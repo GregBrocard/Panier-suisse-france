@@ -26,11 +26,11 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
-      - name: Relever les prix
+      - name: Construire les données
         env:
           SCRAPER_ONLY: ${{ inputs.only }}
           SCRAPER_DEBUG: ${{ inputs.debug }}
-        run: python -m scraper.run
+        run: python -m scraper.build
       - name: Enregistrer le relevé
         if: ${{ inputs.only == '' || inputs.only == null }}
         run: |

@@ -1,0 +1,268 @@
+"""Construit les données du site à partir de toutes les sources.
+
+Sorties :
+  data/series.json           historique mensuel (panier officiel, change, carburant)
+  data/latest.json           photo du mois : détail par produit, viande, marques, carburant par zone
+  data/releves/AAAA-MM.json  archive des relevés automatiques (Migros, Open Prices, stations)
+
+Lancement : python -m scraper.build
+"""
+from __future__ import annotations
+
+import datetime as dt
+import json
+import statistics
+import traceback
+
+import yaml
+
+from . import sources as S
+from .common import ROOT, Candidate, Session, matches, finalize
+from .migros import Scraper as Migros
+
+DATA = ROOT / "data"
+LOG: list[str] = []
+
+
+def log(msg: str):
+    print(msg, flush=True)
+    LOG.append(msg)
+
+
+def safe(fn, *a, default=None, label=""):
+    try:
+        return fn(*a)
+    except Exception as e:  # noqa: BLE001
+        log(f"!! {label or fn.__name__} : {e.__class__.__name__}: {str(e)[:200]}")
+        traceback.print_exc()
+        return default
+
+
+def mean_series(series_list: list[dict]) -> dict:
+    months = sorted({m for s in series_list for m in s})
+    out = {}
+    for m in months:
+        v = [s[m] for s in series_list if m in s]
+        if v:
+            out[m] = round(statistics.mean(v), 4)
+    return out
+
+
+def ffill(series: dict, months: list[str], limit: int) -> dict:
+    out, last, age = {}, None, 0
+    for m in months:
+        if m in series:
+            last, age = series[m], 0
+            out[m] = last
+        elif last is not None and age < limit:
+            age += 1
+            out[m] = last
+    return out
+
+
+def month_range(start: str, end: str) -> list[str]:
+    y, m = map(int, start.split("-"))
+    ye, me = map(int, end.split("-"))
+    out = []
+    while (y, m) <= (ye, me):
+        out.append(f"{y:04d}-{m:02d}")
+        m += 1
+        if m == 13:
+            y, m = y + 1, 1
+    return out
+
+
+# ------------------------------------------------------------------ couche 1 : officiel
+
+def build_officiel(cfg, fx):
+    items = {}
+    for it in cfg["officiel"]:
+        ch = mean_series([safe(S.ofag_series, it["ofag"]["cube"], p, default={}, label=f"OFAG {p}")
+                          for p in it["ofag"]["products"]])
+        fr_list, titles = [], []
+        for idb in it["insee"]:
+            res = safe(S.insee_series, idb, default=None, label=f"INSEE {idb}")
+            if res:
+                titles.append(res[0])
+                fr_list.append(res[1])
+        fr = mean_series(fr_list)
+        if it.get("fill_months") and ch:
+            ch = ffill(ch, month_range(min(ch), max(max(ch), max(fr) if fr else max(ch))), it["fill_months"])
+        log(f"   {it['id']:12s} OFAG {len(ch):4d} mois ({min(ch) if ch else '-'}→{max(ch) if ch else '-'})"
+            f" | INSEE {len(fr):4d} mois ({min(fr) if fr else '-'}→{max(fr) if fr else '-'})")
+        items[it["id"]] = {"meta": {k: it[k] for k in ("id", "label", "cat", "unit", "qty")},
+                           "sources": {"ofag": it["ofag"]["products"], "insee": it["insee"], "insee_titres": titles},
+                           "ch": ch, "fr": fr}
+
+    # série mensuelle du panier : uniquement les mois où CH, FR et change existent
+    months = sorted({m for v in items.values() for m in v["ch"]} & {m for v in items.values() for m in v["fr"]} & set(fx))
+    n_total = len(items)
+    series = []
+    for m in months:
+        common = [k for k, v in items.items() if m in v["ch"] and m in v["fr"]]
+        if len(common) < max(3, int(0.6 * n_total)):
+            continue
+        ch_t = sum(items[k]["ch"][m] * items[k]["meta"]["qty"] for k in common)
+        fr_t = sum(items[k]["fr"][m] * fx[m] * items[k]["meta"]["qty"] for k in common)
+        cats = {}
+        for c in sorted({items[k]["meta"]["cat"] for k in common}):
+            ks = [k for k in common if items[k]["meta"]["cat"] == c]
+            a = sum(items[k]["ch"][m] * items[k]["meta"]["qty"] for k in ks)
+            b = sum(items[k]["fr"][m] * fx[m] * items[k]["meta"]["qty"] for k in ks)
+            cats[c] = round((a / b - 1) * 100, 1)
+        series.append({"m": m, "fx": fx[m], "n": len(common), "ch": round(ch_t, 2), "fr": round(fr_t, 2),
+                       "ecart": round((ch_t / fr_t - 1) * 100, 1), "cats": cats})
+
+    # photo : dernier mois commun pour chaque produit
+    photo = []
+    for k, v in items.items():
+        common = sorted(set(v["ch"]) & set(v["fr"]) & set(fx))
+        if not common:
+            photo.append({**v["meta"], "status": "indisponible"})
+            continue
+        m = common[-1]
+        fr_chf = v["fr"][m] * fx[m]
+        photo.append({**v["meta"], "mois": m, "ch": round(v["ch"][m], 2), "fr_eur": round(v["fr"][m], 2),
+                      "fr_chf": round(fr_chf, 2), "ecart": round((v["ch"][m] / fr_chf - 1) * 100, 1),
+                      "sources": v["sources"]})
+    # historique par produit (allégé : 1 point / mois commun)
+    per_item = {k: [[m, round(v["ch"][m], 3), round(v["fr"][m], 3)]
+                    for m in sorted(set(v["ch"]) & set(v["fr"]))] for k, v in items.items()}
+    return series, photo, per_item
+
+
+# ------------------------------------------------------------------ Migros (viande, marques)
+
+def migros_candidates(mig: Migros, query: str) -> list[Candidate]:
+    return mig.search({"id": query.replace(" ", "_"), "query": query})
+
+
+def build_viande(cfg, fx, s):
+    mig = Migros(s, {})
+    out = []
+    for it in cfg["viande"]:
+        rule = {"match": {k: it["migros"].get(k, []) for k in ("include", "any", "exclude")},
+                "unit": it["unit"], "size": {"min": 0.05, "max": 5}}
+        cands = safe(migros_candidates, mig, it["migros"]["query"], default=[], label=f"Migros {it['id']}")
+        valid = []
+        for c in cands:
+            if matches(rule, c) and not c.promo:
+                c2 = finalize(rule, c)
+                if c2:
+                    valid.append(c2)
+        ch = round(statistics.median([c.unit_price for c in valid]), 2) if valid else None
+        res = safe(S.insee_series, it["insee"][0], default=None, label=f"INSEE {it['id']}")
+        fr_m, fr = (max(res[1]), res[1][max(res[1])]) if res and res[1] else (None, None)
+        rate = fx.get(fr_m) if fr_m else None
+        row = {"id": it["id"], "label": it["label"], "unit": it["unit"], "qty": it["qty"],
+               "ch": ch, "ch_n": len(valid), "ch_produits": [f"{c.name} — {c.unit_price:.2f}/kg" for c in
+                                                              sorted(valid, key=lambda c: c.unit_price)][:8],
+               "fr_eur": fr, "fr_mois": fr_m, "fr_chf": round(fr * rate, 2) if fr and rate else None,
+               "insee": it["insee"][0]}
+        if row["ch"] and row["fr_chf"]:
+            row["ecart"] = round((row["ch"] / row["fr_chf"] - 1) * 100, 1)
+        log(f"   viande {it['id']:10s} CH {ch} ({len(valid)} produits) | FR {fr} € ({fr_m})")
+        out.append(row)
+    return out
+
+
+def build_marques(cfg, fx_today, s):
+    mig = Migros(s, {})
+    out = []
+    for it in cfg["marques"]:
+        rule = {"match": {k: it["migros"].get(k, []) for k in ("include", "any", "exclude")},
+                "unit": it["unit"], "size": {"min": it["size"] * 0.98, "max": it["size"] * 1.02}}
+        cands = safe(migros_candidates, mig, it["migros"]["query"], default=[], label=f"Migros {it['id']}")
+        valid = [c for c in (finalize(rule, c) for c in cands if matches(rule, c)) if c]
+        regular = [c for c in valid if not c.promo] or valid
+        best = min(regular, key=lambda c: c.price) if regular else None
+        op = safe(S.openprices_fr, it["ean_fr"], default=None, label=f"Open Prices {it['id']}")
+        row = {"id": it["id"], "label": it["label"],
+               "ch": best.price if best else None, "ch_produit": best.name if best else None,
+               "ch_url": best.url if best else None,
+               "fr_eur": op["median"] if op else None, "fr_n": op["n"] if op else 0,
+               "fr_produits": op["products"] if op else [], "fr_depuis": op["since"] if op else None}
+        if row["fr_eur"]:
+            row["fr_chf"] = round(row["fr_eur"] * fx_today, 2)
+        if row["ch"] and row.get("fr_chf"):
+            row["ecart"] = round((row["ch"] / row["fr_chf"] - 1) * 100, 1)
+        log(f"   marque {it['id']:8s} CH {row['ch']} | FR {row['fr_eur']} € (n={row['fr_n']})")
+        out.append(row)
+    return out
+
+
+# ------------------------------------------------------------------ carburant
+
+def build_carburant(cfg, fx, fx_today):
+    zones = {}
+    for z, zc in cfg["carburant"]["zones"].items():
+        res = safe(S.fuel_fr_stations, zc["postcodes"], default=None, label=f"stations {z}")
+        if res:
+            res["moyenne_chf"] = {k: (round(v * fx_today, 3) if v else None) for k, v in res["moyenne"].items()}
+            res["min_chf"] = {k: (round(v * fx_today, 3) if v else None) for k, v in res["min"].items()}
+            log(f"   carburant {z:10s} {res['n']} stations, moyenne {res['moyenne']}")
+        zones[z] = res
+    ch = safe(S.fuel_ch_ofdf, default=None, label="OFDF T4.4")
+    if ch:
+        log(f"   carburant CH (OFDF) diesel {ch.get('diesel')} sp95 {ch.get('sp95')} ({ch.get('date_texte')})")
+        ch.pop("raw", None)
+    hist = {}
+    for t in cfg["carburant"]["types"]:
+        res = safe(S.insee_series, t["insee"][0], default=None, label=f"INSEE {t['id']}")
+        if res:
+            hist[t["id"]] = [[m, v, round(v * fx[m], 3)] for m, v in sorted(res[1].items()) if m in fx]
+    return {"zones": zones, "ch": ch, "historique_fr": hist}
+
+
+# ------------------------------------------------------------------ main
+
+def main():
+    cfg = yaml.safe_load((ROOT / "config/panier.yaml").read_text(encoding="utf-8"))
+    s = Session(delay=1.0)
+    today = dt.date.today()
+
+    log("== Change BCE")
+    fx = S.ecb_eur_chf_monthly()
+    fx_day = safe(S.ecb_eur_chf_daily_last, default=None, label="BCE jour") or \
+        {"date": max(fx), "eur_chf": fx[max(fx)]}
+    log(f"   {len(fx)} mois, dernier jour {fx_day}")
+
+    log("== Panier officiel (OFAG / INSEE)")
+    series, photo, per_item = build_officiel(cfg, fx)
+    log(f"   {len(series)} mois de série, dernier : {series[-1] if series else '-'}")
+
+    log("== Viande (Migros / INSEE)")
+    viande = build_viande(cfg, fx, s)
+    log("== Marques (Migros / Open Prices)")
+    marques = build_marques(cfg, fx_day["eur_chf"], s)
+    log("== Carburant")
+    carb = build_carburant(cfg, fx, fx_day["eur_chf"])
+
+    latest = {
+        "genere_le": today.isoformat(), "basket_version": cfg["basket_version"],
+        "fx": {"jour": fx_day, "source": "BCE, taux de référence EUR/CHF"},
+        "officiel": {"mois": series[-1]["m"] if series else None, "produits": photo,
+                     "dernier": series[-1] if series else None},
+        "viande": viande, "marques": marques, "carburant": carb,
+        "journal": LOG,
+    }
+    hist = {
+        "genere_le": today.isoformat(), "basket_version": cfg["basket_version"],
+        "panier": series,
+        "produits": per_item,
+        "fx": [[m, v] for m, v in sorted(fx.items())],
+        "carburant_fr": carb["historique_fr"],
+    }
+    DATA.mkdir(exist_ok=True)
+    (DATA / "releves").mkdir(exist_ok=True)
+    (DATA / "latest.json").write_text(json.dumps(latest, ensure_ascii=False, indent=1), encoding="utf-8")
+    (DATA / "series.json").write_text(json.dumps(hist, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    snap = {"date": today.isoformat(), "fx": fx_day, "viande": viande, "marques": marques,
+            "carburant": {"zones": {z: (v and {k: v[k] for k in ("n", "moyenne", "min")}) for z, v in carb["zones"].items()},
+                          "ch": carb["ch"]}}
+    (DATA / "releves" / f"{today:%Y-%m}.json").write_text(json.dumps(snap, ensure_ascii=False, indent=1), encoding="utf-8")
+    log("== Terminé")
+
+
+if __name__ == "__main__":
+    main()

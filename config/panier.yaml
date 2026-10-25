@@ -1,0 +1,98 @@
+# Panier de référence Suisse / France — version 1
+# ===============================================
+# Trois couches, chacune avec ses sources :
+#
+#  1. "officiel"  : séries statistiques officielles mensuelles
+#                   Suisse = OFAG (Office fédéral de l'agriculture), relevés commerce de détail
+#                   France = INSEE, prix moyens mensuels de vente au détail en métropole
+#                   -> historique long (2006+ pour les fruits & légumes)
+#  2. "viande"    : France = INSEE ; Suisse = relevé automatique Migros (médiane des produits valides)
+#  3. "marques"   : produits identiques ; Suisse = Migros ; France = Open Prices (médiane nationale 6 mois)
+#
+# qty : quantité de référence d'un panier hebdomadaire pour un ménage de deux personnes.
+# Toute modification de ce fichier incrémente basket_version.
+
+basket_version: 1
+
+officiel:
+  # ---------------- Fruits ----------------
+  - { id: bananes,     label: Bananes,            cat: Fruits,  unit: kg, qty: 1.0,
+      ofag: { cube: FruitsVegetablesPotatoes, products: ["Bananes"] },
+      insee: ["000641432"] }
+  - { id: pommes,      label: Pommes,             cat: Fruits,  unit: kg, qty: 1.5,
+      ofag: { cube: FruitsVegetablesPotatoes, products: ["Pommes Golden I", "Pommes Gala I", "Pommes Braeburn I"] },
+      insee: ["000641367"] }
+  - { id: poires,      label: Poires,             cat: Fruits,  unit: kg, qty: 0.5,
+      ofag: { cube: FruitsVegetablesPotatoes, products: ["Poires Conférence I", "Poires Williams I"] },
+      insee: ["000641369"] }
+  - { id: clementines, label: Clémentines,        cat: Fruits,  unit: kg, qty: 1.0,
+      ofag: { cube: FruitsVegetablesPotatoes, products: ["Clémentines"] },
+      insee: ["000641435"] }
+  - { id: oranges,     label: Oranges,            cat: Fruits,  unit: kg, qty: 1.0,
+      ofag: { cube: FruitsVegetablesPotatoes, products: ["Oranges blondes"] },
+      insee: ["000641365"] }
+  # ---------------- Légumes ----------------
+  - { id: tomates,     label: Tomates,            cat: Légumes, unit: kg, qty: 1.0,
+      ofag: { cube: FruitsVegetablesPotatoes, products: ["Tomates grappes", "Tomates charnues"] },
+      insee: ["000641429"] }
+  - { id: carottes,    label: Carottes,           cat: Légumes, unit: kg, qty: 1.0,
+      ofag: { cube: FruitsVegetablesPotatoes, products: ["Carottes"] },
+      insee: ["000641422"] }
+  - { id: courgettes,  label: Courgettes,         cat: Légumes, unit: kg, qty: 0.5,
+      ofag: { cube: FruitsVegetablesPotatoes, products: ["Courgettes"] },
+      insee: ["000641425"] }
+  - { id: champignons, label: Champignons de Paris, cat: Légumes, unit: kg, qty: 0.25,
+      ofag: { cube: FruitsVegetablesPotatoes, products: ["Champignons de Paris"] },
+      insee: ["000641423"] }
+  - { id: oignons,     label: Oignons jaunes,     cat: Légumes, unit: kg, qty: 0.5,
+      ofag: { cube: FruitsVegetablesPotatoes, products: ["Oignons jaunes"] },
+      insee: ["000641427"] }
+  - { id: poireaux,    label: Poireaux,           cat: Légumes, unit: kg, qty: 0.5,
+      ofag: { cube: FruitsVegetablesPotatoes, products: ["Poireau vert"] },
+      insee: ["000641428"] }
+  - { id: endives,     label: Endives,            cat: Légumes, unit: kg, qty: 0.5,
+      ofag: { cube: FruitsVegetablesPotatoes, products: ["Chicorée Witloof"] },
+      insee: ["000641426"] }
+  - { id: poivrons,    label: Poivrons,           cat: Légumes, unit: kg, qty: 0.5,
+      ofag: { cube: FruitsVegetablesPotatoes, products: ["Poivrons"] },
+      insee: ["010596274"] }
+  - { id: pdt,         label: Pommes de terre,    cat: Légumes, unit: kg, qty: 2.0,
+      ofag: { cube: FruitsVegetablesPotatoes, products: ["Chair ferme : vert", "Chair farineuse : bleu"] },
+      insee: ["000641360"] }
+  # ---------------- Pain ----------------
+  - { id: pain,        label: Pain courant (CH mi-blanc / FR baguette), cat: Pain, unit: kg, qty: 1.0,
+      ofag: { cube: BreadCerealsFlourBakedGoods, products: ["Pain mi-blanc , non bio, moyenne"] },
+      insee: ["000442423"], fill_months: 3 }
+
+viande:
+  - { id: entrecote, label: Entrecôte de bœuf,  unit: kg, qty: 0.3, insee: ["000442435"],
+      migros: { query: entrecôte de bœuf, include: [entrecôte], exclude: [bio, marinée, cuite, sauce, burger, haché] } }
+  - { id: veau,      label: Escalope de veau,   unit: kg, qty: 0.2, insee: ["000442441"],
+      migros: { query: escalope de veau, include: [veau], any: [escalope, escalopes], exclude: [bio, panée, pané, cordon, viennoise, sauce] } }
+  - { id: porc,      label: Rôti de porc,       unit: kg, qty: 0.4, insee: ["000442448"],
+      migros: { query: rôti de porc, include: [porc], any: [rôti, roti], exclude: [bio, cuit, fumé, sauce] } }
+  - { id: jambon,    label: Jambon cuit supérieur, unit: kg, qty: 0.2, insee: ["000849397"],
+      migros: { query: jambon cuit, include: [jambon], exclude: [cru, parme, serrano, poulet, dinde, bio, croissant, sandwich, pizza, fumé] } }
+
+marques:
+  # ean_fr : code-barres du produit vendu en France (Open Prices) ; en Suisse, appariement nom + format
+  - { id: nutella, label: Nutella 750 g,           unit: kg, size: 0.75, qty: 0.75, ean_fr: ["3017620421006"],
+      migros: { query: nutella, include: [nutella], exclude: [biscuits, b-ready, plant, go] } }
+  - { id: coca,    label: Coca-Cola 1,5 L,         unit: L,  size: 1.5,  qty: 1.5,  ean_fr: ["5449000000286", "5449000054227"],
+      migros: { query: coca-cola, include: [coca], exclude: [zero, light, cherry, vanille, sans sucre] } }
+  - { id: barilla, label: Barilla Spaghetti n°5 500 g, unit: kg, size: 0.5, qty: 0.5, ean_fr: ["8076800195057"],
+      migros: { query: barilla spaghetti, include: [barilla, spaghetti], exclude: [integrale, complet, protein, sans gluten] } }
+  - { id: evian,   label: Evian 1,5 L,             unit: L,  size: 1.5,  qty: 1.5,  ean_fr: ["3068320114453", "3068320055008"],
+      migros: { query: evian, include: [evian], exclude: [brumisateur, spray, citron, 6 x, 6x] } }
+
+carburant:
+  # France : prix officiels station par station (data.economie.gouv.fr), par zone frontalière
+  # Suisse : prix en zone frontière genevoise publié par l'OFDF (tableau T 4.4, mensuel)
+  # Historique France : INSEE prix moyens mensuels
+  types:
+    - { id: sp95,   label: Sans plomb 95, insee: ["000849411"] }
+    - { id: diesel, label: Diesel,        insee: ["000442588"] }
+  zones:
+    annemasse: { postcodes: ["74100", "74240"] }        # Annemasse, Ville-la-Grand, Gaillard
+    divonne:   { postcodes: ["01220", "01170", "39220"] } # Divonne, Gex, Les Rousses (La Cure)
+    vallorbe:  { postcodes: ["25370", "25300"] }        # Jougne, Pontarlier
