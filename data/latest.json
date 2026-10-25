@@ -771,7 +771,28 @@
       "diesel": 2.39,
       "maj": "2026-10-21T07:08:46+00:00",
       "sp95_ou_e10": 2.16
-     },
+     }
+    ],
+    "n": 5,
+    "moyenne": {
+     "sp95": 2.156,
+     "diesel": 2.395
+    },
+    "min": {
+     "sp95": 2.099,
+     "diesel": 2.359
+    },
+    "moyenne_chf": {
+     "sp95": 1.989,
+     "diesel": 2.21
+    },
+    "min_chf": {
+     "sp95": 1.937,
+     "diesel": 2.177
+    }
+   },
+   "lesrousses": {
+    "stations": [
      {
       "id": 39220002,
       "ville": "Bois-d'Amont",
@@ -828,22 +849,22 @@
       "sp95_ou_e10": 2.299
      }
     ],
-    "n": 10,
+    "n": 5,
     "moyenne": {
-     "sp95": 2.205,
-     "diesel": 2.401
+     "sp95": 2.253,
+     "diesel": 2.407
     },
     "min": {
-     "sp95": 2.099,
-     "diesel": 2.359
+     "sp95": 2.169,
+     "diesel": 2.369
     },
     "moyenne_chf": {
-     "sp95": 2.035,
-     "diesel": 2.215
+     "sp95": 2.079,
+     "diesel": 2.221
     },
     "min_chf": {
-     "sp95": 1.937,
-     "diesel": 2.177
+     "sp95": 2.001,
+     "diesel": 2.186
     }
    },
    "vallorbe": {
@@ -4115,6 +4136,335 @@
    ]
   }
  },
+ "magasins": {
+  "source": "UFC-Que Choisir, comparateur des supermarchés",
+  "publier": false,
+  "panel": {
+   "n": 168,
+   "tires": 600,
+   "mediane": 367.5,
+   "moyenne": 372.03,
+   "p10": 350.9,
+   "p90": 401.08
+  },
+  "zones": {
+   "annemasse": {
+    "magasins": [
+     {
+      "dm": 1447,
+      "nom": "Leclerc Drive Ville-La-Grand",
+      "cp": "74100",
+      "url": "https://www.quechoisir.org/carte-interactive-drives-n21243/drive-magasin-dm1447/",
+      "panier": 336.18,
+      "paniers": {
+       "global": 336.18,
+       "famille": 498.79,
+       "couple": 347.48,
+       "celibataire": 208.06
+      },
+      "appreciation": "Très bon",
+      "indice": 0.9148
+     },
+     {
+      "dm": 2521,
+      "nom": "Leclerc Drive Cranves-Sales",
+      "cp": "74380",
+      "url": "https://www.quechoisir.org/carte-interactive-drives-n21243/drive-magasin-dm2521/",
+      "panier": 336.18,
+      "paniers": {
+       "global": 336.18,
+       "famille": 498.79,
+       "couple": 347.48,
+       "celibataire": 208.06
+      },
+      "appreciation": "Très bon",
+      "indice": 0.9148
+     },
+     {
+      "dm": 18850,
+      "nom": "Intermarché Hyper Annemasse",
+      "cp": "74100",
+      "url": "https://www.quechoisir.org/carte-interactive-drives-n21243/drive-magasin-dm18850/",
+      "panier": 346.75,
+      "paniers": {
+       "global": 346.75,
+       "famille": 513.33,
+       "couple": 358.36,
+       "celibataire": 214.38
+      },
+      "appreciation": "Très bon",
+      "indice": 0.9435
+     },
+     {
+      "dm": 131,
+      "nom": "Intermarché Super Vetraz Monthoux",
+      "cp": "74100",
+      "url": "https://www.quechoisir.org/carte-interactive-drives-n21243/drive-magasin-dm131/",
+      "panier": 358.07,
+      "paniers": {
+       "global": 358.07,
+       "famille": 530.66,
+       "couple": 370.02,
+       "celibataire": 221.86
+      },
+      "appreciation": "Bon",
+      "indice": 0.9743
+     },
+     {
+      "dm": 3103,
+      "nom": "Carrefour Market Annemasse",
+      "cp": "74100",
+      "url": "https://www.quechoisir.org/carte-interactive-drives-n21243/drive-magasin-dm3103/",
+      "panier": 365.99,
+      "paniers": {
+       "global": 365.99,
+       "famille": 543.52,
+       "couple": 377.02,
+       "celibataire": 226.53
+      },
+      "appreciation": "Bon",
+      "indice": 0.9959
+     }
+    ],
+    "indice_median": 0.9435,
+    "panier_median": 346.75
+   },
+   "divonne": {
+    "magasins": [
+     {
+      "dm": 124,
+      "nom": "Intermarché Super Saint Genis Pouilly",
+      "cp": "01630",
+      "url": "https://www.quechoisir.org/carte-interactive-drives-n21243/drive-magasin-dm124/",
+      "panier": 360.33,
+      "paniers": {
+       "global": 360.33,
+       "famille": 533.46,
+       "couple": 371.97,
+       "celibataire": 223.03
+      },
+      "appreciation": "Bon",
+      "indice": 0.9805
+     },
+     {
+      "dm": 21149,
+      "nom": "Hyper U Thoiry",
+      "cp": "01710",
+      "url": "https://www.quechoisir.org/carte-interactive-drives-n21243/drive-magasin-dm21149/",
+      "panier": 367.5,
+      "paniers": {
+       "global": 367.5,
+       "famille": 544.64,
+       "couple": 379.35,
+       "celibataire": 227.7
+      },
+      "appreciation": "Bon",
+      "indice": 1.0
+     },
+     {
+      "dm": 1781,
+      "nom": "Carrefour Hyper Segny",
+      "cp": "01170",
+      "url": "https://www.quechoisir.org/carte-interactive-drives-n21243/drive-magasin-dm1781/",
+      "panier": 368.26,
+      "paniers": {
+       "global": 368.26,
+       "famille": 545.76,
+       "couple": 378.96,
+       "celibataire": 228.17
+      },
+      "appreciation": "Bon",
+      "indice": 1.0021
+     },
+     {
+      "dm": 125,
+      "nom": "Intermarché Super Gex",
+      "cp": "01170",
+      "url": "https://www.quechoisir.org/carte-interactive-drives-n21243/drive-magasin-dm125/",
+      "panier": 373.91,
+      "paniers": {
+       "global": 373.91,
+       "famille": 554.71,
+       "couple": 385.57,
+       "celibataire": 231.68
+      },
+      "appreciation": "Moyen",
+      "indice": 1.0174
+     },
+     {
+      "dm": 21779,
+      "nom": "Carrefour City Divonne-les-Bains",
+      "cp": "01220",
+      "url": "https://www.quechoisir.org/carte-interactive-drives-n21243/drive-magasin-dm21779/",
+      "panier": 431.26,
+      "paniers": {
+       "global": 431.26,
+       "famille": 639.14,
+       "couple": 443.48,
+       "celibataire": 267.44
+      },
+      "appreciation": "Mauvais",
+      "indice": 1.1735
+     }
+    ],
+    "indice_median": 1.0021,
+    "panier_median": 368.26
+   },
+   "lesrousses": {
+    "magasins": [
+     {
+      "dm": 1899,
+      "nom": "Super U Saint Laurent En Grandvaux",
+      "cp": "39150",
+      "url": "https://www.quechoisir.org/carte-interactive-drives-n21243/drive-magasin-dm1899/",
+      "panier": 365.99,
+      "paniers": {
+       "global": 365.99,
+       "famille": 542.4,
+       "couple": 377.41,
+       "celibataire": 226.53
+      },
+      "appreciation": "Bon",
+      "indice": 0.9959
+     },
+     {
+      "dm": 8118,
+      "nom": "Intermarché Super Morez",
+      "cp": "39400",
+      "url": "https://www.quechoisir.org/carte-interactive-drives-n21243/drive-magasin-dm8118/",
+      "panier": 366.74,
+      "paniers": {
+       "global": 366.74,
+       "famille": 543.52,
+       "couple": 378.19,
+       "celibataire": 227.0
+      },
+      "appreciation": "Bon",
+      "indice": 0.9979
+     },
+     {
+      "dm": 5036,
+      "nom": "Intermarché Super Les Rousses",
+      "cp": "39220",
+      "url": "https://www.quechoisir.org/carte-interactive-drives-n21243/drive-magasin-dm5036/",
+      "panier": 373.16,
+      "paniers": {
+       "global": 373.16,
+       "famille": 553.03,
+       "couple": 385.18,
+       "celibataire": 230.98
+      },
+      "appreciation": "Moyen",
+      "indice": 1.0154
+     },
+     {
+      "dm": 21862,
+      "nom": "U Express Morbier",
+      "cp": "39400",
+      "url": "https://www.quechoisir.org/carte-interactive-drives-n21243/drive-magasin-dm21862/",
+      "panier": 387.88,
+      "paniers": {
+       "global": 387.88,
+       "famille": 574.84,
+       "couple": 399.95,
+       "celibataire": 240.33
+      },
+      "appreciation": "Médiocre",
+      "indice": 1.0555
+     }
+    ],
+    "indice_median": 1.0067,
+    "panier_median": 369.95
+   },
+   "vallorbe": {
+    "magasins": [
+     {
+      "dm": 1701,
+      "nom": "Leclerc Drive Pontarlier",
+      "cp": "25300",
+      "url": "https://www.quechoisir.org/carte-interactive-drives-n21243/drive-magasin-dm1701/",
+      "panier": 347.12,
+      "paniers": {
+       "global": 347.12,
+       "famille": 513.33,
+       "couple": 358.75,
+       "celibataire": 215.08
+      },
+      "appreciation": "Très bon",
+      "indice": 0.9445
+     },
+     {
+      "dm": 3197,
+      "nom": "Hyper U Pontarlier",
+      "cp": "25300",
+      "url": "https://www.quechoisir.org/carte-interactive-drives-n21243/drive-magasin-dm3197/",
+      "panier": 353.92,
+      "paniers": {
+       "global": 353.92,
+       "famille": 523.95,
+       "couple": 365.36,
+       "celibataire": 219.29
+      },
+      "appreciation": "Très bon",
+      "indice": 0.963
+     },
+     {
+      "dm": 17992,
+      "nom": "Intermarché Hyper Pontarlier",
+      "cp": "25300",
+      "url": "https://www.quechoisir.org/carte-interactive-drives-n21243/drive-magasin-dm17992/",
+      "panier": 355.05,
+      "paniers": {
+       "global": 355.05,
+       "famille": 526.19,
+       "couple": 366.91,
+       "celibataire": 219.75
+      },
+      "appreciation": "Bon",
+      "indice": 0.9661
+     },
+     {
+      "dm": 7285,
+      "nom": "Intermarché Super Les Hopitaux Neufs",
+      "cp": "25370",
+      "url": "https://www.quechoisir.org/carte-interactive-drives-n21243/drive-magasin-dm7285/",
+      "panier": 361.84,
+      "paniers": {
+       "global": 361.84,
+       "famille": 535.69,
+       "couple": 373.13,
+       "celibataire": 223.96
+      },
+      "appreciation": "Bon",
+      "indice": 0.9846
+     },
+     {
+      "dm": 21391,
+      "nom": "Super U Jougne",
+      "cp": "25370",
+      "url": "https://www.quechoisir.org/carte-interactive-drives-n21243/drive-magasin-dm21391/",
+      "panier": 363.73,
+      "paniers": {
+       "global": 363.73,
+       "famille": 539.05,
+       "couple": 375.46,
+       "celibataire": 225.36
+      },
+      "appreciation": "Bon",
+      "indice": 0.9897
+     }
+    ],
+    "indice_median": 0.9661,
+    "panier_median": 355.05
+   }
+  }
+ },
+ "zones": {
+  "annemasse": "Genève ↔ Annemasse",
+  "divonne": "Nyon ↔ Divonne / Gex",
+  "lesrousses": "La Cure ↔ Les Rousses",
+  "vallorbe": "Vallorbe ↔ Jougne / Pontarlier"
+ },
  "journal": [
   "== Change BCE",
   "   333 mois, dernier jour {'date': '2026-10-23', 'eur_chf': 0.9227}",
@@ -4149,8 +4499,15 @@
   "   marque lindt    CH 48.0/kg (Excellence Lindt Excellence · Noir · 70% cacao (0.1 kg) à 4.80) | FR 30.9 €/kg (n=7)",
   "== Carburant",
   "   carburant annemasse  9 stations, moyenne {'sp95': 2.123, 'diesel': 2.381}",
-  "   carburant divonne    10 stations, moyenne {'sp95': 2.205, 'diesel': 2.401}",
+  "   carburant divonne    5 stations, moyenne {'sp95': 2.156, 'diesel': 2.395}",
+  "   carburant lesrousses 5 stations, moyenne {'sp95': 2.253, 'diesel': 2.407}",
   "   carburant vallorbe   8 stations, moyenne {'sp95': 2.225, 'diesel': 2.402}",
-  "   carburant CH (OFDF) diesel {'ch_chf': 2.19, 'fr_eur': 2.2} sp95 {'ch_chf': 2.48, 'fr_eur': 2.4} (20 octobre 2026)"
+  "   carburant CH (OFDF) diesel {'ch_chf': 2.19, 'fr_eur': 2.2} sp95 {'ch_chf': 2.48, 'fr_eur': 2.4} (20 octobre 2026)",
+  "== Magasins (Que Choisir)",
+  "   panel national : 168 magasins, médiane 367.5 €",
+  "   magasins annemasse  5 magasins, indice médian 0.9435",
+  "   magasins divonne    5 magasins, indice médian 1.0021",
+  "   magasins lesrousses 4 magasins, indice médian 1.0067",
+  "   magasins vallorbe   5 magasins, indice médian 0.9661"
  ]
 }

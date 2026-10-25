@@ -221,14 +221,25 @@
     }
    },
    "divonne": {
-    "n": 10,
+    "n": 5,
     "moyenne": {
-     "sp95": 2.205,
-     "diesel": 2.401
+     "sp95": 2.156,
+     "diesel": 2.395
     },
     "min": {
      "sp95": 2.099,
      "diesel": 2.359
+    }
+   },
+   "lesrousses": {
+    "n": 5,
+    "moyenne": {
+     "sp95": 2.253,
+     "diesel": 2.407
+    },
+    "min": {
+     "sp95": 2.169,
+     "diesel": 2.369
     }
    },
    "vallorbe": {
