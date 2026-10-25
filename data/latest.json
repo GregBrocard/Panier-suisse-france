@@ -1,6 +1,6 @@
 {
  "genere_le": "2026-10-25",
- "basket_version": 1,
+ "basket_version": 2,
  "fx": {
   "jour": {
    "date": "2026-10-23",
@@ -18,6 +18,8 @@
     "unit": "kg",
     "qty": 1.0,
     "in_total": true,
+    "groupe": "fl",
+    "estime": false,
     "mois": "2026-09",
     "ch": 2.49,
     "fr_eur": 2.05,
@@ -30,6 +32,7 @@
      "insee": [
       "000641432"
      ],
+     "fr_indexe": null,
      "insee_titres": [
       "Prix moyens mensuels de vente au détail en métropole - Bananes (1 kg)"
      ]
@@ -42,6 +45,8 @@
     "unit": "kg",
     "qty": 1.5,
     "in_total": true,
+    "groupe": "fl",
+    "estime": false,
     "mois": "2026-09",
     "ch": 3.02,
     "fr_eur": 3.15,
@@ -56,6 +61,7 @@
      "insee": [
       "000641367"
      ],
+     "fr_indexe": null,
      "insee_titres": [
       "Prix moyens mensuels de vente au détail en métropole - Pommes (1 kg)"
      ]
@@ -68,6 +74,8 @@
     "unit": "kg",
     "qty": 0.5,
     "in_total": true,
+    "groupe": "fl",
+    "estime": false,
     "mois": "2026-09",
     "ch": 3.47,
     "fr_eur": 3.82,
@@ -81,6 +89,7 @@
      "insee": [
       "000641369"
      ],
+     "fr_indexe": null,
      "insee_titres": [
       "Prix moyens mensuels de vente au détail en métropole - Poires (1 kg)"
      ]
@@ -93,6 +102,8 @@
     "unit": "kg",
     "qty": 1.0,
     "in_total": true,
+    "groupe": "fl",
+    "estime": false,
     "mois": "2026-09",
     "ch": 2.57,
     "fr_eur": 4.23,
@@ -105,6 +116,7 @@
      "insee": [
       "000641435"
      ],
+     "fr_indexe": null,
      "insee_titres": [
       "Prix moyens mensuels de vente au détail en métropole - Clémentines (1 kg)"
      ]
@@ -117,6 +129,8 @@
     "unit": "kg",
     "qty": 1.0,
     "in_total": true,
+    "groupe": "fl",
+    "estime": false,
     "mois": "2026-09",
     "ch": 1.72,
     "fr_eur": 2.81,
@@ -129,6 +143,7 @@
      "insee": [
       "000641365"
      ],
+     "fr_indexe": null,
      "insee_titres": [
       "Prix moyens mensuels de vente au détail en métropole - Oranges (1 kg)"
      ]
@@ -141,6 +156,8 @@
     "unit": "kg",
     "qty": 1.0,
     "in_total": true,
+    "groupe": "fl",
+    "estime": false,
     "mois": "2026-09",
     "ch": 4.77,
     "fr_eur": 5.23,
@@ -154,6 +171,7 @@
      "insee": [
       "000641429"
      ],
+     "fr_indexe": null,
      "insee_titres": [
       "Prix moyens mensuels de vente au détail en métropole - Tomates (1 kg)"
      ]
@@ -166,6 +184,8 @@
     "unit": "kg",
     "qty": 1.0,
     "in_total": true,
+    "groupe": "fl",
+    "estime": false,
     "mois": "2026-09",
     "ch": 2.02,
     "fr_eur": 2.21,
@@ -178,6 +198,7 @@
      "insee": [
       "000641422"
      ],
+     "fr_indexe": null,
      "insee_titres": [
       "Prix moyens mensuels de vente au détail en métropole - Carottes (1 kg)"
      ]
@@ -190,6 +211,8 @@
     "unit": "kg",
     "qty": 0.5,
     "in_total": true,
+    "groupe": "fl",
+    "estime": false,
     "mois": "2026-09",
     "ch": 2.77,
     "fr_eur": 3.2,
@@ -202,6 +225,7 @@
      "insee": [
       "000641425"
      ],
+     "fr_indexe": null,
      "insee_titres": [
       "Prix moyens mensuels de vente au détail en métropole - Courgettes (1 kg)"
      ]
@@ -214,6 +238,8 @@
     "unit": "kg",
     "qty": 0.25,
     "in_total": true,
+    "groupe": "fl",
+    "estime": false,
     "mois": "2026-09",
     "ch": 8.86,
     "fr_eur": 6.53,
@@ -226,6 +252,7 @@
      "insee": [
       "000641423"
      ],
+     "fr_indexe": null,
      "insee_titres": [
       "Prix moyens mensuels de vente au détail en métropole - Champignons de Paris (1 kg)"
      ]
@@ -238,6 +265,8 @@
     "unit": "kg",
     "qty": 0.5,
     "in_total": true,
+    "groupe": "fl",
+    "estime": false,
     "mois": "2026-09",
     "ch": 1.75,
     "fr_eur": 2.83,
@@ -250,6 +279,7 @@
      "insee": [
       "000641427"
      ],
+     "fr_indexe": null,
      "insee_titres": [
       "Prix moyens mensuels de vente au détail en métropole - Oignons (1 kg)"
      ]
@@ -262,6 +292,8 @@
     "unit": "kg",
     "qty": 0.5,
     "in_total": true,
+    "groupe": "fl",
+    "estime": false,
     "mois": "2026-09",
     "ch": 4.18,
     "fr_eur": 3.47,
@@ -274,6 +306,7 @@
      "insee": [
       "000641428"
      ],
+     "fr_indexe": null,
      "insee_titres": [
       "Prix moyens mensuels de vente au détail en métropole - Poireaux (1 kg)"
      ]
@@ -286,6 +319,8 @@
     "unit": "kg",
     "qty": 0.5,
     "in_total": true,
+    "groupe": "fl",
+    "estime": false,
     "mois": "2026-09",
     "ch": 3.55,
     "fr_eur": 4.78,
@@ -298,6 +333,7 @@
      "insee": [
       "000641426"
      ],
+     "fr_indexe": null,
      "insee_titres": [
       "Prix moyens mensuels de vente au détail en métropole - Endives (1 kg)"
      ]
@@ -310,6 +346,8 @@
     "unit": "kg",
     "qty": 0.5,
     "in_total": true,
+    "groupe": "fl",
+    "estime": false,
     "mois": "2026-09",
     "ch": 3.79,
     "fr_eur": 4.73,
@@ -322,6 +360,7 @@
      "insee": [
       "010596274"
      ],
+     "fr_indexe": null,
      "insee_titres": [
       "Prix moyens mensuels de vente au détail en métropole - Poivrons (1 kg)"
      ]
@@ -334,6 +373,8 @@
     "unit": "kg",
     "qty": 2.0,
     "in_total": true,
+    "groupe": "fl",
+    "estime": false,
     "mois": "2026-09",
     "ch": 1.59,
     "fr_eur": 1.94,
@@ -347,6 +388,7 @@
      "insee": [
       "000641360"
      ],
+     "fr_indexe": null,
      "insee_titres": [
       "Prix moyens mensuels de vente au détail en métropole - Pommes de terre de conservation (1 kg)"
      ]
@@ -359,6 +401,8 @@
     "unit": "kg",
     "qty": 1.0,
     "in_total": false,
+    "groupe": "fl",
+    "estime": false,
     "mois": "2026-09",
     "ch": 2.38,
     "fr_eur": 4.12,
@@ -371,8 +415,159 @@
      "insee": [
       "000442423"
      ],
+     "fr_indexe": null,
      "insee_titres": [
       "Prix moyens mensuels de vente au détail en métropole - Pain baguette (1 kg)"
+     ]
+    }
+   },
+   {
+    "id": "lait",
+    "label": "Lait UHT (CH drink 2,7 %, FR demi-écrémé)",
+    "cat": "Crèmerie",
+    "unit": "L",
+    "qty": 3.0,
+    "in_total": true,
+    "groupe": "cremerie",
+    "estime": true,
+    "mois": "2026-09",
+    "ch": 1.68,
+    "fr_eur": 1.16,
+    "fr_chf": 1.09,
+    "ecart": 53.6,
+    "sources": {
+     "ofag": [
+      "Lait drink UHT"
+     ],
+     "insee": [],
+     "fr_indexe": {
+      "insee_arrete": "000442480",
+      "base_mois": "2019-12",
+      "indice": "011812298",
+      "facteur": 1
+     },
+     "insee_titres": [
+      "Prix moyens mensuels de vente au détail en métropole - Lait UHT demi-écrémé (1 litre) - Série arrêtée"
+     ]
+    }
+   },
+   {
+    "id": "beurre",
+    "label": "Beurre",
+    "cat": "Crèmerie",
+    "unit": "kg",
+    "qty": 0.25,
+    "in_total": true,
+    "groupe": "cremerie",
+    "estime": true,
+    "mois": "2026-09",
+    "ch": 20.34,
+    "fr_eur": 12.05,
+    "fr_chf": 11.36,
+    "ecart": 78.9,
+    "sources": {
+     "ofag": [
+      "Beurre de choix"
+     ],
+     "insee": [],
+     "fr_indexe": {
+      "insee_arrete": "000442490",
+      "base_mois": "2019-12",
+      "indice": "011812325",
+      "facteur": 4
+     },
+     "insee_titres": [
+      "Prix moyens mensuels de vente au détail en métropole - Beurre extra fin (250 g) - Série arrêtée"
+     ]
+    }
+   },
+   {
+    "id": "emmental",
+    "label": "Emmental (CH doux, FR français)",
+    "cat": "Crèmerie",
+    "unit": "kg",
+    "qty": 0.3,
+    "in_total": true,
+    "groupe": "cremerie",
+    "estime": true,
+    "mois": "2026-09",
+    "ch": 15.82,
+    "fr_eur": 10.85,
+    "fr_chf": 10.23,
+    "ecart": 54.6,
+    "sources": {
+     "ofag": [
+      "Emmentaler doux"
+     ],
+     "insee": [],
+     "fr_indexe": {
+      "insee_arrete": "000442487",
+      "base_mois": "2019-12",
+      "indice": "011812307",
+      "facteur": 1
+     },
+     "insee_titres": [
+      "Prix moyens mensuels de vente au détail en métropole - Emmental français (1 kg) - Série arrêtée"
+     ]
+    }
+   },
+   {
+    "id": "yaourt",
+    "label": "Yaourt nature",
+    "cat": "Crèmerie",
+    "unit": "kg",
+    "qty": 1.0,
+    "in_total": true,
+    "groupe": "cremerie",
+    "estime": true,
+    "mois": "2026-09",
+    "ch": 3.24,
+    "fr_eur": 1.78,
+    "fr_chf": 1.68,
+    "ecart": 92.9,
+    "sources": {
+     "ofag": [
+      "Yogourt nature"
+     ],
+     "insee": [],
+     "fr_indexe": {
+      "insee_arrete": "000849398",
+      "base_mois": "2019-12",
+      "indice": "011812310",
+      "facteur": 2
+     },
+     "insee_titres": [
+      "Prix moyens mensuels de vente au détail en métropole - Yaourt nature (500 g) - Série arrêtée"
+     ]
+    }
+   },
+   {
+    "id": "huile",
+    "label": "Huile de tournesol",
+    "cat": "Crèmerie",
+    "unit": "L",
+    "qty": 0.5,
+    "in_total": true,
+    "groupe": "cremerie",
+    "estime": true,
+    "mois": "2026-08",
+    "ch": 5.35,
+    "fr_eur": 2.98,
+    "fr_chf": 2.79,
+    "ecart": 91.6,
+    "sources": {
+     "ofag": [
+      "Huile de tournesol, non bio, import"
+     ],
+     "insee": [],
+     "fr_indexe": {
+      "insee_arrete": "000442493",
+      "base_mois": "2019-12",
+      "indice": "011812322",
+      "facteur": 1
+     },
+     "insee_titres": [
+      "Prix moyens mensuels de vente au détail en métropole - Huile de tournesol (1 litre) - Série arrêtée"
      ]
     }
    }
@@ -397,6 +592,8 @@
    "unit": "kg",
    "qty": 0.3,
    "ch": 74.81,
+   "ch_migros": 78.75,
+   "ajustement_discount": 0.05,
    "ch_n": 10,
    "ch_produits": [
     "M-Classic M-Classic · Entrecôte de bœuf  — 44.50/kg",
@@ -412,9 +609,7 @@
    "fr_mois": "2026-09",
    "fr_chf": 30.67,
    "insee": "000442435",
-   "ecart": 143.9,
-   "ch_migros": 78.75,
-   "ajustement_discount": 0.05
+   "ecart": 143.9
   },
   {
    "id": "veau",
@@ -422,6 +617,8 @@
    "unit": "kg",
    "qty": 0.2,
    "ch": 54.86,
+   "ch_migros": 57.75,
+   "ajustement_discount": 0.05,
    "ch_n": 2,
    "ch_produits": [
     "Migros Migros · Escalope à la chair à saucisse de veau · De la région — 29.50/kg",
@@ -432,8 +629,7 @@
    "fr_chf": 27.88,
    "insee": "000442441",
    "ecart": 96.8,
-   "ch_migros": 57.75,
-   "ajustement_discount": 0.05
+   "reprise": "2026-10-25"
   },
   {
    "id": "porc",
@@ -441,6 +637,8 @@
    "unit": "kg",
    "qty": 0.4,
    "ch": 18.33,
+   "ch_migros": 19.29,
+   "ajustement_discount": 0.05,
    "ch_n": 15,
    "ch_produits": [
     "M-Budget M-Budget · saucisse à rôtir de porc — 10.13/kg",
@@ -456,9 +654,7 @@
    "fr_mois": "2026-09",
    "fr_chf": 13.18,
    "insee": "000442448",
-   "ecart": 39.1,
-   "ch_migros": 19.29,
-   "ajustement_discount": 0.05
+   "ecart": 39.1
   },
   {
    "id": "jambon",
@@ -466,6 +662,8 @@
    "unit": "kg",
    "qty": 0.2,
    "ch": 37.33,
+   "ch_migros": 39.29,
+   "ajustement_discount": 0.05,
    "ch_n": 7,
    "ch_produits": [
     "Da Emilio Da Emilio · Pinsa · au jambon cuit — 18.06/kg",
@@ -480,9 +678,7 @@
    "fr_mois": "2026-09",
    "fr_chf": 18.44,
    "insee": "000849397",
-   "ecart": 102.4,
-   "ch_migros": 39.29,
-   "ajustement_discount": 0.05
+   "ecart": 102.4
   }
  ],
  "marques": [
@@ -499,6 +695,8 @@
    "fr_produit": "Pâte à tartiner Nutella noisettes et cacao - 750g 750g",
    "fr_prix_eur": 5.36,
    "fr_depuis": "2025-10-25",
+   "fenetre_mois": 12,
+   "fr_n_12m": 9,
    "ean_fr": [
     "3017620421006"
    ],
@@ -518,6 +716,8 @@
    "fr_produit": "Coca-Cola goût original 1250ml",
    "fr_prix_eur": 2.15,
    "fr_depuis": "2025-10-25",
+   "fenetre_mois": 12,
+   "fr_n_12m": 16,
    "ean_fr": [
     "5449000267412"
    ],
@@ -537,6 +737,8 @@
    "fr_produit": "25 cl Red Bull - Energy Drink 250ml",
    "fr_prix_eur": 1.13,
    "fr_depuis": "2025-10-25",
+   "fenetre_mois": 12,
+   "fr_n_12m": 21,
    "ean_fr": [
     "9002490205973"
    ],
@@ -556,6 +758,8 @@
    "fr_produit": "Pringles Original 175g",
    "fr_prix_eur": 1.915,
    "fr_depuis": "2025-10-25",
+   "fenetre_mois": 12,
+   "fr_n_12m": 16,
    "ean_fr": [
     "5053990156009"
    ],
@@ -575,6 +779,8 @@
    "fr_produit": "Barre Chocolatée Kinder Bueno Chocolat au Lait 129g",
    "fr_prix_eur": 2.65,
    "fr_depuis": "2025-10-25",
+   "fenetre_mois": 12,
+   "fr_n_12m": 25,
    "ean_fr": [
     "8000500025857"
    ],
@@ -594,11 +800,97 @@
    "fr_produit": "Cioccolato Fondente 78% 100g",
    "fr_prix_eur": 3.09,
    "fr_depuis": "2025-10-25",
+   "fenetre_mois": 12,
+   "fr_n_12m": 7,
    "ean_fr": [
     "3046920010047"
    ],
    "fr_unit_chf": 28.511,
    "ecart": 68.4
+  },
+  {
+   "id": "oreo",
+   "label": "Oreo Original",
+   "unit": "kg",
+   "qty": 0.154,
+   "ch_unit": 19.1558,
+   "ch_produit": "Oreo Oreo · Original (0.154 kg) à 2.95",
+   "ch_url": "https://www.migros.ch/fr/product/110561100000",
+   "fr_unit_eur": 9.708,
+   "fr_n": 14,
+   "fr_produit": "OREO ORIGINAL 154g",
+   "fr_prix_eur": 1.495,
+   "fr_depuis": "2025-10-25",
+   "fenetre_mois": 12,
+   "fr_n_12m": 14,
+   "ean_fr": [
+    "7622300336738"
+   ],
+   "fr_unit_chf": 8.958,
+   "ecart": 113.8
+  },
+  {
+   "id": "babybel",
+   "label": "Mini Babybel (12 × 22 g)",
+   "unit": "kg",
+   "qty": 0.264,
+   "ch_unit": 21.5909,
+   "ch_produit": "Mini Babybel Mini Babybel · Fromage à pâte mi-dure (0.264 kg) à 5.70",
+   "ch_url": "https://www.migros.ch/fr/product/212430300000",
+   "fr_unit_eur": 18.239,
+   "fr_n": 2,
+   "fr_produit": "Babybel 264g",
+   "fr_prix_eur": 4.815,
+   "fr_depuis": "2025-10-25",
+   "fenetre_mois": 12,
+   "fr_n_12m": 2,
+   "ean_fr": [
+    "3073781178005"
+   ],
+   "fr_unit_chf": 16.829,
+   "ecart": 28.3
+  },
+  {
+   "id": "evian",
+   "label": "Evian (6 × 1,5 L)",
+   "unit": "L",
+   "qty": 3.0,
+   "ch_unit": 0.7333,
+   "ch_produit": "Evian Evian · Eau minérale (9 L) à 6.60",
+   "ch_url": "https://www.migros.ch/fr/product/120804900000",
+   "fr_unit_eur": 0.412,
+   "fr_n": 9,
+   "fr_produit": "Evian 9000ml",
+   "fr_prix_eur": 3.71,
+   "fr_depuis": "2025-10-25",
+   "fenetre_mois": 12,
+   "fr_n_12m": 9,
+   "ean_fr": [
+    "3068320120263"
+   ],
+   "fr_unit_chf": 0.38,
+   "ecart": 93.0
+  },
+  {
+   "id": "pesto",
+   "label": "Barilla Pesto alla Genovese",
+   "unit": "kg",
+   "qty": 0.19,
+   "ch_unit": 20.5263,
+   "ch_produit": "Barilla Barilla · Pesto · Genovese (0.19 kg) à 3.90",
+   "ch_url": "https://www.migros.ch/fr/product/153202000000",
+   "fr_unit_eur": 13.395,
+   "fr_n": 14,
+   "fr_produit": "Barilla PESTO alla GENOVESE 190g",
+   "fr_prix_eur": 2.545,
+   "fr_depuis": "2026-04-25",
+   "fenetre_mois": 6,
+   "fr_n_12m": 18,
+   "ean_fr": [
+    "8076809513753"
+   ],
+   "fr_unit_chf": 12.36,
+   "ecart": 66.1
   }
  ],
  "carburant": {
@@ -150239,12 +150531,18 @@
   "   poivrons     OFAG  248 mois (2006-02→2026-09) | INSEE   88 mois (2019-01→2026-09)",
   "   pdt          OFAG  248 mois (2006-02→2026-09) | INSEE  340 mois (1998-01→2026-09)",
   "   pain         OFAG   69 mois (2020-01→2026-09) | INSEE  412 mois (1992-01→2026-09)",
-  "   243 mois de série, dernier : {'m': '2026-09', 'fx': 0.94299, 'n': 14, 'ch': 33.26, 'fr': 36.01, 'ecart': -7.6, 'cats': {'Fruits': -12.0, 'Légumes': -4.5}}",
+  "   lait         OFAG  321 mois (2000-01→2026-09) | INSEE   81 mois (2020-01→2026-09)",
+  "   beurre       OFAG  321 mois (2000-01→2026-09) | INSEE   81 mois (2020-01→2026-09)",
+  "   emmental     OFAG  265 mois (2004-09→2026-09) | INSEE   81 mois (2020-01→2026-09)",
+  "   yaourt       OFAG  265 mois (2004-09→2026-09) | INSEE   81 mois (2020-01→2026-09)",
+  "   huile        OFAG   74 mois (2020-01→2026-08) | INSEE   81 mois (2020-01→2026-09)",
+  "   fruits et légumes : 243 mois de série, dernier : {'m': '2026-09', 'fx': 0.94299, 'n': 14, 'ch': 33.26, 'fr': 36.01, 'ecart': -7.6, 'cats': {'Fruits': -12.0, 'Légumes': -4.5}}",
+  "   crèmerie : 81 mois, dernier : {'m': '2026-09', 'fx': 0.94299, 'n': 4, 'ch': 18.11, 'fr': 10.87, 'ecart': 66.6, 'cats': {'Crèmerie': 66.6}}",
   "== Viande (Migros / INSEE)",
-  "   viande entrecote  CH 78.75 (10 produits) | FR 32.52 € (2026-09)",
-  "   viande veau       CH 57.75 (2 produits) | FR 29.57 € (2026-09)",
-  "   viande porc       CH 19.29 (15 produits) | FR 13.98 € (2026-09)",
-  "   viande jambon     CH 39.29 (7 produits) | FR 19.56 € (2026-09)",
+  "   viande entrecote  CH 74.81 (10 produits) | FR 32.52 € (2026-09)",
+  "   viande veau       CH 54.86 (2 produits) | FR 29.57 € (2026-09)",
+  "   viande porc       CH 18.33 (15 produits) | FR 13.98 € (2026-09)",
+  "   viande jambon     CH 37.33 (7 produits) | FR 19.56 € (2026-09)",
   "== Marques (Migros / Open Prices)",
   "   marque nutella  CH 7.3333/kg (Nutella Nutella · Pâte à tartiner (0.75 kg) à 5.50) | FR 7.147 €/kg (n=9)",
   "   marque coca     CH 1.6/L (Coca-Cola Coca-Cola · Classic  (1.5 L) à 2.40) | FR 1.72 €/L (n=16)",
@@ -150252,6 +150550,10 @@
   "   marque pringles CH 17.8378/kg (Pringles Pringles · Original (0.185 kg) à 3.30) | FR 10.943 €/kg (n=16)",
   "   marque kinder   CH 21.7054/kg (Kinder Kinder · Bueno (0.129 kg) à 2.80) | FR 20.543 €/kg (n=25)",
   "   marque lindt    CH 48.0/kg (Excellence Lindt Excellence · Noir · 70% cacao (0.1 kg) à 4.80) | FR 30.9 €/kg (n=7)",
+  "   marque oreo     CH 19.1558/kg (Oreo Oreo · Original (0.154 kg) à 2.95) | FR 9.708 €/kg (n=14)",
+  "   marque babybel  CH 21.5909/kg (Mini Babybel Mini Babybel · Fromage à pâte mi-dure (0.264 kg) à 5.70) | FR 18.239 €/kg (n=2)",
+  "   marque evian    CH 0.7333/L (Evian Evian · Eau minérale (9 L) à 6.60) | FR 0.412 €/L (n=9)",
+  "   marque pesto    CH 20.5263/kg (Barilla Barilla · Pesto · Genovese (0.19 kg) à 3.90) | FR 13.395 €/kg (n=14)",
   "== Carburant",
   "   carburant annemasse   11 stations, moyenne {'sp95': 2.139, 'diesel': 2.386}",
   "   carburant stjulien    1 stations, moyenne {'sp95': 2.225, 'diesel': 2.398}",
@@ -150265,7 +150567,7 @@
   "   carburant morteau     6 stations, moyenne {'sp95': 2.239, 'diesel': 2.419}",
   "   carburant delle       5 stations, moyenne {'sp95': 2.223, 'diesel': 2.425}",
   "   carburant stlouis     8 stations, moyenne {'sp95': 2.32, 'diesel': 2.445}",
-  "   carburant CH (OFDF) diesel {'ch_chf': 2.19, 'fr_eur': 2.2} sp95 {'ch_chf': 2.48, 'fr_eur': 2.4} (20 octobre 2026)",
+  "   carburant CH (OFDF) diesel {'ch_chf': 2.48, 'fr_eur': 2.4} sp95 {'ch_chf': 2.19, 'fr_eur': 2.2} (20 octobre 2026)",
   "== Magasins (Que Choisir)",
   "   panel national : 168 magasins, médiane 367.5 €",
   "   département 74 : 85 magasins listés",
@@ -150289,7 +150591,15 @@
   "   stlouis     4 magasins, indice médian 0.9574",
   "== Trajets",
   "   4141 localités suisses (swisstopo)",
-  "   trajets : 4141 localités à calculer sur 4141",
-  "   trajets disponibles pour 4141 localités"
- ]
+  "   trajets : 0 localités à calculer sur 4141",
+  "   trajets disponibles pour 4141 localités",
+  "== Contrôles",
+  "   reprise : Viande veau : prix suisse du 2026-10-25 repris (2 produits seulement)."
+ ],
+ "controles": {
+  "alertes": [],
+  "reprises": [
+   "Viande veau : prix suisse du 2026-10-25 repris (2 produits seulement)."
+  ]
+ }
 }

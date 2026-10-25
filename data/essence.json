@@ -1,0 +1,774 @@
+{
+ "genere_le": "2026-10-25T22:10+00:00",
+ "fx": {
+  "date": "2026-10-23",
+  "eur_chf": 0.9227
+ },
+ "zones": {
+  "annemasse": {
+   "nom": "Annemasse",
+   "n": 11,
+   "moyenne": {
+    "sp95": 2.139,
+    "diesel": 2.386
+   },
+   "min": {
+    "sp95": 1.99,
+    "diesel": 2.25
+   },
+   "moins_chers": {
+    "sp95": [
+     {
+      "adresse": "132 Route de Bonneville",
+      "ville": "Vétraz-Monthoux",
+      "prix": 1.99,
+      "maj": "2026-10-23T16:19:32+00:00"
+     },
+     {
+      "adresse": "17 rue des Teppes",
+      "ville": "Vétraz-Monthoux",
+      "prix": 2.075,
+      "maj": "2026-10-23T09:53:13+00:00"
+     },
+     {
+      "adresse": "14 rue de la Résistance",
+      "ville": "Annemasse",
+      "prix": 2.099,
+      "maj": "2026-10-23T09:43:18+00:00"
+     }
+    ],
+    "diesel": [
+     {
+      "adresse": "132 Route de Bonneville",
+      "ville": "Vétraz-Monthoux",
+      "prix": 2.25,
+      "maj": "2026-10-23T16:19:32+00:00"
+     },
+     {
+      "adresse": "Rue Albert Hénon",
+      "ville": "Ville-la-Grand",
+      "prix": 2.389,
+      "maj": "2026-10-25T01:16:00+00:00"
+     },
+     {
+      "adresse": "17 rue des Teppes",
+      "ville": "Vétraz-Monthoux",
+      "prix": 2.389,
+      "maj": "2026-10-23T09:53:13+00:00"
+     }
+    ]
+   },
+   "moyenne_chf": {
+    "sp95": 1.974,
+    "diesel": 2.202
+   },
+   "min_chf": {
+    "sp95": 1.836,
+    "diesel": 2.076
+   }
+  },
+  "stjulien": {
+   "nom": "Saint-Julien-en-Genevois",
+   "n": 1,
+   "moyenne": {
+    "sp95": 2.225,
+    "diesel": 2.398
+   },
+   "min": {
+    "sp95": 2.225,
+    "diesel": 2.398
+   },
+   "moins_chers": {
+    "sp95": [
+     {
+      "adresse": "Route des Vignes",
+      "ville": "Saint-Julien-en-Genevois",
+      "prix": 2.225,
+      "maj": "2026-10-23T16:25:17+00:00"
+     }
+    ],
+    "diesel": [
+     {
+      "adresse": "Route des Vignes",
+      "ville": "Saint-Julien-en-Genevois",
+      "prix": 2.398,
+      "maj": "2026-10-23T16:25:17+00:00"
+     }
+    ]
+   },
+   "moyenne_chf": {
+    "sp95": 2.053,
+    "diesel": 2.213
+   },
+   "min_chf": {
+    "sp95": 2.053,
+    "diesel": 2.213
+   }
+  },
+  "genisferney": {
+   "nom": "Saint-Genis / Ferney",
+   "n": 7,
+   "moyenne": {
+    "sp95": 2.13,
+    "diesel": 2.395
+   },
+   "min": {
+    "sp95": 2.079,
+    "diesel": 2.345
+   },
+   "moins_chers": {
+    "sp95": [
+     {
+      "adresse": "148 Rue des Chalets",
+      "ville": "Saint-Genis-Pouilly",
+      "prix": 2.079,
+      "maj": "2026-10-23T08:36:45+00:00"
+     },
+     {
+      "adresse": "Route de Meyrin",
+      "ville": "Ferney-Voltaire",
+      "prix": 2.098,
+      "maj": "2026-10-23T08:31:40+00:00"
+     },
+     {
+      "adresse": "route de Bellegarde",
+      "ville": "Thoiry",
+      "prix": 2.099,
+      "maj": "2026-10-22T20:19:08+00:00"
+     }
+    ],
+    "diesel": [
+     {
+      "adresse": "148 Rue des Chalets",
+      "ville": "Saint-Genis-Pouilly",
+      "prix": 2.345,
+      "maj": "2026-10-23T08:36:45+00:00"
+     },
+     {
+      "adresse": "RN5",
+      "ville": "Ségny",
+      "prix": 2.36,
+      "maj": "2026-10-23T13:10:00+00:00"
+     },
+     {
+      "adresse": "Route de Meyrin",
+      "ville": "Ferney-Voltaire",
+      "prix": 2.36,
+      "maj": "2026-10-23T08:31:40+00:00"
+     }
+    ]
+   },
+   "moyenne_chf": {
+    "sp95": 1.965,
+    "diesel": 2.21
+   },
+   "min_chf": {
+    "sp95": 1.918,
+    "diesel": 2.164
+   }
+  },
+  "divonnegex": {
+   "nom": "Divonne / Gex",
+   "n": 5,
+   "moyenne": {
+    "sp95": 2.156,
+    "diesel": 2.395
+   },
+   "min": {
+    "sp95": 2.099,
+    "diesel": 2.359
+   },
+   "moins_chers": {
+    "sp95": [
+     {
+      "adresse": "Route de Divonne les Bains",
+      "ville": "Gex",
+      "prix": 2.099,
+      "maj": "2026-10-23T16:02:59+00:00"
+     },
+     {
+      "adresse": "RN5",
+      "ville": "Ségny",
+      "prix": 2.105,
+      "maj": "2026-10-23T13:10:00+00:00"
+     },
+     {
+      "adresse": "156 Av. des Tilleuls",
+      "ville": "Gex",
+      "prix": 2.16,
+      "maj": "2026-10-21T07:08:46+00:00"
+     }
+    ],
+    "diesel": [
+     {
+      "adresse": "Route de Divonne les Bains",
+      "ville": "Gex",
+      "prix": 2.359,
+      "maj": "2026-10-23T16:02:59+00:00"
+     },
+     {
+      "adresse": "RN5",
+      "ville": "Ségny",
+      "prix": 2.36,
+      "maj": "2026-10-23T13:10:00+00:00"
+     },
+     {
+      "adresse": "156 Av. des Tilleuls",
+      "ville": "Gex",
+      "prix": 2.39,
+      "maj": "2026-10-21T07:08:46+00:00"
+     }
+    ]
+   },
+   "moyenne_chf": {
+    "sp95": 1.989,
+    "diesel": 2.21
+   },
+   "min_chf": {
+    "sp95": 1.937,
+    "diesel": 2.177
+   }
+  },
+  "thonon": {
+   "nom": "Thonon-les-Bains",
+   "n": 11,
+   "moyenne": {
+    "sp95": 2.145,
+    "diesel": 2.405
+   },
+   "min": {
+    "sp95": 2.036,
+    "diesel": 2.363
+   },
+   "moins_chers": {
+    "sp95": [
+     {
+      "adresse": "7 RUE AMEDEE DE FORAS",
+      "ville": "Thonon-les-Bains",
+      "prix": 2.036,
+      "maj": "2026-10-24T08:39:09+00:00"
+     },
+     {
+      "adresse": "RUE DE CARTHERAY",
+      "ville": "Publier",
+      "prix": 2.039,
+      "maj": "2026-10-22T14:05:58+00:00"
+     },
+     {
+      "adresse": "54 Avenue d'Évian",
+      "ville": "Thonon-les-Bains",
+      "prix": 2.063,
+      "maj": "2026-10-23T11:20:00+00:00"
+     }
+    ],
+    "diesel": [
+     {
+      "adresse": "7 RUE AMEDEE DE FORAS",
+      "ville": "Thonon-les-Bains",
+      "prix": 2.363,
+      "maj": "2026-10-24T08:39:09+00:00"
+     },
+     {
+      "adresse": "RUE DE CARTHERAY",
+      "ville": "Publier",
+      "prix": 2.369,
+      "maj": "2026-10-22T14:05:58+00:00"
+     },
+     {
+      "adresse": "RTE DE GENEVE",
+      "ville": "Anthy-sur-Léman",
+      "prix": 2.379,
+      "maj": "2026-10-23T16:00:00+00:00"
+     }
+    ]
+   },
+   "moyenne_chf": {
+    "sp95": 1.979,
+    "diesel": 2.219
+   },
+   "min_chf": {
+    "sp95": 1.879,
+    "diesel": 2.18
+   }
+  },
+  "evian": {
+   "nom": "Évian-les-Bains",
+   "n": 7,
+   "moyenne": {
+    "sp95": 2.088,
+    "diesel": 2.381
+   },
+   "min": {
+    "sp95": 2.036,
+    "diesel": 2.359
+   },
+   "moins_chers": {
+    "sp95": [
+     {
+      "adresse": "7 RUE AMEDEE DE FORAS",
+      "ville": "Thonon-les-Bains",
+      "prix": 2.036,
+      "maj": "2026-10-24T08:39:09+00:00"
+     },
+     {
+      "adresse": "RUE DE CARTHERAY",
+      "ville": "Publier",
+      "prix": 2.039,
+      "maj": "2026-10-22T14:05:58+00:00"
+     },
+     {
+      "adresse": "54 Avenue d'Évian",
+      "ville": "Thonon-les-Bains",
+      "prix": 2.063,
+      "maj": "2026-10-23T11:20:00+00:00"
+     }
+    ],
+    "diesel": [
+     {
+      "adresse": "9 AVENUE ANNA DE NOUAILLES",
+      "ville": "Évian-les-Bains",
+      "prix": 2.359,
+      "maj": "2026-10-25T06:00:00+00:00"
+     },
+     {
+      "adresse": "7 RUE AMEDEE DE FORAS",
+      "ville": "Thonon-les-Bains",
+      "prix": 2.363,
+      "maj": "2026-10-24T08:39:09+00:00"
+     },
+     {
+      "adresse": "RUE DE CARTHERAY",
+      "ville": "Publier",
+      "prix": 2.369,
+      "maj": "2026-10-22T14:05:58+00:00"
+     }
+    ]
+   },
+   "moyenne_chf": {
+    "sp95": 1.927,
+    "diesel": 2.197
+   },
+   "min_chf": {
+    "sp95": 1.879,
+    "diesel": 2.177
+   }
+  },
+  "lesrousses": {
+   "nom": "Les Rousses",
+   "n": 6,
+   "moyenne": {
+    "sp95": 2.261,
+    "diesel": 2.414
+   },
+   "min": {
+    "sp95": 2.169,
+    "diesel": 2.369
+   },
+   "moins_chers": {
+    "sp95": [
+     {
+      "adresse": "15 route Prémanon",
+      "ville": "Les Rousses",
+      "prix": 2.169,
+      "maj": "2026-10-22T10:45:28+00:00"
+     },
+     {
+      "adresse": "ROUTE DU GENIE",
+      "ville": "Les Rousses",
+      "prix": 2.199,
+      "maj": "2026-10-23T08:35:24+00:00"
+     },
+     {
+      "adresse": "1961 Rue de Franche-Comté",
+      "ville": "Bois-d'Amont",
+      "prix": 2.299,
+      "maj": "2026-10-08T07:58:16+00:00"
+     }
+    ],
+    "diesel": [
+     {
+      "adresse": "15 route Prémanon",
+      "ville": "Les Rousses",
+      "prix": 2.369,
+      "maj": "2026-10-22T10:45:28+00:00"
+     },
+     {
+      "adresse": "ROUTE DU GENIE",
+      "ville": "Les Rousses",
+      "prix": 2.379,
+      "maj": "2026-10-23T08:35:24+00:00"
+     },
+     {
+      "adresse": "1140 route blanche",
+      "ville": "Les Rousses",
+      "prix": 2.389,
+      "maj": "2026-10-13T18:58:21+00:00"
+     }
+    ]
+   },
+   "moyenne_chf": {
+    "sp95": 2.086,
+    "diesel": 2.227
+   },
+   "min_chf": {
+    "sp95": 2.001,
+    "diesel": 2.186
+   }
+  },
+  "jougne": {
+   "nom": "Jougne",
+   "n": 1,
+   "moyenne": {
+    "sp95": 2.178,
+    "diesel": 2.365
+   },
+   "min": {
+    "sp95": 2.178,
+    "diesel": 2.365
+   },
+   "moins_chers": {
+    "sp95": [
+     {
+      "adresse": "52, route de Lausanne",
+      "ville": "Les Hôpitaux-Neufs",
+      "prix": 2.178,
+      "maj": "2026-10-21T12:54:33+00:00"
+     }
+    ],
+    "diesel": [
+     {
+      "adresse": "52, route de Lausanne",
+      "ville": "Les Hôpitaux-Neufs",
+      "prix": 2.365,
+      "maj": "2026-10-21T12:54:33+00:00"
+     }
+    ]
+   },
+   "moyenne_chf": {
+    "sp95": 2.01,
+    "diesel": 2.182
+   },
+   "min_chf": {
+    "sp95": 2.01,
+    "diesel": 2.182
+   }
+  },
+  "pontarlier": {
+   "nom": "Pontarlier",
+   "n": 7,
+   "moyenne": {
+    "sp95": 2.235,
+    "diesel": 2.408
+   },
+   "min": {
+    "sp95": 2.199,
+    "diesel": 2.379
+   },
+   "moins_chers": {
+    "sp95": [
+     {
+      "adresse": "Rue de Besançon",
+      "ville": "Doubs",
+      "prix": 2.199,
+      "maj": "2026-10-16T19:00:00+00:00"
+     },
+     {
+      "adresse": "66 RUE DES SALINS",
+      "ville": "Pontarlier",
+      "prix": 2.199,
+      "maj": "2026-10-24T20:15:00+00:00"
+     },
+     {
+      "adresse": "1 RUE DES MERAILLIS",
+      "ville": "Les Fourgs",
+      "prix": 2.219,
+      "maj": "2026-10-22T05:23:30+00:00"
+     }
+    ],
+    "diesel": [
+     {
+      "adresse": "Rue de Besançon",
+      "ville": "Doubs",
+      "prix": 2.379,
+      "maj": "2026-10-16T19:00:00+00:00"
+     },
+     {
+      "adresse": "route de dijon",
+      "ville": "Houtaud",
+      "prix": 2.379,
+      "maj": "2026-10-24T20:00:00+00:00"
+     },
+     {
+      "adresse": "66 RUE DES SALINS",
+      "ville": "Pontarlier",
+      "prix": 2.399,
+      "maj": "2026-10-24T20:15:00+00:00"
+     }
+    ]
+   },
+   "moyenne_chf": {
+    "sp95": 2.062,
+    "diesel": 2.222
+   },
+   "min_chf": {
+    "sp95": 2.029,
+    "diesel": 2.195
+   }
+  },
+  "morteau": {
+   "nom": "Morteau",
+   "n": 6,
+   "moyenne": {
+    "sp95": 2.239,
+    "diesel": 2.419
+   },
+   "min": {
+    "sp95": 2.149,
+    "diesel": 2.399
+   },
+   "moins_chers": {
+    "sp95": [
+     {
+      "adresse": "4 rue du Clos Jeune",
+      "ville": "Morteau",
+      "prix": 2.149,
+      "maj": "2026-10-24T20:00:00+00:00"
+     },
+     {
+      "adresse": "Les Terres Rouges",
+      "ville": "Villers-le-Lac",
+      "prix": 2.149,
+      "maj": "2026-10-24T19:30:00+00:00"
+     },
+     {
+      "adresse": "ROUTE DU PRE DES COMBES",
+      "ville": "Morteau",
+      "prix": 2.229,
+      "maj": "2026-10-24T19:00:00+00:00"
+     }
+    ],
+    "diesel": [
+     {
+      "adresse": "4 rue du Clos Jeune",
+      "ville": "Morteau",
+      "prix": 2.399,
+      "maj": "2026-10-24T20:00:00+00:00"
+     },
+     {
+      "adresse": "Les Terres Rouges",
+      "ville": "Villers-le-Lac",
+      "prix": 2.399,
+      "maj": "2026-10-24T19:30:00+00:00"
+     },
+     {
+      "adresse": "ROUTE DU PRE DES COMBES",
+      "ville": "Morteau",
+      "prix": 2.399,
+      "maj": "2026-10-24T19:00:00+00:00"
+     }
+    ]
+   },
+   "moyenne_chf": {
+    "sp95": 2.066,
+    "diesel": 2.232
+   },
+   "min_chf": {
+    "sp95": 1.983,
+    "diesel": 2.214
+   }
+  },
+  "delle": {
+   "nom": "Delle",
+   "n": 5,
+   "moyenne": {
+    "sp95": 2.223,
+    "diesel": 2.425
+   },
+   "min": {
+    "sp95": 2.054,
+    "diesel": 2.342
+   },
+   "moins_chers": {
+    "sp95": [
+     {
+      "adresse": "37 FAUBOURG DE BELFORT",
+      "ville": "Delle",
+      "prix": 2.054,
+      "maj": "2026-10-24T08:30:00+00:00"
+     },
+     {
+      "adresse": "COMBE DU MAGNY",
+      "ville": "Dampierre-les-Bois",
+      "prix": 2.114,
+      "maj": "2026-10-20T11:24:56+00:00"
+     },
+     {
+      "adresse": "Rue Alfred Péchin",
+      "ville": "Beaucourt",
+      "prix": 2.257,
+      "maj": "2026-10-25T09:11:06+00:00"
+     }
+    ],
+    "diesel": [
+     {
+      "adresse": "COMBE DU MAGNY",
+      "ville": "Dampierre-les-Bois",
+      "prix": 2.342,
+      "maj": "2026-10-20T11:24:56+00:00"
+     },
+     {
+      "adresse": "37 FAUBOURG DE BELFORT",
+      "ville": "Delle",
+      "prix": 2.38,
+      "maj": "2026-10-24T08:30:00+00:00"
+     },
+     {
+      "adresse": "37 Rue Alfred Péchin",
+      "ville": "Beaucourt",
+      "prix": 2.45,
+      "maj": "2026-10-13T08:51:12+00:00"
+     }
+    ]
+   },
+   "moyenne_chf": {
+    "sp95": 2.051,
+    "diesel": 2.238
+   },
+   "min_chf": {
+    "sp95": 1.895,
+    "diesel": 2.161
+   }
+  },
+  "stlouis": {
+   "nom": "Saint-Louis",
+   "n": 8,
+   "moyenne": {
+    "sp95": 2.32,
+    "diesel": 2.445
+   },
+   "min": {
+    "sp95": 2.278,
+    "diesel": 2.25
+   },
+   "moins_chers": {
+    "sp95": [
+     {
+      "adresse": "17 Route de St Louis",
+      "ville": "Huningue",
+      "prix": 2.278,
+      "maj": "2026-10-23T10:29:30+00:00"
+     },
+     {
+      "adresse": "2 RUE DU RHIN",
+      "ville": "Huningue",
+      "prix": 2.278,
+      "maj": "2026-10-23T17:04:03+00:00"
+     },
+     {
+      "adresse": "Carrefour de l'Europe",
+      "ville": "Bartenheim",
+      "prix": 2.279,
+      "maj": "2026-10-23T08:09:17+00:00"
+     }
+    ],
+    "diesel": [
+     {
+      "adresse": "122 Rue de Mulhouse",
+      "ville": "Saint-Louis",
+      "prix": 2.25,
+      "maj": "2026-10-21T08:41:14+00:00"
+     },
+     {
+      "adresse": "1 Rue de Seville",
+      "ville": "Saint-Louis",
+      "prix": 2.441,
+      "maj": "2026-10-25T01:15:00+00:00"
+     },
+     {
+      "adresse": "2 RUE DU RHIN",
+      "ville": "Huningue",
+      "prix": 2.442,
+      "maj": "2026-10-23T17:04:03+00:00"
+     }
+    ]
+   },
+   "moyenne_chf": {
+    "sp95": 2.141,
+    "diesel": 2.256
+   },
+   "min_chf": {
+    "sp95": 2.102,
+    "diesel": 2.076
+   }
+  }
+ },
+ "ofdf": {
+  "source": "https://www.bazg.admin.ch/dam/fr/sd-web/GEosTpUlCewh/Monatstabelle%20T%204.4f.02.pdf",
+  "date_texte": "20 octobre 2026",
+  "zones": {
+   "bale": {
+    "sp95": {
+     "ch_chf": 2.16,
+     "etranger_eur": 2.179
+    },
+    "diesel": {
+     "ch_chf": 2.44,
+     "etranger_eur": 2.229
+    }
+   },
+   "kreuzlingen": {
+    "sp95": {
+     "ch_chf": 2.13,
+     "etranger_eur": 2.089
+    },
+    "diesel": {
+     "ch_chf": 2.41,
+     "etranger_eur": 2.219
+    }
+   },
+   "tessin": {
+    "sp95": {
+     "ch_chf": 2.04,
+     "etranger_eur": 1.989
+    },
+    "diesel": {
+     "ch_chf": 2.32,
+     "etranger_eur": 2.189
+    }
+   },
+   "geneve": {
+    "sp95": {
+     "ch_chf": 2.19,
+     "etranger_eur": 2.2
+    },
+    "diesel": {
+     "ch_chf": 2.48,
+     "etranger_eur": 2.4
+    }
+   },
+   "liechtenstein": {
+    "sp95": {
+     "ch_chf": 2.17,
+     "etranger_eur": 1.759
+    },
+    "diesel": {
+     "ch_chf": 2.46,
+     "etranger_eur": 2.099
+    }
+   }
+  },
+  "sp95": {
+   "ch_chf": 2.19,
+   "fr_eur": 2.2
+  },
+  "diesel": {
+   "ch_chf": 2.48,
+   "fr_eur": 2.4
+  }
+ },
+ "sources": {
+  "france": "Flux officiel des prix des carburants, data.economie.gouv.fr",
+  "suisse": "OFDF, tableau T 4.4 (prix à la colonne en zone frontière)",
+  "change": "BCE"
+ }
+}
