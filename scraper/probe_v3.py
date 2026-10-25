@@ -42,6 +42,14 @@ if "eurostat" in what:
             pick = [t for t in ts if t in ("2019-12", "2025", "2026", "2025-12")] + ts[-1:]
             print(f"   {geo} {c:8s} {labels.get(c,'')[:60]:60s} " + " ".join(f"{t}={series[t]}" for t in dict.fromkeys(pick)))
 
+if "eurostat2" in what:
+    r = requests.get(ES + "prc_hicp_midx", params={"geo": "FR", "unit": "I25", "coicop": ["CP01142", "CP01151", "CP01145", "CP01144", "CP01154"],
+                     "sinceTimePeriod": "2019-11", "format": "JSON", "lang": "en"}, headers=UA, timeout=180)
+    print("== midx I25", r.status_code)
+    j = r.json(); t = j["dimension"]["time"]["category"]["index"]; inv = {v: k for k, v in t.items()}
+    print("   périodes", min(t), max(t), len(t), "valeurs", len(j.get("value", {})))
+    print("   ", {inv[int(k) % len(t)]: v for k, v in list(j["value"].items())[:3]}, {inv[int(k) % len(t)]: v for k, v in list(j["value"].items())[-3:]})
+
 if "insee" in what:
     for fid in ["IPC-2015", "IPC-2025"]:
         r = requests.get(f"https://bdm.insee.fr/series/sdmx/data/{fid}", params={"lastNObservations": 1},
