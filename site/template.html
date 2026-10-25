@@ -43,6 +43,8 @@ button{font:inherit;color:inherit}
 .intro{text-align:center;padding-block:44px 28px;display:grid;gap:10px;justify-items:center}
 .intro h1{font-size:clamp(30px,4.6vw,50px);font-weight:600;line-height:1.08;max-width:20ch}
 .intro p{color:var(--ink-2);max-width:56ch;font-size:17px}
+.intro .upd{font-size:13px;color:var(--ink-2);border:1px solid var(--line);padding:4px 12px;border-radius:999px;margin-top:6px}
+.intro .upd::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--red);margin-right:8px;vertical-align:1px}
 
 /* formulaire */
 .tool{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:24px;align-items:stretch}
@@ -86,6 +88,7 @@ button{font:inherit;color:inherit}
 .chk input{accent-color:var(--red);width:17px;height:17px}
 .info{position:relative;display:inline-flex}
 .info > button{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--ink-2);background:none;font-size:12px;font-weight:700;line-height:1;cursor:pointer;color:var(--ink-2);padding:0}
+.info .pop b{display:block}
 .info .pop{position:absolute;right:-8px;top:28px;z-index:30;width:min(320px,82vw);background:var(--paper);border:1px solid var(--ink);padding:14px 16px;
   font-size:14px;font-weight:400;color:var(--ink);box-shadow:0 10px 30px rgba(0,0,0,.12);display:grid;gap:8px}
 .info .pop ul{margin:0;padding-left:18px;display:grid;gap:4px}
@@ -133,6 +136,7 @@ figcaption{font-size:13px;color:var(--muted)}
 .photo-tall img{aspect-ratio:4/3}
 .bw img{filter:grayscale(1) contrast(1.05)}
 .split{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:32px;align-items:start}
+.split.solo{grid-template-columns:minmax(0,1fr);max-width:720px;margin:0 auto;width:100%}
 @media (max-width:860px){.split{grid-template-columns:1fr}}
 
 .stores{display:grid}
@@ -189,6 +193,7 @@ footer{margin-top:80px;padding-top:16px;border-top:1px solid var(--ink);display:
   <div class="intro">
     <h1>Faire ses courses en France, ça vaut le coup ?</h1>
     <p>Remplissez les cases, puis appuyez sur « Calculer ». Le calcul tient compte des prix du magasin, du trajet et de la douane.</p>
+    <p class="upd" id="upd"></p>
   </div>
 
   <div class="tool">
@@ -212,8 +217,8 @@ footer{margin-top:80px;padding-top:16px;border-top:1px solid var(--ink);display:
       <div class="pair">
         <div class="field"><label for="conso">Essence (L/100 km)</label><input id="conso" type="number" min="0" step="0.1" value="7"></div>
         <div class="field"><label for="persons">Adultes dans la voiture
-          <span class="info"><button type="button" id="infoBtn" aria-expanded="false" aria-controls="infoPop" aria-label="Règles de la douane">?</button>
-            <span class="pop" id="infoPop" role="note" hidden><b>Douane suisse, par personne et par jour</b>
+          <span class="info"><button type="button" class="ibtn" aria-expanded="false" aria-label="Règles de la douane">?</button>
+            <span class="pop" role="note" hidden><b>Douane suisse, par personne et par jour</b>
               <ul><li>150 CHF d'achats en franchise. Au-delà, la TVA suisse (2,6 % sur l'alimentation) est due sur tout le montant.</li>
                   <li>1 kg de viande en franchise.</li>
                   <li>Alcool : 5 L sous 18 % vol., 1 L au-dessus.</li>
@@ -221,6 +226,10 @@ footer{margin-top:80px;padding-top:16px;border-top:1px solid var(--ink);display:
               <span class="muted">Plus il y a d'adultes, plus la franchise totale est grande.</span></span></span></label>
           <input id="persons" type="number" min="1" max="9" step="1" value="1"></div>
       </div>
+      <div class="field"><label for="vtime">Votre temps vaut (CHF/heure)
+          <span class="info"><button type="button" class="ibtn" aria-expanded="false" aria-label="Pourquoi compter son temps">?</button>
+            <span class="pop" role="note" hidden><b>Le coût d'opportunité</b>Une heure sur la route, c'est une heure que vous ne passez pas ailleurs : au travail, en famille, au repos. Indiquez ce que vaut une heure pour vous, par exemple votre salaire horaire. Laissez 0 pour ne pas en tenir compte.</span></span></label>
+        <input id="vtime" type="number" min="0" step="5" value="0"></div>
       <label class="chk"><input id="fill" type="checkbox"> Je fais aussi le plein en France</label>
       <div class="field off" id="tankField"><label for="tank">Litres d'essence</label><input id="tank" type="number" min="0" step="1" value="50" disabled></div>
       <div class="field"><label for="km">Distance aller (km)</label><input id="km" type="number" min="0" step="1" placeholder="calculée automatiquement"></div>
@@ -235,8 +244,8 @@ footer{margin-top:80px;padding-top:16px;border-top:1px solid var(--ink);display:
 
   <section id="magasins">
     <div class="head"><h2 id="magTitle">Les magasins</h2><p id="magLede">Choisissez une ville pour voir ses magasins, du moins cher au plus cher.</p></div>
-    <div class="split">
-      <figure class="photo-tall"><img src="img/jura.webp" alt="Le poste des douanes françaises à Jougne, en venant de Vallorbe" loading="lazy">
+    <div class="split" id="magSplit">
+      <figure class="photo-tall" id="magPhoto" hidden><img src="img/jura.webp" alt="Le poste des douanes françaises à Jougne, en venant de Vallorbe" loading="lazy">
         <figcaption>Douanes françaises à Jougne, en venant de Vallorbe. Photo : <span data-credit="jura"></span>.</figcaption></figure>
       <div><div class="stores" id="stores" role="radiogroup" aria-label="Magasin"></div><p class="muted" id="magSrc" style="margin-top:10px"></p></div>
     </div>
@@ -262,6 +271,18 @@ footer{margin-top:80px;padding-top:16px;border-top:1px solid var(--ink);display:
     </div>
   </section>
 
+  <section id="viande">
+    <div class="head"><h2>Viande : l'écart reste énorme</h2>
+      <p>Prix au kilo des morceaux courants. En France, moyenne nationale de l'INSEE ; en Suisse, médiane des produits équivalents vendus par Migros, hors bio et hors promotion. Tout est en francs suisses.</p></div>
+    <figure class="photo-wide bw"><img src="img/boucherie.webp" alt="Étal de boucherie parisien, années 1920" loading="lazy" style="object-position:50% 40%">
+      <figcaption>« La vie chère à Paris », étal de boucherie, années 1920. Photo : <span data-credit="boucherie"></span>.</figcaption></figure>
+    <div class="chart">
+      <div class="cap2"><span>Prix au kilo, en CHF</span><span class="legend"><span><span class="sw" style="background:var(--red)"></span>Suisse</span><span><span class="sw" style="background:var(--fr)"></span>France</span></span></div>
+      <div class="canvas" style="height:280px"><canvas id="meatC" aria-label="Prix de la viande au kilo en Suisse et en France"></canvas></div>
+    </div>
+    <div class="tbl"><table id="tMeat"><thead><tr><th>Morceau</th><th>Suisse, CHF/kg</th><th>France, CHF/kg</th><th>Écart</th></tr></thead><tbody></tbody></table></div>
+  </section>
+
   <section id="prix">
     <div class="head"><h2>Les prix produit par produit</h2><p>Tous les prix sont en francs suisses (CHF). Pour la France, le prix en euros est indiqué en petit, converti au taux de la BCE. Touchez une ligne de fruits et légumes pour voir son historique.</p></div>
     <div class="tables">
@@ -269,11 +290,6 @@ footer{margin-top:80px;padding-top:16px;border-top:1px solid var(--ink);display:
       <div class="chart">
         <div class="cap2"><span id="itemTitle">Historique</span><span class="legend"><span><span class="sw" style="background:var(--red)"></span>Suisse</span><span><span class="sw" style="background:var(--fr)"></span>France</span></span></div>
         <div class="canvas"><canvas id="item"></canvas></div>
-      </div>
-      <div class="split">
-        <figure class="photo-tall bw"><img src="img/boucherie.webp" alt="Étal de boucherie parisien, années 1920" loading="lazy">
-          <figcaption>« La vie chère à Paris », étal de boucherie, années 1920. Photo : <span data-credit="boucherie"></span>.</figcaption></figure>
-        <div class="tbl"><table id="tMeat"><caption>Viande : le poste où l'écart reste énorme</caption><thead><tr><th>Morceau</th><th>Suisse, CHF/kg</th><th>France, CHF/kg</th><th>Écart</th></tr></thead><tbody></tbody></table></div>
       </div>
       <div class="tbl"><table id="tBrand"><caption>Produits de marque identiques</caption><thead><tr><th>Produit</th><th>Suisse, CHF</th><th>France, CHF</th><th>Écart</th></tr></thead><tbody></tbody></table></div>
       <div class="tbl"><table id="tFuel"><caption>Carburant</caption><thead><tr><th>Où</th><th>Sans plomb, CHF/L</th><th>Diesel, CHF/L</th><th>Stations</th></tr></thead><tbody></tbody></table></div>
@@ -351,6 +367,8 @@ footer{margin-top:80px;padding-top:16px;border-top:1px solid var(--ink);display:
 
   const d = new Date(L.genere_le);
   $('#date').textContent = 'Prix de ' + d.toLocaleDateString('fr-CH',{month:'long',year:'numeric'}) + ' · 1 EUR = ' + nf(L.fx.jour.eur_chf,4) + ' CHF';
+  { const nx = new Date(d.getFullYear(), d.getMonth() + (d.getDate() >= 20 ? 1 : 0), 20);
+    $('#upd').textContent = 'Prix mis à jour automatiquement le 20 de chaque mois. Dernière mise à jour : ' + d.toLocaleDateString('fr-CH',{day:'numeric',month:'long',year:'numeric'}) + '. Prochaine : ' + nx.toLocaleDateString('fr-CH',{day:'numeric',month:'long'}) + '.'; }
   $('#foot').textContent = 'Méthode version ' + L.basket_version + ', données du ' + d.toLocaleDateString('fr-CH') + '.';
 
   // ---------- état (rien n'est présélectionné)
@@ -407,10 +425,10 @@ footer{margin-top:80px;padding-top:16px;border-top:1px solid var(--ink);display:
   $('#mix').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;st.mix=b.dataset.m;$('#mix').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));update();});
   $('#fill').addEventListener('change',e=>{ $('#tank').disabled=!e.target.checked; $('#tankField').classList.toggle('off',!e.target.checked); update(); });
   $('#km').addEventListener('input',()=>{st.kmManual=true;update();});
-  ['#spend','#conso','#persons','#tank'].forEach(s=>$(s).addEventListener('input',()=>{ if(s==='#spend') $('#slotSpend').classList.remove('bad'); update(); }));
-  const ib=$('#infoBtn'), ip=$('#infoPop');
-  ib.addEventListener('click',e=>{ e.preventDefault(); ip.hidden=!ip.hidden; ib.setAttribute('aria-expanded',String(!ip.hidden)); });
-  document.addEventListener('click',e=>{ if(!ip.hidden && !e.target.closest('.info')){ ip.hidden=true; ib.setAttribute('aria-expanded','false'); } });
+  ['#spend','#conso','#persons','#tank','#vtime'].forEach(s=>$(s).addEventListener('input',()=>{ if(s==='#spend') $('#slotSpend').classList.remove('bad'); update(); }));
+  document.querySelectorAll('.info').forEach(box=>{ const b=box.querySelector('.ibtn'), p=box.querySelector('.pop');
+    b.addEventListener('click',e=>{ e.preventDefault(); const open=p.hidden; document.querySelectorAll('.info .pop').forEach(x=>x.hidden=true); document.querySelectorAll('.info .ibtn').forEach(x=>x.setAttribute('aria-expanded','false')); p.hidden=!open; b.setAttribute('aria-expanded',String(open)); }); });
+  document.addEventListener('click',e=>{ if(!e.target.closest('.info')){ document.querySelectorAll('.info .pop').forEach(x=>x.hidden=true); document.querySelectorAll('.info .ibtn').forEach(x=>x.setAttribute('aria-expanded','false')); } });
 
   // ---------- validation et calcul
   function missing(){
@@ -437,7 +455,8 @@ footer{margin-top:80px;padding-top:16px;border-top:1px solid var(--ink);display:
     const z=fd(st.dest); let fuelG=0;
     if($('#fill').checked && z && z.moyenne_chf && z.moyenne_chf.sp95 && fch.sp95) fuelG=(+$('#tank').value||0)*(fch.sp95.ch_chf-z.moyenne_chf.sp95);
     const lim=150*persons, vat=fr>lim?fr*0.026:0;
-    return {spend,km,t,rate,fr,gross,road,fuelG,vat,lim,persons,w,net:gross-road+fuelG-vat};
+    const mins=t?2*t[1]:Math.round(2*km/60*60), vt=Math.max(0,+$('#vtime').value||0), timeC=vt*mins/60;
+    return {spend,km,t,rate,fr,gross,road,fuelG,vat,lim,persons,w,mins,vt,timeC,net:gross-road+fuelG-vat-timeC};
   }
   function idxNow(){
     const m=MAG[st.dest]; if(!m||!m.magasins.length) return {idx:1,name:null};
@@ -456,8 +475,10 @@ footer{margin-top:80px;padding-top:16px;border-top:1px solid var(--ink);display:
     let h=r('Vos courses en Suisse',nf(c.spend)+' CHF')+r('Les mêmes en France',nf(c.fr)+' CHF')+r('Différence',sg(c.gross))+r(`Essence aller-retour, ${2*c.km} km`,'+ '+nf(c.road)+' CHF');
     if($('#fill').checked) h+=r('Plein en France',sg(c.fuelG));
     if(c.vat) h+=r('TVA à la douane','+ '+nf(c.vat)+' CHF');
+    const hm=m=>m>=60?Math.floor(m/60)+' h '+String(m%60).padStart(2,'0'):m+' min';
+    h+= c.vt>0 ? r(`Votre temps, ${hm(c.mins)} de route`, '+ '+nf(c.timeC)+' CHF') : r(`Temps de route aller-retour`, hm(c.mins));
     h+=r(c.net>=0?'Vous économisez':'Vous perdez',nf(Math.abs(c.net))+' CHF','t');
-    const be=c.rate>0?(c.road-c.fuelG)/c.rate:null;
+    const be=c.rate>0?(c.road+c.timeC-c.fuelG)/c.rate:null;
     if(be&&be>0) h+=`<p class="muted">Rentable dès ${nf(be,0)} CHF de courses environ.</p>`;
     if(c.fr>c.lim) h+=`<p class="warn">Plus de ${c.lim} CHF d'achats : déclarez-les à la douane, la TVA suisse s'applique sur tout.</p>`;
     const avgKg=meat.length?meat.reduce((a,v)=>a+v.ch*v.qty,0)/meat.reduce((a,v)=>a+v.qty,0):40;
@@ -469,6 +490,7 @@ footer{margin-top:80px;padding-top:16px;border-top:1px solid var(--ink);display:
   function renderStores(){
     const m=MAG[st.dest], dd=DEST.find(x=>x.id===st.dest);
     $('#magTitle').textContent = dd ? 'Les magasins à '+dd.nom : 'Les magasins';
+    $('#magPhoto').hidden = !dd; $('#magSplit').classList.toggle('solo', !dd);
     $('#magLede').textContent = dd ? 'Du moins cher au plus cher. Choisissez un magasin pour refaire le calcul à son niveau de prix.' : 'Choisissez une ville dans le formulaire pour voir ses magasins, du moins cher au plus cher.';
     if(!dd){ $('#stores').innerHTML='<p class="muted" style="padding:14px 0;border-top:1px solid var(--ink)">Choisissez une ville dans le formulaire pour voir ses magasins.</p>'; $('#magSrc').textContent=''; return; }
     if(!m||!m.magasins.length){ $('#stores').innerHTML='<p class="muted" style="padding:14px 0;border-top:1px solid var(--ink)">Pas encore de prix par magasin pour cette ville : le calcul utilise la moyenne française.</p>'; $('#magSrc').textContent=''; return; }
@@ -541,6 +563,12 @@ footer{margin-top:80px;padding-top:16px;border-top:1px solid var(--ink);display:
     charts.push(new Chart($('#fx'),{type:'line',data:{labels:fl,datasets:[{data:H.fx.map(f=>f[1]),borderColor:css('--ink'),borderWidth:1.5,pointRadius:0,tension:.2}]},
       options:{maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{callbacks:{title:i=>ml(i[0].label),label:c=>'1 EUR = '+nf(c.parsed.y,4)+' CHF'}}},
         scales:{x:{grid:{display:false},border:{color:css('--ink')},ticks:{...tk(),autoSkip:false,maxRotation:0,callback:(v,i)=>fl[i].endsWith('-01')&&(+fl[i].slice(0,4))%4===0?fl[i].slice(0,4):''}},y:{grid:{color:css('--line')},border:{display:false},ticks:{...tk(),callback:v=>nf(v,2)+' CHF'}}}}}));
+    const mv=(L.viande||[]).filter(v=>v.ch&&v.fr_chf);
+    charts.push(new Chart($('#meatC'),{type:'bar',data:{labels:mv.map(v=>v.label),datasets:[
+      {label:'Suisse',data:mv.map(v=>v.ch),backgroundColor:css('--red'),borderRadius:4,barPercentage:.7,categoryPercentage:.7},
+      {label:'France',data:mv.map(v=>v.fr_chf),backgroundColor:css('--fr'),borderRadius:4,barPercentage:.7,categoryPercentage:.7}]},
+      options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.dataset.label+' : '+nf(c.parsed.x)+' CHF/kg'}}},
+        scales:{x:{beginAtZero:true,grid:{color:css('--line')},border:{display:false},ticks:{...tk(),callback:v=>v+' CHF'}},y:{grid:{display:false},border:{color:css('--ink')},ticks:{color:css('--ink'),font:{size:13}}}}}}));
     drawItem(curItem);
   }
   function drawItem(id){
