@@ -1,6 +1,6 @@
 # Méthodologie — Panier Suisse × France
 
-Version 1.3 · octobre 2026 (toutes les localités suisses, 12 zones françaises, magasins par zone)
+Version 1.4 · octobre 2026 (toutes les localités suisses, 12 zones françaises, magasins par zone)
 
 ## 1. Question posée
 
@@ -29,7 +29,11 @@ Le pain est affiché à titre indicatif mais n'entre pas dans le total : le pain
 
 ### 3.2 Viande
 
-France : INSEE (entrecôte de bœuf, escalope de veau, rôti de porc dans le filet, jambon supérieur). Suisse : relevé automatique du site Migros, **médiane** des produits correspondants au kilo, hors bio et hors promotion. La médiane est utilisée parce que la référence française est elle-même une moyenne de marché, et non un premier prix.
+France : INSEE (entrecôte de bœuf, escalope de veau, rôti de porc dans le filet, jambon supérieur). Suisse : relevé automatique du site Migros, **médiane** des produits correspondants au kilo, hors bio et hors promotion, **réduite de 5 %**. La médiane est utilisée parce que la référence française est elle-même une moyenne de marché, et non un premier prix.
+
+Pourquoi −5 % : le comparateur s'adresse à des ménages attentifs aux prix, qui font en Suisse plutôt leurs courses chez un discounter. Les sites d'Aldi, Lidl et Denner ne pouvant pas être relevés automatiquement, on part du prix Migros et on le ramène au niveau des discounters. Le test de prix K-Tipp d'août 2025 (100 produits courants) donne un panier de 243,54 CHF chez Migros, contre 232,83 CHF chez Lidl et 230,94 CHF chez Aldi, soit un écart d'environ 5 %. Le paramètre `viande_ajustement_discount` de `config/panier.yaml` porte ce taux ; le prix Migros brut reste publié (`ch_migros` dans `data/latest.json`).
+
+Les fruits et légumes ne sont pas ajustés : la série OFAG est déjà une moyenne de tout le commerce de détail, discounters compris. Les produits de marque ne le sont pas non plus : un même article de marque coûte pratiquement le même prix chez Migros et chez les discounters (relevé bonus.ch, août 2025).
 
 ### 3.3 Produits de marque identiques
 
@@ -84,11 +88,12 @@ L'usure du véhicule n'est pas comptée.
 ## 6. Limites connues
 
 - Les prix alimentaires français de base sont des moyennes nationales ; l'ajustement par magasin (§ 3.5) repose sur un indice global, pas sur des prix par produit.
-- La viande suisse provient d'une seule enseigne (Migros), faute de série officielle ouverte.
+- La viande suisse provient d'une seule enseigne (Migros), faute de série officielle ouverte ; l'ajustement de 5 % vers les discounters repose sur un seul test de prix (K-Tipp, 2025) et sera revu à chaque nouveau test publié.
+- Côté français, Que Choisir ne couvre pas les discounters sans drive (Lidl, Aldi) : on compare donc un prix suisse de discounter à un supermarché français classique, ce qui tend à sous-estimer l'économie.
 - Open Prices dépend des tickets partagés par ses contributeurs : certains produits ont peu de relevés.
 - L'origine et la qualité des fruits et légumes ne sont pas contrôlées.
 - Les quantités de référence sont forfaitaires ; une pondération selon l'IPC de l'OFS est prévue dans une version ultérieure.
 
 ## 7. Citer
 
-> Brocard, G. (2026). *Panier Suisse × France*, méthodologie v1.3. Données OFAG, INSEE, BCE, OFDF, Open Prices, UFC-Que Choisir. Code et données : https://github.com/GregBrocard/Panier-suisse-france
+> Brocard, G. (2026). *Panier Suisse × France*, méthodologie v1.4. Données OFAG, INSEE, BCE, OFDF, Open Prices, UFC-Que Choisir. Code et données : https://github.com/GregBrocard/Panier-suisse-france

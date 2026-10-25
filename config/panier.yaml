@@ -6,7 +6,8 @@
 #                   Suisse = OFAG (Office fédéral de l'agriculture), relevés commerce de détail
 #                   France = INSEE, prix moyens mensuels de vente au détail en métropole
 #                   -> historique long (2006+ pour les fruits & légumes)
-#  2. "viande"    : France = INSEE ; Suisse = relevé automatique Migros (médiane des produits valides)
+#  2. "viande"    : France = INSEE ; Suisse = relevé automatique Migros (médiane des produits valides),
+#                   réduit de `viande_ajustement_discount` pour refléter les prix des discounters
 #  3. "marques"   : produits identiques ; Suisse = Migros ; France = Open Prices (médiane nationale 6 mois)
 #
 # qty : quantité de référence d'un panier hebdomadaire pour un ménage de deux personnes.
@@ -64,6 +65,11 @@ officiel:
   - { id: pain,        label: "Pain courant (CH mi-blanc, FR baguette)", cat: Pain, unit: kg, qty: 1.0, in_total: false,
       ofag: { cube: BreadCerealsFlourBakedGoods, products: ["Pain mi-blanc , non bio, moyenne"] },
       insee: ["000442423"], fill_months: 3 }
+
+# Prix suisse de la viande ramené au niveau des discounters (Aldi, Lidl) :
+# Migros environ 5 % plus cher qu'Aldi et Lidl sur un panier de 100 produits (K-Tipp, août 2025).
+viande_ajustement_discount: 0.05
+viande_ajustement_source: "K-Tipp, test de prix de 100 produits courants, août 2025"
 
 viande:
   - { id: entrecote, label: Entrecôte de bœuf,  unit: kg, qty: 0.3, insee: ["000442435"],

@@ -141,6 +141,7 @@ def migros_candidates(mig: Migros, query: str) -> list[Candidate]:
 
 def build_viande(cfg, fx, s):
     mig = Migros(s, {})
+    adj = float(cfg.get("viande_ajustement_discount") or 0)
     out = []
     for it in cfg["viande"]:
         rule = {"match": {k: it["migros"].get(k, []) for k in ("include", "any", "exclude")},
@@ -152,12 +153,13 @@ def build_viande(cfg, fx, s):
                 c2 = finalize(rule, c)
                 if c2:
                     valid.append(c2)
-        ch = round(statistics.median([c.unit_price for c in valid]), 2) if valid else None
+        ch_migros = round(statistics.median([c.unit_price for c in valid]), 2) if valid else None
+        ch = round(ch_migros * (1 - adj), 2) if ch_migros else None
         res = safe(S.insee_series, it["insee"][0], default=None, label=f"INSEE {it['id']}")
         fr_m, fr = (max(res[1]), res[1][max(res[1])]) if res and res[1] else (None, None)
         rate = fx.get(fr_m) if fr_m else None
         row = {"id": it["id"], "label": it["label"], "unit": it["unit"], "qty": it["qty"],
-               "ch": ch, "ch_n": len(valid), "ch_produits": [f"{c.name} — {c.unit_price:.2f}/kg" for c in
+               "ch": ch, "ch_migros": ch_migros, "ajustement_discount": adj, "ch_n": len(valid), "ch_produits": [f"{c.name} — {c.unit_price:.2f}/kg" for c in
                                                               sorted(valid, key=lambda c: c.unit_price)][:8],
                "fr_eur": fr, "fr_mois": fr_m, "fr_chf": round(fr * rate, 2) if fr and rate else None,
                "insee": it["insee"][0]}

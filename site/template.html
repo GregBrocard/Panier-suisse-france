@@ -288,7 +288,7 @@ footer{margin-top:80px;padding-top:16px;border-top:1px solid var(--ink);display:
 
   <section id="viande">
     <div class="head"><h2>Viande : l'écart reste énorme</h2>
-      <p>Prix au kilo des morceaux courants. En France, moyenne nationale de l'INSEE ; en Suisse, médiane des produits équivalents vendus par Migros, hors bio et hors promotion. Tout est en francs suisses.</p></div>
+      <p>Prix au kilo des morceaux courants. En France, moyenne nationale de l'INSEE. En Suisse, prix Migros (médiane des produits équivalents, hors bio et hors promotion) réduit de 5 % : c'est l'écart mesuré entre Migros et les discounters Aldi et Lidl (K-Tipp, août 2025). Tout est en francs suisses.</p></div>
     <figure class="photo-wide bw"><img src="img/boucherie.webp" alt="Étal de boucherie parisien, années 1920" loading="lazy" style="object-position:50% 40%">
       <figcaption>« La vie chère à Paris », étal de boucherie, années 1920. Photo : <span data-credit="boucherie"></span>.</figcaption></figure>
     <div class="chart">
@@ -322,7 +322,7 @@ footer{margin-top:80px;padding-top:16px;border-top:1px solid var(--ink);display:
       <details class="doc" open><summary>Sources</summary><div class="b"><ul>
         <li><b>Fruits et légumes, Suisse :</b> Office fédéral de l'agriculture (OFAG), prix de consommation mensuels.</li>
         <li><b>Fruits, légumes, viande, France :</b> INSEE, prix moyens de vente au détail.</li>
-        <li><b>Viande et marques, Suisse :</b> relevé mensuel du site Migros.</li>
+        <li><b>Viande et marques, Suisse :</b> relevé mensuel du site Migros. Pour la viande, prix réduit de 5 % pour correspondre aux discounters (Aldi, Lidl), d'après le test de prix K-Tipp d'août 2025.</li>
         <li><b>Marques, France :</b> Open Prices (Open Food Facts), tickets de caisse partagés.</li>
         <li><b>Niveau de prix de chaque magasin :</b> comparateur des supermarchés de l'UFC-Que Choisir, publié avec son accord.</li>
         <li><b>Carburant :</b> prix officiels des stations françaises ; tableau T 4.4 de l'OFDF pour la Suisse.</li>
@@ -336,7 +336,7 @@ footer{margin-top:80px;padding-top:16px;border-top:1px solid var(--ink);display:
         <p>Distance routière la plus rapide entre le centre de votre localité et le centre de la ville choisie, calculée une fois par mois sur OpenStreetMap. Le coût compte l'aller et le retour au prix suisse de l'essence. Vous pouvez corriger la distance dans le formulaire.</p></div></details>
       <details class="doc"><summary>Limites</summary><div class="b">
         <p>Les fruits et légumes suivent les saisons : la moyenne sur 12 mois est plus fiable qu'un mois isolé. Leur origine n'est pas contrôlée.</p>
-        <p>La viande suisse vient d'une seule enseigne (Migros). Pour les marques, quand Open Prices a moins de 5 relevés, le chiffre est indicatif.</p>
+        <p>La viande suisse vient d'une seule enseigne (Migros), ajustée de 5 % vers les prix des discounters. Pour les marques, quand Open Prices a moins de 5 relevés, le chiffre est indicatif.</p>
         <p>Le taux de la BCE est interbancaire ; celui de votre carte est en général 1 à 2 % moins bon.</p></div></details>
       <details class="doc"><summary>Douane suisse</summary><div class="b"><ul>
         <li>150 CHF d'achats par personne et par jour en franchise. Au-delà, la TVA suisse est due sur tout le montant (2,6 % pour l'alimentation).</li>
@@ -556,7 +556,7 @@ footer{margin-top:80px;padding-top:16px;border-top:1px solid var(--ink);display:
   const gp=g=>`<span class="${g>0?'up':'down'}">${pc(g)}</span>`;
   const off=(L.officiel.produits||[]).filter(p=>p.ecart!=null);
   $('#tOff tbody').innerHTML=off.map(p=>`<tr class="click" tabindex="0" data-id="${p.id}"><td>${esc(p.label)}<small>${ml(p.mois)}</small></td><td>${nf(p.ch)} CHF</td><td>${nf(p.fr_chf)} CHF<small>soit ${nf(p.fr_eur)} EUR</small></td><td>${gp(p.ecart)}</td></tr>`).join('');
-  $('#tMeat tbody').innerHTML=(L.viande||[]).map(v=>`<tr><td>${esc(v.label)}<small>Suisse : médiane de ${v.ch_n} produits Migros</small></td><td>${nf(v.ch)} CHF</td><td>${nf(v.fr_chf)} CHF<small>soit ${nf(v.fr_eur)} EUR</small></td><td>${gp(v.ecart)}</td></tr>`).join('');
+  $('#tMeat tbody').innerHTML=(L.viande||[]).map(v=>`<tr><td>${esc(v.label)}<small>Suisse : ${v.ch_migros?`${nf(v.ch_migros)} CHF chez Migros, moins ${Math.round((v.ajustement_discount||0)*100)} %`:`médiane de ${v.ch_n} produits Migros`}</small></td><td>${nf(v.ch)} CHF</td><td>${nf(v.fr_chf)} CHF<small>soit ${nf(v.fr_eur)} EUR</small></td><td>${gp(v.ecart)}</td></tr>`).join('');
   $('#tBrand tbody').innerHTML=(L.marques||[]).map(v=>{const u=v.unit==='L'?'L':'kg'; return `<tr><td>${esc(v.label)}<small>${v.fr_n} relevé${v.fr_n>1?'s':''} en France${v.fr_n&&v.fr_n<5?', indicatif':''}</small></td><td>${nf(v.ch_unit)} CHF/${u}</td><td>${v.fr_unit_chf!=null?nf(v.fr_unit_chf)+' CHF/'+u+`<small>soit ${nf(v.fr_unit_eur)} EUR/${u}</small>`:'—'}</td><td>${v.ecart!=null?gp(v.ecart):'—'}</td></tr>`;}).join('');
   $('#tFuel tbody').innerHTML=`<tr><td>Suisse, zone frontière de Genève<small>OFDF, ${esc(fch.date_texte||'')}</small></td><td>${fch.sp95?nf(fch.sp95.ch_chf)+' CHF':'—'}</td><td>${fch.diesel?nf(fch.diesel.ch_chf)+' CHF':'—'}</td><td></td></tr>`
     +DEST.map(x=>{const f=fd(x.id); return f&&f.n?`<tr><td>${esc(x.nom)}</td><td>${nf(f.moyenne_chf.sp95)} CHF<small>soit ${nf(f.moyenne.sp95,3)} EUR</small></td><td>${nf(f.moyenne_chf.diesel)} CHF<small>soit ${nf(f.moyenne.diesel,3)} EUR</small></td><td>${f.n}</td></tr>`:'';}).join('');
