@@ -59,7 +59,7 @@ Les prix français des sections 3.1 à 3.3 sont des moyennes nationales. Pour es
 
 En clair : si le caddie Que Choisir coûte 10 % de plus dans un magasin que dans le supermarché français moyen, on considère que vos courses y coûtent aussi 10 % de plus que les prix moyens français, puis on compare aux prix suisses.
 
-Cette méthode suppose que l'écart d'un magasin à la moyenne est le même dans toutes les catégories ; c'est une approximation. Les données de Que Choisir leur appartiennent ; elles sont publiées avec l'accord de l'UFC-Que Choisir (octobre 2026), avec citation de la source et lien vers leur comparateur. Le paramètre `quechoisir.publier` de `config/panier.yaml` permet de les retirer du site public à tout moment.
+Cette méthode suppose que l'écart d'un magasin à la moyenne est le même dans toutes les catégories ; c'est une approximation. Les données de Que Choisir leur appartiennent ; leur source est citée avec un lien vers leur comparateur. L'accord de l'UFC-Que Choisir pour cette publication n'a pas encore été demandé. Le paramètre `quechoisir.publier` de `config/panier.yaml` permet de les retirer du site public à tout moment.
 
 ## 4. Calculs
 

@@ -110,7 +110,7 @@ carburant:
 # Prix par magasin : comparateur des supermarchés de l'UFC-Que Choisir (panier d'une centaine de produits).
 # Pour chaque zone : magasins « graines » + tous les magasins à moins de 15 km d'eux (liste publiée par Que Choisir).
 # Référence : médiane d'un panel national de magasins tirés au hasard (tirage fixe).
-# publier: true = publication avec l'accord de l'UFC-Que Choisir (octobre 2026), source citée sur le site.
+# publier: true = données Que Choisir affichées sur le site public (accord de l'UFC-Que Choisir non encore demandé).
 quechoisir:
   publier: true
   panel: { n: 600, seed: 2026 }   # tirage brut ; les identifiants valides sont gardés dans data/qc_panel.json
