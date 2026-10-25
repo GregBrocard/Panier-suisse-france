@@ -244,7 +244,6 @@
   const fig=(k,v,s)=>`<div class="fig"><span>${k}</span><b>${pc(v)}</b><small>${s}</small></div>`;
   $('#figs').innerHTML=fig('Viande',G.m,'plus cher en Suisse, 4 morceaux')+fig('Fruits et légumes',G.f,'moyenne sur 12 mois')+fig('Produits laitiers',G.c,'5 produits, estimation')
     +fig('Mêmes marques',G.b,br.length+' produits identiques')+fig('Essence',E.sp95_ecart,'sans plomb, Genève comparé aux zones françaises');
-  $('#figs').style.gridTemplateColumns='repeat(auto-fit,minmax(170px,1fr))';
   const gp=g=>`<span class="${g>0?'up':'down'}">${pc(g)}</span>`;
   const rep=x=>x?`<span class="flag" title="Valeur du mois précédent reprise">${esc(String(x).slice(0,7))}</span>`:'';
   const off=(L.officiel.produits||[]).filter(p=>p.ecart!=null && (p.groupe||'fl')==='fl');
