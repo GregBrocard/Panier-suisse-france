@@ -297,19 +297,20 @@ def build_origines(dests):
     locs = O.localites()
     log(f"   {len(locs)} localités suisses (swisstopo)")
     cache = R.matrix(locs, dests, DATA / "distances.json", log=log)
-    liste, dist = [], []
+    liste, dist, coords = [], [], []
     for o in locs:
         row = cache.get(f"{o['nom']}|{o['canton']}", {})
         if not row:
             continue
         liste.append([o["nom"], o["canton"], o["npa"]])
+        coords.append([round(o["lat"], 3), round(o["lon"], 3)])
         flat = []
         for d in dests:
             v = row.get(d["id"])
             flat += v if v else [None, None]
         dist.append(flat)
     log(f"   trajets disponibles pour {len(liste)} localités")
-    return {"liste": liste, "dist": dist, "destinations": [d["id"] for d in dests],
+    return {"liste": liste, "dist": dist, "coords": coords, "destinations": [d["id"] for d in dests],
             "source": "swisstopo (répertoire officiel des localités) ; OSRM et OpenStreetMap (itinéraires)"}
 
 

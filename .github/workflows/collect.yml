@@ -42,6 +42,7 @@ jobs:
           mkdir -p _site
           cp site/public.html _site/index.html
           cp data/latest.json data/series.json METHODOLOGIE.md _site/
+          cp -r site/img _site/img
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site

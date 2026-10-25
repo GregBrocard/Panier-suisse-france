@@ -18,6 +18,10 @@ def main():
             z.pop("stations", None)
     latest.get("carburant", {}).pop("historique_fr", None)
     tpl = (ROOT / "site/template.html").read_text(encoding="utf-8")
+    extra = {}
+    for key, path in (("carte", ROOT / "data/carte.json"), ("credits", ROOT / "site/img/credits.json")):
+        if path.exists():
+            extra[key] = json.loads(path.read_text(encoding="utf-8"))
 
     def render(data, name):
         payload = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
@@ -26,12 +30,12 @@ def main():
         print(f"site/{name} : {len(out) / 1024:.0f} Ko")
 
     # version complète (usage privé)
-    render({"latest": latest, "series": series}, "index.html")
+    render({"latest": latest, "series": series, **extra}, "index.html")
     # version publique : sans les données Que Choisir tant que leur accord n'est pas obtenu
     pub = dict(latest)
     if not (latest.get("magasins") or {}).get("publier"):
         pub["magasins"] = None
-    render({"latest": pub, "series": series}, "public.html")
+    render({"latest": pub, "series": series, **extra}, "public.html")
 
 
 if __name__ == "__main__":

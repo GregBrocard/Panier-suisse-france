@@ -89,6 +89,12 @@ def _rdp(pts, eps):
     return [pts[0], pts[-1]]
 
 
+def _simplify_ring(pts, eps):
+    """Anneau fermé : on le coupe en deux pour que Douglas-Peucker garde sa forme."""
+    h = len(pts) // 2
+    return _rdp(pts[:h + 1], eps)[:-1] + _rdp(pts[h:], eps)
+
+
 def _rings(geom):
     polys = geom["coordinates"] if geom["type"] == "MultiPolygon" else [geom["coordinates"]]
     for poly in polys:
@@ -109,7 +115,7 @@ def carte():
         for ring in _rings(f["geometry"]):
             if not any(BBOX[0] - 1 <= x <= BBOX[2] + 1 and BBOX[1] - 1 <= y <= BBOX[3] + 1 for x, y in ring):
                 continue
-            simp = _rdp([[round(x, 4), round(y, 4)] for x, y in ring], 0.004)
+            simp = _simplify_ring([[round(x, 4), round(y, 4)] for x, y in ring], 0.003)
             if len(simp) > 3:
                 rings.append(simp)
         if rings:
@@ -119,7 +125,7 @@ def carte():
             if all(BBOX[0] <= x <= BBOX[2] and BBOX[1] <= y <= BBOX[3] for x, y in ring) and len(ring) > 20:
                 xs = [p[0] for p in ring]
                 if max(xs) - min(xs) > 0.12:
-                    out["lacs"].append(_rdp([[round(x, 4), round(y, 4)] for x, y in ring], 0.003))
+                    out["lacs"].append(_simplify_ring([[round(x, 4), round(y, 4)] for x, y in ring], 0.002))
     (ROOT / "data" / "carte.json").write_text(json.dumps(out, separators=(",", ":")), encoding="utf-8")
     print("propriétés exemple :", list(countries["features"][0]["properties"])[:15])
     print("carte :", {k: sum(len(r) for r in v) for k, v in out["pays"].items()}, "lacs", len(out["lacs"]))
