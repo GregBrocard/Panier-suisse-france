@@ -5,7 +5,7 @@ import sys
 import requests
 
 from .common import Session
-from .migros import Migros
+from .migros import Scraper as Migros
 from . import lindas_explore as LX
 
 UA = {"User-Agent": "panier-suisse-france (https://github.com/GregBrocard/Panier-suisse-france)"}
