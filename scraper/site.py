@@ -660,7 +660,7 @@ def main(out: Path):
     shutil.copy(SITE / "base.css", out / "style.css")
     for f in ("calc.js", "app.js", "essence.js"):
         shutil.copy(SITE / f, out / f)
-    for d in ("fonts", "img", "vendor", "v1"):
+    for d in ("fonts", "img", "vendor", "v1", "v2"):
         if (SITE / d).exists():
             shutil.copytree(SITE / d, out / d)
     shutil.copy(ROOT / "METHODOLOGIE.md", out / "METHODOLOGIE.md")

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Données ouvertes | Panier Suisse France</title>
+<meta name="description" content="Tous les prix et écarts Suisse – France en fichiers JSON, mis à jour chaque mois.">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Panier Suisse France">
+<meta property="og:title" content="Données ouvertes | Panier Suisse France">
+<meta property="og:description" content="Tous les prix et écarts Suisse – France en fichiers JSON, mis à jour chaque mois.">
+<meta property="og:url" content="https://gregbrocard.github.io/Panier-suisse-france/donnees/">
+<meta property="og:image" content="https://gregbrocard.github.io/Panier-suisse-france/og/accueil.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="fr_CH">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#da291c">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../icon-180.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="preload" href="../fonts/IBMPlexSans-Regular-Latin1.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../style.css?v=2026102520261025">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Panier Suisse France", "description": "Écarts de prix alimentaires et de carburant entre la Suisse et la France voisine, mensuels depuis 2006.", "url": "https://gregbrocard.github.io/Panier-suisse-france/donnees/", "license": "https://creativecommons.org/licenses/by/4.0/", "creator": {"@type": "Person", "name": "Greg Brocard"}, "temporalCoverage": "2006-01/2026-10", "spatialCoverage": "Suisse, France"}</script>
+
+</head>
+<body>
+<div style="background:#da291c;color:#fff;text-align:center;padding:8px 12px;font:14px/1.4 sans-serif">Version 2 archivée (octobre 2026). <a href="../../" style="color:#fff;font-weight:600">Voir la version actuelle</a></div>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="../"><span class="cross" aria-hidden="true"></span>Panier Suisse France</a>
+    <nav aria-label="Rubriques">
+      <a href="../">Calculateur</a><a href="../essence/">Essence</a><a href="../zones/">Villes</a><a href="../douane/">Douane</a><a href="../barometre/">Baromètre</a><a href="../methodologie/">Méthode</a>
+    </nav>
+  </header>
+
+  <main class="page">
+<h1>Données ouvertes</h1>
+<p class="lede">Tous les chiffres du site sont publiés en fichiers JSON, mis à jour à chaque relevé. Les calculs et l'historique produits par ce projet peuvent être réutilisés librement en citant « Panier Suisse France » (licence Creative Commons BY 4.0).</p>
+<div class="tbl"><table><thead><tr><th>Fichier</th><th>Contenu</th></tr></thead><tbody><tr><td><a href="../data/latest.json">data/latest.json</a></td><td>Photo du mois : tous les prix, écarts, magasins, essence, contrôles</td></tr><tr><td><a href="../data/series.json">data/series.json</a></td><td>Historique mensuel : écarts fruits et légumes depuis 2006, crèmerie, change, prix par produit</td></tr><tr><td><a href="../data/essence.json">data/essence.json</a></td><td>Essence : prix du jour par zone et stations les moins chères</td></tr><tr><td><a href="../data/stations.json">data/stations.json</a></td><td>Stations françaises au prix du jour et stations suisses avec un prix relevé (mode « Où faire le plein »)</td></tr><tr><td><a href="../data/origines.json">data/origines.json</a></td><td>Distances et durées de trajet de 4 100 localités suisses vers chaque ville française</td></tr><tr><td><a href="../data/controles.json">data/controles.json</a></td><td>Rapport des contrôles automatiques du dernier relevé</td></tr></tbody></table></div>
+<p class="muted">Les données d'origine restent soumises aux conditions de leurs producteurs (OFAG, INSEE, Eurostat, BCE, OFDF : données publiques ; Open Prices et OpenStreetMap : licence ODbL; UFC-Que Choisir : droits réservés, reproduction soumise à leur accord). Code source et historique complet sur <a href="https://github.com/GregBrocard/Panier-suisse-france" rel="noopener">GitHub</a>.</p>
+<h2>Contrôles du dernier relevé</h2>
+<p>À chaque relevé, le robot vérifie les chiffres. Une valeur manquante ou un échantillon trop petit est remplacé par la valeur du mois précédent, signalée sur le site ; un saut anormal est publié mais signalé.</p>
+<ul><li>Viande veau : prix suisse du 2026-10-25 repris (2 produits seulement).</li></ul>
+<ul><li>Aucune alerte.</li></ul>
+  </main>
+
+  <footer class="foot">
+    <nav aria-label="Pied de page">
+      <a href="../a-propos/">À propos</a>
+      <a href="../methodologie/">Méthodologie</a>
+      <a href="../barometre/">Baromètre du mois</a>
+      <a href="../widget/">Intégrer le calculateur</a>
+      <a href="../donnees/">Données ouvertes</a>
+      <a href="../mentions-legales/">Mentions légales</a>
+      <a href="../confidentialite/">Confidentialité</a>
+      <a href="https://github.com/GregBrocard/Panier-suisse-france" rel="noopener">Code source</a>
+    </nav>
+    <p>Données mises à jour automatiquement le 20 de chaque mois (essence : chaque jour). Méthode version 2, site version 2. Aucun lien commercial avec les enseignes comparées.</p>
+    <p>Sources : OFAG, INSEE, BCE, OFDF, Open Prices (Open Food Facts), UFC-Que Choisir, relevé Migros, flux officiel des prix des carburants. Trajets et adresses : © contributeurs OpenStreetMap (ODbL), OSRM. Fond de carte : Natural Earth. Localités : swisstopo. Photos : Wikimedia Commons.</p>
+  </footer>
+</div>
+
+</body>
+</html>
