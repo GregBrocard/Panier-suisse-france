@@ -1,6 +1,6 @@
 # Méthodologie — Panier Suisse France
 
-Version 2.0 · octobre 2026. La version 1 (septembre–octobre 2026) reste consultable : [site archivé](https://gregbrocard.github.io/Panier-suisse-france/v1/) et branche `v1` du dépôt. Les changements de la version 2 sont listés à la section 9.
+Version 2.1 · octobre 2026. La version 1 (septembre–octobre 2026) reste consultable : [site archivé](https://gregbrocard.github.io/Panier-suisse-france/v1/) et branche `v1` du dépôt. Les changements de la version 2 sont listés à la section 9.
 
 ## 1. Question posée
 
@@ -89,6 +89,24 @@ En clair : si le caddie Que Choisir coûte 10 % de plus dans un magasin que dans
 
 Cette méthode suppose que l'écart d'un magasin à la moyenne est le même dans toutes les catégories ; c'est une approximation. Les données de Que Choisir leur appartiennent ; leur source est citée avec un lien vers leur comparateur. L'accord de l'UFC-Que Choisir pour cette publication n'a pas encore été demandé. Le paramètre `quechoisir.publier` de `config/panier.yaml` permet de les retirer du site public à tout moment.
 
+### 3.7 Où faire le plein (v2.1)
+
+Le mode « Où faire le plein » (page Essence) indique, depuis une localité suisse, la station qui fait le plus économiser, trajet compris, et la meilleure à moins de 5, 10 ou 20 km.
+
+**Stations et prix.**
+- **France** : toutes les stations de la bande frontalière (latitude 45,75° à 47,95°, longitude 5,55° à 7,65°), avec leur prix du jour issu du flux officiel (relevé quotidien). Un prix non mis à jour par la station depuis plus de 15 jours n'est pas utilisé. Le nom de la station vient d'OpenStreetMap (station la plus proche à moins de 150 m), sinon de la commune.
+- **Suisse** : la liste des stations (environ 3 800) vient d'OpenStreetMap, mise à jour chaque mois. **Aucune source ouverte ne publie les prix station par station en Suisse** : la loi n'oblige pas les stations à les publier, et les bases existantes (TCS, Benzio, TankBillig, Fuelo) reposent sur des saisies d'utilisateurs et ne sont pas libres de réutilisation (les conditions du TCS limitent l'appli à un usage privé et non commercial). Le site n'utilise donc que des prix relevés pour lui (`data/prix_ch.yaml`) : relevés personnels ou signalés par des visiteurs, vérifiés avant ajout, publiés avec leur date et leur source. Un prix de plus de 14 jours est marqué « à confirmer » ; au-delà de 45 jours, il n'est plus utilisé. D'autres sources pourront être branchées avec l'accord de leur producteur.
+- **Prix habituel** (référence) : par défaut, le prix moyen de la zone frontière suisse la plus proche publié chaque mois par l'OFDF (Genève, Bâle, Kreuzlingen, Tessin, Liechtenstein) ; l'utilisateur peut le remplacer par le prix de sa station.
+
+**Distance.** Même base que le calculateur : coordonnées des localités (swisstopo) et itinéraires OSRM vers les 12 villes frontalières.
+- Station française : itinéraire réel jusqu'à la ville frontalière la plus proche de la station, plus la distance entre cette ville et la station × facteur route ; si la ligne droite ne traverse pas de lac et donne une distance plus courte, c'est elle qui est retenue (ligne droite × facteur route).
+- Station suisse : ligne droite × facteur route, doublée si la ligne droite traverse un lac.
+- **Facteur route** : rapport médian entre la distance routière OSRM et la distance à vol d'oiseau, mesuré sur environ 7 000 trajets réels du site (1,39 en octobre 2026). **Vitesse moyenne** : médiane des mêmes trajets (environ 76 km/h). Ces deux valeurs sont recalculées à chaque publication.
+
+**Gain net** = (prix habituel − prix de la station) × litres − carburant brûlé pour l'aller-retour (distance × 2 × consommation × prix habituel) − usure de la voiture (distance × 2 × 0,19 CHF/km, TCS 2026, option). Le temps de trajet est affiché mais n'est pas déduit. Seules les stations à moins de 90 km sont considérées. Si aucun détour n'est rentable, le site le dit et montre la station au prix connu la plus proche.
+
+**Limites.** Les distances vers les stations suisses et vers les stations françaises éloignées des villes frontalières sont des estimations. La couverture suisse dépend des relevés reçus. L'Allemagne, l'Italie et l'Autriche ne sont pas encore couvertes station par station (leurs prix moyens frontaliers figurent dans le tableau OFDF de la page).
+
 ## 4. Calculs
 
 **Change.** Les prix français sont convertis au taux de référence EUR/CHF de la Banque centrale européenne : moyenne mensuelle pour l'historique, dernier taux quotidien pour la photo du mois et l'essence.
@@ -165,6 +183,8 @@ Chaque mois, les chiffres clés (écart viande, fruits et légumes sur 12 mois, 
 
 ## 9. Historique des versions
 
+**v2.1 (octobre 2026)** : mode « Où faire le plein » (stations françaises au prix du jour, stations suisses OpenStreetMap, prix suisses relevés, facteur route calibré sur les trajets réels, prise en compte des lacs).
+
 **v2.0 (octobre 2026)**
 - Correction de la lecture du tableau OFDF (essence 95 et diesel étaient inversés), contrôle automatique ajouté.
 - Nouvelle catégorie produits laitiers et huile (5 produits, prix français estimés par indexation).
@@ -181,4 +201,4 @@ Chaque mois, les chiffres clés (écart viande, fruits et légumes sur 12 mois, 
 
 ## 10. Citer
 
-> Brocard, G. (2026). *Panier Suisse France*, méthodologie v2.0. Données OFAG, INSEE, Eurostat, BCE, OFDF, TCS, Open Prices, UFC-Que Choisir. Code et données : https://github.com/GregBrocard/Panier-suisse-france
+> Brocard, G. (2026). *Panier Suisse France*, méthodologie v2.1. Données OFAG, INSEE, Eurostat, BCE, OFDF, TCS, Open Prices, UFC-Que Choisir. Code et données : https://github.com/GregBrocard/Panier-suisse-france

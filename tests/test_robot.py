@@ -120,3 +120,37 @@ def test_synthese_sur_les_donnees_publiees():
     sy = synthese(latest, series)
     assert sy["gaps"]["m"] is not None and sy["gaps"]["m"] > 0
     assert abs(sum(MIX[0]["w"].values()) - 1) < 0.01
+
+
+# ---------------------------------------------------------------- mode « Où faire le plein »
+
+def test_gain_essence_js():
+    js = ("const P=require('./site/calc.js');"
+          "console.log(JSON.stringify(P.fuelGain({litres:50,conso:7,pref:2.19,wear:true,usure:0.19},{km:5,prix:2.05})))")
+    g = json.loads(subprocess.run(["node", "-e", js], cwd=ROOT, capture_output=True, text=True, check=True).stdout)
+    assert g["fuel"] == pytest.approx(50 * 0.14)
+    assert g["drive"] == pytest.approx(2 * 5 * 0.07 * 2.19)
+    assert g["wear"] == pytest.approx(2 * 5 * 0.19)
+    assert g["net"] == pytest.approx(g["fuel"] - g["drive"] - g["wear"])
+
+
+def test_stations_prix_perimes_et_releves(tmp_path, monkeypatch):
+    import scraper.site as SI
+    monkeypatch.setattr(SI, "DATA", tmp_path)
+    (tmp_path / "prix_ch.yaml").write_text(
+        "releves:\n"
+        "  - { station: A, localite: Morges, lat: 46.5, lon: 6.5, sp95: 1.9, date: '2026-10-20', source: test }\n"
+        "  - { station: B, localite: Nyon, lat: 46.4, lon: 6.2, sp95: 1.9, date: '2026-01-01', source: test }\n", encoding="utf-8")
+    extra = {"essence": {"genere_le": "2026-10-25T05:00+00:00", "stations_fr": [
+        {"id": "1", "lat": 46.2, "lon": 6.2, "adresse": "x", "ville": "ANNEMASSE", "sp95": 2.0, "sp95_maj": "2026-10-24T10:00", "diesel": 2.3, "diesel_maj": "2026-09-01T10:00"}]}}
+    dests = [{"id": "annemasse", "lat": 46.19, "lon": 6.23}]
+    import datetime as _dt
+    class D(_dt.date):
+        @classmethod
+        def today(cls):
+            return cls(2026, 10, 25)
+    monkeypatch.setattr(SI.dt, "date", D)
+    st, zones = SI.donnees_stations(extra, dests, {"zones": {}}, 0.93)
+    assert len(st["fr"]) == 1 and st["fr"][0][5] == pytest.approx(1.86) and st["fr"][0][6] is None  # diesel périmé
+    assert [x[2] for x in st["ch"]] == ["A"]  # relevé de plus de 45 jours écarté
+    assert st["fr"][0][9] == "annemasse"

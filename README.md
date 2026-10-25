@@ -28,6 +28,10 @@ Lancer à la main : onglet **Actions** → choisir le robot → *Run workflow*.
 
 Dans `config/site.yaml` : nom de domaine (`base_url`), statistiques sans cookies (`goatcounter`), lettre d'information (`newsletter_url`), liens rémunérés (`affiliation`), e-mail de contact (`contact_email`). Une valeur vide désactive la fonction.
 
+## Ajouter un prix d'essence suisse
+
+Le fichier [data/prix_ch.yaml](data/prix_ch.yaml) contient les prix relevés en Suisse, station par station (le mode « Où faire le plein » les utilise). Il se modifie directement sur GitHub, même depuis un téléphone : un bloc par station, avec la date. Les visiteurs signalent des prix via l'onglet **Issues** (étiquette « prix ») : vérifier, puis recopier dans le fichier.
+
 ## En local
 
 ```bash

@@ -77,7 +77,24 @@
     return hi;
   }
 
-  const api = { savingsRate, meatDuty, compute, breakEven };
+  // Mode « Où faire le plein » : gain net d'un détour vers une station.
+  // p : litres, conso (L/100 km), pref (prix habituel CHF/L), wear (bool), usure (CHF/km)
+  // st : { km (aller), prix (CHF/L) }
+  function fuelGain(p, st) {
+    const fuel = (p.litres || 0) * ((p.pref || 0) - st.prix);
+    const drive = 2 * st.km * (p.conso || 0) / 100 * (p.pref || st.prix);
+    const wear = p.wear ? 2 * st.km * (p.usure || 0) : 0;
+    return { fuel, drive, wear, net: fuel - drive - wear };
+  }
+
+  function haversine(a, b) {
+    const R = 6371, r = Math.PI / 180;
+    const dl = (b[0] - a[0]) * r, dn = (b[1] - a[1]) * r;
+    const h = Math.sin(dl / 2) ** 2 + Math.cos(a[0] * r) * Math.cos(b[0] * r) * Math.sin(dn / 2) ** 2;
+    return 2 * R * Math.asin(Math.sqrt(h));
+  }
+
+  const api = { savingsRate, meatDuty, compute, breakEven, fuelGain, haversine };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.PSF = api;
 })(typeof window !== 'undefined' ? window : globalThis);

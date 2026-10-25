@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block main %}
+  <div class="intro">
+    <h1>Où faire le plein ?</h1>
+    <p class="keep">Indiquez votre localité : on vous montre la station qui vous fait le plus économiser, trajet compris, et la meilleure tout près de chez vous.</p>
+    <p class="upd">{{ upd_text }}</p>
+  </div>
+
+  <div class="tool">
+    <div class="panel">
+      <h3><span class="step">1</span>Votre plein</h3>
+      <form class="sentence" autocomplete="off" onsubmit="return false">
+        <span class="ln">J'habite à
+          <span class="slot" id="slotFrom"><input id="from" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="fromList" aria-label="Localité" placeholder="insérer un lieu" spellcheck="false"><ul class="list" id="fromList" role="listbox" hidden></ul></span></span>
+        <span class="ln">et je mets
+          <span class="slot" id="slotL"><input id="litres" type="number" inputmode="numeric" min="5" step="5" value="50" aria-label="Litres" style="width:2.6em;text-align:center"></span> litres de
+          <span class="slot"><select id="fuel" aria-label="Carburant"><option value="sp95">sans plomb 95</option><option value="diesel">diesel</option></select></span>.</span>
+      </form>
+      <p class="hint">Tapez les premières lettres de votre localité ou son NPA, par exemple « Mor » ou « 1110 ».</p>
+    </div>
+    <div class="panel side">
+      <h3><span class="step">2</span>Votre voiture</h3>
+      <div class="pair">
+        <div class="field"><label for="conso">Consommation (L/100 km)</label><input id="conso" type="number" min="0" step="0.1" value="7"></div>
+        <div class="field"><label for="radius">« Près de chez moi » (km)</label><select id="radius"><option value="5">5 km</option><option value="10" selected>10 km</option><option value="20">20 km</option></select></div>
+      </div>
+      <div class="field"><label for="pref">Prix que vous payez d'habitude (CHF/L)
+        <span class="info"><button type="button" class="ibtn" aria-expanded="false" aria-label="D'où vient ce prix">?</button>
+          <span class="pop" role="note" hidden><b>Prix de référence</b>Par défaut, le prix moyen de votre région frontalière publié chaque mois par la douane suisse (OFDF). Remplacez-le par le prix de votre station habituelle pour un calcul plus juste.</span></span></label>
+        <input id="pref" type="number" min="0" step="0.01"></div>
+      <label class="chk"><input id="wear" type="checkbox" checked> Compter l'usure de la voiture ({{ usure }} CHF/km, TCS)</label>
+      <button type="button" class="go" id="go">Trouver où faire le plein</button>
+      <p class="missing" id="missing" role="alert" hidden></p>
+    </div>
+  </div>
+
+  <div class="answer" id="answer">
+    <p class="waiting" id="waiting">Vos meilleures stations s'afficheront ici.</p>
+    <div id="res" hidden>
+      <div class="cards" id="cards"></div>
+      <h3 style="margin-top:28px" id="listTitle">Toutes les stations rentables</h3>
+      <div class="tbl"><table id="tStations"><thead><tr><th>Station</th><th>Prix</th><th>Trajet</th><th>Gain net</th></tr></thead><tbody></tbody></table></div>
+      <p class="muted" id="resNote" style="margin-top:10px"></p>
+    </div>
+  </div>
+
+  <section id="couverture">
+    <div class="note" id="cov"></div>
+  </section>
+
+  <section class="page wide" style="padding-top:56px">
+{{ content | safe }}
+  </section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ root }}calc.js?v={{ version }}"></script>
+<script id="data" type="application/json">{{ data_json | safe }}</script>
+<script src="{{ root }}essence.js?v={{ version }}"></script>
+{% endblock %}

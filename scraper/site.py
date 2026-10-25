@@ -244,13 +244,12 @@ def page_essence(sy, zones, ch, maj, dests, fx):
         a, b = cell("sp95")
         c, d_ = cell("diesel")
         autres.append((noms.get(zid, zid), a, b, c, d_))
-    h = f"""<h1>Faire le plein à l'étranger : les prix du jour</h1>
-<p class="lede">Prix moyens des stations françaises autour de chaque ville frontalière, relevés chaque jour sur le flux officiel du ministère de l'Économie, convertis au taux de change du jour. Dernière mise à jour : {e(date_longue(maj)) + ' à ' + maj[11:16] + ' (UTC)' if maj else 'mensuelle'}.</p>
+    h = f"""<h2>Les prix du jour, ville par ville</h2>
+<p>Prix moyens des stations françaises autour de chaque ville frontalière, relevés chaque jour sur le flux officiel du ministère de l'Économie, convertis au taux de change du jour. Dernière mise à jour : {e(date_longue(maj)) + ' à ' + maj[11:16] + ' (UTC)' if maj else 'mensuelle'}.</p>
 {kpis([("Sans plomb 95 en Suisse", nf(ess.get('sp95_ch')) + " CHF", "zone frontière genevoise, OFDF, " + e(ch.get('date_texte') or '')),
        ("Sans plomb 95 en France", nf(ess.get('sp95_fr')) + " CHF", "moyenne des zones frontalières"),
        ("Plein de 50 L", (nf((ess['sp95_ch'] - ess['sp95_fr']) * 50, 0) + " CHF") if ess.get('sp95_ch') and ess.get('sp95_fr') else "—", "économisés en moyenne en France"),
        ("Diesel", pc(ess.get('diesel_ecart')), "Suisse comparée à la France")])}
-<h2>Par ville frontalière</h2>
 {tableau(["Ville", "Sans plomb 95", "Diesel", "Plein de 50 L (SP95)", "La moins chère (SP95)"], rows)}
 <p class="muted">Plein de 50 L : économie par rapport au prix suisse de la zone frontière genevoise, sans compter le trajet. Pour savoir si le détour vaut la peine, utilisez le <a href="../">calculateur</a>.</p>
 <h2>Les autres frontières suisses</h2>
@@ -467,6 +466,7 @@ def page_donnees(controles, magasins_publies):
     fichiers = [("data/latest.json", "Photo du mois : tous les prix, écarts, magasins, essence, contrôles"),
                 ("data/series.json", "Historique mensuel : écarts fruits et légumes depuis 2006, crèmerie, change, prix par produit"),
                 ("data/essence.json", "Essence : prix du jour par zone et stations les moins chères"),
+                ("data/stations.json", "Stations françaises au prix du jour et stations suisses avec un prix relevé (mode « Où faire le plein »)"),
                 ("data/origines.json", "Distances et durées de trajet de 4 100 localités suisses vers chaque ville française"),
                 ("data/controles.json", "Rapport des contrôles automatiques du dernier relevé")]
     al = controles.get("alertes") or []
@@ -535,6 +535,107 @@ def page_methodologie():
     return body + '<p><a href="../METHODOLOGIE.md">Version texte (Markdown)</a> · <a href="../v1/">Version 1 du site (archive)</a></p>'
 
 
+
+# ------------------------------------------------------------------ mode « Où faire le plein »
+
+ZONES_OFDF_GEO = {"geneve": ("zone frontière genevoise", 46.204, 6.143), "bale": ("zone frontière bâloise", 47.559, 7.588),
+                  "kreuzlingen": ("zone frontière de Kreuzlingen", 47.650, 9.175), "tessin": ("zone frontière tessinoise", 45.990, 8.950),
+                  "liechtenstein": ("zone frontière saint-galloise (Liechtenstein)", 47.168, 9.478)}
+
+
+def _hav(a, b):
+    la1, lo1, la2, lo2 = map(math.radians, (a[0], a[1], b[0], b[1]))
+    h = math.sin((la2 - la1) / 2) ** 2 + math.cos(la1) * math.cos(la2) * math.sin((lo2 - lo1) / 2) ** 2
+    return 2 * 6371 * math.asin(math.sqrt(h))
+
+
+def calibrer_routes(ori, dests):
+    """Facteur route / vol d'oiseau et vitesse moyenne, mesurés sur les itinéraires OSRM déjà calculés."""
+    import statistics
+    pos = {d["id"]: (d["lat"], d["lon"]) for d in dests}
+    ratios, speeds = [], []
+    for i, row in enumerate(ori["dist"][::7]):
+        c = ori["coords"][i * 7]
+        for k, did in enumerate(ori["destinations"]):
+            km, mn = row[2 * k], row[2 * k + 1]
+            if km and mn and did in pos:
+                h = _hav(c, pos[did])
+                if h > 3:
+                    ratios.append(km / h)
+                    speeds.append(km / (mn / 60))
+    return {"facteur": round(statistics.median(ratios), 3) if ratios else 1.3,
+            "kmh": round(statistics.median(speeds), 1) if speeds else 60.0, "paires": len(ratios)}
+
+
+def donnees_stations(extra, dests, ch_ess, fx):
+    """data/stations.json : stations françaises au prix du jour + stations suisses avec un prix relevé."""
+    ess = extra.get("essence") or {}
+    osm = []
+    p = DATA / "stations_osm.json"
+    if p.exists():
+        osm = json.loads(p.read_text(encoding="utf-8")).get("stations", [])
+    osm_fr = [x for x in osm if x[6] == "FR"]
+    osm_ch = [x for x in osm if x[6] == "CH"]
+    by_id = {x[0]: x for x in osm}
+    fr = []
+    ref = (ess.get("genere_le") or dt.date.today().isoformat())[:10]
+
+    def frais(prix, maj):  # un prix non mis à jour depuis plus de 15 jours n'est pas utilisé
+        if not prix or not maj:
+            return None
+        try:
+            return prix if (dt.date.fromisoformat(ref) - dt.date.fromisoformat(maj[:10])).days <= 15 else None
+        except ValueError:
+            return None
+    for x in ess.get("stations_fr") or []:
+        x = dict(x, sp95=frais(x.get("sp95"), x.get("sp95_maj")), diesel=frais(x.get("diesel"), x.get("diesel_maj")))
+        if not (x.get("sp95") or x.get("diesel")) or not fx:
+            continue
+        pt = (x["lat"], x["lon"])
+        nom = ""
+        best, bd = None, 0.15
+        for o in osm_fr:
+            if abs(o[1] - pt[0]) < 0.003 and abs(o[2] - pt[1]) < 0.004:
+                d = _hav(pt, (o[1], o[2]))
+                if d < bd:
+                    best, bd = o, d
+        if best:
+            nom = best[3] or best[4]
+        z, zk = None, None
+        for d in dests:
+            dk = _hav(pt, (d["lat"], d["lon"]))
+            if zk is None or dk < zk:
+                z, zk = d["id"], round(dk, 2)
+        fr.append([x["lat"], x["lon"], nom or f"Station {(x.get('ville') or '').title()}", x.get("adresse") or "",
+                   (x.get("ville") or "").title(), round(x["sp95"] * fx, 3) if x.get("sp95") else None,
+                   round(x["diesel"] * fx, 3) if x.get("diesel") else None, (x.get("sp95_maj") or "")[:16],
+                   (x.get("diesel_maj") or "")[:16], z, zk])
+    ch = []
+    rp = DATA / "prix_ch.yaml"
+    today = dt.date.today()
+    if rp.exists():
+        for r in (yaml.safe_load(rp.read_text(encoding="utf-8")) or {}).get("releves") or []:
+            try:
+                age = (today - dt.date.fromisoformat(str(r["date"]))).days
+            except Exception:  # noqa: BLE001
+                continue
+            if age > 45:
+                continue
+            lat, lon = r.get("lat"), r.get("lon")
+            if r.get("osm") and r["osm"] in by_id:
+                lat, lon = by_id[r["osm"]][1], by_id[r["osm"]][2]
+            if lat is None or lon is None:
+                continue
+            ch.append([lat, lon, r.get("station", "Station"), r.get("localite", ""), r.get("sp95"), r.get("diesel"),
+                       str(r["date"]), r.get("source", "relevé"), age > 14])
+    zones = []
+    for zid, (nom, lat, lon) in ZONES_OFDF_GEO.items():
+        z = (ch_ess.get("zones") or {}).get(zid) or {}
+        zones.append({"id": zid, "nom": nom, "lat": lat, "lon": lon,
+                      "sp95": (z.get("sp95") or {}).get("ch_chf"), "diesel": (z.get("diesel") or {}).get("ch_chf")})
+    return {"fr": fr, "ch": ch, "ch_total": len(osm_ch), "maj_fr": ess.get("genere_le")}, zones
+
+
 # ------------------------------------------------------------------ main
 
 def main(out: Path):
@@ -554,7 +655,7 @@ def main(out: Path):
     out.mkdir(parents=True)
     # fichiers statiques
     shutil.copy(SITE / "base.css", out / "style.css")
-    for f in ("calc.js", "app.js"):
+    for f in ("calc.js", "app.js", "essence.js"):
         shutil.copy(SITE / f, out / f)
     for d in ("fonts", "img", "vendor", "v1"):
         if (SITE / d).exists():
@@ -616,9 +717,25 @@ def main(out: Path):
     dests = latest.get("destinations") or []
     mags = {d["id"]: d for d in ((pub.get("magasins") or {}).get("destinations") or [])}
     fx_now = sy["fx"]
-    render("page.html", "essence/", 1, "Prix de l'essence aux frontières suisses aujourd'hui | Panier Suisse France",
-           "Prix du jour du sans plomb et du diesel dans les stations françaises près de la Suisse, et aux autres frontières, comparés au prix suisse.",
-           "essence", content=page_essence(sy, zones_ess, ch_ess, maj_ess, dests, fx_now), wide=True)
+    stations, ofdf_zones = donnees_stations(extra, dests, ch_ess, (extra.get("essence") or {}).get("fx", {}).get("eur_chf") or fx_now)
+    (out / "data/stations.json").write_text(json.dumps(stations, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    route = calibrer_routes(latest["origines"], dests) if latest.get("origines") else {"facteur": 1.3, "kmh": 60}
+    sig_body = ("Station : \nLocalité : \nPrix sans plomb 95 (CHF/L) : \nPrix diesel (CHF/L) : \nDate du relevé : \n"
+                "(Une photo du panneau de prix est la bienvenue.)")
+    import urllib.parse as _u
+    signal_url = (f"mailto:{site['contact_email']}?subject=" + _u.quote("Prix essence") + "&body=" + _u.quote(sig_body)
+                  if site.get("contact_email") else
+                  "https://github.com/GregBrocard/Panier-suisse-france/issues/new?title=" + _u.quote("Prix essence : ")
+                  + "&labels=prix&body=" + _u.quote(sig_body))
+    ess_data = {"root": "../", "lacs": (extra.get("carte") or {}).get("lacs", []), "usure": sy["regles"]["usure_chf_km"], "ofdf_zones": ofdf_zones, "route": route,
+                "ref_defaut": {"sp95": sy["essence"].get("sp95_ch"), "diesel": sy["essence"].get("diesel_ch")},
+                "ofdf_date": ch_ess.get("date_texte") or "", "signal_url": signal_url}
+    upd_ess = (f"Stations françaises : prix officiels du {date_longue(maj_ess)}. " if maj_ess else "") + \
+              f"Prix moyens suisses : douane suisse, {ch_ess.get('date_texte') or 'mensuel'}."
+    render("essence.html", "essence/", 1, "Où faire le plein ? Stations les moins chères près de chez vous | Panier Suisse France",
+           "Indiquez votre localité : la station qui vous fait le plus économiser, trajet compris, en Suisse ou en France voisine.",
+           "essence", content=page_essence(sy, zones_ess, ch_ess, maj_ess, dests, fx_now), upd_text=upd_ess,
+           usure=nf(sy["regles"]["usure_chf_km"]), data_json=json.dumps(ess_data, ensure_ascii=False).replace("</", "<\\/"))
     render("page.html", "zones/", 1, "Les villes françaises où les Suisses font leurs courses | Panier Suisse France",
            "Annemasse, Saint-Julien, Pontarlier, Saint-Louis… Supermarchés, essence et économie depuis la Suisse, ville par ville.",
            "zones", content=page_zones_index(dests, mags, zones_ess, publies), wide=True)
