@@ -27,7 +27,8 @@ for flow in ["IPC-2025", "IPC-2015"]:
         if "COICOP" in cl.group(1) or "PRODUIT" in cl.group(1):
             cl_body += cl.group(2)
     codes = re.findall(r'<str:Code id="([^"]+)"[^>]*>.*?<com:Name xml:lang="fr">([^<]+)</com:Name>', cl_body, re.S)
-    hits = [c for c, n in codes if re.search(r"^(Lait|Beurre|Fromage|Yaourt|Huile|Œuf|Oeuf)", n.strip())]
+    hits = [c for c, n in codes if len(c) == 5 and re.search(r" - (Lait|Beurre|Fromage|Yaourt|Huile|Autres huiles|Œuf|Oeuf)", n)]
+    print("   codes retenus", [(c, n) for c, n in codes if c in hits])
     for code in hits[:20]:
         key = ".".join(code if d == prod_dim else "" for d in order)
         d = requests.get(f"https://bdm.insee.fr/series/sdmx/data/{flow}/{key}", params={"lastNObservations": 1},
@@ -36,5 +37,5 @@ for flow in ["IPC-2025", "IPC-2015"]:
             a = dict(re.findall(r'(\w+)="([^"]*)"', m.group(1)))
             o = dict(re.findall(r'(\w+)="([^"]*)"', m.group(2)))
             t = a.get("TITLE_FR", "")
-            if "Ensemble des ménages" in t and "France" in t and "mensuel" in t.lower():
+            if "nsemble des ménages" in t and "France" in t and "BRUT" in m.group(1) and a.get("FREQ") == "M":
                 print(f"   {a.get('IDBANK')} | {t[:160]} | {o.get('TIME_PERIOD')} {o.get('OBS_VALUE')}")
