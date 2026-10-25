@@ -1,0 +1,11 @@
+# Prix relevés en Suisse, station par station (mode « Où faire le plein »).
+# Ce sont des relevés personnels ou envoyés par des visiteurs, vérifiés avant d'être ajoutés ici.
+# Un prix de plus de 14 jours est affiché « à confirmer » ; au-delà de 45 jours, il n'est plus utilisé.
+#
+# Pour ajouter une station : copier un bloc, remplir, enregistrer (directement sur GitHub depuis le téléphone).
+#   station : nom affiché            localite : commune          lat / lon : position (clic droit sur la carte
+#   sp95 / diesel : CHF par litre    date : AAAA-MM-JJ             OpenStreetMap ou Google Maps > copier)
+#   source : « relevé personnel », « visiteur », « affichage à la pompe »…
+#   osm : identifiant OpenStreetMap si connu (facultatif, sert à rattacher le prix à la bonne station)
+releves: []
+#  - { station: "Exemple SA", localite: "Morges", lat: 46.5110, lon: 6.4980, sp95: 1.99, diesel: 2.09, date: "2026-10-25", source: "relevé personnel" }
