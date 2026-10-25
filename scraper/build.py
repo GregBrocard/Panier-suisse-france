@@ -34,7 +34,8 @@ def safe(fn, *a, default=None, label=""):
         return fn(*a)
     except Exception as e:  # noqa: BLE001
         log(f"!! {label or fn.__name__} : {e.__class__.__name__}: {str(e)[:200]}")
-        traceback.print_exc()
+        if __import__('os').environ.get('SCRAPER_DEBUG') == '2':
+            traceback.print_exc()
         return default
 
 

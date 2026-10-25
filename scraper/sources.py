@@ -16,10 +16,21 @@ import requests
 UA = {"User-Agent": "panier-suisse-france (https://github.com/GregBrocard/Panier-suisse-france)"}
 
 
-def _get(url, **kw):
-    r = requests.get(url, headers={**UA, **kw.pop("headers", {})}, timeout=90, **kw)
-    r.raise_for_status()
-    return r
+def _get(url, tries: int = 5, **kw):
+    """GET avec reprises : certains serveurs publics (INSEE) coupent les connexions en rafale."""
+    import time
+    headers = {**UA, **kw.pop("headers", {})}
+    for i in range(tries):
+        try:
+            r = requests.get(url, headers=headers, timeout=90, **kw)
+            if r.status_code in (429, 500, 502, 503, 504):
+                raise requests.HTTPError(f"{r.status_code}", response=r)
+            r.raise_for_status()
+            return r
+        except (requests.ConnectionError, requests.Timeout, requests.HTTPError) as e:
+            if i == tries - 1:
+                raise
+            time.sleep(4 * (i + 1))
 
 
 # ------------------------------------------------------------------ BCE
@@ -43,6 +54,8 @@ def ecb_eur_chf_daily_last() -> dict:
 
 def insee_series(idbank: str) -> tuple[str, dict[str, float]]:
     """Série BDM INSEE complète. Renvoie (titre, {mois: valeur})."""
+    import time
+    time.sleep(1.5)  # politesse envers l'API INSEE
     r = _get(f"https://bdm.insee.fr/series/sdmx/data/SERIES_BDM/{idbank}")
     title = re.search(r'TITLE_FR="([^"]+)"', r.text)
     obs = re.findall(r'TIME_PERIOD="(\d{4}-\d{2})" OBS_VALUE="([\d.]+)"', r.text)
