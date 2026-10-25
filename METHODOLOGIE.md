@@ -70,7 +70,7 @@ Cette méthode suppose que l'écart d'un magasin à la moyenne est le même dans
 - plein en France (option) = litres × (prix suisse − prix moyen de la zone) ;
 - TVA suisse : si les achats dépassent 150 CHF par personne, 2,6 % (taux réduit alimentaire) sur la totalité ;
 - seuil de rentabilité = coût du trajet ÷ taux d'économie.
-- temps (facultatif) : l'utilisateur peut indiquer ce que vaut une heure pour lui (coût d'opportunité) ; coût = durée de trajet aller-retour (OSRM) × valeur horaire.
+- temps : la durée de trajet aller-retour (OSRM) est affichée à part comme coût d'opportunité (durée × valeur d'une heure, 25 CHF/h par défaut à titre d'exemple ou la valeur indiquée par l'utilisateur) ; elle n'est pas déduite de l'économie calculée.
 L'usure du véhicule n'est pas comptée.
 
 ## 5. Règles douanières rappelées (OFDF, ch.ch, 2026)

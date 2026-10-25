@@ -110,6 +110,8 @@ button{font:inherit;color:inherit}
 .bill .r{display:flex;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line);padding-bottom:7px}
 .bill .r span:last-child{font-variant-numeric:tabular-nums;white-space:nowrap}
 .bill .r.t{border-bottom:0;font-weight:700}
+.opp{font-size:14px;color:var(--ink-2);background:var(--tint);padding:12px 14px;margin-top:4px}
+.opp b{color:var(--ink)}
 .warn{font-size:14px;color:var(--ink-2);border-left:2px solid var(--red);padding-left:10px}
 .waiting{border-top:3px solid var(--line);padding-top:22px;color:var(--muted);font-size:17px}
 .map{position:relative;border:1px solid var(--line);background:var(--out);aspect-ratio:16/9;max-width:100%}
@@ -228,8 +230,8 @@ footer{margin-top:80px;padding-top:16px;border-top:1px solid var(--ink);display:
       </div>
       <div class="field"><label for="vtime">Votre temps vaut (CHF/heure)
           <span class="info"><button type="button" class="ibtn" aria-expanded="false" aria-label="Pourquoi compter son temps">?</button>
-            <span class="pop" role="note" hidden><b>Le coût d'opportunité</b>Une heure sur la route, c'est une heure que vous ne passez pas ailleurs : au travail, en famille, au repos. Indiquez ce que vaut une heure pour vous, par exemple votre salaire horaire. Laissez 0 pour ne pas en tenir compte.</span></span></label>
-        <input id="vtime" type="number" min="0" step="5" value="0"></div>
+            <span class="pop" role="note" hidden><b>Le coût d'opportunité</b>Une heure sur la route, c'est une heure que vous ne passez pas ailleurs : au travail, en famille, au repos. Indiquez ce que vaut une heure pour vous, par exemple votre salaire horaire. Ce chiffre n'entre pas dans le calcul des économies : il est affiché à part, pour information.</span></span></label>
+        <input id="vtime" type="number" min="0" step="5" placeholder="par exemple 25"></div>
       <label class="chk"><input id="fill" type="checkbox"> Je fais aussi le plein en France</label>
       <div class="field off" id="tankField"><label for="tank">Litres d'essence</label><input id="tank" type="number" min="0" step="1" value="50" disabled></div>
       <div class="field"><label for="km">Distance aller (km)</label><input id="km" type="number" min="0" step="1" placeholder="calculée automatiquement"></div>
@@ -455,8 +457,8 @@ footer{margin-top:80px;padding-top:16px;border-top:1px solid var(--ink);display:
     const z=fd(st.dest); let fuelG=0;
     if($('#fill').checked && z && z.moyenne_chf && z.moyenne_chf.sp95 && fch.sp95) fuelG=(+$('#tank').value||0)*(fch.sp95.ch_chf-z.moyenne_chf.sp95);
     const lim=150*persons, vat=fr>lim?fr*0.026:0;
-    const mins=t?2*t[1]:Math.round(2*km/60*60), vt=Math.max(0,+$('#vtime').value||0), timeC=vt*mins/60;
-    return {spend,km,t,rate,fr,gross,road,fuelG,vat,lim,persons,w,mins,vt,timeC,net:gross-road+fuelG-vat-timeC};
+    const mins=t?2*t[1]:Math.round(2*km), vIn=+$('#vtime').value, vt=vIn>0?vIn:25, timeC=vt*mins/60;
+    return {spend,km,t,rate,fr,gross,road,fuelG,vat,lim,persons,w,mins,vt,vGiven:vIn>0,timeC,net:gross-road+fuelG-vat};
   }
   function idxNow(){
     const m=MAG[st.dest]; if(!m||!m.magasins.length) return {idx:1,name:null};
@@ -475,14 +477,15 @@ footer{margin-top:80px;padding-top:16px;border-top:1px solid var(--ink);display:
     let h=r('Vos courses en Suisse',nf(c.spend)+' CHF')+r('Les mêmes en France',nf(c.fr)+' CHF')+r('Différence',sg(c.gross))+r(`Essence aller-retour, ${2*c.km} km`,'+ '+nf(c.road)+' CHF');
     if($('#fill').checked) h+=r('Plein en France',sg(c.fuelG));
     if(c.vat) h+=r('TVA à la douane','+ '+nf(c.vat)+' CHF');
-    const hm=m=>m>=60?Math.floor(m/60)+' h '+String(m%60).padStart(2,'0'):m+' min';
-    h+= c.vt>0 ? r(`Votre temps, ${hm(c.mins)} de route`, '+ '+nf(c.timeC)+' CHF') : r(`Temps de route aller-retour`, hm(c.mins));
+
     h+=r(c.net>=0?'Vous économisez':'Vous perdez',nf(Math.abs(c.net))+' CHF','t');
-    const be=c.rate>0?(c.road+c.timeC-c.fuelG)/c.rate:null;
+    const be=c.rate>0?(c.road-c.fuelG)/c.rate:null;
     if(be&&be>0) h+=`<p class="muted">Rentable dès ${nf(be,0)} CHF de courses environ.</p>`;
     if(c.fr>c.lim) h+=`<p class="warn">Plus de ${c.lim} CHF d'achats : déclarez-les à la douane, la TVA suisse s'applique sur tout.</p>`;
     const avgKg=meat.length?meat.reduce((a,v)=>a+v.ch*v.qty,0)/meat.reduce((a,v)=>a+v.qty,0):40;
     if(c.w.m*c.spend/avgKg>c.persons) h+=`<p class="warn">Vous dépassez sans doute 1 kg de viande par personne, la limite en franchise.</p>`;
+    const after=c.net-c.timeC;
+    h+=`<div class="opp"><b>${c.mins} minutes sur la route</b> (aller-retour). C'est le coût d'opportunité : ce temps, vous pourriez le passer à autre chose. ${c.vGiven?'À':'À titre d\'exemple, à'} ${nf(c.vt,0)} CHF de l'heure, il vaut <b>${nf(c.timeC,0)} CHF</b>${after>=0?`, et le trajet reste avantageux (${nf(after,0)} CHF de gain).`:`, soit plus que ce que vous économisez (${nf(-after,0)} CHF de perte si l'on compte le temps).`}</div>`;
     $('#bill').innerHTML=h;
   }
 
