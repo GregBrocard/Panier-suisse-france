@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title }}</title>
+<meta name="description" content="{{ description }}">
+<link rel="canonical" href="{{ site.base_url }}/{{ path }}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ site.nom }}">
+<meta property="og:title" content="{{ og_title or title }}">
+<meta property="og:description" content="{{ description }}">
+<meta property="og:url" content="{{ site.base_url }}/{{ path }}">
+<meta property="og:image" content="{{ site.base_url }}/{{ og_image or 'og/accueil.png' }}">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="fr_CH">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#da291c">
+<link rel="icon" href="{{ root }}icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{ root }}icon-180.png">
+<link rel="manifest" href="{{ root }}manifest.webmanifest">
+<link rel="preload" href="{{ root }}fonts/IBMPlexSans-Regular-Latin1.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="{{ root }}style.css?v={{ version }}">
+{% if jsonld %}<script type="application/ld+json">{{ jsonld | safe }}</script>{% endif %}
+{% if site.goatcounter %}<script data-goatcounter="https://{{ site.goatcounter }}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>{% endif %}
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="{{ root }}"><span class="cross" aria-hidden="true"></span>{{ site.nom }}</a>
+    <nav aria-label="Rubriques">
+      {% for href, label, key in nav %}<a href="{{ root }}{{ href }}"{% if key == active %} aria-current="page"{% endif %}>{{ label }}</a>{% endfor %}
+    </nav>
+  </header>
+{% block main %}{% endblock %}
+  <footer class="foot">
+    <nav aria-label="Pied de page">
+      <a href="{{ root }}a-propos/">À propos</a>
+      <a href="{{ root }}methodologie/">Méthodologie</a>
+      <a href="{{ root }}barometre/">Baromètre du mois</a>
+      <a href="{{ root }}widget/">Intégrer le calculateur</a>
+      <a href="{{ root }}donnees/">Données ouvertes</a>
+      <a href="{{ root }}mentions-legales/">Mentions légales</a>
+      <a href="{{ root }}confidentialite/">Confidentialité</a>
+      <a href="https://github.com/GregBrocard/Panier-suisse-france" rel="noopener">Code source</a>
+    </nav>
+    <p>Données mises à jour automatiquement le 20 de chaque mois (essence : chaque jour). Méthode version {{ basket_version }}, site version 2. Aucun lien commercial avec les enseignes comparées.</p>
+    <p>Sources : OFAG, INSEE, BCE, OFDF, Open Prices (Open Food Facts), UFC-Que Choisir, relevé Migros, flux officiel des prix des carburants. Trajets et adresses : © contributeurs OpenStreetMap (ODbL), OSRM. Fond de carte : Natural Earth. Localités : swisstopo. Photos : Wikimedia Commons.</p>
+  </footer>
+</div>
+{% block scripts %}{% endblock %}
+</body>
+</html>

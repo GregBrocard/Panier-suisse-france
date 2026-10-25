@@ -1,3 +1,6 @@
-debug/
-__pycache__/
 *.pyc
+.pytest_cache/
+__pycache__/
+_site/
+debug/
+dist/

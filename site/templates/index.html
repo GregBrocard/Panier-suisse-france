@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% block main %}
+  <div class="intro">
+    <h1>Faire ses courses en France, ça vaut le coup ?</h1>
+    <p class="keep">Remplissez les cases, puis appuyez sur « Calculer ». Le calcul tient compte des prix du magasin, du trajet, de la douane et de l'usure de la voiture.</p>
+    <p class="upd" id="upd">{{ upd_text }}</p>
+  </div>
+
+  <div class="tool">
+    <div class="panel">
+      <h3><span class="step">1</span>Votre trajet</h3>
+      <form class="sentence" id="sentence" autocomplete="off" onsubmit="return false">
+        <span class="ln">Je pars de
+          <span class="slot" id="slotFrom"><input id="from" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="fromList" aria-label="Ville de départ" placeholder="insérer un lieu" spellcheck="false"><ul class="list" id="fromList" role="listbox" hidden></ul></span></span>
+        <span class="ln">pour faire mes courses à
+          <span class="slot" id="slotTo"><select id="to" aria-label="Ville française" class="empty"></select></span></span>
+        <span class="ln">et je dépense d'habitude
+          <span class="slot" id="slotSpend"><input id="spend" type="number" inputmode="numeric" min="0" step="10" placeholder="montant" aria-label="Montant en francs"></span> CHF.</span>
+      </form>
+      <p class="hint">Tapez les premières lettres de votre ville ou son NPA, par exemple « Lau » ou « 1003 ».</p>
+      <div class="map" id="map" aria-label="Carte de la frontière franco-suisse"></div>
+    </div>
+
+    <div class="panel side">
+      <h3><span class="step">2</span>Vos habitudes</h3>
+      <div class="field"><span class="lab">Vous achetez surtout</span><div class="seg" id="mix" role="group" aria-label="Ce que vous achetez"></div></div>
+      <div class="pair">
+        <div class="field"><label for="conso" id="consoLab">Essence (L/100 km)</label><input id="conso" type="number" min="0" step="0.1" value="7"></div>
+        <div class="field"><label for="persons">Adultes dans la voiture
+          <span class="info"><button type="button" class="ibtn" aria-expanded="false" aria-label="Règles de la douane">?</button>
+            <span class="pop" role="note" hidden><b>Douane suisse, par personne et par jour</b>
+              <ul><li>150 CHF d'achats en franchise. Au-delà, la TVA suisse (2,6 % sur l'alimentation) est due sur tout le montant.</li>
+                  <li>1 kg de viande en franchise. Au-delà : 17 CHF par kg (23 CHF au-delà de 10 kg).</li>
+                  <li>Beurre et crème : 1 kg. Huiles et graisses : 5 kg.</li>
+                  <li>Alcool : 5 L sous 18 % vol., 1 L au-dessus. Tabac : 250 cigarettes.</li></ul>
+              <span class="muted">Plus il y a d'adultes, plus la franchise totale est grande. <a href="{{ root }}douane/">Guide complet</a>.</span></span></span></label>
+          <input id="persons" type="number" min="1" max="9" step="1" value="1"></div>
+      </div>
+      <div class="field"><label for="vtime">Votre temps vaut (CHF/heure)
+          <span class="info"><button type="button" class="ibtn" aria-expanded="false" aria-label="Pourquoi compter son temps">?</button>
+            <span class="pop" role="note" hidden><b>Le coût d'opportunité</b>Une heure sur la route, c'est une heure que vous ne passez pas ailleurs : au travail, en famille, au repos. Indiquez ce que vaut une heure pour vous, par exemple votre salaire horaire. Ce chiffre n'entre pas dans le calcul des économies : il est affiché à part, pour information.</span></span></label>
+        <input id="vtime" type="number" min="0" step="5" placeholder="par exemple 25"></div>
+      <label class="chk"><input id="fill" type="checkbox"> Je fais aussi le plein en France
+        <span class="info"><button type="button" class="ibtn" aria-expanded="false" aria-label="Règles pour l'essence">?</button>
+          <span class="pop" role="note" hidden><b>Essence et douane</b>Le carburant contenu dans le réservoir du véhicule passe la douane sans formalité. Pour un bidon de réserve, renseignez-vous auprès de l'OFDF. Prix du jour par station : <a href="{{ root }}essence/">page Essence</a>.</span></span></label>
+      <div class="field off" id="tankField"><label for="tank">Litres d'essence</label><input id="tank" type="number" min="0" step="1" value="50" disabled></div>
+      <div class="field"><label for="km">Distance aller (km)</label><input id="km" type="number" min="0" step="1" placeholder="calculée automatiquement"></div>
+      <details class="more" id="more"><summary>Plus d'options</summary>
+        <div class="form">
+          <div class="field"><label for="mode">Comment y allez-vous ?</label>
+            <select id="mode"><option value="essence">Voiture à essence</option><option value="diesel">Voiture diesel</option><option value="ev">Voiture électrique</option><option value="tp">Transports publics</option></select></div>
+          <div class="field" id="tpField" hidden><label for="tpCost">Prix du billet aller-retour (CHF)</label><input id="tpCost" type="number" min="0" step="0.5" placeholder="par exemple 12"></div>
+          <label class="chk"><input id="wear" type="checkbox" checked> Compter l'usure de la voiture ({{ "%.2f"|format(regles.usure_chf_km)|replace('.', ',') }} CHF/km, TCS)</label>
+          <label class="chk"><input id="card" type="checkbox"> Ma carte prend des frais sur les achats en euros (≈ 1,5 %)</label>
+        </div>
+      </details>
+      <button type="button" class="go" id="go">Calculer mes économies</button>
+      <p class="missing" id="missing" role="alert" hidden></p>
+    </div>
+  </div>
+
+  <div class="answer" id="answer">
+    <p class="waiting" id="waiting">Votre résultat s'affichera ici après « Calculer ».</p>
+    <div class="res" id="res" hidden><div class="verdict" id="verdict"></div><div class="bill" id="bill"></div></div>
+    <p class="embedfoot">Calcul fourni par <a href="{{ site.base_url }}/" target="_blank" rel="noopener">{{ site.nom }}</a>, données publiques mises à jour chaque mois.</p>
+  </div>
+
+  {% if site.affiliation %}
+  <aside class="note" id="partners" hidden><b>Payer en euros sans frais</b> — {% for a in site.affiliation %}<a href="{{ a.url }}" rel="sponsored noopener" target="_blank">{{ a.nom }}</a>{% if a.texte %} ({{ a.texte }}){% endif %}{% if not loop.last %}, {% endif %}{% endfor %}. <span class="muted">Liens rémunérés : ils n'influencent aucun chiffre du site.</span></aside>
+  {% endif %}
+
+  <section id="magasins">
+    <div class="head"><h2 id="magTitle">Les magasins</h2><p id="magLede">Choisissez une ville pour voir ses magasins, du moins cher au plus cher.</p></div>
+    <div class="split" id="magSplit">
+      <figure class="photo-tall" id="magPhoto" hidden><img src="{{ root }}img/jura.webp" alt="Le poste des douanes françaises à Jougne, en venant de Vallorbe" loading="lazy">
+        <figcaption>Douanes françaises à Jougne, en venant de Vallorbe. Photo : <span data-credit="jura"></span>.</figcaption></figure>
+      <div><div class="how2" id="how2" hidden><b>Comment on estime les prix d'un magasin</b><ol>
+        <li>On part des prix moyens en France.</li>
+        <li>Que Choisir relève chaque jour le prix du même caddie (une centaine de produits) dans chaque supermarché.</li>
+        <li>Si ce caddie coûte 10 % de plus dans un magasin qu'en moyenne en France, on compte vos courses 10 % plus cher dans ce magasin.</li>
+        <li>On compare ensuite aux prix suisses et on retire le prix du trajet.</li></ol></div>
+        <div class="stores" id="stores" role="radiogroup" aria-label="Magasin"></div><p class="muted" id="magSrc" style="margin-top:10px"></p></div>
+    </div>
+  </section>
+
+  <section id="mois">
+    <div class="head"><h2>Les écarts de prix ce mois-ci</h2><p>Prix en Suisse comparés aux prix moyens en France, tout converti en francs suisses. <a href="{{ root }}barometre/">Baromètre détaillé</a>.</p></div>
+    <div class="figs" id="figs"></div>
+  </section>
+
+  <section id="histoire">
+    <div class="head"><h2>{{ titre_fl }}</h2>
+      <p>Écart de prix entre la Suisse et la France sur 14 fruits et légumes, depuis 2006. Au-dessus de zéro, la Suisse est plus chère.</p></div>
+    <figure class="photo-wide bw"><img src="{{ root }}img/marchande.webp" alt="Une marchande des quatre-saisons et sa charrette de légumes, Paris, vers 1900" loading="lazy" style="object-position:50% 70%">
+      <figcaption>Marchande des quatre-saisons, Paris, vers 1900. Photo : <span data-credit="marchande"></span>.</figcaption></figure>
+    <div class="chart">
+      <div class="cap2"><span>Écart Suisse / France, en %</span><span class="legend"><span><span class="sw" style="background:var(--ink)"></span>moyenne sur 12 mois</span><span><span class="sw" style="background:var(--muted)"></span>chaque mois</span></span></div>
+      <div class="canvas"><canvas id="gap" aria-label="Écart de prix fruits et légumes Suisse France depuis 2006" role="img"></canvas></div>
+      <p class="chartnote">{{ resume_fl }}</p>
+    </div>
+    <div class="chart">
+      <div class="cap2"><span>Taux de change : francs suisses pour 1 euro (BCE)</span></div>
+      <div class="canvas s"><canvas id="fx" aria-label="Taux de change EUR CHF" role="img"></canvas></div>
+      <p class="chartnote">{{ resume_fx }}</p>
+    </div>
+  </section>
+
+  <section id="viande">
+    <div class="head"><h2>{{ titre_viande }}</h2>
+      <p>Prix au kilo des morceaux courants. En France, moyenne nationale de l'INSEE. En Suisse, prix Migros (médiane des produits équivalents, hors bio et hors promotion) réduit de 5 % : c'est l'écart mesuré entre Migros et les discounters Aldi et Lidl (K-Tipp, août 2025). La viande suisse et la viande française vendue en moyenne en France ne sont pas toujours de même origine ni de même label. Tout est en francs suisses.</p></div>
+    <figure class="photo-wide bw"><img src="{{ root }}img/boucherie.webp" alt="Étal de boucherie parisien, années 1920" loading="lazy" style="object-position:50% 40%">
+      <figcaption>« La vie chère à Paris », étal de boucherie, années 1920. Photo : <span data-credit="boucherie"></span>.</figcaption></figure>
+    <div class="chart">
+      <div class="cap2"><span>Prix au kilo, en CHF</span><span class="legend"><span><span class="sw" style="background:var(--red)"></span>Suisse</span><span><span class="sw" style="background:var(--fr)"></span>France</span></span></div>
+      <div class="canvas" style="height:280px"><canvas id="meatC" aria-label="Prix de la viande au kilo en Suisse et en France" role="img"></canvas></div>
+    </div>
+    <div class="tbl"><table id="tMeat"><thead><tr><th>Morceau</th><th>Suisse, CHF/kg</th><th>France, CHF/kg</th><th>Écart</th></tr></thead><tbody></tbody></table></div>
+  </section>
+
+  <section id="prix">
+    <div class="head"><h2>Les prix produit par produit</h2><p>Tous les prix sont en francs suisses (CHF). Pour la France, le prix en euros est indiqué en petit, converti au taux de la BCE. Touchez une ligne de fruits et légumes pour voir son historique.</p></div>
+    <div class="tables">
+      <div class="tbl"><table id="tOff"><caption>Fruits et légumes</caption><thead><tr><th>Produit</th><th>Suisse, CHF/kg</th><th>France, CHF/kg</th><th>Écart</th></tr></thead><tbody></tbody></table></div>
+      <div class="chart">
+        <div class="cap2"><span id="itemTitle">Historique</span><span class="legend"><span><span class="sw" style="background:var(--red)"></span>Suisse</span><span><span class="sw" style="background:var(--fr)"></span>France</span></span></div>
+        <div class="canvas"><canvas id="item" role="img" aria-label="Historique du prix du produit choisi"></canvas></div>
+      </div>
+      <div class="tbl"><table id="tCrem"><caption>Produits laitiers et huile</caption><thead><tr><th>Produit</th><th>Suisse, CHF</th><th>France, CHF (estimé)</th><th>Écart</th></tr></thead><tbody></tbody></table>
+        <p class="chartnote">France : l'INSEE ne publie plus le prix moyen de ces produits depuis fin 2019. On part de ce dernier prix et on le fait évoluer chaque mois comme l'indice officiel des prix du même produit (INSEE). C'est une estimation.</p></div>
+      <div class="tbl"><table id="tBrand"><caption>Produits de marque identiques</caption><thead><tr><th>Produit</th><th>Suisse, CHF</th><th>France, CHF</th><th>Écart</th></tr></thead><tbody></tbody></table></div>
+      <div class="tbl"><table id="tFuel"><caption>Carburant</caption><thead><tr><th>Où</th><th>Sans plomb, CHF/L</th><th>Diesel, CHF/L</th><th>Stations</th></tr></thead><tbody></tbody></table>
+        <p class="chartnote">Prix du jour, station par station : <a href="{{ root }}essence/">page Essence</a>.</p></div>
+    </div>
+  </section>
+
+  {% if site.newsletter_url %}
+  <section id="lettre"><div class="note"><b>Le chiffre du mois dans votre boîte mail.</b> Une fois par mois, les nouveaux écarts de prix et l'essence la moins chère. <a class="btn" href="{{ site.newsletter_url }}" rel="noopener" target="_blank">S'inscrire</a></div></section>
+  {% endif %}
+
+  <section id="lac" style="padding-top:64px">
+    <figure class="photo-wide"><img src="{{ root }}img/leman.webp" alt="Saint-Gingolph au bord du Léman : la rivière Morge sépare le village suisse du village français" loading="lazy">
+      <figcaption>Saint-Gingolph, au bord du Léman : la Morge sépare la Suisse, à gauche, de la France. Photo : <span data-credit="leman"></span>.</figcaption></figure>
+  </section>
+
+  <section id="methode">
+    <div class="head"><h2>D'où viennent les chiffres</h2><p><a href="{{ root }}methodologie/">Méthodologie complète</a></p></div>
+    <div class="docs">
+      <details class="doc" open><summary>Sources</summary><div class="b"><ul>
+        <li><b>Fruits, légumes, produits laitiers, Suisse :</b> Office fédéral de l'agriculture (OFAG), prix de consommation mensuels.</li>
+        <li><b>Fruits, légumes, viande, France :</b> INSEE, prix moyens de vente au détail. <b>Produits laitiers, France :</b> dernier prix moyen INSEE (2019) actualisé avec l'indice des prix harmonisé de l'INSEE.</li>
+        <li><b>Viande et marques, Suisse :</b> relevé mensuel du site Migros. Pour la viande, prix réduit de 5 % pour correspondre aux discounters (Aldi, Lidl), d'après le test de prix K-Tipp d'août 2025.</li>
+        <li><b>Marques, France :</b> Open Prices (Open Food Facts), tickets de caisse partagés.</li>
+        <li><b>Niveau de prix de chaque magasin :</b> comparateur des supermarchés de l'UFC-Que Choisir.</li>
+        <li><b>Carburant :</b> prix officiels des stations françaises (chaque jour) ; tableau T 4.4 de l'OFDF pour la Suisse.</li>
+        <li><b>Villes de départ et trajets :</b> répertoire officiel des localités de swisstopo ; itinéraires OSRM sur OpenStreetMap.</li>
+        <li><b>Usure de la voiture :</b> frais kilométriques TCS 2026. <b>Pondération du panier :</b> indice des prix harmonisé, Suisse, 2025 (Eurostat).</li>
+        <li><b>Change :</b> taux de référence de la Banque centrale européenne.</li>
+      </ul></div></details>
+      <details class="doc"><summary>Comment le prix d'un magasin est estimé</summary><div class="b">
+        <p>Que Choisir publie chaque jour le prix du même caddie d'une centaine de produits dans chaque supermarché français. Pour savoir ce qu'est un supermarché « moyen », on a tiré au hasard des magasins dans toute la France et pris celui du milieu (la médiane). Un magasin dont le caddie coûte 8 % de moins que ce magasin du milieu est dit « 8 % moins cher qu'un supermarché français moyen ».</p>
+        <p>On applique cet indice aux prix moyens français, puis on compare à la Suisse. C'est une estimation : un magasin peut être bon marché en épicerie et plus cher en boucherie.</p></div></details>
+      <details class="doc"><summary>Comment le trajet est calculé</summary><div class="b">
+        <p>Distance routière la plus rapide entre le centre de votre localité et le centre de la ville choisie (OpenStreetMap). Le coût compte l'aller et le retour : l'essence au prix suisse, et l'usure de la voiture (pneus, entretien, perte de valeur liée aux kilomètres) selon les frais kilométriques du TCS. Vous pouvez corriger la distance et décocher l'usure.</p>
+        <p>Le temps affiché ajoute 15 minutes forfaitaires pour le passage de la douane et le parking. Il n'est pas déduit de l'économie.</p></div></details>
+      <details class="doc"><summary>Limites</summary><div class="b">
+        <p>Les fruits et légumes suivent les saisons : la moyenne sur 12 mois est plus fiable qu'un mois isolé. Leur origine n'est pas contrôlée. Les promotions ne sont comptées ni en Suisse ni en France.</p>
+        <p>La viande suisse vient d'une seule enseigne (Migros), ajustée de 5 % vers les prix des discounters. Pour les marques, quand Open Prices a moins de 5 relevés, le chiffre est indicatif.</p>
+        <p>Côté français, les discounters sans drive (Lidl, Aldi) ne sont pas couverts par Que Choisir : on compare un prix suisse de discounter à un supermarché français classique, ce qui tend à sous-estimer l'économie.</p>
+        <p>Le taux de la BCE est interbancaire ; celui de votre carte est en général 1 à 2 % moins bon (option dans le calculateur).</p></div></details>
+      <details class="doc"><summary>Douane suisse et détaxe française</summary><div class="b"><ul>
+        <li>150 CHF d'achats par personne et par jour en franchise. Au-delà, la TVA suisse est due sur tout le montant (2,6 % pour l'alimentation).</li>
+        <li>Viande : 1 kg par personne et par jour en franchise ; au-delà, 17 CHF par kg jusqu'à 10 kg, 23 CHF au-delà.</li>
+        <li>Alcool : 5 L sous 18 % vol., 1 L au-dessus. Tabac : 250 cigarettes.</li>
+        <li>Détaxe : au-delà de 100 € d'achats le même jour dans le même magasin, un résident suisse peut se faire rembourser la TVA française (5,5 % sur l'alimentation), moins les frais de l'opérateur. <a href="{{ root }}douane/">Guide de la douane</a>.</li>
+      </ul></div></details>
+    </div>
+  </section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ root }}vendor/chart.umd.min.js"></script>
+<script src="{{ root }}calc.js?v={{ version }}"></script>
+<script id="data" type="application/json">{{ data_json | safe }}</script>
+<script src="{{ root }}app.js?v={{ version }}"></script>
+{% endblock %}

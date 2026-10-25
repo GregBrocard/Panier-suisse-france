@@ -835,11 +835,63 @@
   "ch": {
    "source": "https://www.bazg.admin.ch/dam/fr/sd-web/GEosTpUlCewh/Monatstabelle%20T%204.4f.02.pdf",
    "date_texte": "20 octobre 2026",
-   "diesel": {
+   "zones": {
+    "bale": {
+     "sp95": {
+      "ch_chf": 2.16,
+      "etranger_eur": 2.179
+     },
+     "diesel": {
+      "ch_chf": 2.44,
+      "etranger_eur": 2.229
+     }
+    },
+    "kreuzlingen": {
+     "sp95": {
+      "ch_chf": 2.13,
+      "etranger_eur": 2.089
+     },
+     "diesel": {
+      "ch_chf": 2.41,
+      "etranger_eur": 2.219
+     }
+    },
+    "tessin": {
+     "sp95": {
+      "ch_chf": 2.04,
+      "etranger_eur": 1.989
+     },
+     "diesel": {
+      "ch_chf": 2.32,
+      "etranger_eur": 2.189
+     }
+    },
+    "geneve": {
+     "sp95": {
+      "ch_chf": 2.19,
+      "etranger_eur": 2.2
+     },
+     "diesel": {
+      "ch_chf": 2.48,
+      "etranger_eur": 2.4
+     }
+    },
+    "liechtenstein": {
+     "sp95": {
+      "ch_chf": 2.17,
+      "etranger_eur": 1.759
+     },
+     "diesel": {
+      "ch_chf": 2.46,
+      "etranger_eur": 2.099
+     }
+    }
+   },
+   "sp95": {
     "ch_chf": 2.19,
     "fr_eur": 2.2
    },
-   "sp95": {
+   "diesel": {
     "ch_chf": 2.48,
     "fr_eur": 2.4
    }

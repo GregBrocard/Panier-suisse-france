@@ -1,4 +1,4 @@
-# Panier de référence Suisse / France — version 1
+# Panier de référence Suisse / France — version 2 (octobre 2026 : crèmerie, nouvelles marques)
 # ===============================================
 # Trois couches, chacune avec ses sources :
 #
@@ -13,7 +13,7 @@
 # qty : quantité de référence d'un panier hebdomadaire pour un ménage de deux personnes.
 # Toute modification de ce fichier incrémente basket_version.
 
-basket_version: 1
+basket_version: 2
 
 officiel:
   # ---------------- Fruits ----------------
@@ -66,6 +66,25 @@ officiel:
       ofag: { cube: BreadCerealsFlourBakedGoods, products: ["Pain mi-blanc , non bio, moyenne"] },
       insee: ["000442423"], fill_months: 3 }
 
+  # ---------------- Crèmerie et huile (groupe « cremerie », v2) ----------------
+  # France : l'INSEE a arrêté ses prix moyens de ces produits en décembre 2019. Prix estimé chaque mois =
+  # prix moyen INSEE de décembre 2019 × évolution de l'indice des prix harmonisé du même poste (INSEE, base 2025).
+  - { id: lait,     label: "Lait UHT (CH drink 2,7 %, FR demi-écrémé)", cat: Crèmerie, groupe: cremerie, unit: L, qty: 3.0,
+      ofag: { cube: MilkDairyProducts, products: ["Lait drink UHT"] },
+      fr_indexe: { insee_arrete: "000442480", base_mois: "2019-12", indice: "011812298", facteur: 1 } }
+  - { id: beurre,   label: Beurre,             cat: Crèmerie, groupe: cremerie, unit: kg, qty: 0.25,
+      ofag: { cube: MilkDairyProducts, products: ["Beurre de choix"] },
+      fr_indexe: { insee_arrete: "000442490", base_mois: "2019-12", indice: "011812325", facteur: 4 } }
+  - { id: emmental, label: "Emmental (CH doux, FR français)", cat: Crèmerie, groupe: cremerie, unit: kg, qty: 0.3,
+      ofag: { cube: MilkDairyProducts, products: ["Emmentaler doux"] },
+      fr_indexe: { insee_arrete: "000442487", base_mois: "2019-12", indice: "011812307", facteur: 1 } }
+  - { id: yaourt,   label: Yaourt nature,      cat: Crèmerie, groupe: cremerie, unit: kg, qty: 1.0,
+      ofag: { cube: MilkDairyProducts, products: ["Yogourt nature"] },
+      fr_indexe: { insee_arrete: "000849398", base_mois: "2019-12", indice: "011812310", facteur: 2 } }
+  - { id: huile,    label: Huile de tournesol, cat: Crèmerie, groupe: cremerie, unit: L, qty: 0.5, fill_months: 4,
+      ofag: { cube: Oilseeds, products: ["Huile de tournesol, non bio, import"] },
+      fr_indexe: { insee_arrete: "000442493", base_mois: "2019-12", indice: "011812322", facteur: 1 } }
+
 # Prix suisse de la viande ramené au niveau des discounters (Aldi, Lidl) :
 # Migros environ 5 % plus cher qu'Aldi et Lidl sur un panier de 100 produits (K-Tipp, août 2025).
 viande_ajustement_discount: 0.05
@@ -83,7 +102,8 @@ viande:
 
 marques:
   # Produits de marque identiques des deux côtés, comparés au prix unitaire (par kg ou par litre).
-  # France : Open Prices, médiane nationale des relevés hors promotion sur 12 mois (code-barres ean_fr,
+  # France : Open Prices, médiane nationale des relevés hors promotion sur 6 mois s'il y a au moins 10 relevés,
+  #          sinon sur 12 mois (code-barres ean_fr,
   #          conditionnement size_fr). Suisse : Migros, produit de la même marque et gamme.
   - { id: nutella,  label: "Nutella",                   unit: kg, qty: 0.75, ean_fr: ["3017620421006"], size_fr: 0.75,
       migros: { query: nutella, include: [nutella], exclude: [biscuits, b-ready, plant, go], size: [0.35, 1.0] } }
@@ -97,6 +117,15 @@ marques:
       migros: { query: kinder bueno, include: [kinder, bueno], exclude: [white, mini, ice, glace, eis], size: [0.04, 0.5] } }
   - { id: lindt,    label: "Lindt Excellence noir 100 g", unit: kg, qty: 0.1, ean_fr: ["3046920010047"], size_fr: 0.1,
       migros: { query: lindt excellence, include: [lindt, excellence], exclude: [lait, milk, orange, menthe, poire, sel, caramel, blanc], size: [0.1, 0.1] } }
+
+  - { id: oreo,     label: "Oreo Original",             unit: kg, qty: 0.154, ean_fr: ["7622300336738"], size_fr: 0.154,
+      migros: { query: oreo original, include: [oreo, original], exclude: [mini, cream, cône, cones, ice, golden, double], size: [0.15, 0.16] } }
+  - { id: babybel,  label: "Mini Babybel (12 × 22 g)",  unit: kg, qty: 0.264, ean_fr: ["3073781178005"], size_fr: 0.264,
+      migros: { query: mini babybel, include: [babybel], exclude: [allégé, light, protéines, rouleaux], size: [0.25, 0.28] } }
+  - { id: evian,    label: "Evian (6 × 1,5 L)",         unit: L,  qty: 3.0,  ean_fr: ["3068320120263"], size_fr: 9.0,
+      migros: { query: evian, include: [evian], exclude: [mini, sport, sparkling, gazeuse, 500ml, 330ml, 750ml], size: [8.5, 9.5] } }
+  - { id: pesto,    label: "Barilla Pesto alla Genovese", unit: kg, qty: 0.19, ean_fr: ["8076809513753"], size_fr: 0.19,
+      migros: { query: barilla pesto genovese, include: [barilla, pesto], any: [genovese], exclude: [rosso, vegan, bio], size: [0.18, 0.2] } }
 
 carburant:
   # France : prix officiels station par station (data.economie.gouv.fr), par zone frontalière

@@ -14,41 +14,58 @@ permissions:
   contents: write
   pages: write
   id-token: write
+  issues: write
 
 concurrency:
-  group: releve
+  group: publication
   cancel-in-progress: false
 
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
       - run: pip install -r requirements.txt
+      - name: Tests des calculs
+        run: python -m pytest -q tests
       - name: Construire les données
         if: ${{ inputs.site_seulement != 'true' }}
         run: python -m scraper.build
+      - name: Essence du jour
+        if: ${{ inputs.site_seulement != 'true' }}
+        run: python -m scraper.essence || true
       - name: Construire le site
-        run: python -m scraper.site
+        run: python -m scraper.site --out _site
       - name: Enregistrer le relevé
         run: |
           git config user.name "releve-bot"
           git config user.email "releve-bot@users.noreply.github.com"
-          git add data/ site/index.html site/public.html
+          git add data/
           git diff --cached --quiet || git commit -m "Relevé $(date +%Y-%m-%d)"
           git pull --rebase -X theirs origin main || true
           git push
-      - name: Préparer la publication
+      - name: Signaler les alertes (ticket GitHub)
+        if: ${{ inputs.site_seulement != 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          mkdir -p _site
-          cp site/public.html _site/index.html
-          cp data/latest.json data/series.json METHODOLOGIE.md _site/
-          cp -r site/img _site/img
-          cp -r site/v1 _site/v1
+          python - <<'PY'
+          import json, subprocess
+          r = json.load(open("data/controles.json"))
+          if r.get("alertes"):
+              body = "Le robot a relevé des points à vérifier lors du relevé du " + r["date"] + " :\n\n" + \
+                     "\n".join("- " + a for a in r["alertes"]) + "\n\nValeurs reprises du mois précédent :\n\n" + \
+                     ("\n".join("- " + a for a in r["reprises"]) or "- aucune") + \
+                     "\n\nLe site est publié ; les valeurs douteuses sont signalées. Détail : data/controles.json."
+              subprocess.run(["gh", "issue", "create", "--title", "Relevé du " + r["date"] + " : à vérifier", "--body", body], check=False)
+          PY
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site

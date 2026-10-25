@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block main %}
+  <main class="page{% if wide %} wide{% endif %}">
+{{ content | safe }}
+  </main>
+{% endblock %}
+{% block scripts %}{% if script %}<script>{{ script | safe }}</script>{% endif %}{% endblock %}

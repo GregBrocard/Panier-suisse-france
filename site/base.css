@@ -242,3 +242,7 @@ body.embed{padding-bottom:16px}
 body.embed .top,body.embed .intro p:not(.keep),body.embed section,body.embed .foot{display:none}
 body.embed .embedfoot{display:block!important;font-size:12px;color:var(--muted);margin-top:10px}
 .embedfoot{display:none}
+.page th,.page td{white-space:normal}
+.page th:first-child,.page td:first-child{min-width:110px}
+@media (max-width:640px){.page th,.page td{padding:9px 8px 9px 0;font-size:14px}.page .tbl{margin-inline:-4px}}
+.page th,.page td{text-align:left}

@@ -107,3 +107,40 @@ def taux_economie(gaps: dict, w: dict, idx: float = 1.0) -> float:
         tot += wk * (1 - 1 / (1 + g_adj))
         sw += wk
     return tot / sw if sw else 0.0
+
+
+def calcul(p: dict, S: dict) -> dict:
+    """Portage Python de PSF.compute (site/calc.js), pour les pages générées (zones, baromètre).
+    Les deux versions sont comparées par les tests (tests/test_calc.py)."""
+    R = S["regles"]
+    spend, km = max(0.0, p.get("spend", 0)), max(0.0, p.get("km", 0))
+    persons = max(1, round(p.get("persons", 1)))
+    rate = taux_economie(S["gaps"], p["w"], p.get("idx", 1.0))
+    fr = spend * (1 - rate)
+    gross = spend - fr
+    mode = p.get("mode", "essence")
+    car = mode != "tp"
+    fuel_ch = S["essence"]["diesel_ch"] if mode == "diesel" else S["essence"]["sp95_ch"]
+    if mode == "tp":
+        energy = max(0.0, p.get("tpCost", 0))
+    elif mode == "ev":
+        energy = 2 * km * (p.get("conso") or R["conso_ev_kwh"]) / 100 * R["electricite_chf_kwh"]
+    else:
+        energy = 2 * km * p.get("conso", 0) / 100 * (fuel_ch or 2.2)
+    wear = 2 * km * R["usure_chf_km"] if car and p.get("wear") else 0.0
+    lim = R["franchise_chf"] * persons
+    vat = fr * R["tva_alimentaire"] if fr > lim else 0.0
+    card = fr * R["frais_carte"] if p.get("card") else 0.0
+    meat_kg = p["w"].get("m", 0) * fr / S["viande_fr_chf_kg"] if S.get("viande_fr_chf_kg") else 0.0
+    excess = max(0.0, meat_kg - R["viande_franchise_kg"] * persons)
+    duty, done, rest = 0.0, 0.0, excess
+    for up_to, r in R["viande_droits"]:
+        cap = float("inf") if up_to is None else up_to - done
+        q = min(rest, cap)
+        duty += q * r
+        rest -= q
+        done += q
+        if rest <= 0:
+            break
+    net = gross - energy - wear - vat - card - duty
+    return {"rate": rate, "fr": fr, "gross": gross, "road": energy + wear, "vat": vat, "duty": duty, "net": net}

@@ -1,0 +1,51 @@
+name: Essence du jour
+
+on:
+  schedule:
+    - cron: "41 5 * * *"   # chaque jour à 05:41 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: publication
+  cancel-in-progress: false
+
+jobs:
+  essence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Relever les prix des stations
+        run: python -m scraper.essence
+      - name: Construire le site
+        run: python -m scraper.site --out _site
+      - name: Enregistrer
+        run: |
+          git config user.name "releve-bot"
+          git config user.email "releve-bot@users.noreply.github.com"
+          git add data/essence.json data/barometre/
+          git diff --cached --quiet || git commit -m "Essence $(date +%Y-%m-%d)"
+          git pull --rebase -X theirs origin main || true
+          git push
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: essence
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
