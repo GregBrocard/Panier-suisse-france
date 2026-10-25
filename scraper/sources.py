@@ -199,10 +199,16 @@ def fuel_ch_ofdf() -> dict:
 
 # ------------------------------------------------------------------ Open Prices (France)
 
-def openprices_fr(eans: list[str], days: int = 365) -> dict | None:
-    """Médiane des prix relevés en France pour ces codes-barres sur les `days` derniers jours."""
-    since = (dt.date.today() - dt.timedelta(days=days)).isoformat()
-    prices, products = [], set()
+def openprices_fr(eans: list[str], days: int = 365, short_days: int = 183, min_short: int = 10) -> dict | None:
+    """Médiane des prix relevés en France (hors promotion) pour ces codes-barres.
+
+    Fenêtre de 6 mois s'il y a au moins `min_short` relevés sur cette période (prix plus récents),
+    sinon 12 mois. Le nombre de relevés et la fenêtre retenue sont renvoyés.
+    """
+    today = dt.date.today()
+    since = (today - dt.timedelta(days=days)).isoformat()
+    since_short = (today - dt.timedelta(days=short_days)).isoformat()
+    rows, products = [], set()
     for ean in eans:
         r = _get("https://prices.openfoodfacts.org/api/v1/prices",
                  params={"product_code": ean, "currency": "EUR", "date__gte": since, "size": 100,
@@ -214,11 +220,25 @@ def openprices_fr(eans: list[str], days: int = 365) -> dict | None:
                 continue
             if it.get("price_is_discounted"):
                 continue
-            prices.append(float(it["price"]))
+            rows.append((it.get("date") or "", float(it["price"])))
             p = it.get("product") or {}
             if p.get("product_name"):
                 products.add(f'{p.get("product_name")} {p.get("product_quantity") or ""}{p.get("product_quantity_unit") or ""}')
-    if not prices:
+    if not rows:
         return None
-    return {"median": round(statistics.median(prices), 3), "n": len(prices),
-            "min": min(prices), "max": max(prices), "products": sorted(products)[:3], "since": since}
+    recent = [v for d, v in rows if d >= since_short]
+    use, window, start = (recent, 6, since_short) if len(recent) >= min_short else ([v for _, v in rows], 12, since)
+    return {"median": round(statistics.median(use), 3), "n": len(use), "n_12m": len(rows), "fenetre_mois": window,
+            "min": min(use), "max": max(use), "products": sorted(products)[:3], "since": start}
+
+
+# ------------------------------------------------------------------ Eurostat (indices des prix harmonisés)
+
+def eurostat_hicp(geo: str, coicop: str, since: str = "2019-11") -> dict[str, float]:
+    """Indice des prix harmonisé mensuel (base 2025 = 100) d'un poste COICOP."""
+    r = _get("https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/prc_hicp_midx",
+             params={"geo": geo, "unit": "I25", "coicop": coicop, "sinceTimePeriod": since,
+                     "format": "JSON", "lang": "fr"})
+    j = r.json()
+    t = {v: k for k, v in j["dimension"]["time"]["category"]["index"].items()}
+    return {t[int(k)]: float(v) for k, v in j.get("value", {}).items()}

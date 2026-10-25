@@ -1,0 +1,18 @@
+# Réglages du site public. Une valeur vide = fonction désactivée.
+nom: Panier Suisse France
+# Adresse publique du site (sert aux liens de partage, au plan du site et aux images de partage).
+# Le jour où un nom de domaine est branché (ex. https://courses-france.ch), il suffit de changer cette ligne.
+base_url: https://gregbrocard.github.io/Panier-suisse-france
+# Contact public (page Mentions légales). Une adresse e-mail dédiée peut remplacer le lien.
+contact_url: https://github.com/GregBrocard/Panier-suisse-france/issues
+contact_email: ""
+editeur: Greg Brocard
+# Statistiques de visite sans cookies (GoatCounter, gratuit) : indiquer le code du compte, ex. "panier-suisse-france".
+goatcounter: ""
+# Lettre d'information : lien vers le formulaire d'inscription (ex. Buttondown, Brevo). Vide = bloc masqué.
+newsletter_url: ""
+# Liens rémunérés (parrainage de cartes, etc.). Chaque entrée : { nom, url, texte }. Vide = rien n'est affiché.
+# Règle : jamais de lien payant avec une enseigne comparée sur le site.
+affiliation: []
+# Publicité : vide = aucune publicité.
+publicite: ""
