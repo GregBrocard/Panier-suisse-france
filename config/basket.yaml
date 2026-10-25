@@ -25,9 +25,9 @@ items:
     type: generic
     unit: L
     ref_qty: 2
-    query: lait UHT demi-écrémé
-    match: { include: [lait], any: [demi, drink, "1.5%", "1,5%"], exclude: [chocolat, avoine, soja, amande, lactose, bio, entier, crème, creme, café, cafe] }
-    size: { min: 0.5, max: 1.5 }
+    query: lait demi-écrémé
+    match: { include: [lait], any: [demi, drink, "1.5%", "1,5%"], exclude: [chocolat, avoine, soja, amande, lactose, bio, entier, crème, creme, café, cafe, poudre, condensé] }
+    size: { min: 0.5, max: 2.0 }
 
   - id: beurre
     label: Beurre (doux / de table)
@@ -230,7 +230,7 @@ items:
     type: brand
     unit: kg
     ref_qty: 0.75
-    query: nutella 750
+    query: nutella
     match: { include: [nutella], exclude: [biscuits, b-ready, plant, vegan, go] }
     size: { min: 0.75, max: 0.75 }
 
@@ -240,7 +240,7 @@ items:
     type: brand
     unit: L
     ref_qty: 1.5
-    query: coca-cola 1.5
+    query: coca-cola
     match: { include: [coca], exclude: [zero, light, cherry, vanille, sans sucre, canette] }
     size: { min: 1.5, max: 1.5 }
 
@@ -260,7 +260,7 @@ items:
     type: brand
     unit: L
     ref_qty: 1.5
-    query: evian 1.5
+    query: evian
     match: { include: [evian], exclude: [brumisateur, spray, aromatisée, citron] }
     size: { min: 1.5, max: 1.5 }
 
@@ -270,6 +270,6 @@ items:
     type: brand
     unit: kg
     ref_qty: 0.5
-    query: kellogg's corn flakes
+    query: corn flakes
     match: { include: [corn, flakes], any: [kellogg], exclude: [miel, honey, chocolat, frosties] }
     size: { min: 0.25, max: 1.0 }

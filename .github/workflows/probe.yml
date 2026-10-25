@@ -32,7 +32,7 @@ jobs:
           PROBE_EXTRA: ${{ inputs.extra }}
         run: |
           mkdir -p debug
-          ${{ inputs.cmd }} 2>&1 | tee debug/_summary.txt
+          ( ${{ inputs.cmd }} ) 2>&1 | tee debug/_summary.txt
       # Les pages téléchargées sont publiées sur la branche "sonde" (écrasée à chaque fois)
       - name: Publier les pages sur la branche sonde
         if: always()

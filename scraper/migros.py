@@ -37,18 +37,20 @@ class Scraper:
                         headers=self.h, tag=f"migros_cards_{item['id']}")
         r.raise_for_status()
         out = []
-        for p in r.json() if isinstance(r.json(), list) else r.json().get("products", []):
-            name = " ".join(x for x in [p.get("brandLine") or p.get("brand"), p.get("name")] if x)
+        data = r.json()
+        for p in (data if isinstance(data, list) else data.get("products", [])):
             offer = p.get("offer") or {}
             price = offer.get("price") or {}
-            promo = offer.get("promotionPrice")
-            qty = offer.get("quantity") or price.get("quantity") or ""
+            brand = p.get("brandLine") or p.get("brand") or ""
+            name = " ".join(x for x in [brand, p.get("title") or p.get("name")] if x)
+            eff, adv = price.get("effectiveValue"), price.get("advertisedValue")
             out.append(Candidate(
-                name=name or p.get("title", ""),
-                price=parse_price((price.get("effectiveValue") if not promo else price.get("value")) or price.get("value")),
+                name=name,
+                price=parse_price(adv if adv else eff),
                 currency="CHF",
-                url=f"{BASE}/fr/product/{p.get('migrosId') or p.get('uid')}",
-                raw_size=str(qty),
-                promo=bool(promo),
+                url=p.get("productUrls") or f"{BASE}/fr/product/{p.get('migrosId')}",
+                raw_size=str(offer.get("quantity") or ""),
+                promo=(offer.get("type") not in (None, "STANDARD")) or (eff is not None and adv is not None and eff < adv),
+                variable_weight=bool(offer.get("isVariableWeight")),
             ))
         return out

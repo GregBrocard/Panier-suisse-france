@@ -32,6 +32,7 @@ class Candidate:
     promo: bool = False
     ean: str | None = None
     raw_size: str = ""
+    variable_weight: bool = False   # vendu au poids : le prix affiché est un prix unitaire
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -171,7 +172,7 @@ def finalize(item: dict, cand: Candidate) -> Candidate | None:
     if cand.size is None or cand.unit != item["unit"]:
         return None
     lo, hi = item.get("size", {}).get("min", 0), item.get("size", {}).get("max", 1e9)
-    if not (lo - 1e-9 <= cand.size <= hi + 1e-9):
+    if not cand.variable_weight and not (lo - 1e-9 <= cand.size <= hi + 1e-9):
         return None
     cand.unit_price = round(cand.price / cand.size, 4)
     return cand
