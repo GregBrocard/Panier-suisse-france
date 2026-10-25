@@ -3,14 +3,14 @@ name: Sonde des sites
 on:
   workflow_dispatch:
     inputs:
+      cmd:
+        description: "Commande à lancer"
+        default: "python -m scraper.probe"
       query:
-        description: "Mot recherché"
+        description: "Mot recherché (sonde)"
         default: "nutella"
       extra:
         description: "URL supplémentaires (tag=url;tag2=url2)"
-        default: ""
-      only:
-        description: "Limiter aux tags (séparés par des espaces)"
         default: ""
 
 permissions:
@@ -32,9 +32,10 @@ jobs:
           PROBE_EXTRA: ${{ inputs.extra }}
         run: |
           mkdir -p debug
-          python -m scraper.probe ${{ inputs.only }} | tee debug/_summary.txt
+          ${{ inputs.cmd }} 2>&1 | tee debug/_summary.txt
       # Les pages téléchargées sont publiées sur la branche "sonde" (écrasée à chaque fois)
       - name: Publier les pages sur la branche sonde
+        if: always()
         run: |
           cd debug
           git init -q -b sonde

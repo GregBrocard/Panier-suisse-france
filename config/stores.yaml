@@ -21,13 +21,6 @@ zones:
 
 stores:
   # ---------- Suisse (prix nationaux) ----------
-  - id: ch_coop
-    country: CH
-    chain: Coop
-    tier: standard
-    scraper: coop
-    zones: [annemasse, divonne, vallorbe]
-
   - id: ch_migros
     country: CH
     chain: Migros
@@ -42,34 +35,14 @@ stores:
     scraper: lidl_ch
     zones: [annemasse, divonne, vallorbe]
 
-  - id: ch_aldi
-    country: CH
-    chain: Aldi
+  # ---------- France ----------
+  - id: fr_lidl
+    country: FR
+    chain: Lidl
     tier: discount
-    scraper: aldi_ch
+    scraper: lidl_fr
     zones: [annemasse, divonne, vallorbe]
 
-  # ---------- France (prix par magasin) ----------
-  - id: fr_leclerc_annemasse
-    country: FR
-    chain: E.Leclerc
-    tier: standard
-    scraper: leclerc_drive
-    zones: [annemasse]
-    store: { city: Ville-la-Grand, postcode: "74100", search: annemasse }
-
-  - id: fr_leclerc_divonne
-    country: FR
-    chain: E.Leclerc
-    tier: standard
-    scraper: leclerc_drive
-    zones: [divonne]
-    store: { city: Gex, postcode: "01170", search: gex }
-
-  - id: fr_leclerc_vallorbe
-    country: FR
-    chain: E.Leclerc
-    tier: standard
-    scraper: leclerc_drive
-    zones: [vallorbe]
-    store: { city: Pontarlier, postcode: "25300", search: pontarlier }
+# Enseignes écartées : leurs sites bloquent les robots (protection DataDome ou Akamai).
+# Le projet ne contourne pas ces protections. Voir METHODOLOGIE.md, section Sources.
+#   Coop, Aldi Suisse, E.Leclerc Drive, Carrefour, Intermarché, Super U
