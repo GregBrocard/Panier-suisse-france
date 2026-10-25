@@ -1,0 +1,51 @@
+===== page 0
+T 4.4
+État: 20 octobre 2026
+Situation en zones 
+frontières suisses
+Situation dans les 
+zones frontières 
+étrangères
+Suisse Étranger
+EUR CHF
+Prix ct. Prix Cent Prix en ct. Prix en ct.
+Suisse Étranger au cours au cours
+achat vente
+0.9117 0.9416
+ Bâle  A (Weil) 216.00 217.90 198.66 205.17 + 17.34 - 10.83 
+ Kreuzlingen  A (Konstanz) 213.00 208.90 190.45 196.70 + 22.55 - 16.30 
+ Tessin  Italie 204.00 198.90 181.34 187.28 + 22.66 - 16.72 
+ Genève  France 219.00 220.00 200.57 207.15 + 18.43 - 11.85 
+ Liechtenstein  Autriche 217.00 175.90 160.37 165.63 + 56.63 - 51.37 
+ Bâle  A (Weil) 244.00 222.90 203.22 209.88 + 40.78 - 34.12 
+ Kreuzlingen  A (Konstanz) 241.00 221.90 202.31 208.94 + 38.69 - 32.06 
+ Tessin  Italie 232.00 218.90 199.57 206.12 + 32.43 - 25.88 
+ Genève  France 248.00 240.00 218.81 225.98 + 29.19 - 22.02 
+ Liechtenstein  Autriche 246.00 209.90 191.37 197.64 + 54.63 - 48.36 
+Remarques
+1)  La différence indiquée se calcule du prix pour le carburant de la zone frontière suisse moins le prix
+     pour le carburant de la zone frontière étrangère au cours d'achat.
+2) La différence indiquée se calcule du prix pour le carburant de la zone frontière étrangère au cours de vente
+     moins le prix pour le carburant de la zone frontière suisse.
+EURO-Cours change billets du: 20 octobre 2026 Achat Vente
+(100 Cent = 1 €) 0.9117 0.9416
+Cours d'achat =  cours auquel le voyageur étranger peut acheter des CHF en Suisse
+Cours de vente =  cours auquel le voyageur suisse obtient des EURO en Suisse
+Prix des carburants à la colonne dans les zones frontières
+suisses et étrangères
+Pour les étrangers,
+le carburant
+suisse est 
+meilleur marché (-)
+ou plus cher (+)
+diff. en ct./l 1)
+Pour les Suisses,
+le carburant
+étranger est
+meilleur marché (-)
+ou plus cher (+)
+diff. en ct./l 2)
+ Huile diesel
+ Essence 95 IOR
+Zones frontières
+Prix à la station-service par litre

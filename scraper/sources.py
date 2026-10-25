@@ -155,23 +155,46 @@ def _f(x):
 OFDF_T44 = "https://www.bazg.admin.ch/dam/fr/sd-web/GEosTpUlCewh/Monatstabelle%20T%204.4f.02.pdf"
 
 
+ZONES_OFDF = {"bale": "Bâle", "kreuzlingen": "Kreuzlingen", "tessin": "Tessin", "geneve": "Genève",
+              "liechtenstein": "Liechtenstein"}
+
+
+def parse_ofdf(text: str) -> dict:
+    """Lit le texte du tableau T 4.4.
+
+    Le PDF contient deux blocs de 5 zones (Bâle, Kreuzlingen, Tessin, Genève, Liechtenstein).
+    Vérifié le 25.10.2026 : le 1er bloc est l'essence 95, le 2e le diesel (le prix français du
+    1er bloc correspond au SP95 du flux officiel français et à la série INSEE, le 2e au gazole).
+    Les libellés « Huile diesel / Essence 95 » sont extraits dans l'ordre inverse : ne pas s'y fier.
+    """
+    date = re.search(r"[ÉE]tat\s*:\s*([^\n]+)", text)
+    rows = []
+    for line in text.splitlines():
+        for zid, name in ZONES_OFDF.items():
+            if re.search(rf"^\s*{name[:4]}", line, re.I) or line.strip().startswith(name):
+                nums = re.findall(r"\d{3}[.,]\d{2}", line)
+                if len(nums) >= 2:
+                    rows.append((zid, float(nums[0].replace(",", ".")) / 100, float(nums[1].replace(",", ".")) / 100))
+                break
+    zones = {}
+    half = len(rows) // 2
+    for i, (zid, ch, etr) in enumerate(rows):
+        kind = "sp95" if i < half else "diesel"
+        zones.setdefault(zid, {})[kind] = {"ch_chf": round(ch, 3), "etranger_eur": round(etr, 3)}
+    out = {"source": OFDF_T44, "date_texte": date.group(1).strip() if date else None, "zones": zones}
+    g = zones.get("geneve", {})
+    for kind in ("sp95", "diesel"):
+        if kind in g:
+            out[kind] = {"ch_chf": g[kind]["ch_chf"], "fr_eur": g[kind]["etranger_eur"]}
+    return out
+
+
 def fuel_ch_ofdf() -> dict:
-    """Tableau OFDF T 4.4 : prix à la colonne en zone frontière genevoise (ct./l)."""
+    """Tableau OFDF T 4.4 : prix à la colonne dans les zones frontières suisses et étrangères."""
     from pypdf import PdfReader
     r = _get(OFDF_T44)
     text = "\n".join(p.extract_text() or "" for p in PdfReader(io.BytesIO(r.content)).pages)
-    date = re.search(r"[ÉE]tat\s*:\s*([^\n]+)", text)
-    out = {"source": OFDF_T44, "date_texte": date.group(1) if date else None, "raw": text[:3000]}
-    # lignes "Genève (France) 219,00 220,00 ..." ; la 1re occurrence = diesel, la 2e = essence 95
-    lines = [l for l in text.splitlines() if re.search(r"Gen[eè]ve", l)]
-    nums = [re.findall(r"\d{3}[.,]\d{2}", l) for l in lines]
-    nums = [n for n in nums if len(n) >= 2]
-    if len(nums) >= 2:
-        out["diesel"] = {"ch_chf": float(nums[0][0].replace(",", ".")) / 100,
-                         "fr_eur": float(nums[0][1].replace(",", ".")) / 100}
-        out["sp95"] = {"ch_chf": float(nums[1][0].replace(",", ".")) / 100,
-                       "fr_eur": float(nums[1][1].replace(",", ".")) / 100}
-    return out
+    return parse_ofdf(text)
 
 
 # ------------------------------------------------------------------ Open Prices (France)
