@@ -1,0 +1,49 @@
+name: Relevé mensuel des prix
+
+on:
+  schedule:
+    # le 2 de chaque mois à 06:17 UTC (jour ouvrable après le 1er, hors pic de début de mois)
+    - cron: "17 6 2 * *"
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "Limiter à certaines enseignes (ex. ch_coop,fr_leclerc_annemasse)"
+        default: ""
+      debug:
+        description: "Garder les pages téléchargées (1 = oui)"
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Relever les prix
+        env:
+          SCRAPER_ONLY: ${{ inputs.only }}
+          SCRAPER_DEBUG: ${{ inputs.debug }}
+        run: python -m scraper.run
+      - name: Enregistrer le relevé
+        if: ${{ inputs.only == '' || inputs.only == null }}
+        run: |
+          git config user.name "releve-bot"
+          git config user.email "releve-bot@users.noreply.github.com"
+          git add data/
+          git diff --cached --quiet || git commit -m "Relevé $(date +%Y-%m)"
+          git push
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: releve
+          path: |
+            data/latest.json
+            debug/
+          retention-days: 14
