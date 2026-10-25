@@ -1,3 +1,7 @@
+<!doctype html>
+<html lang="fr">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Panier Suisse France</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Combien économisez-vous en faisant vos courses en France ? Indiquez votre ville et où vous allez : le calcul tient compte des prix du magasin, du trajet et de la douane.">
@@ -149,6 +153,11 @@ figcaption{font-size:13px;color:var(--muted)}
 .store .s{font-size:14px;color:var(--muted)}
 .store .g{text-align:right;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
 .store .g small{display:block;font-weight:400;font-size:13px;color:var(--muted)}
+.store .lv{display:inline-block;margin-top:4px;font-size:13px;font-weight:600}
+.how2{background:var(--tint);padding:16px 18px;font-size:15px;color:var(--ink-2);display:grid;gap:6px;margin-bottom:14px}
+.how2 b{color:var(--ink)}
+.how2 ol{margin:0;padding-left:20px;display:grid;gap:4px}
+@media (max-width:640px){.panel{padding:20px}.info .pop{position:fixed;left:16px;right:16px;top:auto;bottom:16px;width:auto;max-height:70vh;overflow:auto}}
 
 .figs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--ink);border-bottom:1px solid var(--line)}
 .fig{padding:20px 18px;display:grid;gap:2px;align-content:start;border-right:1px solid var(--line);text-align:center}
@@ -249,7 +258,11 @@ footer{margin-top:80px;padding-top:16px;border-top:1px solid var(--ink);display:
     <div class="split" id="magSplit">
       <figure class="photo-tall" id="magPhoto" hidden><img src="img/jura.webp" alt="Le poste des douanes françaises à Jougne, en venant de Vallorbe" loading="lazy">
         <figcaption>Douanes françaises à Jougne, en venant de Vallorbe. Photo : <span data-credit="jura"></span>.</figcaption></figure>
-      <div><div class="stores" id="stores" role="radiogroup" aria-label="Magasin"></div><p class="muted" id="magSrc" style="margin-top:10px"></p></div>
+      <div><div class="how2" id="how2" hidden><b>Comment on estime les prix d'un magasin</b><ol>
+        <li>On part des prix moyens en France.</li>
+        <li>Que Choisir relève chaque jour le prix du même caddie (une centaine de produits) dans chaque supermarché.</li>
+        <li>Si ce caddie coûte 10 % de plus dans un magasin qu'en moyenne en France, on compte vos courses 10 % plus cher dans ce magasin.</li>
+        <li>On compare ensuite aux prix suisses et on retire le prix du trajet.</li></ol></div><div class="stores" id="stores" role="radiogroup" aria-label="Magasin"></div><p class="muted" id="magSrc" style="margin-top:10px"></p></div>
     </div>
   </section>
 
@@ -317,7 +330,7 @@ footer{margin-top:80px;padding-top:16px;border-top:1px solid var(--ink);display:
         <li><b>Change :</b> taux de référence de la Banque centrale européenne.</li>
       </ul><p>Code, données et méthodologie complète sur <a href="https://github.com/GregBrocard/Panier-suisse-france" target="_blank" rel="noopener">GitHub</a>. Mise à jour automatique le 20 de chaque mois.</p></div></details>
       <details class="doc"><summary>Comment le prix d'un magasin est estimé</summary><div class="b">
-        <p>Que Choisir publie le prix du même panier d'une centaine de produits dans chaque magasin. On le compare à la médiane d'un échantillon de magasins tirés au hasard dans toute la France : un indice de 0,92 veut dire que le magasin est 8 % moins cher que le magasin français typique.</p>
+        <p>Que Choisir publie chaque jour le prix du même caddie d'une centaine de produits dans chaque supermarché français. Pour savoir ce qu'est un supermarché « moyen », on a tiré au hasard des magasins dans toute la France et pris celui du milieu (la médiane). Un magasin dont le caddie coûte 8 % de moins que ce magasin du milieu est dit « 8 % moins cher qu'un supermarché français moyen ».</p>
         <p>On applique cet indice aux prix moyens français, puis on compare à la Suisse. C'est une estimation : un magasin peut être bon marché en épicerie et plus cher en boucherie.</p></div></details>
       <details class="doc"><summary>Comment le trajet est calculé</summary><div class="b">
         <p>Distance routière la plus rapide entre le centre de votre localité et le centre de la ville choisie, calculée une fois par mois sur OpenStreetMap. Le coût compte l'aller et le retour au prix suisse de l'essence. Vous pouvez corriger la distance dans le formulaire.</p></div></details>
@@ -343,7 +356,7 @@ footer{margin-top:80px;padding-top:16px;border-top:1px solid var(--ink);display:
   const D = JSON.parse(document.getElementById('data').textContent);
   const L = D.latest, H = D.series;
   const $ = s => document.querySelector(s);
-  const nf = (v,d=2) => v==null||isNaN(v) ? '—' : v.toLocaleString('fr-CH',{minimumFractionDigits:d,maximumFractionDigits:d});
+  const nf = (v,d=2) => v==null||isNaN(v) ? '—' : v.toLocaleString('fr-FR',{minimumFractionDigits:d,maximumFractionDigits:d}).replace(/[\u202f\u00a0]/g,'\u2009');
   const pc = v => v==null||isNaN(v) ? '—' : (v>0?'+':v<0?'−':'') + Math.abs(Math.round(v)) + ' %';
   const MO = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
   const ml = m => { if(!m) return '—'; const [y,mm]=m.split('-'); return MO[+mm-1]+' '+y; };
@@ -495,15 +508,17 @@ footer{margin-top:80px;padding-top:16px;border-top:1px solid var(--ink);display:
     $('#magTitle').textContent = dd ? 'Les magasins à '+dd.nom : 'Les magasins';
     $('#magPhoto').hidden = !dd; $('#magSplit').classList.toggle('solo', !dd);
     $('#magLede').textContent = dd ? 'Du moins cher au plus cher. Choisissez un magasin pour refaire le calcul à son niveau de prix.' : 'Choisissez une ville dans le formulaire pour voir ses magasins, du moins cher au plus cher.';
-    if(!dd){ $('#stores').innerHTML='<p class="muted" style="padding:14px 0;border-top:1px solid var(--ink)">Choisissez une ville dans le formulaire pour voir ses magasins.</p>'; $('#magSrc').textContent=''; return; }
+    if(!dd){ $('#stores').innerHTML='<p class="muted" style="padding:14px 0;border-top:1px solid var(--ink)">Choisissez une ville dans le formulaire pour voir ses magasins.</p>'; $('#magSrc').textContent=''; $('#how2').hidden=true; return; }
     if(!m||!m.magasins.length){ $('#stores').innerHTML='<p class="muted" style="padding:14px 0;border-top:1px solid var(--ink)">Pas encore de prix par magasin pour cette ville : le calcul utilise la moyenne française.</p>'; $('#magSrc').textContent=''; return; }
     const ready=st.o!=null && +$('#spend').value>0;
-    const lvl=idx=>Math.abs(idx-1)<.01?'prix dans la moyenne française':(idx<1?Math.round((1-idx)*100)+' % moins cher que la moyenne':Math.round((idx-1)*100)+' % plus cher que la moyenne');
+    const lvl=idx=>{ const p=Math.round(Math.abs(idx-1)*100);
+      return p<1?'<span class="lv">Prix dans la moyenne française</span>':`<span class="lv ${idx<1?'down':'up'}">${p} % ${idx<1?'moins cher':'plus cher'} qu'un supermarché français moyen</span>`; };
     const row=(id,n,s,idx)=>{ const on=String(st.store)===String(id), c=ready?compute(idx):null;
-      return `<label class="store"><input type="radio" name="store" value="${id}" ${on?'checked':''}><span><span class="n">${esc(n)}</span><br><span class="s">${s}</span></span><span class="g">${c?(c.net>=0?'':'−')+nf(Math.abs(c.net),0)+' CHF':'—'}<small>${lvl(idx)}</small></span></label>`; };
-    $('#stores').innerHTML=row('avg','Tous les magasins de la ville',m.magasins.length+' magasins, prix médian',m.indice_median)+m.magasins.map(s=>row(s.dm,s.nom,esc(s.adresse||s.cp||''),s.indice)).join('');
+      return `<label class="store"><input type="radio" name="store" value="${id}" ${on?'checked':''}><span><span class="n">${esc(n)}</span><br><span class="s">${s}</span><br>${lvl(idx)}</span><span class="g">${c?(c.net>=0?'':'−')+nf(Math.abs(c.net),0)+' CHF':'—'}<small>${c?(c.net>=0?'économisés':'perdus'):''}</small></span></label>`; };
+    $('#stores').innerHTML=row('avg','Tous les magasins de la ville',m.magasins.length>1?m.magasins.length+' magasins, prix du magasin du milieu':'1 seul magasin référencé',m.indice_median)+m.magasins.map(s=>row(s.dm,s.nom,esc(s.adresse||s.cp||''),s.indice)).join('');
     $('#stores').onchange=e=>{ st.store=e.target.value; update(); };
-    $('#magSrc').innerHTML=`Montant : votre économie estimée, trajet compris${ready?'':' (remplissez le formulaire pour la voir)'}. Niveau de prix comparé à la médiane de ${L.magasins.panel.n} magasins français tirés au hasard. Source : <a href="https://www.quechoisir.org/carte-interactive-drives-n21243/" target="_blank" rel="noopener">UFC-Que Choisir</a>.`;
+    $('#how2').hidden=false;
+    $('#magSrc').innerHTML=`${ready?'Montant à droite : ce que vous économisez dans ce magasin, trajet compris.':'Remplissez le formulaire pour voir combien vous économisez dans chaque magasin.'} Source des prix par magasin : <a href="https://www.quechoisir.org/carte-interactive-drives-n21243/" target="_blank" rel="noopener">UFC-Que Choisir</a>.`;
   }
 
   // ---------- carte

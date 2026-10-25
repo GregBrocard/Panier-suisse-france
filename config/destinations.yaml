@@ -2,6 +2,8 @@
 # Chaque magasin Que Choisir des départements listés est rattaché à la destination la plus proche,
 # s'il se trouve à moins de `rayon_km` de son centre. Les stations-service sont prises dans le même rayon.
 # Pour ajouter une ville : une ligne de plus ici, le robot fait le reste au passage suivant.
+# `points` (facultatif) : pour une zone qui regroupe plusieurs communes voisines, un magasin est rattaché
+# s'il est à moins de `rayon_km` de l'un de ces points. lat/lon reste le point d'arrivée du trajet.
 
 rayon_km: 7
 departements: ["74", "01", "39", "25", "68", "90"]
@@ -9,10 +11,10 @@ departements: ["74", "01", "39", "25", "68", "90"]
 destinations:
   - { id: annemasse,    nom: Annemasse,               lat: 46.1934, lon: 6.2358, passage: "depuis Genève" }
   - { id: stjulien,     nom: Saint-Julien-en-Genevois, lat: 46.1440, lon: 6.0820, passage: "depuis Genève" }
-  - { id: stgenis,      nom: Saint-Genis-Pouilly,     lat: 46.2430, lon: 6.0250, passage: "depuis Genève" }
-  - { id: ferney,       nom: Ferney-Voltaire,         lat: 46.2560, lon: 6.1080, passage: "depuis Genève" }
-  - { id: gex,          nom: Gex,                     lat: 46.3330, lon: 6.0580, passage: "depuis Nyon" }
-  - { id: divonne,      nom: Divonne-les-Bains,       lat: 46.3570, lon: 6.1390, passage: "depuis Nyon" }
+  - { id: genisferney,  nom: Saint-Genis / Ferney,     lat: 46.2500, lon: 6.0660, passage: "depuis Genève",
+      points: [[46.2430, 6.0250], [46.2560, 6.1080], [46.2560, 6.0590]] }
+  - { id: divonnegex,   nom: Divonne / Gex,            lat: 46.3290, lon: 6.0890, passage: "depuis Nyon",
+      points: [[46.3570, 6.1390], [46.3330, 6.0580], [46.2960, 6.0710]] }
   - { id: thonon,       nom: Thonon-les-Bains,        lat: 46.3705, lon: 6.4790, passage: "par Saint-Gingolph ou en bateau" }
   - { id: evian,        nom: Évian-les-Bains,         lat: 46.4010, lon: 6.5900, passage: "par Saint-Gingolph ou en bateau" }
   - { id: lesrousses,   nom: Les Rousses,             lat: 46.4840, lon: 6.0630, passage: "par La Cure" }

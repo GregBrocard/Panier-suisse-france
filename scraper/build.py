@@ -266,8 +266,9 @@ def build_magasins(cfg, dcfg):
                 geo[key] = c
         if key not in geo:
             continue
-        near = min(dests, key=lambda d: _km(geo[key], (d["lat"], d["lon"])))
-        dist = _km(geo[key], (near["lat"], near["lon"]))
+        dkm = lambda d: min(_km(geo[key], tuple(p)) for p in [(d["lat"], d["lon"])] + (d.get("points") or []))
+        near = min(dests, key=dkm)
+        dist = dkm(near)
         if dist > rayon:
             continue
         g = st["paniers"]["global"]
@@ -282,7 +283,7 @@ def build_magasins(cfg, dcfg):
     for d in dests:
         ms = sorted(per_dest[d["id"]], key=lambda r: r["panier"])
         idx = [m["indice"] for m in ms]
-        out_dests.append({**d, "magasins": ms,
+        out_dests.append({**{k: v for k, v in d.items() if k != "points"}, "magasins": ms,
                           "indice_median": round(statistics.median(idx), 4) if idx else None,
                           "panier_median": round(statistics.median([m["panier"] for m in ms]), 2) if ms else None})
         log(f"   {d['id']:11s} {len(ms)} magasins, indice médian {out_dests[-1]['indice_median']}")

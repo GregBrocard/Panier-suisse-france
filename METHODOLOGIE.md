@@ -1,10 +1,10 @@
 # Méthodologie — Panier Suisse × France
 
-Version 1.2 · octobre 2026 (toutes les localités suisses, 14 villes françaises, magasins par ville)
+Version 1.3 · octobre 2026 (toutes les localités suisses, 12 zones françaises, magasins par zone)
 
 ## 1. Question posée
 
-Combien coûtent les mêmes courses du quotidien en Suisse romande et dans la France voisine, et à partir de quand le déplacement vaut-il la peine ? Le départ peut être n'importe quelle localité de Suisse (répertoire officiel des localités de swisstopo, environ 4 100 localités). L'arrivée est l'une des 14 villes françaises où les Suisses font couramment leurs courses (`config/destinations.yaml`) : Annemasse, Saint-Julien-en-Genevois, Saint-Genis-Pouilly, Ferney-Voltaire, Gex, Divonne-les-Bains, Thonon-les-Bains, Évian-les-Bains, Les Rousses, Jougne, Pontarlier, Morteau, Delle, Saint-Louis.
+Combien coûtent les mêmes courses du quotidien en Suisse romande et dans la France voisine, et à partir de quand le déplacement vaut-il la peine ? Le départ peut être n'importe quelle localité de Suisse (répertoire officiel des localités de swisstopo, environ 4 100 localités). L'arrivée est l'une des 12 zones françaises où les Suisses font couramment leurs courses (`config/destinations.yaml`) : Annemasse, Saint-Julien-en-Genevois, Saint-Genis / Ferney (avec Thoiry), Divonne / Gex (avec Segny), Thonon-les-Bains, Évian-les-Bains, Les Rousses, Jougne, Pontarlier, Morteau, Delle, Saint-Louis. Les communes voisines du Pays de Gex sont regroupées parce que, prises une à une, elles comptent trop peu de magasins référencés (Ferney-Voltaire : aucun ; Divonne-les-Bains : un seul).
 
 ## 2. Principe : des sources publiques, vérifiables et automatisées
 
@@ -47,11 +47,13 @@ Nutella, Coca-Cola (bouteille PET), Red Bull 25 cl, Pringles Original, Kinder Bu
 
 Les prix français des sections 3.1 à 3.3 sont des moyennes nationales. Pour estimer les prix d'un magasin précis, on utilise le comparateur des supermarchés de l'UFC-Que Choisir, qui relève chaque jour, dans chaque magasin disposant d'un drive, le prix d'un même panier d'une centaine de produits (marques nationales et marques de distributeur ; épicerie, fruits et légumes, crèmerie, boucherie, boissons, hygiène).
 
-- **Magasins d'une ville.** Tous les magasins listés par Que Choisir dans les départements frontaliers (74, 01, 39, 25, 68, 90) ; chaque adresse est géolocalisée (Nominatim, OpenStreetMap) et le magasin est rattaché à la ville de destination la plus proche s'il se trouve à moins de 7 km de son centre.
-- **Référence nationale.** Un panel de magasins tirés au hasard dans toute la France (tirage fixe, graine 2026), dont on prend la médiane du panier global.
-- **Indice du magasin** = panier global du magasin ÷ médiane du panel. Un indice de 0,92 signifie un magasin 8 % moins cher que le magasin français typique.
-- **Indice de la ville** = médiane des indices de ses magasins. Une ville sans magasin référencé utilise la moyenne française (indice 1).
+- **Magasins d'une ville.** Tous les magasins listés par Que Choisir dans les départements frontaliers (74, 01, 39, 25, 68, 90) ; chaque adresse est géolocalisée (Nominatim, OpenStreetMap) et le magasin est rattaché à la zone la plus proche s'il se trouve à moins de 7 km de son centre ou, pour une zone qui regroupe plusieurs communes, de l'un des centres de ces communes.
+- **Référence nationale (le « supermarché français moyen »).** Un panel de magasins tirés au hasard dans toute la France (tirage fixe, graine 2026 ; 168 magasins valides en octobre 2026), dont on prend la médiane du panier global. Ce panel sert uniquement d'étalon : il dit à quoi ressemble un magasin français ordinaire. Les magasins proposés à l'utilisateur sont, eux, ceux de la zone choisie.
+- **Indice du magasin** = panier global du magasin ÷ médiane du panel. Un indice de 0,92 signifie un magasin 8 % moins cher que le supermarché français moyen ; le site l'affiche ainsi.
+- **Indice de la zone** = médiane des indices de ses magasins. Une zone sans magasin référencé utilise la moyenne française (indice 1).
 - **Écart Suisse / magasin** pour une catégorie : (1 + écart Suisse / France) ÷ indice − 1.
+
+En clair : si le caddie Que Choisir coûte 10 % de plus dans un magasin que dans le supermarché français moyen, on considère que vos courses y coûtent aussi 10 % de plus que les prix moyens français, puis on compare aux prix suisses.
 
 Cette méthode suppose que l'écart d'un magasin à la moyenne est le même dans toutes les catégories ; c'est une approximation. Les données de Que Choisir leur appartiennent ; elles sont publiées avec l'accord de l'UFC-Que Choisir (octobre 2026), avec citation de la source et lien vers leur comparateur. Le paramètre `quechoisir.publier` de `config/panier.yaml` permet de les retirer du site public à tout moment.
 
@@ -89,4 +91,4 @@ L'usure du véhicule n'est pas comptée.
 
 ## 7. Citer
 
-> Brocard, G. (2026). *Panier Suisse × France*, méthodologie v1.2. Données OFAG, INSEE, BCE, OFDF, Open Prices, UFC-Que Choisir. Code et données : https://github.com/GregBrocard/Panier-suisse-france
+> Brocard, G. (2026). *Panier Suisse × France*, méthodologie v1.3. Données OFAG, INSEE, BCE, OFDF, Open Prices, UFC-Que Choisir. Code et données : https://github.com/GregBrocard/Panier-suisse-france
