@@ -13,7 +13,7 @@ def main():
     latest = json.loads((ROOT / "data/latest.json").read_text(encoding="utf-8"))
     series = json.loads((ROOT / "data/series.json").read_text(encoding="utf-8"))
     latest.pop("journal", None)
-    for z in (latest.get("carburant", {}).get("zones") or {}).values():
+    for z in (latest.get("carburant", {}).get("destinations") or {}).values():
         if z:
             z.pop("stations", None)
     latest.get("carburant", {}).pop("historique_fr", None)

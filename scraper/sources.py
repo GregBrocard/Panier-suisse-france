@@ -107,9 +107,14 @@ SELECT ?d ?price WHERE {{ GRAPH <{GRAPH}> {{
 
 # ------------------------------------------------------------------ Carburant France (stations)
 
-def fuel_fr_stations(postcodes: list[str]) -> dict:
+def fuel_fr_near(lat: float, lon: float, km: float) -> dict:
+    """Stations à moins de `km` du point donné."""
+    return fuel_fr_stations(None, where=f"within_distance(geom, geom'POINT({lon} {lat})', {km}km)")
+
+
+def fuel_fr_stations(postcodes: list[str] | None, where: str | None = None) -> dict:
     """Prix instantanés des stations des codes postaux donnés (flux officiel prix-carburants)."""
-    where = " or ".join(f'cp="{p}"' for p in postcodes)
+    where = where or " or ".join(f'cp="{p}"' for p in postcodes)
     r = _get("https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/"
              "prix-des-carburants-en-france-flux-instantane-v2/records",
              params={"where": where, "limit": 100})

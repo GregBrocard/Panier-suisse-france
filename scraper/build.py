@@ -201,15 +201,17 @@ def build_marques(cfg, fx_today, s):
 
 # ------------------------------------------------------------------ carburant
 
-def build_carburant(cfg, fx, fx_today):
-    zones = {}
-    for z, zc in cfg["carburant"]["zones"].items():
-        res = safe(S.fuel_fr_stations, zc["postcodes"], default=None, label=f"stations {z}")
+def build_carburant(cfg, fx, fx_today, dests, rayon):
+    """Prix des stations françaises autour de chaque destination + prix suisse (OFDF) + historique INSEE."""
+    out = {}
+    for d in dests:
+        res = safe(S.fuel_fr_near, d["lat"], d["lon"], rayon + 1, default=None, label=f"stations {d['id']}")
         if res:
+            res.pop("stations", None)
             res["moyenne_chf"] = {k: (round(v * fx_today, 3) if v else None) for k, v in res["moyenne"].items()}
             res["min_chf"] = {k: (round(v * fx_today, 3) if v else None) for k, v in res["min"].items()}
-            log(f"   carburant {z:10s} {res['n']} stations, moyenne {res['moyenne']}")
-        zones[z] = res
+            log(f"   carburant {d['id']:11s} {res['n']} stations, moyenne {res['moyenne']}")
+        out[d["id"]] = res
     ch = safe(S.fuel_ch_ofdf, default=None, label="OFDF T4.4")
     if ch:
         log(f"   carburant CH (OFDF) diesel {ch.get('diesel')} sp95 {ch.get('sp95')} ({ch.get('date_texte')})")
@@ -219,55 +221,96 @@ def build_carburant(cfg, fx, fx_today):
         res = safe(S.insee_series, t["insee"][0], default=None, label=f"INSEE {t['id']}")
         if res:
             hist[t["id"]] = [[m, v, round(v * fx[m], 3)] for m, v in sorted(res[1].items()) if m in fx]
-    return {"zones": zones, "ch": ch, "historique_fr": hist}
+    return {"destinations": out, "ch": ch, "historique_fr": hist}
 
 
-# ------------------------------------------------------------------ magasins (Que Choisir)
+# ------------------------------------------------------------------ magasins (Que Choisir) et trajets
 
-def build_magasins(cfg):
+def _km(a, b):
+    import math
+    la1, lo1, la2, lo2 = map(math.radians, (a[0], a[1], b[0], b[1]))
+    h = math.sin((la2 - la1) / 2) ** 2 + math.cos(la1) * math.cos(la2) * math.sin((lo2 - lo1) / 2) ** 2
+    return 6371 * 2 * math.asin(math.sqrt(h))
+
+
+def build_magasins(cfg, dcfg):
     from . import quechoisir as QC
+    from . import routes as R
     qc = cfg.get("quechoisir") or {}
-    if not qc:
-        return None
+    dests = dcfg["destinations"]
+    rayon = dcfg["rayon_km"]
     panel = safe(QC.national_panel, qc["panel"]["n"], qc["panel"]["seed"], 22000, DATA / "qc_panel.json",
                  default=None, label="Que Choisir panel")
     if not panel or not panel["mediane"]:
         return None
     log(f"   panel national : {panel['n']} magasins, médiane {panel['mediane']} €")
-    zones = {}
-    for z, zc in qc["zones"].items():
-        stores = safe(QC.zone_stores, zc["seeds"], zc.get("departements"), default=[], label=f"Que Choisir {z}") or []
-        rows = []
-        for st in stores:
-            g = st["paniers"]["global"]
-            rows.append({"dm": st["dm"], "nom": st["nom"], "cp": st["cp"], "url": st["url"], "adresse": st.get("adresse"),
-                         "panier": g, "paniers": st["paniers"], "appreciation": st["appreciation"],
-                         "indice": round(g / panel["mediane"], 4)})
-        rows.sort(key=lambda r: r["panier"])
-        idx = [r["indice"] for r in rows]
-        zones[z] = {"magasins": rows,
-                    "indice_median": round(statistics.median(idx), 4) if idx else None,
-                    "panier_median": round(statistics.median([r["panier"] for r in rows]), 2) if rows else None}
-        log(f"   magasins {z:10s} {len(rows)} magasins, indice médian {zones[z]['indice_median']}")
-    out = {"source": "UFC-Que Choisir, comparateur des supermarchés", "publier": qc.get("publier", False),
-           "panel": panel, "zones": zones}
-    out["trajets"] = safe(build_trajets, zones, default=None, label="trajets")
-    return out
+
+    ids = []
+    for dep in dcfg["departements"]:
+        got = safe(QC.department_store_ids, dep, default=[], label=f"Que Choisir dép. {dep}") or []
+        log(f"   département {dep} : {len(got)} magasins listés")
+        ids += got
+    geo_path = DATA / "geo_magasins.json"
+    geo = json.loads(geo_path.read_text()) if geo_path.exists() else {}
+    per_dest = {d["id"]: [] for d in dests}
+    n_ok = 0
+    for dm in sorted(set(ids)):
+        st = safe(QC.store, dm, default=None, label=f"magasin {dm}")
+        if not st:
+            continue
+        n_ok += 1
+        key = str(dm)
+        if key not in geo:
+            c = R.geocode([st.get("adresse"), f"{st['nom']} {st.get('cp') or ''}", f"{st.get('cp') or ''} France"])
+            if c:
+                geo[key] = c
+        if key not in geo:
+            continue
+        near = min(dests, key=lambda d: _km(geo[key], (d["lat"], d["lon"])))
+        dist = _km(geo[key], (near["lat"], near["lon"]))
+        if dist > rayon:
+            continue
+        g = st["paniers"]["global"]
+        per_dest[near["id"]].append({"dm": dm, "nom": st["nom"], "cp": st["cp"], "adresse": st.get("adresse"),
+                                     "url": st["url"], "panier": g, "paniers": st["paniers"],
+                                     "appreciation": st["appreciation"], "indice": round(g / panel["mediane"], 4),
+                                     "km_centre": round(dist, 1), "coord": geo[key]})
+    geo_path.write_text(json.dumps(geo, separators=(",", ":")), encoding="utf-8")
+    log(f"   {n_ok} fiches magasin lues, {len(geo)} adresses géocodées")
+
+    out_dests = []
+    for d in dests:
+        ms = sorted(per_dest[d["id"]], key=lambda r: r["panier"])
+        idx = [m["indice"] for m in ms]
+        out_dests.append({**d, "magasins": ms,
+                          "indice_median": round(statistics.median(idx), 4) if idx else None,
+                          "panier_median": round(statistics.median([m["panier"] for m in ms]), 2) if ms else None})
+        log(f"   {d['id']:11s} {len(ms)} magasins, indice médian {out_dests[-1]['indice_median']}")
+    return {"source": "UFC-Que Choisir, comparateur des supermarchés", "publier": qc.get("publier", False),
+            "panel": panel, "destinations": out_dests}
 
 
-def build_trajets(zones):
-    """Distances routières localités suisses -> magasins (OSRM / OpenStreetMap), avec cache."""
+def build_origines(dests):
+    """Toutes les localités de Suisse et leur distance routière vers chaque destination."""
+    from . import origines as O
     from . import routes as R
-    origins = yaml.safe_load((ROOT / "config/origines.yaml").read_text(encoding="utf-8"))["origines"]
-    stores = [m for z in zones.values() for m in z["magasins"]]
-    coords = R.geocode_stores(stores, DATA / "geo_magasins.json")
-    coords = {k: v for k, v in coords.items() if k in {str(m["dm"]) for m in stores}}
-    dist = R.road_matrix(origins, coords, DATA / "distances.json")
-    n = sum(len(v) for v in dist.values())
-    log(f"   trajets : {len(coords)}/{len(stores)} magasins géocodés, {n} distances")
-    return {"origines": [o[0] for o in origins], "coords": coords,
-            "distances": {o[0]: dist.get(o[0], {}) for o in origins},
-            "source": "OpenStreetMap (Nominatim, OSRM)"}
+    locs = O.localites()
+    log(f"   {len(locs)} localités suisses (swisstopo)")
+    cache = R.matrix(locs, dests, DATA / "distances.json", log=log)
+    liste, dist = [], []
+    for o in locs:
+        row = cache.get(f"{o['nom']}|{o['canton']}", {})
+        if not row:
+            continue
+        liste.append([o["nom"], o["canton"], o["npa"]])
+        flat = []
+        for d in dests:
+            v = row.get(d["id"])
+            flat += v if v else [None, None]
+        dist.append(flat)
+    log(f"   trajets disponibles pour {len(liste)} localités")
+    return {"liste": liste, "dist": dist, "destinations": [d["id"] for d in dests],
+            "source": "swisstopo (répertoire officiel des localités) ; OSRM et OpenStreetMap (itinéraires)"}
 
 
 # ------------------------------------------------------------------ main
@@ -291,10 +334,13 @@ def main():
     viande = build_viande(cfg, fx, s)
     log("== Marques (Migros / Open Prices)")
     marques = build_marques(cfg, fx_day["eur_chf"], s)
+    dcfg = yaml.safe_load((ROOT / "config/destinations.yaml").read_text(encoding="utf-8"))
     log("== Carburant")
-    carb = build_carburant(cfg, fx, fx_day["eur_chf"])
+    carb = build_carburant(cfg, fx, fx_day["eur_chf"], dcfg["destinations"], dcfg["rayon_km"])
     log("== Magasins (Que Choisir)")
-    magasins = build_magasins(cfg)
+    magasins = build_magasins(cfg, dcfg)
+    log("== Trajets")
+    origines = safe(build_origines, dcfg["destinations"], default=None, label="trajets")
 
     latest = {
         "genere_le": today.isoformat(), "basket_version": cfg["basket_version"],
@@ -302,7 +348,8 @@ def main():
         "officiel": {"mois": series[-1]["m"] if series else None, "produits": photo,
                      "dernier": series[-1] if series else None},
         "viande": viande, "marques": marques, "carburant": carb,
-        "magasins": magasins, "zones": cfg.get("zones", {}),
+        "magasins": magasins, "origines": origines,
+        "destinations": [{k: d[k] for k in ("id", "nom", "lat", "lon", "passage")} for d in dcfg["destinations"]],
         "journal": LOG,
     }
     hist = {
@@ -317,7 +364,7 @@ def main():
     (DATA / "latest.json").write_text(json.dumps(latest, ensure_ascii=False, indent=1), encoding="utf-8")
     (DATA / "series.json").write_text(json.dumps(hist, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     snap = {"date": today.isoformat(), "fx": fx_day, "viande": viande, "marques": marques,
-            "carburant": {"zones": {z: (v and {k: v[k] for k in ("n", "moyenne", "min")}) for z, v in carb["zones"].items()},
+            "carburant": {"destinations": {z: (v and {k: v[k] for k in ("n", "moyenne", "min")}) for z, v in carb["destinations"].items()},
                           "ch": carb["ch"]}}
     (DATA / "releves" / f"{today:%Y-%m}.json").write_text(json.dumps(snap, ensure_ascii=False, indent=1), encoding="utf-8")
     log("== Terminé")

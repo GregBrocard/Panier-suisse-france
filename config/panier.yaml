@@ -99,18 +99,7 @@ carburant:
   types:
     - { id: sp95,   label: Sans plomb 95, insee: ["000849411"] }
     - { id: diesel, label: Diesel,        insee: ["000442588"] }
-  zones:
-    annemasse:  { postcodes: ["74100", "74240"] }   # Annemasse, Ville-la-Grand, Gaillard
-    divonne:    { postcodes: ["01220", "01170"] }   # Divonne, Gex
-    lesrousses: { postcodes: ["39220"] }            # Les Rousses, Bois-d'Amont (La Cure)
-    vallorbe:   { postcodes: ["25370", "25300"] }   # Jougne, Pontarlier
-
-# Zones frontalières (libellés affichés sur le site)
-zones:
-  annemasse:  "Genève ↔ Annemasse"
-  divonne:    "Nyon ↔ Divonne / Gex"
-  lesrousses: "La Cure ↔ Les Rousses"
-  vallorbe:   "Vallorbe ↔ Jougne / Pontarlier"
+  # Stations françaises : autour de chaque destination (config/destinations.yaml)
 
 # Prix par magasin : comparateur des supermarchés de l'UFC-Que Choisir (panier d'une centaine de produits).
 # Pour chaque zone : magasins « graines » + tous les magasins à moins de 15 km d'eux (liste publiée par Que Choisir).
@@ -119,8 +108,4 @@ zones:
 quechoisir:
   publier: true
   panel: { n: 600, seed: 2026 }   # tirage brut ; les identifiants valides sont gardés dans data/qc_panel.json
-  zones:
-    annemasse:  { seeds: [1447], departements: ["74"] }         # Leclerc Drive Ville-la-Grand
-    divonne:    { seeds: [21779, 1781], departements: ["01"] }  # Carrefour City Divonne, Carrefour Hyper Segny
-    lesrousses: { seeds: [5036], departements: ["39"] }         # Intermarché Super Les Rousses
-    vallorbe:   { seeds: [21391, 1701], departements: ["25"] }  # Super U Jougne, Leclerc Pontarlier
+  # Magasins : tous ceux des départements listés dans config/destinations.yaml, rattachés à la ville la plus proche

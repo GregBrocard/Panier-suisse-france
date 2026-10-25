@@ -21,12 +21,12 @@ UA = {"User-Agent": "panier-suisse-france (projet de recherche HES-SO ; contact 
 DELAY = 2.0
 
 
-def _get(url: str) -> str | None:
+def _get(url: str, any_page: bool = False) -> str | None:
     for i in range(3):
         try:
             r = requests.get(url, headers=UA, timeout=60, allow_redirects=True)
             time.sleep(DELAY)
-            if r.status_code == 200 and "drive-magasin-dm" in r.url:
+            if r.status_code == 200 and (any_page or "drive-magasin-dm" in r.url):
                 return r.text
             return None  # magasin inexistant -> redirection vers la carte
         except requests.RequestException:
@@ -119,3 +119,9 @@ def national_panel(n: int = 600, seed: int = 2026, max_id: int = 22000, cache=No
             "moyenne": round(statistics.mean(vals), 2) if vals else None,
             "p10": round(sorted(vals)[len(vals) // 10], 2) if vals else None,
             "p90": round(sorted(vals)[len(vals) * 9 // 10], 2) if vals else None}
+
+
+def department_store_ids(dep: str) -> list[int]:
+    """Identifiants de tous les magasins d'un département listés par Que Choisir."""
+    html = _get("https://www.quechoisir.org/carte-interactive-drives-n21243/drive-departement-dd{}/".format(dep), any_page=True)
+    return sorted({int(x) for x in re.findall(r"drive-magasin-dm(\d+)", html or "")})

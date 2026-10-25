@@ -1,0 +1,23 @@
+# Villes françaises où les Suisses vont faire leurs courses.
+# Chaque magasin Que Choisir des départements listés est rattaché à la destination la plus proche,
+# s'il se trouve à moins de `rayon_km` de son centre. Les stations-service sont prises dans le même rayon.
+# Pour ajouter une ville : une ligne de plus ici, le robot fait le reste au passage suivant.
+
+rayon_km: 7
+departements: ["74", "01", "39", "25", "68", "90"]
+
+destinations:
+  - { id: annemasse,    nom: Annemasse,               lat: 46.1934, lon: 6.2358, passage: "depuis Genève" }
+  - { id: stjulien,     nom: Saint-Julien-en-Genevois, lat: 46.1440, lon: 6.0820, passage: "depuis Genève" }
+  - { id: stgenis,      nom: Saint-Genis-Pouilly,     lat: 46.2430, lon: 6.0250, passage: "depuis Genève" }
+  - { id: ferney,       nom: Ferney-Voltaire,         lat: 46.2560, lon: 6.1080, passage: "depuis Genève" }
+  - { id: gex,          nom: Gex,                     lat: 46.3330, lon: 6.0580, passage: "depuis Nyon" }
+  - { id: divonne,      nom: Divonne-les-Bains,       lat: 46.3570, lon: 6.1390, passage: "depuis Nyon" }
+  - { id: thonon,       nom: Thonon-les-Bains,        lat: 46.3705, lon: 6.4790, passage: "par Saint-Gingolph ou en bateau" }
+  - { id: evian,        nom: Évian-les-Bains,         lat: 46.4010, lon: 6.5900, passage: "par Saint-Gingolph ou en bateau" }
+  - { id: lesrousses,   nom: Les Rousses,             lat: 46.4840, lon: 6.0630, passage: "par La Cure" }
+  - { id: jougne,       nom: Jougne,                  lat: 46.7630, lon: 6.3880, passage: "par Vallorbe" }
+  - { id: pontarlier,   nom: Pontarlier,              lat: 46.9040, lon: 6.3550, passage: "par Vallorbe ou Les Verrières" }
+  - { id: morteau,      nom: Morteau,                 lat: 47.0570, lon: 6.6070, passage: "par Le Locle" }
+  - { id: delle,        nom: Delle,                   lat: 47.5080, lon: 7.0000, passage: "par Boncourt" }
+  - { id: stlouis,      nom: Saint-Louis,             lat: 47.5900, lon: 7.5600, passage: "depuis Bâle" }
