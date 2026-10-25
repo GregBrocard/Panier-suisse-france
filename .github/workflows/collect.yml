@@ -18,7 +18,7 @@ concurrency:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -33,13 +33,13 @@ jobs:
         run: |
           git config user.name "releve-bot"
           git config user.email "releve-bot@users.noreply.github.com"
-          git add data/ site/index.html
+          git add data/ site/index.html site/public.html
           git diff --cached --quiet || git commit -m "Relevé $(date +%Y-%m-%d)"
           git push
       - name: Préparer la publication
         run: |
           mkdir -p _site
-          cp site/index.html _site/index.html
+          cp site/public.html _site/index.html
           cp data/latest.json data/series.json METHODOLOGIE.md _site/
       - uses: actions/upload-pages-artifact@v3
         with:

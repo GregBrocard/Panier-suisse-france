@@ -222,6 +222,36 @@ def build_carburant(cfg, fx, fx_today):
     return {"zones": zones, "ch": ch, "historique_fr": hist}
 
 
+# ------------------------------------------------------------------ magasins (Que Choisir)
+
+def build_magasins(cfg):
+    from . import quechoisir as QC
+    qc = cfg.get("quechoisir") or {}
+    if not qc:
+        return None
+    panel = safe(QC.national_panel, qc["panel"]["n"], qc["panel"]["seed"], default=None, label="Que Choisir panel")
+    if not panel or not panel["mediane"]:
+        return None
+    log(f"   panel national : {panel['n']} magasins, médiane {panel['mediane']} €")
+    zones = {}
+    for z, zc in qc["zones"].items():
+        stores = safe(QC.zone_stores, zc["seeds"], zc.get("departements"), default=[], label=f"Que Choisir {z}") or []
+        rows = []
+        for st in stores:
+            g = st["paniers"]["global"]
+            rows.append({"dm": st["dm"], "nom": st["nom"], "cp": st["cp"], "url": st["url"],
+                         "panier": g, "paniers": st["paniers"], "appreciation": st["appreciation"],
+                         "indice": round(g / panel["mediane"], 4)})
+        rows.sort(key=lambda r: r["panier"])
+        idx = [r["indice"] for r in rows]
+        zones[z] = {"magasins": rows,
+                    "indice_median": round(statistics.median(idx), 4) if idx else None,
+                    "panier_median": round(statistics.median([r["panier"] for r in rows]), 2) if rows else None}
+        log(f"   magasins {z:10s} {len(rows)} magasins, indice médian {zones[z]['indice_median']}")
+    return {"source": "UFC-Que Choisir, comparateur des supermarchés", "publier": qc.get("publier", False),
+            "panel": panel, "zones": zones}
+
+
 # ------------------------------------------------------------------ main
 
 def main():
@@ -245,6 +275,8 @@ def main():
     marques = build_marques(cfg, fx_day["eur_chf"], s)
     log("== Carburant")
     carb = build_carburant(cfg, fx, fx_day["eur_chf"])
+    log("== Magasins (Que Choisir)")
+    magasins = build_magasins(cfg)
 
     latest = {
         "genere_le": today.isoformat(), "basket_version": cfg["basket_version"],
@@ -252,6 +284,7 @@ def main():
         "officiel": {"mois": series[-1]["m"] if series else None, "produits": photo,
                      "dernier": series[-1] if series else None},
         "viande": viande, "marques": marques, "carburant": carb,
+        "magasins": magasins, "zones": cfg.get("zones", {}),
         "journal": LOG,
     }
     hist = {

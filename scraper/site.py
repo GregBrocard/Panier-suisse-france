@@ -17,12 +17,21 @@ def main():
         if z:
             z.pop("stations", None)
     latest.get("carburant", {}).pop("historique_fr", None)
-    payload = json.dumps({"latest": latest, "series": series}, ensure_ascii=False, separators=(",", ":"))
-    payload = payload.replace("</", "<\\/")
     tpl = (ROOT / "site/template.html").read_text(encoding="utf-8")
-    out = tpl.replace("/*__DATA__*/", payload)
-    (ROOT / "site/index.html").write_text(out, encoding="utf-8")
-    print(f"site/index.html : {len(out) / 1024:.0f} Ko")
+
+    def render(data, name):
+        payload = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+        out = tpl.replace("/*__DATA__*/", payload)
+        (ROOT / "site" / name).write_text(out, encoding="utf-8")
+        print(f"site/{name} : {len(out) / 1024:.0f} Ko")
+
+    # version complète (usage privé)
+    render({"latest": latest, "series": series}, "index.html")
+    # version publique : sans les données Que Choisir tant que leur accord n'est pas obtenu
+    pub = dict(latest)
+    if not (latest.get("magasins") or {}).get("publier"):
+        pub["magasins"] = None
+    render({"latest": pub, "series": series}, "public.html")
 
 
 if __name__ == "__main__":
