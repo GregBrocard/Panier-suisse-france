@@ -53,7 +53,7 @@ Les prix français des sections 3.1 à 3.3 sont des moyennes nationales. Pour es
 - **Indice de la zone** = médiane des indices des magasins de la zone.
 - **Écart Suisse / magasin** pour une catégorie : (1 + écart Suisse / France) ÷ indice − 1.
 
-Cette méthode suppose que l'écart d'un magasin à la moyenne est le même dans toutes les catégories ; c'est une approximation. Les données de Que Choisir leur appartiennent : elles sont utilisées ici à titre de test privé et ne seront publiées qu'avec leur accord (paramètre `quechoisir.publier` dans `config/panier.yaml`).
+Cette méthode suppose que l'écart d'un magasin à la moyenne est le même dans toutes les catégories ; c'est une approximation. Les données de Que Choisir leur appartiennent ; elles sont publiées avec l'accord de l'UFC-Que Choisir (octobre 2026), avec citation de la source et lien vers leur comparateur. Le paramètre `quechoisir.publier` de `config/panier.yaml` permet de les retirer du site public à tout moment.
 
 ## 4. Calculs
 
