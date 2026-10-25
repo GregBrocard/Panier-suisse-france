@@ -26,6 +26,7 @@ PHOTOS = {
     "jura": "File:Jougne douane.JPG",
     "leman": "File:St-Gingolph (France).jpg",
     "boucherie": "File:La vie chère à Paris (étal de boucherie) - btv1b53004739h.jpg",
+    "marchande": "File:Marchande des quatre saisons. PH1033.jpg",
 }
 SEARCH = ["Agence Rol marché légumes", "marchande des quatre saisons", "Les Halles marché légumes 1910", "étal fruits marché Genève"]
 
@@ -100,7 +101,8 @@ def carte():
     lakes = requests.get(base + "ne_10m_lakes.geojson", timeout=300).json()
     out = {"bbox": BBOX, "pays": {}, "lacs": [], "source": "Natural Earth (domaine public)"}
     for f in countries["features"]:
-        iso = f["properties"].get("ADM0_A3")
+        pr = f["properties"]
+        iso = pr.get("ADM0_A3") or pr.get("adm0_a3") or pr.get("ISO_A3") or pr.get("iso_a3")
         if iso not in ("CHE", "FRA", "DEU", "ITA", "LIE", "AUT"):
             continue
         rings = []
@@ -119,6 +121,7 @@ def carte():
                 if max(xs) - min(xs) > 0.12:
                     out["lacs"].append(_rdp([[round(x, 4), round(y, 4)] for x, y in ring], 0.003))
     (ROOT / "data" / "carte.json").write_text(json.dumps(out, separators=(",", ":")), encoding="utf-8")
+    print("propriétés exemple :", list(countries["features"][0]["properties"])[:15])
     print("carte :", {k: sum(len(r) for r in v) for k, v in out["pays"].items()}, "lacs", len(out["lacs"]))
 
 
