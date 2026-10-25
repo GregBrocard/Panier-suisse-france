@@ -66,6 +66,11 @@ section{padding-block:56px 8px;display:grid;gap:22px}
 /* calculateur */
 .calc{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:32px;align-items:start}
 @media (max-width:860px){.calc{grid-template-columns:1fr}}
+.route{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:16px;align-items:end;margin-bottom:22px}
+.route .arrow{font-family:var(--f-display);font-size:28px;font-weight:600;color:var(--red);padding-bottom:6px}
+@media (max-width:520px){.route{grid-template-columns:1fr}.route .arrow{display:none}}
+select{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--ink) 50%),linear-gradient(135deg,var(--ink) 50%,transparent 50%);background-position:calc(100% - 12px) 55%,calc(100% - 6px) 55%;background-size:6px 6px;background-repeat:no-repeat;padding-right:24px;cursor:pointer}
+select option{color:#111;background:#fff}
 .tabs{display:flex;flex-wrap:wrap;gap:0;border-bottom:1px solid var(--rule)}
 .tabs button{font:inherit;font-weight:600;font-size:15px;background:none;border:0;border-bottom:3px solid transparent;color:var(--ink-2);padding:10px 14px 9px 0;margin-right:18px;cursor:pointer}
 .tabs button[aria-pressed="true"]{color:var(--ink);border-bottom-color:var(--red)}
@@ -160,15 +165,19 @@ footer{margin-top:64px;padding-top:16px;border-top:2px solid var(--ink);display:
     <div class="sh">
       <p class="eyebrow">Calculateur</p>
       <h2>Où allez-vous faire vos courses<span class="redot"></span></h2>
-      <p class="lede">Choisissez un passage, puis un magasin. Le calcul part de ce que vous dépensez en Suisse et tient compte du niveau de prix du magasin, du trajet et de la douane.</p>
+      <p class="lede">Indiquez d'où vous partez et où vous allez, puis choisissez un magasin. La distance se calcule toute seule ; le résultat tient compte du niveau de prix du magasin, du trajet et de la douane.</p>
     </div>
     <div class="calc">
       <div>
-        <div class="tabs" id="zones" role="group" aria-label="Passage frontière"></div>
+        <div class="route">
+          <div class="field"><label for="from">Vous partez de</label><select id="from"></select></div>
+          <span class="arrow" aria-hidden="true">→</span>
+          <div class="field"><label for="to">Vous allez à</label><select id="to"></select></div>
+        </div>
         <div class="stores" id="stores" role="radiogroup" aria-label="Magasin"></div>
         <form class="fields" id="form" autocomplete="off">
           <div class="field"><label for="spend">Vos courses en Suisse (CHF)</label><input id="spend" type="number" min="0" step="10" value="200"></div>
-          <div class="field"><label for="km">Distance aller (km)</label><input id="km" type="number" min="0" step="1" value="30"></div>
+          <div class="field"><label for="km">Distance aller (km) <span class="small" id="kmSrc"></span></label><input id="km" type="number" min="0" step="1" value="30"></div>
           <div class="field"><label for="conso">Consommation (L/100 km)</label><input id="conso" type="number" min="0" step="0.1" value="7"></div>
           <div class="field"><label for="persons">Adultes dans la voiture</label><input id="persons" type="number" min="1" max="9" step="1" value="1"></div>
           <div class="field" style="grid-column:1/-1"><label>Dans votre caddie</label></div>
@@ -304,12 +313,27 @@ footer{margin-top:64px;padding-top:16px;border-top:2px solid var(--ink);display:
   try{ const s=JSON.parse(localStorage.getItem('psf')||'{}'); if(ZONES[s.zone]) st.zone=s.zone; if(MIX.some(m=>m.id===s.mix)) st.mix=s.mix; }catch(e){}
   const save = () => { try{localStorage.setItem('psf',JSON.stringify({zone:st.zone,mix:st.mix}))}catch(e){} };
 
-  $('#zones').innerHTML = Object.entries(ZONES).map(([id,l])=>`<button type="button" data-z="${id}" aria-pressed="${id===st.zone}">${esc(l)}</button>`).join('');
-  $('#zones').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;st.zone=b.dataset.z;st.store='avg';
-    $('#zones').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));save();renderStores();renderRank();calc();});
+  const TR = MAG && MAG.trajets ? MAG.trajets : null;
+  const ORIG = TR ? TR.origines : [];
+  try{ const s=JSON.parse(localStorage.getItem('psf')||'{}'); st.from = ORIG.includes(s.from) ? s.from : (ORIG.includes('Lausanne')?'Lausanne':ORIG[0]); }catch(e){ st.from = ORIG[0]; }
+  if(ORIG.length){
+    $('#from').innerHTML = ORIG.map(o=>`<option ${o===st.from?'selected':''}>${esc(o)}</option>`).join('');
+  } else { $('#from').closest('.field').hidden = true; }
+  $('#to').innerHTML = Object.entries(ZONES).map(([id,l])=>`<option value="${id}" ${id===st.zone?'selected':''}>${esc(l)}</option>`).join('');
+  const saveAll = () => { try{localStorage.setItem('psf',JSON.stringify({zone:st.zone,mix:st.mix,from:st.from}))}catch(e){} };
+  $('#from').addEventListener('change',e=>{st.from=e.target.value;saveAll();renderStores();autoKm();calc();});
+  $('#to').addEventListener('change',e=>{st.zone=e.target.value;st.store='avg';saveAll();renderStores();renderRank();autoKm();calc();});
+  const dist = dm => TR && st.from && TR.distances[st.from] ? TR.distances[st.from][String(dm)] : null;
+  function autoKm(){
+    const zm = zoneMag(); if(!zm || !TR) { $('#kmSrc').textContent=''; return; }
+    let d = null;
+    if(st.store==='avg'){ const ds = zm.magasins.map(m=>dist(m.dm)).filter(Boolean).sort((a,b)=>a[0]-b[0]); d = ds[0]||null; }
+    else d = dist(st.store);
+    if(d){ $('#km').value = Math.round(d[0]); $('#kmSrc').textContent = '· calculée, environ '+d[1]+' min'; }
+  }
   $('#mix').innerHTML = MIX.map(m=>`<button type="button" data-m="${m.id}" aria-pressed="${m.id===st.mix}">${m.label}</button>`).join('');
   $('#mix').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;st.mix=b.dataset.m;
-    $('#mix').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));save();calc();});
+    $('#mix').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));saveAll();calc();});
   $('#fill').addEventListener('change',e=>{$('#tankRow').hidden=!e.target.checked;calc();});
   $('#form').addEventListener('input',calc); $('#form').addEventListener('submit',e=>e.preventDefault());
 
@@ -319,9 +343,10 @@ footer{margin-top:64px;padding-top:16px;border-top:2px solid var(--ink);display:
     const zm = zoneMag(), el = $('#stores');
     if(!zm || !zm.magasins.length){ el.innerHTML = `<p class="small" style="padding:12px 0">Prix par magasin non disponibles : le calcul utilise la moyenne française.</p>`; return; }
     const row = (id,name,addr,idx,checked,cls='') => `<label class="store ${cls}"><input type="radio" name="store" value="${id}" ${checked?'checked':''}><span><span class="n">${esc(name)}</span><br><span class="a">${esc(addr)}</span></span><span class="i">${nf(idx,2)}<small>${idxFmt(idx)}</small></span></label>`;
-    el.innerHTML = row('avg','Moyenne des magasins de la zone', zm.magasins.length+' magasins', zm.indice_median, st.store==='avg','avg')
-      + zm.magasins.map(m=>row(m.dm, m.nom, (m.cp||'')+' · '+(m.appreciation||''), m.indice, String(st.store)===String(m.dm))).join('');
-    el.onchange = e => { st.store = e.target.value; calc(); };
+    const km = dm => { const d = dist(dm); return d ? ' · '+Math.round(d[0])+' km, '+d[1]+' min' : ''; };
+    el.innerHTML = row('avg','Moyenne des magasins de la zone', zm.magasins.length+' magasins · trajet vers le plus proche', zm.indice_median, st.store==='avg','avg')
+      + zm.magasins.map(m=>row(m.dm, m.nom, (m.appreciation||'')+km(m.dm), m.indice, String(st.store)===String(m.dm))).join('');
+    el.onchange = e => { st.store = e.target.value; autoKm(); calc(); };
   }
   function currentIdx(){
     const zm = zoneMag(); if(!zm) return {idx:1,label:'Moyenne française'};
@@ -343,7 +368,7 @@ footer{margin-top:64px;padding-top:16px;border-top:2px solid var(--ink);display:
     const sg = v => (v>=0?'− ':'+ ')+nf(Math.abs(v))+' CHF';
     let h = `<span class="eyebrow">${net>=0?'Vous économisez':'Vous perdez'}</span><span class="big num ${net<0?'neg':''}">${nf(Math.abs(net),0)} CHF</span>`;
     h += `<span class="verdict">${net>10?'Le trajet en vaut la peine.':net>-5?'Ça se vaut à peu près.':'Mieux vaut rester en Suisse.'}</span>`;
-    h += `<span class="where">${esc(label)} · ${esc(ZONES[st.zone])}</span><div class="lines">`;
+    h += `<span class="where">${st.from?esc(st.from)+' → ':''}${esc(label)} · ${esc(ZONES[st.zone])}</span><div class="lines">`;
     h += ln('Courses en Suisse', nf(spend)+' CHF') + ln('Mêmes courses en France', nf(fr)+' CHF') + ln('Différence', sg(gross));
     h += ln(`Trajet, ${2*km} km`, '+ '+nf(trip)+' CHF');
     if($('#fill').checked) h += ln('Plein en France', sg(fuelG));
@@ -379,7 +404,7 @@ footer{margin-top:64px;padding-top:16px;border-top:2px solid var(--ink);display:
   $('#tFuel tbody').innerHTML = `<tr><td>Suisse, zone frontière de Genève<span class="eur">OFDF, ${esc(fch.date_texte||'')}</span></td><td class="v">${fch.sp95?nf(fch.sp95.ch_chf):'—'}</td><td class="v">${fch.diesel?nf(fch.diesel.ch_chf):'—'}</td><td></td></tr>`
     + Object.keys(ZONES).map(z=>{const f=zf(z); return f ? `<tr><td>${esc(ZONES[z])}</td><td class="v">${nf(f.moyenne_chf.sp95)}<span class="eur">${nf(f.moyenne.sp95,3)} €</span></td><td class="v">${nf(f.moyenne_chf.diesel)}<span class="eur">${nf(f.moyenne.diesel,3)} €</span></td><td class="v">${f.n}</td></tr>` : `<tr><td>${esc(ZONES[z])}</td><td colspan="3" class="small">indisponible</td></tr>`;}).join('');
 
-  renderStores(); renderRank(); calc();
+  renderStores(); renderRank(); autoKm(); calc();
 
   // ---------- graphiques
   if(!window.Chart){ document.querySelectorAll('.canvas').forEach(c=>c.innerHTML='<p class="small">Graphique indisponible.</p>'); return; }

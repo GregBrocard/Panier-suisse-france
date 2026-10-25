@@ -240,7 +240,7 @@ def build_magasins(cfg):
         rows = []
         for st in stores:
             g = st["paniers"]["global"]
-            rows.append({"dm": st["dm"], "nom": st["nom"], "cp": st["cp"], "url": st["url"],
+            rows.append({"dm": st["dm"], "nom": st["nom"], "cp": st["cp"], "url": st["url"], "adresse": st.get("adresse"),
                          "panier": g, "paniers": st["paniers"], "appreciation": st["appreciation"],
                          "indice": round(g / panel["mediane"], 4)})
         rows.sort(key=lambda r: r["panier"])
@@ -249,8 +249,25 @@ def build_magasins(cfg):
                     "indice_median": round(statistics.median(idx), 4) if idx else None,
                     "panier_median": round(statistics.median([r["panier"] for r in rows]), 2) if rows else None}
         log(f"   magasins {z:10s} {len(rows)} magasins, indice médian {zones[z]['indice_median']}")
-    return {"source": "UFC-Que Choisir, comparateur des supermarchés", "publier": qc.get("publier", False),
-            "panel": panel, "zones": zones}
+    out = {"source": "UFC-Que Choisir, comparateur des supermarchés", "publier": qc.get("publier", False),
+           "panel": panel, "zones": zones}
+    out["trajets"] = safe(build_trajets, zones, default=None, label="trajets")
+    return out
+
+
+def build_trajets(zones):
+    """Distances routières localités suisses -> magasins (OSRM / OpenStreetMap), avec cache."""
+    from . import routes as R
+    origins = yaml.safe_load((ROOT / "config/origines.yaml").read_text(encoding="utf-8"))["origines"]
+    stores = [m for z in zones.values() for m in z["magasins"]]
+    coords = R.geocode_stores(stores, DATA / "geo_magasins.json")
+    coords = {k: v for k, v in coords.items() if k in {str(m["dm"]) for m in stores}}
+    dist = R.road_matrix(origins, coords, DATA / "distances.json")
+    n = sum(len(v) for v in dist.values())
+    log(f"   trajets : {len(coords)}/{len(stores)} magasins géocodés, {n} distances")
+    return {"origines": [o[0] for o in origins], "coords": coords,
+            "distances": {o[0]: dist.get(o[0], {}) for o in origins},
+            "source": "OpenStreetMap (Nominatim, OSRM)"}
 
 
 # ------------------------------------------------------------------ main

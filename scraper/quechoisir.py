@@ -54,17 +54,19 @@ def store(dm: int) -> dict | None:
     if i > 0:
         m = re.search(r'aria-label="Appréciation : ([^"]+)"', html[i:i + 3000])
         rating = m.group(1) if m else None
-    neighbors = []
+    neighbors, own_addr = [], None
     for href, ens, addr in re.findall(
             r'<a class="qc-compare-map-drive_drive-card[^"]*"[^>]*?(?:href="/carte-interactive-drives-n21243/drive-magasin-dm(\d+)/")?\s*>'
             r'.*?drive-enseigne[^>]*>([^<]+)</span>.*?<address>(.*?)</address>', html, re.S):
+        a = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", addr)).strip()
         if href:
-            neighbors.append({"dm": int(href), "enseigne": ens.strip(),
-                              "adresse": re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", addr)).strip()})
+            neighbors.append({"dm": int(href), "enseigne": ens.strip(), "adresse": a})
+        elif own_addr is None:
+            own_addr = a  # la carte sans lien est le magasin lui-même
     if "global" not in baskets:
         return None
     return {"dm": dm, "nom": name.split(" (")[0], "cp": cp.group(1) if cp else None,
-            "url": BASE.format(dm), "paniers": baskets, "appreciation": rating, "voisins": neighbors}
+            "url": BASE.format(dm), "adresse": own_addr, "paniers": baskets, "appreciation": rating, "voisins": neighbors}
 
 
 def zone_stores(seeds: list[int], postcodes_prefix: list[str] | None = None) -> list[dict]:

@@ -65,6 +65,7 @@ Cette méthode suppose que l'écart d'un magasin à la moyenne est le même dans
 
 **Calculateur de trajet.**
 - économie sur les courses = dépense × taux d'économie pondéré selon la composition du panier choisie (viande, fruits et légumes, marques), chaque écart étant ajusté par l'indice du magasin choisi (ou de la zone) ;
+- distance : choisie par l'utilisateur ou calculée automatiquement entre sa localité de départ (liste `config/origines.yaml`, centre de la localité) et le magasin choisi ; pour « moyenne de la zone », trajet vers le magasin le plus proche. Distances et durées routières calculées avec OSRM sur les données OpenStreetMap, adresses des magasins géocodées avec Nominatim ;
 - coût du trajet = distance aller-retour × consommation ÷ 100 × prix suisse du carburant ;
 - plein en France (option) = litres × (prix suisse − prix moyen de la zone) ;
 - TVA suisse : si les achats dépassent 150 CHF par personne, 2,6 % (taux réduit alimentaire) sur la totalité ;
