@@ -9,6 +9,12 @@ on:
       extra:
         description: "URL supplémentaires (tag=url;tag2=url2)"
         default: ""
+      only:
+        description: "Limiter aux tags (séparés par des espaces)"
+        default: ""
+
+permissions:
+  contents: write
 
 jobs:
   probe:
@@ -24,9 +30,15 @@ jobs:
           SCRAPER_DEBUG: "1"
           PROBE_QUERY: ${{ inputs.query }}
           PROBE_EXTRA: ${{ inputs.extra }}
-        run: python -m scraper.probe
-      - uses: actions/upload-artifact@v4
-        with:
-          name: debug
-          path: debug/
-          retention-days: 7
+        run: |
+          mkdir -p debug
+          python -m scraper.probe ${{ inputs.only }} | tee debug/_summary.txt
+      # Les pages téléchargées sont publiées sur la branche "sonde" (écrasée à chaque fois)
+      - name: Publier les pages sur la branche sonde
+        run: |
+          cd debug
+          git init -q -b sonde
+          git config user.name "releve-bot"
+          git config user.email "releve-bot@users.noreply.github.com"
+          git add -A && git commit -qm "Sonde $(date -u +%FT%TZ)"
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" sonde
