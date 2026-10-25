@@ -114,30 +114,42 @@
     const R=+$('#radius').value, h=home();
     const rows=stations().map(s=>{ const l=legOf(s); const g=PSF.fuelGain(p,{km:l.km,prix:s.prix}); return Object.assign(s,l,g); }).filter(s=>s.km<=90);
     rows.sort((a,b)=>b.net-a.net);
-    const best=rows[0], near=rows.filter(s=>s.km<=R).sort((a,b)=>b.net-a.net)[0];
+    const FR=rows.filter(s=>s.pays==='FR'), CH=rows.filter(s=>s.pays==='CH');
+    const bestFR=FR[0], nearCH=CH.filter(s=>s.km<=R)[0];
     $('#waiting').hidden=true; $('#res').hidden=false;
     const route=s=>`https://www.openstreetmap.org/directions?engine=fossgis_osrm_car&route=${h[0]}%2C${h[1]}%3B${s.lat}%2C${s.lon}`;
-    const card=(title,s,empty)=>{
-      if(!s) return `<div class="card"><span class="ct">${title}</span><p class="muted">${empty}</p></div>`;
-      const pos=s.net>0;
-      return `<div class="card ${pos?'':'neg'}"><span class="ct">${title}</span>
-        <span class="cg">${pos?'+':'−'}${nf(Math.abs(s.net),0)}<small> CHF</small></span>
-        <span class="cn">${esc(s.nom)} <span class="flag">${s.pays==='FR'?'France':'Suisse'}</span></span>
-        <span class="ca">${esc(s.adr)}</span>
-        <span class="cd">${nf(s.prix)} CHF/L${s.maj?' · '+(s.pays==='FR'?'mis à jour le ':'relevé le ')+dateFr(s.maj):''}${s.vieux?' · à confirmer':''} · ${nf(s.km,0)} km, ${nf(s.min,0)} min${s.via?'':' (distance estimée)'}</span>
-        <span class="cx">Plein : ${pos||s.fuel>0?'−':'+'}${nf(Math.abs(s.fuel))} CHF · trajet aller-retour : +${nf(s.drive)} CHF${s.wear?` · usure : +${nf(s.wear)} CHF`:''}</span>
-        <a class="cr" href="${route(s)}" target="_blank" rel="noopener">Itinéraire</a></div>`;
-    };
-    const verdict = best && best.net>0.5 ? '' : `<p class="warn" style="grid-column:1/-1">Aucun détour n'est rentable pour ${nf(p.litres,0)} litres avec ces prix : faites le plein à votre station habituelle.</p>`;
-    const nearest=rows.slice().sort((a,b)=>a.km-b.km)[0];
-    $('#cards').innerHTML=verdict+(best&&best.net>0?card('Le plus rentable',best,''):card('La station au prix connu la plus proche',nearest,'Aucune station avec un prix connu à moins de 90 km.'))
-      +card(`Le plus rentable à moins de ${R} km`,near&&near.net>0?near:null,`Aucune station avec un prix connu et rentable à moins de ${R} km. <a href="${esc(D.signal_url)}" target="_blank" rel="noopener">Signalez un prix</a> : il aidera tout le monde.`);
-    let pos=rows.filter(s=>s.net>0).slice(0,15);
-    $('#listTitle').textContent = pos.length ? 'Toutes les stations rentables' : 'Les stations les plus proches avec un prix connu';
-    if(!pos.length) pos=rows.slice().sort((a,b)=>a.km-b.km).slice(0,6);
-    $('#tStations tbody').innerHTML=pos.length?pos.map(s=>`<tr><td>${esc(s.nom)} <span class="flag">${s.pays}</span><small>${esc(s.adr)}</small></td><td>${nf(s.prix)} CHF<small>${s.maj?dateFr(s.maj):''}${s.vieux?', à confirmer':''}</small></td><td>${nf(s.km,0)} km<small>${nf(s.min,0)} min</small></td><td><b>${s.net>=0?'+':'−'}${nf(Math.abs(s.net),0)} CHF</b></td></tr>`).join(''):'<tr><td colspan="4" class="muted">Aucune.</td></tr>';
+    const perH=s=>s.net/((2*s.min)/60);
+    const detail=s=>`<span class="cn">${esc(s.nom)}</span><span class="ca">${esc(s.adr)}</span>
+        <span class="cd">${nf(s.prix)} CHF/L${s.maj?' · '+(s.pays==='FR'?'prix officiel du ':'relevé le ')+dateFr(s.maj):''}${s.vieux?' · à confirmer':''} · ${nf(s.km,0)} km, ${nf(s.min,0)} min${s.via?'':' (distance estimée)'}</span>
+        <span class="cx">Plein : ${s.fuel>=0?'−':'+'}${nf(Math.abs(s.fuel))} CHF · trajet aller-retour : +${nf(s.drive)} CHF${s.wear?` · usure : +${nf(s.wear)} CHF`:''}</span>
+        <a class="cr" href="${route(s)}" target="_blank" rel="noopener">Itinéraire</a>`;
+    // 1. près de chez vous : stations suisses
+    const proches=(ST.ch_osm||[]).map(x=>({lat:x[0],lon:x[1],nom:x[2],ville:x[3],d:PSF.haversine(h,[x[0],x[1]])*D.route.facteur})).sort((a,b)=>a.d-b.d).slice(0,4);
+    let c1;
+    if(nearCH && nearCH.net>0){
+      c1=`<div class="card"><span class="ct">Le plus rentable à moins de ${R} km</span><span class="cg">+${nf(nearCH.net,0)}<small> CHF</small></span>${detail(nearCH)}</div>`;
+    } else {
+      c1=`<div class="card"><span class="ct">Près de chez vous</span>
+        <p>${CH.length?`Aucune station suisse avec un prix relevé n'est moins chère que ${nf(p.pref)} CHF/L à moins de ${R} km.`:`Les prix des stations suisses ne sont pas publiés : la loi ne l'impose pas. Les plus proches :`}</p>
+        <ul class="plist">${proches.map(x=>`<li><span><b>${esc(x.nom)}</b>${x.ville?', '+esc(x.ville):''}</span><small>${nf(x.d,1)} km</small></li>`).join('')}</ul>
+        <span class="cx"><a href="https://benzin.tcs.ch/fr" target="_blank" rel="noopener">Voir leurs prix sur le radar du TCS</a> · <a href="${esc(D.signal_url)}" target="_blank" rel="noopener">Signaler un prix ici</a></span></div>`;
+    }
+    // 2. la France vaut-elle le détour ?
+    let c2;
+    if(!bestFR){ c2=`<div class="card"><span class="ct">Faire le plein en France</span><p class="muted">Aucune station française avec un prix du jour à moins de 90 km.</p></div>`; }
+    else if(bestFR.net>=5 && bestFR.min<=45){
+      c2=`<div class="card"><span class="ct">En France : oui, ça vaut le coup</span><span class="cg">+${nf(bestFR.net,0)}<small> CHF</small></span>${detail(bestFR)}<span class="cx">Soit environ ${nf(perH(bestFR),0)} CHF gagnés par heure de route.</span></div>`;
+    } else {
+      const why = bestFR.net<=0 ? `Même la station la plus intéressante vous ferait perdre ${nf(-bestFR.net,0)} CHF, trajet compris.`
+        : `Au mieux +${nf(bestFR.net,0)} CHF pour ${nf(2*bestFR.min,0)} minutes de route aller-retour : pas intéressant.`;
+      c2=`<div class="card neg"><span class="ct">En France : non, pas depuis chez vous</span><p>${why}</p><span class="cx">Meilleure station française : ${esc(bestFR.nom)}, ${esc(bestFR.adr)} (${nf(bestFR.prix)} CHF/L, ${nf(bestFR.km,0)} km).</span></div>`;
+    }
+    $('#cards').innerHTML=c1+c2;
+    const pos=rows.filter(s=>s.net>=1).slice(0,15);
+    $('#listTitle').textContent='Toutes les stations rentables'; $('#listTitle').hidden=!pos.length; $('#tStations').closest('.tbl').hidden=!pos.length;
+    $('#tStations tbody').innerHTML=pos.length?pos.map(s=>`<tr><td>${esc(s.nom)} <span class="flag">${s.pays==='FR'?'France':'Suisse'}</span><small>${esc(s.adr)}</small></td><td>${nf(s.prix)} CHF<small>${s.maj?dateFr(s.maj):''}${s.vieux?', à confirmer':''}</small></td><td>${nf(s.km,0)} km<small>${nf(s.min,0)} min</small></td><td><b>${s.net>=0?'+':'−'}${nf(Math.abs(s.net),0)} CHF</b></td></tr>`).join(''):'<tr><td colspan="4" class="muted">Aucune.</td></tr>';
     const z=refZone();
-    $('#resNote').innerHTML=`Gain net = (prix habituel − prix de la station) × litres − carburant brûlé pour l'aller-retour${p.wear?' − usure de la voiture':''}. Prix habituel : ${nf(p.pref)} CHF/L${st.prefEdited?' (votre prix)':z?` (moyenne ${esc(z.nom)}, douane suisse, ${esc(D.ofdf_date)})`:''}. Distances : itinéraire réel jusqu'à la ville frontalière quand il existe, sinon estimation (vol d'oiseau × ${nf(D.route.facteur,2)}). Le temps n'est pas déduit. Pour la France, le réservoir passe la douane sans formalité.`;
+    $('#resNote').innerHTML=`Gain net = (prix habituel − prix de la station) × litres − carburant brûlé pour l'aller-retour${p.wear?' − usure de la voiture':''}. Prix habituel : ${nf(p.pref)} CHF/L${st.prefEdited?' (votre prix)':z?` (moyenne ${esc(z.nom)}, douane suisse, ${esc(D.ofdf_date)})`:''}. Distances : itinéraire réel jusqu'à la ville frontalière quand il existe, sinon estimation (vol d'oiseau × ${nf(D.route.facteur,2)}). « Ça vaut le coup » : au moins 5 CHF de gain et moins de 45 minutes de route aller. Pour la France, le réservoir passe la douane sans formalité.`;
     if(!$('#res').dataset.scrolled){ $('#res').dataset.scrolled='1'; document.getElementById('answer').scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth', block:'start'}); }
   }
 

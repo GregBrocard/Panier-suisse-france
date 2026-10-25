@@ -103,7 +103,9 @@ Le mode « Où faire le plein » (page Essence) indique, depuis une localité su
 - Station suisse : ligne droite × facteur route, doublée si la ligne droite traverse un lac.
 - **Facteur route** : rapport médian entre la distance routière OSRM et la distance à vol d'oiseau, mesuré sur environ 7 000 trajets réels du site (1,39 en octobre 2026). **Vitesse moyenne** : médiane des mêmes trajets (environ 76 km/h). Ces deux valeurs sont recalculées à chaque publication.
 
-**Gain net** = (prix habituel − prix de la station) × litres − carburant brûlé pour l'aller-retour (distance × 2 × consommation × prix habituel) − usure de la voiture (distance × 2 × 0,19 CHF/km, TCS 2026, option). Le temps de trajet est affiché mais n'est pas déduit. Seules les stations à moins de 90 km sont considérées. Si aucun détour n'est rentable, le site le dit et montre la station au prix connu la plus proche.
+**Gain net** = (prix habituel − prix de la station) × litres − carburant brûlé pour l'aller-retour (distance × 2 × consommation × prix habituel) − usure de la voiture (distance × 2 × 0,19 CHF/km, TCS 2026, option). Le temps de trajet est affiché mais n'est pas déduit. Seules les stations à moins de 90 km sont considérées.
+
+**Réponses affichées.** (1) « Près de chez vous » : la station suisse la plus rentable dans le rayon choisi si un prix relevé existe ; sinon, les quatre stations suisses les plus proches (OpenStreetMap, sans les stations pour bateaux), avec un lien vers le radar du TCS pour voir leur prix et un lien pour signaler un prix. (2) « En France » : le détour n'est conseillé que s'il rapporte au moins 5 CHF et demande moins de 45 minutes de route aller ; sinon le site l'écrit et indique le gain ou la perte de la meilleure station française.
 
 **Limites.** Les distances vers les stations suisses et vers les stations françaises éloignées des villes frontalières sont des estimations. La couverture suisse dépend des relevés reçus. L'Allemagne, l'Italie et l'Autriche ne sont pas encore couvertes station par station (leurs prix moyens frontaliers figurent dans le tableau OFDF de la page).
 

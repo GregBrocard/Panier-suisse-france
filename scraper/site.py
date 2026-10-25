@@ -633,7 +633,10 @@ def donnees_stations(extra, dests, ch_ess, fx):
         z = (ch_ess.get("zones") or {}).get(zid) or {}
         zones.append({"id": zid, "nom": nom, "lat": lat, "lon": lon,
                       "sp95": (z.get("sp95") or {}).get("ch_chf"), "diesel": (z.get("diesel") or {}).get("ch_chf")})
-    return {"fr": fr, "ch": ch, "ch_total": len(osm_ch), "maj_fr": ess.get("genere_le")}, zones
+    bateaux = ("naval", "marina", "port de", "chantier", "bateau", "boat", "hafen", "werft")
+    ch_osm = [[x[1], x[2], x[3] or x[4] or "Station", x[5]] for x in osm_ch
+              if not any(b in (x[3] or "").lower() for b in bateaux)]
+    return {"fr": fr, "ch": ch, "ch_osm": ch_osm, "ch_total": len(osm_ch), "maj_fr": ess.get("genere_le")}, zones
 
 
 # ------------------------------------------------------------------ main

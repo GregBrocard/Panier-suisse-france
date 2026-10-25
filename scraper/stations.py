@@ -46,6 +46,8 @@ def _parse(j, pays):
         if lat is None or lon is None:
             continue
         nom = t.get("name") or t.get("brand") or t.get("operator") or ""
+        if t.get("boat") == "yes" or t.get("motorcar") == "no" or t.get("access") in ("private", "no"):
+            continue  # stations pour bateaux, privées ou fermées au public
         out.append([f"{el['type'][0]}{el['id']}", round(lat, 5), round(lon, 5), nom, t.get("brand") or "",
                     t.get("addr:city") or "", pays])
     return out
