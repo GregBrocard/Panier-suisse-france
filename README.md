@@ -1,9 +1,9 @@
 # Panier Suisse × France
 
-Comparaison mensuelle automatisée du prix des courses entre la Suisse romande et la France voisine (Annemasse, Divonne / La Cure, Vallorbe / Pontarlier), à partir de données publiques : OFAG, INSEE, BCE, OFDF, Open Prices, flux officiel des prix des carburants et relevé Migros.
+Comparaison mensuelle automatisée du prix des courses entre la Suisse romande et la France voisine (départ depuis toute localité suisse, 14 villes françaises de destination), à partir de données publiques : OFAG, INSEE, BCE, OFDF, Open Prices, flux officiel des prix des carburants et relevé Migros.
 
 - **Méthodologie** : [METHODOLOGIE.md](METHODOLOGIE.md)
-- **Panier** : [config/panier.yaml](config/panier.yaml)
+- **Panier** : [config/panier.yaml](config/panier.yaml) · **Villes françaises** : [config/destinations.yaml](config/destinations.yaml)
 - **Données** : `data/series.json` (historique depuis 2006), `data/latest.json` (dernier relevé), `data/releves/` (archives)
 - **Site** : `site/index.html` (page autonome, publiée sur GitHub Pages)
 

@@ -1,10 +1,10 @@
 # Méthodologie — Panier Suisse × France
 
-Version 1.1 · octobre 2026 (ajout du niveau de prix par magasin)
+Version 1.2 · octobre 2026 (toutes les localités suisses, 14 villes françaises, magasins par ville)
 
 ## 1. Question posée
 
-Combien coûtent les mêmes courses du quotidien en Suisse romande et dans la France voisine, et à partir de quand le déplacement vaut-il la peine ? Quatre passages frontaliers sont couverts : Genève ↔ Annemasse, Nyon ↔ Divonne / Gex, La Cure ↔ Les Rousses, Vallorbe ↔ Jougne / Pontarlier.
+Combien coûtent les mêmes courses du quotidien en Suisse romande et dans la France voisine, et à partir de quand le déplacement vaut-il la peine ? Le départ peut être n'importe quelle localité de Suisse (répertoire officiel des localités de swisstopo, environ 4 100 localités). L'arrivée est l'une des 14 villes françaises où les Suisses font couramment leurs courses (`config/destinations.yaml`) : Annemasse, Saint-Julien-en-Genevois, Saint-Genis-Pouilly, Ferney-Voltaire, Gex, Divonne-les-Bains, Thonon-les-Bains, Évian-les-Bains, Les Rousses, Jougne, Pontarlier, Morteau, Delle, Saint-Louis.
 
 ## 2. Principe : des sources publiques, vérifiables et automatisées
 
@@ -39,7 +39,7 @@ Nutella, Coca-Cola (bouteille PET), Red Bull 25 cl, Pringles Original, Kinder Bu
 
 ### 3.4 Carburant
 
-- France : flux officiel des prix des stations (ministère de l'Économie, data.economie.gouv.fr), moyenne des stations de chaque zone : Annemasse (74100, 74240), Divonne / Gex (01220, 01170), Les Rousses (39220), Jougne / Pontarlier (25370, 25300). Le SP95 pur ayant presque disparu, on retient le SP95 ou, à défaut, l'E10.
+- France : flux officiel des prix des stations (ministère de l'Économie, data.economie.gouv.fr), moyenne des stations à moins de 8 km du centre de chaque ville de destination. Le SP95 pur ayant presque disparu, on retient le SP95 ou, à défaut, l'E10.
 - Suisse : tableau T 4.4 de l'Office fédéral de la douane et de la sécurité des frontières (OFDF), prix à la colonne en zone frontière genevoise, publié mensuellement.
 - Historique France : INSEE, prix moyens mensuels des carburants.
 
@@ -47,10 +47,10 @@ Nutella, Coca-Cola (bouteille PET), Red Bull 25 cl, Pringles Original, Kinder Bu
 
 Les prix français des sections 3.1 à 3.3 sont des moyennes nationales. Pour estimer les prix d'un magasin précis, on utilise le comparateur des supermarchés de l'UFC-Que Choisir, qui relève chaque jour, dans chaque magasin disposant d'un drive, le prix d'un même panier d'une centaine de produits (marques nationales et marques de distributeur ; épicerie, fruits et légumes, crèmerie, boucherie, boissons, hygiène).
 
-- **Magasins d'une zone.** Un ou deux magasins « graines » par zone, plus tous les magasins situés à moins de 15 km d'eux selon la liste publiée par Que Choisir (limités au département de la zone).
+- **Magasins d'une ville.** Tous les magasins listés par Que Choisir dans les départements frontaliers (74, 01, 39, 25, 68, 90) ; chaque adresse est géolocalisée (Nominatim, OpenStreetMap) et le magasin est rattaché à la ville de destination la plus proche s'il se trouve à moins de 7 km de son centre.
 - **Référence nationale.** Un panel de magasins tirés au hasard dans toute la France (tirage fixe, graine 2026), dont on prend la médiane du panier global.
 - **Indice du magasin** = panier global du magasin ÷ médiane du panel. Un indice de 0,92 signifie un magasin 8 % moins cher que le magasin français typique.
-- **Indice de la zone** = médiane des indices des magasins de la zone.
+- **Indice de la ville** = médiane des indices de ses magasins. Une ville sans magasin référencé utilise la moyenne française (indice 1).
 - **Écart Suisse / magasin** pour une catégorie : (1 + écart Suisse / France) ÷ indice − 1.
 
 Cette méthode suppose que l'écart d'un magasin à la moyenne est le même dans toutes les catégories ; c'est une approximation. Les données de Que Choisir leur appartiennent ; elles sont publiées avec l'accord de l'UFC-Que Choisir (octobre 2026), avec citation de la source et lien vers leur comparateur. Le paramètre `quechoisir.publier` de `config/panier.yaml` permet de les retirer du site public à tout moment.
@@ -65,7 +65,7 @@ Cette méthode suppose que l'écart d'un magasin à la moyenne est le même dans
 
 **Calculateur de trajet.**
 - économie sur les courses = dépense × taux d'économie pondéré selon la composition du panier choisie (viande, fruits et légumes, marques), chaque écart étant ajusté par l'indice du magasin choisi (ou de la zone) ;
-- distance : choisie par l'utilisateur ou calculée automatiquement entre sa localité de départ (liste `config/origines.yaml`, centre de la localité) et le magasin choisi ; pour « moyenne de la zone », trajet vers le magasin le plus proche. Distances et durées routières calculées avec OSRM sur les données OpenStreetMap, adresses des magasins géocodées avec Nominatim ;
+- distance : calculée automatiquement entre le centre de la localité de départ (coordonnées swisstopo) et le centre de la ville de destination, itinéraire le plus rapide (OSRM sur OpenStreetMap), recalculée seulement pour les nouvelles paires ; l'utilisateur peut la corriger ;
 - coût du trajet = distance aller-retour × consommation ÷ 100 × prix suisse du carburant ;
 - plein en France (option) = litres × (prix suisse − prix moyen de la zone) ;
 - TVA suisse : si les achats dépassent 150 CHF par personne, 2,6 % (taux réduit alimentaire) sur la totalité ;
@@ -88,4 +88,4 @@ Le temps passé et l'usure du véhicule ne sont pas comptés.
 
 ## 7. Citer
 
-> Brocard, G. (2026). *Panier Suisse × France*, méthodologie v1.1. Données OFAG, INSEE, BCE, OFDF, Open Prices, UFC-Que Choisir. Code et données : https://github.com/GregBrocard/Panier-suisse-france
+> Brocard, G. (2026). *Panier Suisse × France*, méthodologie v1.2. Données OFAG, INSEE, BCE, OFDF, Open Prices, UFC-Que Choisir. Code et données : https://github.com/GregBrocard/Panier-suisse-france
