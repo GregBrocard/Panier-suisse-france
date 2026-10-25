@@ -118,9 +118,9 @@ zones:
 # publier: false = usage privé de test (données propriété de l'UFC-Que Choisir, accord à demander avant publication).
 quechoisir:
   publier: false
-  panel: { n: 160, seed: 2026 }
+  panel: { n: 600, seed: 2026 }   # tirage brut ; les identifiants valides sont gardés dans data/qc_panel.json
   zones:
     annemasse:  { seeds: [1447], departements: ["74"] }         # Leclerc Drive Ville-la-Grand
-    divonne:    { seeds: [21779], departements: ["01"] }        # Carrefour City Divonne
+    divonne:    { seeds: [21779, 1781], departements: ["01"] }  # Carrefour City Divonne, Carrefour Hyper Segny
     lesrousses: { seeds: [5036], departements: ["39"] }         # Intermarché Super Les Rousses
     vallorbe:   { seeds: [21391, 1701], departements: ["25"] }  # Super U Jougne, Leclerc Pontarlier

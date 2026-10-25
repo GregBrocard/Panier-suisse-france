@@ -90,16 +90,29 @@ def zone_stores(seeds: list[int], postcodes_prefix: list[str] | None = None) -> 
     return out
 
 
-def national_panel(n: int = 160, seed: int = 2026, max_id: int = 22000) -> dict:
-    """Médiane du panier global sur un échantillon fixe de magasins tirés au hasard (même tirage chaque mois)."""
-    rng = random.Random(seed)
-    ids = rng.sample(range(1, max_id), n)
-    vals, names = [], []
+def national_panel(n: int = 600, seed: int = 2026, max_id: int = 22000, cache=None) -> dict:
+    """Médiane du panier global sur un échantillon fixe de magasins tirés au hasard (même tirage chaque mois).
+
+    Beaucoup d'identifiants tirés ne correspondent à aucun magasin : au premier passage, on garde la liste
+    des identifiants valides dans le fichier `cache` (JSON) et les mois suivants on ne relit que ceux-là.
+    """
+    import json
+    ids = None
+    if cache is not None and cache.exists():
+        meta = json.loads(cache.read_text())
+        if meta.get("seed") == seed and meta.get("n") == n:
+            ids = meta["valides"]
+    fresh = ids is None
+    if fresh:
+        ids = random.Random(seed).sample(range(1, max_id), n)
+    vals, valid = [], []
     for dm in ids:
         s = store(dm)
         if s:
             vals.append(s["paniers"]["global"])
-            names.append(s["nom"])
+            valid.append(dm)
+    if cache is not None and (fresh or len(valid) < len(ids)):
+        cache.write_text(json.dumps({"seed": seed, "n": n, "valides": valid}))
     return {"n": len(vals), "tires": n, "mediane": round(statistics.median(vals), 2) if vals else None,
             "moyenne": round(statistics.mean(vals), 2) if vals else None,
             "p10": round(sorted(vals)[len(vals) // 10], 2) if vals else None,

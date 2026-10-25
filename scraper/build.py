@@ -229,7 +229,8 @@ def build_magasins(cfg):
     qc = cfg.get("quechoisir") or {}
     if not qc:
         return None
-    panel = safe(QC.national_panel, qc["panel"]["n"], qc["panel"]["seed"], default=None, label="Que Choisir panel")
+    panel = safe(QC.national_panel, qc["panel"]["n"], qc["panel"]["seed"], 22000, DATA / "qc_panel.json",
+                 default=None, label="Que Choisir panel")
     if not panel or not panel["mediane"]:
         return None
     log(f"   panel national : {panel['n']} magasins, médiane {panel['mediane']} €")

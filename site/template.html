@@ -1,261 +1,257 @@
 <title>Panier Suisse France</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Combien coûtent les mêmes courses en Suisse romande et dans la France voisine ? Données officielles OFAG, INSEE, BCE, mises à jour chaque mois.">
+<meta name="description" content="Les mêmes courses en Suisse romande et dans la France voisine, magasin par magasin. Données publiques mises à jour chaque mois.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout : un poste frontière — bandeau-verdict, puis une colonne de lecture, chiffres en police de ticket de caisse */
+/* Mise en page : grille suisse, alignement à gauche, filets noirs, un seul rouge.
+   Le point rouge (aiguille des horloges de gare) marque ce qui compte. */
 :root{
-  --bg:#f5f6f4; --surface:#ffffff; --ink:#1d2321; --ink-2:#4a5450; --muted:#6f7975; --rule:#d9dedb;
-  --ch:#C2362B; --fr:#2F5BB7; --accent:#1f6b5c; --accent-soft:#e3efeb; --warn:#9a6200; --warn-soft:#fbf1dc;
-  --f-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
-  --f-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
-  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --paper:#ffffff; --ink:#111111; --ink-2:#4b4b4b; --muted:#8a8a8a; --rule:#e4e4e4; --wash:#f4f4f2;
+  --red:#da291c; --red-wash:#fbe9e7; --fr:#2f5bb7; --fr-wash:#e8eef9; --good:#1d7a4f;
+  --f-display:"Archivo","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --f-body:"Instrument Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#141917; --surface:#1c2220; --ink:#e7ece9; --ink-2:#b5bfbb; --muted:#8c9692; --rule:#2e3633;
-  --ch:#E25A4F; --fr:#5F8BE0; --accent:#5fc0a8; --accent-soft:#1d332d; --warn:#e2a94a; --warn-soft:#33281a; color-scheme:dark}}
+  --paper:#121212; --ink:#f2f2f0; --ink-2:#bdbdbb; --muted:#8c8c8a; --rule:#2a2a2a; --wash:#1b1b1b;
+  --red:#ef4a3c; --red-wash:#3a1a17; --fr:#6d95e6; --fr-wash:#1a2438; --good:#4fbf8a; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#141917; --surface:#1c2220; --ink:#e7ece9; --ink-2:#b5bfbb; --muted:#8c9692; --rule:#2e3633;
-  --ch:#E25A4F; --fr:#5F8BE0; --accent:#5fc0a8; --accent-soft:#1d332d; --warn:#e2a94a; --warn-soft:#33281a; color-scheme:dark}
+  --paper:#121212; --ink:#f2f2f0; --ink-2:#bdbdbb; --muted:#8c8c8a; --rule:#2a2a2a; --wash:#1b1b1b;
+  --red:#ef4a3c; --red-wash:#3a1a17; --fr:#6d95e6; --fr-wash:#1a2438; --good:#4fbf8a; color-scheme:dark}
 
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
-.wrap{max-width:1040px;margin:0 auto}
-h1,h2,h3{font-family:var(--f-display);font-weight:800;letter-spacing:.01em;line-height:1.05;text-wrap:balance;margin:0}
-h2{font-size:clamp(28px,4vw,38px);text-transform:uppercase}
-h3{font-size:22px;text-transform:uppercase;font-weight:600}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;
+  padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));padding-block:0 64px}
+.wrap{max-width:1080px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance;letter-spacing:-.02em}
+h2{font-size:clamp(30px,4.6vw,48px);font-weight:800;line-height:1.02}
+h3{font-size:18px;font-weight:600;letter-spacing:-.01em}
 p{margin:0}
-a{color:var(--accent)}
-.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
-.label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
-.lede{color:var(--ink-2);max-width:65ch}
+a{color:inherit;text-decoration-thickness:1px;text-underline-offset:3px}
+.num{font-family:var(--f-display);font-variant-numeric:tabular-nums}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.lede{color:var(--ink-2);max-width:60ch;font-size:17px}
+.small{font-size:13px;color:var(--muted)}
+.redot{display:inline-block;width:.42em;height:.42em;border-radius:50%;background:var(--red);vertical-align:.18em;margin-left:.08em}
 
-/* bandeau */
-header.top{padding-block:28px 8px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:end;justify-content:space-between;border-bottom:3px solid var(--ink)}
-header.top h1{font-size:clamp(40px,7vw,72px);text-transform:uppercase}
-header.top h1 .x{display:inline-block;color:var(--muted);font-weight:600;margin:0 .12em}
-.stamp{font-family:var(--f-mono);font-size:12px;color:var(--ink-2);border:1.5px solid var(--ink-2);padding:6px 10px;transform:rotate(-1.5deg);line-height:1.4}
+/* en-tête */
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:22px;border-bottom:2px solid var(--ink)}
+.brand{display:flex;align-items:center;gap:12px;font-family:var(--f-display);font-weight:600;font-size:17px;letter-spacing:-.01em}
+.cross{width:28px;height:28px;background:var(--red);position:relative;flex:none}
+.cross::before,.cross::after{content:"";position:absolute;background:#fff;left:50%;top:50%;transform:translate(-50%,-50%)}
+.cross::before{width:16px;height:5px}.cross::after{width:5px;height:16px}
+.date{font-size:13px;color:var(--ink-2);text-align:right}
 
-/* verdict */
-.verdict{padding-block:28px;display:grid;gap:20px}
-.verdict .q{font-family:var(--f-display);font-size:clamp(26px,3.6vw,34px);font-weight:600;text-transform:uppercase;max-width:30ch}
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
-.tile{background:var(--surface);border:1px solid var(--rule);padding:16px;display:grid;gap:6px;align-content:start}
-.tile .big{font-family:var(--f-display);font-weight:800;font-size:44px;line-height:1}
-.tile .big.ch{color:var(--ink)} .tile .sub{color:var(--ink-2);font-size:14px}
-.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:2px;justify-self:start}
-.chip.ch{background:color-mix(in srgb,var(--ch) 14%,transparent);color:var(--ink)}
-.chip.fr{background:color-mix(in srgb,var(--fr) 16%,transparent);color:var(--ink)}
-.chip.eq{background:var(--accent-soft);color:var(--ink)}
-.dot{width:8px;height:8px;border-radius:50%;display:inline-block}
-.dot.ch{background:var(--ch)} .dot.fr{background:var(--fr)}
+/* ouverture */
+.hero{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:24px;padding-block:56px 40px}
+.hero .say{grid-column:1/-1;font-family:var(--f-display);font-weight:800;font-size:clamp(38px,7.4vw,92px);line-height:.96;letter-spacing:-.035em;max-width:14ch}
+.hero .say em{font-style:normal;color:var(--red)}
+.hero .lede{grid-column:1/span 7}
+@media (max-width:760px){.hero .lede{grid-column:1/-1}}
+.figs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--ink)}
+.fig{padding:18px 18px 22px 0;display:grid;gap:4px;align-content:start;border-right:1px solid var(--rule)}
+.fig + .fig{padding-left:18px}
+.fig:last-child{border-right:0}
+.fig .v{font-family:var(--f-display);font-weight:800;font-size:clamp(34px,4.6vw,52px);letter-spacing:-.03em;line-height:1}
+.fig .k{font-weight:600}
+.fig .d{font-size:13px;color:var(--muted)}
+@media (max-width:760px){.figs{grid-template-columns:repeat(2,minmax(0,1fr))}.fig:nth-child(2){border-right:0}.fig:nth-child(n+3){border-top:1px solid var(--rule)}.fig:nth-child(3){padding-left:0}}
 
-section{padding-block:36px;border-top:1px solid var(--rule);display:grid;gap:16px}
-section > header{display:grid;gap:6px}
+section{padding-block:56px 8px;display:grid;gap:22px}
+.sh{display:grid;gap:10px;border-top:2px solid var(--ink);padding-top:14px}
 
 /* calculateur */
-.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
-@media (max-width:760px){.calc{grid-template-columns:1fr}}
-.form{display:grid;gap:14px;background:var(--surface);border:1px solid var(--rule);padding:18px}
-.row{display:grid;gap:4px}
-.row label{font-weight:600;font-size:14px}
-.row .hint{font-size:13px;color:var(--muted)}
-input[type=number],select{font:inherit;font-family:var(--f-mono);padding:8px 10px;border:1px solid var(--rule);background:var(--bg);color:var(--ink);border-radius:2px;width:100%}
-.seg{display:flex;flex-wrap:wrap;gap:6px}
-.seg button{font:inherit;font-size:14px;padding:6px 12px;border:1.5px solid var(--rule);background:var(--bg);color:var(--ink);border-radius:2px;cursor:pointer}
-.seg button[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--bg)}
-button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.check{display:flex;gap:8px;align-items:center;font-size:14px}
-.receipt{font-family:var(--f-mono);font-size:14px;background:var(--surface);border:1px solid var(--rule);padding:18px;display:grid;gap:6px;align-content:start;
-  background-image:radial-gradient(circle at 8px -2px,var(--bg) 6px,transparent 6.5px);background-size:16px 10px;background-repeat:repeat-x;background-position:0 100%}
-.receipt .line{display:flex;justify-content:space-between;gap:12px}
-.receipt .line span:last-child{text-align:right;white-space:nowrap}
-.receipt hr{border:0;border-top:1px dashed var(--muted);margin:6px 0;width:100%}
-.receipt .total{font-weight:500;font-size:18px}
-.receipt .verdictline{font-family:var(--f-display);font-size:26px;font-weight:800;text-transform:uppercase;margin-top:6px;line-height:1.1}
-.notice{background:var(--warn-soft);border-left:3px solid var(--warn);padding:10px 12px;font-family:var(--f-body);font-size:14px}
+.calc{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:32px;align-items:start}
+@media (max-width:860px){.calc{grid-template-columns:1fr}}
+.tabs{display:flex;flex-wrap:wrap;gap:0;border-bottom:1px solid var(--rule)}
+.tabs button{font:inherit;font-weight:600;font-size:15px;background:none;border:0;border-bottom:3px solid transparent;color:var(--ink-2);padding:10px 14px 9px 0;margin-right:18px;cursor:pointer}
+.tabs button[aria-pressed="true"]{color:var(--ink);border-bottom-color:var(--red)}
+.stores{display:grid;border-top:1px solid var(--ink)}
+.store{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--rule);cursor:pointer}
+.store input{accent-color:var(--red);width:16px;height:16px;margin:0}
+.store .n{font-weight:600}
+.store .a{font-size:13px;color:var(--muted)}
+.store .i{text-align:right;font-family:var(--f-display);font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.store .i small{display:block;font-family:var(--f-body);font-weight:400;font-size:12px;color:var(--muted)}
+.store.avg .n{font-style:normal}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 20px;margin-top:22px}
+@media (max-width:480px){.fields{grid-template-columns:1fr}}
+.field{display:grid;gap:6px}
+.field label{font-size:13px;font-weight:600;color:var(--ink-2)}
+input[type=number],select{font:inherit;font-family:var(--f-display);font-weight:500;font-size:18px;padding:8px 0;border:0;border-bottom:1.5px solid var(--ink);background:transparent;color:var(--ink);border-radius:0;width:100%}
+.chips{display:flex;flex-wrap:wrap;gap:8px;grid-column:1/-1}
+.chips button{font:inherit;font-size:14px;padding:7px 12px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);cursor:pointer;border-radius:999px}
+.chips button[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.check{display:flex;gap:10px;align-items:center;font-size:15px;grid-column:1/-1}
+.check input{accent-color:var(--red);width:16px;height:16px}
+button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,.store:focus-within{outline:2px solid var(--red);outline-offset:2px}
+
+.result{background:var(--wash);padding:24px;display:grid;gap:10px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px)}
+@media (max-width:860px){.result{position:static}}
+.result .big{font-family:var(--f-display);font-weight:800;font-size:clamp(46px,7vw,72px);letter-spacing:-.035em;line-height:.95}
+.result .big.neg{color:var(--muted)}
+.result .verdict{font-family:var(--f-display);font-weight:600;font-size:20px}
+.result .where{font-size:13px;color:var(--ink-2)}
+.lines{display:grid;gap:6px;border-top:1px solid var(--ink);padding-top:12px;margin-top:6px}
+.line{display:flex;justify-content:space-between;gap:16px;font-size:14px}
+.line span:last-child{font-family:var(--f-mono);white-space:nowrap}
+.note{font-size:13px;color:var(--ink-2);border-left:2px solid var(--red);padding-left:10px}
+
+/* magasins */
+.rank{display:grid;border-top:1px solid var(--ink)}
+.rk{display:grid;grid-template-columns:28px minmax(0,1.4fr) minmax(0,1fr) 92px;gap:14px;align-items:center;padding:11px 0;border-bottom:1px solid var(--rule)}
+.rk .pos{font-family:var(--f-display);font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+.rk .n{font-weight:600} .rk .a{font-size:13px;color:var(--muted)}
+.rk .track{height:6px;background:var(--wash);position:relative}
+.rk .track i{position:absolute;top:0;bottom:0;background:var(--ink)}
+.rk .track b{position:absolute;top:-4px;bottom:-4px;width:1px;background:var(--red)}
+.rk .v{text-align:right;font-family:var(--f-display);font-weight:600;font-variant-numeric:tabular-nums}
+@media (max-width:560px){.rk{grid-template-columns:24px minmax(0,1fr) 78px}.rk .track{display:none}}
 
 /* graphiques */
-.chartbox{background:var(--surface);border:1px solid var(--rule);padding:14px 14px 8px}
-.chartbox .cap{display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:space-between;align-items:baseline;margin-bottom:8px}
-.canvas{position:relative;height:300px}
-.canvas.small{height:180px}
-.legend{display:flex;gap:14px;font-size:13px;color:var(--ink-2);align-items:center;flex-wrap:wrap}
+.chart{display:grid;gap:10px}
+.chart .cap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 18px;align-items:baseline}
+.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;color:var(--ink-2)}
+.sw{display:inline-block;width:14px;height:3px;vertical-align:middle;margin-right:6px}
+.canvas{position:relative;height:320px}
+.canvas.s{height:170px}
 
 /* tableaux */
-.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--rule)}
-table{border-collapse:collapse;width:100%;font-size:14px}
-th,td{padding:9px 12px;text-align:right;border-bottom:1px solid var(--rule);white-space:nowrap}
-th:first-child,td:first-child{text-align:left;white-space:normal;min-width:150px}
-thead th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;background:var(--bg)}
-tbody tr.clickable{cursor:pointer}
-tbody tr.clickable:hover,tbody tr[aria-selected="true"]{background:var(--accent-soft)}
-td.num{font-family:var(--f-mono)}
-.small{font-size:13px;color:var(--muted)}
-.bar{display:inline-block;height:8px;vertical-align:middle;border-radius:0 2px 2px 0}
+.tbl{overflow-x:auto;border-top:1px solid var(--ink)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{padding:10px 14px 10px 0;text-align:right;border-bottom:1px solid var(--rule);white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal;min-width:140px}
+th{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+td.v{font-family:var(--f-display);font-weight:500;font-variant-numeric:tabular-nums}
+td .eur{font-size:12px;color:var(--muted);display:block}
+tr.click{cursor:pointer} tr.click:hover td{background:var(--wash)} tr[aria-selected="true"] td{background:var(--wash)}
+.gap{font-family:var(--f-display);font-weight:600;font-variant-numeric:tabular-nums}
+.gap.up{color:var(--red)} .gap.down{color:var(--fr)}
 
-details{background:var(--surface);border:1px solid var(--rule);padding:12px 16px}
-details summary{cursor:pointer;font-weight:700}
-details .body{display:grid;gap:10px;padding-top:10px;max-width:72ch}
-details ul{margin:0;padding-left:20px}
-footer{padding-block:24px;color:var(--muted);font-size:13px;border-top:3px solid var(--ink);display:grid;gap:6px}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+@media (max-width:860px){.cols{grid-template-columns:1fr}}
+.cols > div{display:grid;gap:12px;align-content:start}
+details{border-top:1px solid var(--rule);padding-block:14px}
+details summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px}
+details summary::after{content:"+";font-family:var(--f-display);font-weight:600}
+details[open] summary::after{content:"–"}
+details .body{display:grid;gap:10px;padding-top:12px;max-width:68ch;color:var(--ink-2)}
+details ul{margin:0;padding-left:18px;display:grid;gap:6px}
+footer{margin-top:64px;padding-top:16px;border-top:2px solid var(--ink);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;font-size:13px;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
 <div class="wrap">
   <header class="top">
-    <h1>Panier Suisse<span class="x">×</span>France</h1>
-    <div class="stamp" id="stamp">RELEVÉ —</div>
+    <div class="brand"><span class="cross" aria-hidden="true"></span><span>Panier Suisse × France</span></div>
+    <div class="date" id="date">—</div>
   </header>
 
-  <div class="verdict">
-    <p class="q">Les mêmes courses, de chaque côté de la frontière.</p>
-    <p class="lede" id="lede">Chargement des données…</p>
-    <div class="tiles" id="tiles"></div>
+  <div class="hero">
+    <p class="say" id="say">Vos courses, de l'autre côté de la frontière.</p>
+    <p class="lede" id="lede">Chargement…</p>
   </div>
+  <div class="figs" id="figs"></div>
 
-  <section id="trajet">
-    <header>
-      <p class="label">Calculateur</p>
-      <h2>Le trajet vaut-il la peine ?</h2>
-      <p class="lede">Indiquez votre zone, votre dépense habituelle et votre voiture. Le calcul reprend les écarts de prix ci-dessous, le prix du carburant de la zone et les règles de la douane suisse.</p>
-    </header>
+  <section id="calcul">
+    <div class="sh">
+      <p class="eyebrow">Calculateur</p>
+      <h2>Où allez-vous faire vos courses<span class="redot"></span></h2>
+      <p class="lede">Choisissez un passage, puis un magasin. Le calcul part de ce que vous dépensez en Suisse et tient compte du niveau de prix du magasin, du trajet et de la douane.</p>
+    </div>
     <div class="calc">
-      <form class="form" id="calcForm" autocomplete="off">
-        <div class="row">
-          <label>Passage frontière</label>
-          <div class="seg" id="zoneSeg" role="group" aria-label="Zone frontalière"></div>
-        </div>
-        <div class="row">
-          <label for="spend">Courses habituelles en Suisse (CHF)</label>
-          <input id="spend" type="number" min="0" step="10" value="200">
-          <span class="hint">Ce que vous dépenseriez pour les mêmes courses en Suisse.</span>
-        </div>
-        <div class="row">
-          <label>Ce que contient votre panier</label>
-          <div class="seg" id="mixSeg" role="group" aria-label="Composition du panier"></div>
-        </div>
-        <div class="row">
-          <label for="km">Distance aller simple (km)</label>
-          <input id="km" type="number" min="0" step="1" value="30">
-        </div>
-        <div class="row">
-          <label for="conso">Consommation (L/100 km)</label>
-          <input id="conso" type="number" min="0" step="0.1" value="7">
-        </div>
-        <div class="row">
-          <label for="persons">Adultes dans la voiture</label>
-          <input id="persons" type="number" min="1" max="9" step="1" value="1">
-          <span class="hint">La franchise douanière de 150 CHF est par personne.</span>
-        </div>
-        <label class="check"><input id="fill" type="checkbox"> Je fais aussi le plein en France</label>
-        <div class="row" id="tankRow" hidden>
-          <label for="tank">Litres achetés</label>
-          <input id="tank" type="number" min="0" step="1" value="50">
-        </div>
-      </form>
-      <div class="receipt" id="receipt" aria-live="polite"></div>
+      <div>
+        <div class="tabs" id="zones" role="group" aria-label="Passage frontière"></div>
+        <div class="stores" id="stores" role="radiogroup" aria-label="Magasin"></div>
+        <form class="fields" id="form" autocomplete="off">
+          <div class="field"><label for="spend">Vos courses en Suisse (CHF)</label><input id="spend" type="number" min="0" step="10" value="200"></div>
+          <div class="field"><label for="km">Distance aller (km)</label><input id="km" type="number" min="0" step="1" value="30"></div>
+          <div class="field"><label for="conso">Consommation (L/100 km)</label><input id="conso" type="number" min="0" step="0.1" value="7"></div>
+          <div class="field"><label for="persons">Adultes dans la voiture</label><input id="persons" type="number" min="1" max="9" step="1" value="1"></div>
+          <div class="field" style="grid-column:1/-1"><label>Dans votre caddie</label></div>
+          <div class="chips" id="mix" role="group" aria-label="Composition du panier"></div>
+          <label class="check"><input id="fill" type="checkbox"> Je fais aussi le plein en France</label>
+          <div class="field" id="tankRow" hidden><label for="tank">Litres</label><input id="tank" type="number" min="0" step="1" value="50"></div>
+        </form>
+      </div>
+      <aside class="result" id="result" aria-live="polite"></aside>
     </div>
   </section>
 
-  <section id="fruits">
-    <header>
-      <p class="label">Fruits, légumes · données officielles OFAG et INSEE</p>
-      <h2>Vingt ans d'écart de prix</h2>
-      <p class="lede">Écart du panier de 14 fruits et légumes entre la Suisse et la moyenne française, converti en francs au taux de la BCE du mois. Au-dessus de zéro, la Suisse est plus chère.</p>
-    </header>
-    <div class="chartbox">
-      <div class="cap"><span class="label">Écart Suisse / France, en %</span>
-        <span class="legend"><span><span class="dot" style="background:var(--ink)"></span> moyenne sur 12 mois</span><span><span class="dot" style="background:var(--muted);opacity:.5"></span> mois par mois</span></span></div>
-      <div class="canvas"><canvas id="gapChart" aria-label="Écart de prix du panier fruits et légumes entre la Suisse et la France depuis 2006"></canvas></div>
+  <section id="magasins">
+    <div class="sh">
+      <p class="eyebrow">Magasins</p>
+      <h2>Du moins cher au plus cher</h2>
+      <p class="lede" id="magLede">Prix d'un même panier d'une centaine de produits dans chaque magasin de la zone, comparé à la médiane des magasins français.</p>
     </div>
-    <div class="chartbox">
-      <div class="cap"><span class="label">Taux de change, francs pour 1 euro (BCE)</span></div>
-      <div class="canvas small"><canvas id="fxChart" aria-label="Évolution du taux de change EUR/CHF"></canvas></div>
+    <div class="rank" id="rank"></div>
+    <p class="small" id="magSrc"></p>
+  </section>
+
+  <section id="histoire">
+    <div class="sh">
+      <p class="eyebrow">Fruits et légumes · depuis 2006</p>
+      <h2>L'écart fond depuis 2022</h2>
+      <p class="lede">Écart entre la Suisse et la France sur 14 fruits et légumes, en francs au taux du mois. Au-dessus de zéro, la Suisse est plus chère.</p>
     </div>
-    <p class="small">Touchez une ligne du tableau pour voir l'historique du produit.</p>
-    <div class="tbl"><table id="tblOff"><thead><tr><th>Produit (1 kg)</th><th>Suisse</th><th>France</th><th>Écart</th><th>Mois</th></tr></thead><tbody></tbody></table></div>
-    <div class="chartbox" id="itemBox">
-      <div class="cap"><span class="label" id="itemTitle">Historique</span>
-        <span class="legend"><span><span class="dot ch"></span> Suisse (OFAG)</span><span><span class="dot fr"></span> France (INSEE, en CHF)</span></span></div>
-      <div class="canvas"><canvas id="itemChart"></canvas></div>
+    <div class="chart">
+      <div class="cap"><span class="eyebrow">Écart Suisse / France</span>
+        <span class="legend"><span><span class="sw" style="background:var(--ink)"></span>moyenne sur 12 mois</span><span><span class="sw" style="background:var(--muted)"></span>chaque mois</span></span></div>
+      <div class="canvas"><canvas id="gap" aria-label="Écart de prix fruits et légumes Suisse France depuis 2006"></canvas></div>
+    </div>
+    <div class="chart">
+      <div class="cap"><span class="eyebrow">Francs pour 1 euro (BCE)</span></div>
+      <div class="canvas s"><canvas id="fx" aria-label="Taux de change EUR CHF"></canvas></div>
     </div>
   </section>
 
-  <section id="viande">
-    <header>
-      <p class="label">Viande · INSEE et Migros</p>
-      <h2>La viande, le vrai écart</h2>
-      <p class="lede">Prix au kilo. France : moyenne nationale de l'INSEE. Suisse : médiane des produits équivalents vendus par Migros, hors bio et hors promotion.</p>
-    </header>
-    <div class="tbl"><table id="tblMeat"><thead><tr><th>Morceau (1 kg)</th><th>Suisse</th><th>France</th><th>Écart</th><th>Produits CH</th></tr></thead><tbody></tbody></table></div>
-  </section>
-
-  <section id="marques">
-    <header>
-      <p class="label">Mêmes marques · Migros et Open Prices</p>
-      <h2>Les produits de marque</h2>
-      <p class="lede">Le même produit des deux côtés, comparé au prix par kilo ou par litre. Côté France, médiane des tickets partagés sur Open Prices sur douze mois : quand il y a peu de relevés, le chiffre est indicatif.</p>
-    </header>
-    <div class="tbl"><table id="tblBrand"><thead><tr><th>Produit</th><th>Suisse</th><th>France</th><th>Écart</th><th>Relevés FR</th></tr></thead><tbody></tbody></table></div>
-  </section>
-
-  <section id="carburant">
-    <header>
-      <p class="label">Carburant · prix officiels</p>
-      <h2>Le plein, de part et d'autre</h2>
-      <p class="lede">France : moyenne des stations de la zone (flux officiel du ministère de l'Économie). Suisse : prix à la colonne en zone frontière genevoise publié par l'Office fédéral de la douane (OFDF).</p>
-    </header>
-    <div class="tbl"><table id="tblFuel"><thead><tr><th>Zone</th><th>Stations FR</th><th>SP95 / E10 FR</th><th>SP95 CH</th><th>Diesel FR</th><th>Diesel CH</th></tr></thead><tbody></tbody></table></div>
+  <section id="prix">
+    <div class="sh">
+      <p class="eyebrow">Détail des prix</p>
+      <h2>Produit par produit</h2>
+      <p class="lede">Prix moyens en France, convertis en francs. Touchez une ligne pour voir son historique.</p>
+    </div>
+    <div class="tbl"><table id="tOff"><thead><tr><th>Fruits et légumes, 1 kg</th><th>Suisse</th><th>France</th><th>Écart</th></tr></thead><tbody></tbody></table></div>
+    <div class="chart">
+      <div class="cap"><span class="eyebrow" id="itemTitle">Historique</span>
+        <span class="legend"><span><span class="sw" style="background:var(--red)"></span>Suisse</span><span><span class="sw" style="background:var(--fr)"></span>France</span></span></div>
+      <div class="canvas"><canvas id="item"></canvas></div>
+    </div>
+    <div class="tbl"><table id="tMeat"><thead><tr><th>Viande, 1 kg</th><th>Suisse</th><th>France</th><th>Écart</th></tr></thead><tbody></tbody></table></div>
+    <div class="tbl"><table id="tBrand"><thead><tr><th>Mêmes marques</th><th>Suisse</th><th>France</th><th>Écart</th></tr></thead><tbody></tbody></table></div>
+    <div class="tbl"><table id="tFuel"><thead><tr><th>Carburant, 1 litre</th><th>Sans plomb</th><th>Diesel</th><th>Stations</th></tr></thead><tbody></tbody></table></div>
   </section>
 
   <section id="methode">
-    <header>
-      <p class="label">Méthode</p>
-      <h2>D'où viennent les chiffres</h2>
-    </header>
-    <details open>
-      <summary>Sources et fréquence</summary>
-      <div class="body">
-        <ul>
-          <li><b>Fruits, légumes, pain (Suisse)</b> : prix de consommation mensuels de l'Office fédéral de l'agriculture (OFAG), relevés dans le commerce de détail, région de vente « Suisse ». Données ouvertes LINDAS.</li>
-          <li><b>Fruits, légumes, viande, pain, carburant (France)</b> : prix moyens mensuels de vente au détail en métropole, INSEE (base BDM).</li>
-          <li><b>Viande et marques (Suisse)</b> : relevé automatique mensuel du site Migros.</li>
-          <li><b>Marques (France)</b> : Open Prices (Open Food Facts), base ouverte de tickets de caisse.</li>
-          <li><b>Carburant</b> : flux officiel des prix des stations françaises ; tableau T 4.4 de l'OFDF pour la Suisse.</li>
-          <li><b>Change</b> : taux de référence de la Banque centrale européenne, moyenne mensuelle pour l'historique, dernier taux quotidien pour la photo du mois.</li>
-        </ul>
-        <p>Les données sont reconstruites le 20 de chaque mois par un robot public. Le code, la méthodologie complète et toutes les données sont sur <a href="https://github.com/GregBrocard/Panier-suisse-france" target="_blank" rel="noopener">GitHub</a>.</p>
-      </div>
-    </details>
-    <details>
-      <summary>Ce qu'il faut savoir avant de citer ces chiffres</summary>
-      <div class="body">
-        <p>Les prix français sont des moyennes nationales. Les magasins proches de la frontière peuvent être un peu plus ou un peu moins chers. Seul le carburant est relevé zone par zone.</p>
-        <p>Les fruits et légumes suivent les saisons : un mois isolé peut tromper, la moyenne sur 12 mois est plus fiable. L'origine des produits n'est pas contrôlée.</p>
-        <p>Le pain n'entre pas dans le total : le pain mi-blanc suisse et la baguette française ne sont pas le même produit.</p>
-        <p>Le taux de la BCE est un taux interbancaire. Celui de votre carte est en général 1 à 2 % moins favorable.</p>
-      </div>
-    </details>
-    <details>
-      <summary>Règles de la douane suisse (achats pour usage privé)</summary>
-      <div class="body">
-        <ul>
-          <li>Franchise de valeur : 150 CHF par personne et par jour. Au-delà, la TVA suisse est due sur la totalité des achats (2,6 % pour l'alimentation).</li>
-          <li>Viande : 1 kg par personne et par jour en franchise ; au-delà, droits de douane sur l'excédent.</li>
-          <li>Alcool : 5 L sous 18 % vol., 1 L au-dessus. Tabac : 250 cigarettes.</li>
-        </ul>
-        <p>Source : OFDF et ch.ch, règles en vigueur en 2026.</p>
-      </div>
-    </details>
+    <div class="sh"><p class="eyebrow">Méthode</p><h2>D'où viennent les chiffres</h2></div>
+    <div>
+      <details open><summary>Sources</summary><div class="body"><ul>
+        <li><b>Fruits et légumes, Suisse :</b> Office fédéral de l'agriculture (OFAG), prix de consommation mensuels.</li>
+        <li><b>Fruits, légumes, viande, France :</b> INSEE, prix moyens de vente au détail.</li>
+        <li><b>Viande et marques, Suisse :</b> relevé mensuel du site Migros.</li>
+        <li><b>Marques, France :</b> Open Prices (Open Food Facts), tickets de caisse partagés.</li>
+        <li><b>Niveau de prix de chaque magasin :</b> comparateur des supermarchés de l'UFC-Que Choisir (panier d'une centaine de produits, relevé chaque jour).</li>
+        <li><b>Carburant :</b> prix officiels des stations françaises ; tableau T 4.4 de l'OFDF pour la Suisse.</li>
+        <li><b>Change :</b> taux de référence de la Banque centrale européenne.</li>
+      </ul><p>Code, données et méthodologie complète sur <a href="https://github.com/GregBrocard/Panier-suisse-france" target="_blank" rel="noopener">GitHub</a>. Mise à jour automatique le 20 de chaque mois.</p></div></details>
+      <details><summary>Comment le prix d'un magasin est estimé</summary><div class="body">
+        <p>Que Choisir publie le prix du même panier dans chaque magasin. On le compare à la médiane d'un échantillon de magasins tirés au hasard dans toute la France. Un indice de 0,92 veut dire que le magasin est 8 % moins cher que le magasin français typique.</p>
+        <p>On applique cet indice aux prix moyens français (INSEE, Open Prices) pour estimer les prix du magasin, puis on compare à la Suisse. C'est une estimation : un magasin peut être bon marché en épicerie et plus cher en boucherie.</p></div></details>
+      <details><summary>Limites</summary><div class="body">
+        <p>Les fruits et légumes suivent les saisons : la moyenne sur 12 mois est plus fiable qu'un mois isolé. Leur origine n'est pas contrôlée.</p>
+        <p>La viande suisse vient d'une seule enseigne (Migros). Pour les marques, quand Open Prices a moins de 5 relevés, le chiffre est indicatif.</p>
+        <p>Le taux de la BCE est interbancaire ; celui de votre carte est en général 1 à 2 % moins bon.</p></div></details>
+      <details><summary>Douane suisse</summary><div class="body"><ul>
+        <li>150 CHF d'achats par personne et par jour en franchise. Au-delà, la TVA suisse est due sur tout le montant (2,6 % pour l'alimentation).</li>
+        <li>Viande : 1 kg par personne et par jour en franchise.</li>
+        <li>Alcool : 5 L sous 18 % vol., 1 L au-dessus. Tabac : 250 cigarettes.</li>
+      </ul></div></details>
+    </div>
   </section>
 
-  <footer>
-    <span id="foot">—</span>
-    <span>Projet de Greg Brocard. Données ouvertes, code public, mise à jour mensuelle automatique.</span>
-  </footer>
+  <footer><span id="foot">—</span><span>Un projet de Greg Brocard · données publiques · code ouvert</span></footer>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
@@ -265,153 +261,166 @@ footer{padding-block:24px;color:var(--muted);font-size:13px;border-top:3px solid
   const D = JSON.parse(document.getElementById('data').textContent);
   const L = D.latest, H = D.series;
   const $ = s => document.querySelector(s);
-  const fmt = (v, d=2) => v==null ? '—' : v.toLocaleString('fr-CH',{minimumFractionDigits:d,maximumFractionDigits:d});
-  const pct = v => v==null ? '—' : (v>0?'+':'') + v.toLocaleString('fr-CH',{maximumFractionDigits:0}) + ' %';
-  const MONTHS = ['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
-  const mlabel = m => { if(!m) return '—'; const [y,mm]=m.split('-'); return MONTHS[+mm-1]+' '+y; };
+  const nf = (v,d=2) => v==null||isNaN(v) ? '—' : v.toLocaleString('fr-CH',{minimumFractionDigits:d,maximumFractionDigits:d});
+  const pc = v => v==null||isNaN(v) ? '—' : (v>0?'+':v<0?'−':'') + Math.abs(Math.round(v)) + ' %';
+  const MO = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+  const ml = m => { if(!m) return '—'; const [y,mm]=m.split('-'); return MO[+mm-1]+' '+y; };
   const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-  const ZONES = {annemasse:'Genève ↔ Annemasse', divonne:'Nyon ↔ Divonne / La Cure', vallorbe:'Vallorbe ↔ Jougne / Pontarlier'};
+  const esc = s => String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const ZONES = L.zones && Object.keys(L.zones).length ? L.zones : {annemasse:'Genève ↔ Annemasse', divonne:'Nyon ↔ Divonne / Gex', lesrousses:'La Cure ↔ Les Rousses', vallorbe:'Vallorbe ↔ Jougne / Pontarlier'};
+  const MAG = L.magasins && L.magasins.zones ? L.magasins : null;
 
-  // ---------- agrégats
+  // ---------- écarts nationaux
   const pan = H.panier || [];
-  const roll = pan.map((p,i) => { const w = pan.slice(Math.max(0,i-11), i+1); return w.length<12 ? null : w.reduce((a,b)=>a+b.ecart,0)/12; });
-  const last12 = roll[roll.length-1];
-  const meat = (L.viande||[]).filter(v => v.ecart!=null);
-  const meatCH = meat.reduce((a,v)=>a+v.ch*v.qty,0), meatFR = meat.reduce((a,v)=>a+v.fr_chf*v.qty,0);
-  const meatGap = meat.length ? (meatCH/meatFR-1)*100 : null;
-  const br = (L.marques||[]).filter(v => v.ecart!=null);
-  const brCH = br.reduce((a,v)=>a+v.ch_unit*v.qty,0), brFR = br.reduce((a,v)=>a+v.fr_unit_chf*v.qty,0);
-  const brGap = br.length ? (brCH/brFR-1)*100 : null;
+  const roll = pan.map((p,i)=>{const w=pan.slice(Math.max(0,i-11),i+1);return w.length<12?null:w.reduce((a,b)=>a+b.ecart,0)/12;});
+  const gFL = roll[roll.length-1];
+  const meat = (L.viande||[]).filter(v=>v.ecart!=null);
+  const gMeat = meat.length ? (meat.reduce((a,v)=>a+v.ch*v.qty,0)/meat.reduce((a,v)=>a+v.fr_chf*v.qty,0)-1)*100 : null;
+  const br = (L.marques||[]).filter(v=>v.ecart!=null);
+  const gBrand = br.length ? (br.reduce((a,v)=>a+v.ch_unit*v.qty,0)/br.reduce((a,v)=>a+v.fr_unit_chf*v.qty,0)-1)*100 : null;
   const fuel = L.carburant||{}, fch = fuel.ch||{};
-  const zFuel = z => (fuel.zones||{})[z] || null;
+  const zf = z => (fuel.zones||{})[z]||null;
+  const adj = (g, idx) => g==null ? null : ((1+g/100)/idx - 1)*100;  // écart Suisse / magasin
 
-  // ---------- en-tête
-  $('#stamp').innerHTML = 'RELEVÉ DU ' + new Date(L.genere_le).toLocaleDateString('fr-CH',{day:'2-digit',month:'long',year:'numeric'}).toUpperCase()
-    + '<br>1 € = ' + fmt(L.fx.jour.eur_chf,4) + ' CHF (BCE, ' + new Date(L.fx.jour.date).toLocaleDateString('fr-CH') + ')';
-  $('#foot').textContent = 'Version du panier ' + L.basket_version + ' · données générées le ' + new Date(L.genere_le).toLocaleDateString('fr-CH') + '.';
-
-  const chip = g => g==null ? '' : Math.abs(g) < 3 ? '<span class="chip eq">Prix proches</span>'
-    : g > 0 ? '<span class="chip ch"><span class="dot ch"></span>Plus cher en Suisse</span>' : '<span class="chip fr"><span class="dot fr"></span>Plus cher en France</span>';
-  const tile = (label, g, sub) => `<div class="tile"><span class="label">${label}</span><span class="big">${pct(g)}</span>${chip(g)}<span class="sub">${sub}</span></div>`;
-  const sp95gap = (fch.sp95 && zFuel('annemasse')) ? (fch.sp95.ch_chf / zFuel('annemasse').moyenne_chf.sp95 - 1)*100 : null;
-  $('#tiles').innerHTML =
-    tile('Viande', meatGap, meat.length + ' morceaux courants, au kilo') +
-    tile('Fruits & légumes', last12, 'moyenne des 12 derniers mois') +
-    tile('Produits de marque', brGap, br.length + ' produits identiques, au kilo ou au litre') +
-    tile('Essence 95', sp95gap, 'Genève contre stations d\'Annemasse');
-  const big = meatGap!=null ? Math.round(meatGap) : null;
-  $('#lede').textContent = big!=null
-    ? `La viande coûte environ ${big} % de plus en Suisse. Sur les fruits, les légumes et beaucoup de produits de marque, l'écart est faible et change de sens selon les mois. Le trajet est surtout rentable pour la viande.`
-    : 'Comparaison mensuelle des prix entre la Suisse romande et la France voisine.';
+  // ---------- en-tête et ouverture
+  const d = new Date(L.genere_le);
+  $('#date').innerHTML = 'Relevé du ' + d.toLocaleDateString('fr-CH',{day:'numeric',month:'long',year:'numeric'}) + '<br><span class="mono">1 € = ' + nf(L.fx.jour.eur_chf,4) + ' CHF</span>';
+  $('#foot').textContent = 'Panier version ' + L.basket_version + ' · données du ' + d.toLocaleDateString('fr-CH');
+  if (gMeat!=null) {
+    const x = (1+gMeat/100);
+    $('#say').innerHTML = x>=1.9 ? 'La viande coûte <em>deux fois</em> plus cher en Suisse.' : 'La viande coûte <em>'+pc(gMeat)+'</em> de plus en Suisse.';
+  }
+  $('#lede').textContent = "Pour les fruits et légumes, l'écart a presque disparu depuis 2022. Sur les produits de marque, la Suisse reste plus chère. Le choix du magasin français compte autant que le passage de la frontière.";
+  const fig = (k,v,dsc) => `<div class="fig"><span class="k">${k}</span><span class="v">${pc(v)}</span><span class="d">${dsc}</span></div>`;
+  const zA = zf('annemasse'); const gFuel = (fch.sp95 && zA && zA.moyenne_chf.sp95) ? (fch.sp95.ch_chf/zA.moyenne_chf.sp95-1)*100 : null;
+  $('#figs').innerHTML = fig('Viande',gMeat,'4 morceaux courants, au kilo') + fig('Fruits et légumes',gFL,'moyenne des 12 derniers mois')
+    + fig('Mêmes marques',gBrand,br.length+' produits identiques') + fig('Essence',gFuel,'Genève contre Annemasse');
 
   // ---------- calculateur
-  const MIX = [
-    {id:'mixte', label:'Mixte', w:{viande:.35, fl:.35, marques:.30}},
-    {id:'viande', label:'Surtout viande', w:{viande:.7, fl:.15, marques:.15}},
-    {id:'fl', label:'Surtout fruits & légumes', w:{viande:.1, fl:.75, marques:.15}},
-    {id:'marques', label:'Surtout produits de marque', w:{viande:.1, fl:.2, marques:.7}},
-  ];
-  const state = {zone:'annemasse', mix:'mixte'};
-  try { const s = JSON.parse(localStorage.getItem('panier-calc')||'{}'); Object.assign(state, s.zone?{zone:s.zone}:{}, s.mix?{mix:s.mix}:{}); } catch(e){}
-  function seg(el, items, key){
-    el.innerHTML = items.map(it => `<button type="button" data-v="${it.id}" aria-pressed="${state[key]===it.id}">${it.label}</button>`).join('');
-    el.addEventListener('click', e => { const b = e.target.closest('button'); if(!b) return; state[key]=b.dataset.v;
-      el.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed', x===b)); try{localStorage.setItem('panier-calc',JSON.stringify(state))}catch(e){} calc(); });
-  }
-  seg($('#zoneSeg'), Object.entries(ZONES).map(([id,label])=>({id,label})), 'zone');
-  seg($('#mixSeg'), MIX, 'mix');
-  $('#fill').addEventListener('change', e => { $('#tankRow').hidden = !e.target.checked; calc(); });
-  $('#calcForm').addEventListener('input', calc);
-  $('#calcForm').addEventListener('submit', e => e.preventDefault());
+  const MIX = [{id:'mixte',label:'Un peu de tout',w:{m:.35,f:.35,b:.30}},{id:'viande',label:'Surtout de la viande',w:{m:.7,f:.15,b:.15}},
+               {id:'fl',label:'Surtout des fruits et légumes',w:{m:.1,f:.75,b:.15}},{id:'b',label:'Surtout des produits de marque',w:{m:.1,f:.2,b:.7}}];
+  const st = {zone:'annemasse', store:'avg', mix:'mixte'};
+  try{ const s=JSON.parse(localStorage.getItem('psf')||'{}'); if(ZONES[s.zone]) st.zone=s.zone; if(MIX.some(m=>m.id===s.mix)) st.mix=s.mix; }catch(e){}
+  const save = () => { try{localStorage.setItem('psf',JSON.stringify({zone:st.zone,mix:st.mix}))}catch(e){} };
 
-  function saveRate(g){ return g==null ? 0 : 1 - 1/(1+g/100); } // part économisée en achetant en France
+  $('#zones').innerHTML = Object.entries(ZONES).map(([id,l])=>`<button type="button" data-z="${id}" aria-pressed="${id===st.zone}">${esc(l)}</button>`).join('');
+  $('#zones').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;st.zone=b.dataset.z;st.store='avg';
+    $('#zones').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));save();renderStores();renderRank();calc();});
+  $('#mix').innerHTML = MIX.map(m=>`<button type="button" data-m="${m.id}" aria-pressed="${m.id===st.mix}">${m.label}</button>`).join('');
+  $('#mix').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;st.mix=b.dataset.m;
+    $('#mix').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));save();calc();});
+  $('#fill').addEventListener('change',e=>{$('#tankRow').hidden=!e.target.checked;calc();});
+  $('#form').addEventListener('input',calc); $('#form').addEventListener('submit',e=>e.preventDefault());
+
+  const zoneMag = () => MAG && MAG.zones[st.zone] ? MAG.zones[st.zone] : null;
+  const idxFmt = i => { const p=(i-1)*100; return Math.abs(p)<1 ? 'dans la moyenne' : (p<0?Math.abs(Math.round(p))+' % moins cher':Math.round(p)+' % plus cher'); };
+  function renderStores(){
+    const zm = zoneMag(), el = $('#stores');
+    if(!zm || !zm.magasins.length){ el.innerHTML = `<p class="small" style="padding:12px 0">Prix par magasin non disponibles : le calcul utilise la moyenne française.</p>`; return; }
+    const row = (id,name,addr,idx,checked,cls='') => `<label class="store ${cls}"><input type="radio" name="store" value="${id}" ${checked?'checked':''}><span><span class="n">${esc(name)}</span><br><span class="a">${esc(addr)}</span></span><span class="i">${nf(idx,2)}<small>${idxFmt(idx)}</small></span></label>`;
+    el.innerHTML = row('avg','Moyenne des magasins de la zone', zm.magasins.length+' magasins', zm.indice_median, st.store==='avg','avg')
+      + zm.magasins.map(m=>row(m.dm, m.nom, (m.cp||'')+' · '+(m.appreciation||''), m.indice, String(st.store)===String(m.dm))).join('');
+    el.onchange = e => { st.store = e.target.value; calc(); };
+  }
+  function currentIdx(){
+    const zm = zoneMag(); if(!zm) return {idx:1,label:'Moyenne française'};
+    if(st.store==='avg') return {idx:zm.indice_median, label:'Moyenne des magasins de la zone'};
+    const m = zm.magasins.find(x=>String(x.dm)===String(st.store)); return m ? {idx:m.indice,label:m.nom} : {idx:zm.indice_median,label:'Moyenne de la zone'};
+  }
+  const save1 = g => g==null ? 0 : 1 - 1/(1+g/100);
   function calc(){
-    const spend = +$('#spend').value||0, km = +$('#km').value||0, conso = +$('#conso').value||0, persons = Math.max(1, +$('#persons').value||1);
-    const w = MIX.find(m=>m.id===state.mix).w;
-    const z = zFuel(state.zone);
-    const rate = w.viande*saveRate(meatGap) + w.fl*saveRate(last12) + w.marques*saveRate(brGap);
-    const frCost = spend*(1-rate);
-    const gross = spend - frCost;
-    const fuelCH = fch.sp95 ? fch.sp95.ch_chf : (z ? z.moyenne_chf.sp95 : 2.2);
-    const trip = 2*km*conso/100*fuelCH;
-    let fuelGain = 0;
-    if ($('#fill').checked && z && z.moyenne_chf.sp95 && fch.sp95) fuelGain = (+$('#tank').value||0) * (fch.sp95.ch_chf - z.moyenne_chf.sp95);
-    let vat = 0; const franchise = 150*persons;
-    if (frCost > franchise) vat = frCost*0.026;
-    const net = gross - trip + fuelGain - vat;
-    const line = (a,b,cls='') => `<div class="line ${cls}"><span>${a}</span><span>${b}</span></div>`;
-    let html = `<span class="label">${ZONES[state.zone]}</span>`;
-    html += line('Courses en Suisse', fmt(spend)+' CHF');
-    html += line('Mêmes courses en France', fmt(frCost)+' CHF');
-    html += line('Économie sur les courses', (gross>=0?'− ':'+ ')+fmt(Math.abs(gross))+' CHF');
-    html += line(`Trajet ${2*km} km (${fmt(conso,1)} L/100)`, '+ '+fmt(trip)+' CHF');
-    if ($('#fill').checked) html += line('Plein en France', (fuelGain>=0?'− ':'+ ')+fmt(Math.abs(fuelGain))+' CHF');
-    if (vat) html += line('TVA suisse (au-delà de '+franchise+' CHF)', '+ '+fmt(vat)+' CHF');
-    html += '<hr>';
-    html += line(net>=0 ? 'Gain net du trajet' : 'Perte nette du trajet', fmt(Math.abs(net))+' CHF', 'total');
-    html += `<div class="verdictline">${net > 5 ? 'Le trajet vaut la peine' : net > -5 ? 'Ça se vaut' : 'Restez en Suisse'}</div>`;
-    const be = rate>0 ? (trip - fuelGain)/rate : null;
-    if (be!=null && be>0) html += `<p class="small" style="font-family:var(--f-body)">Seuil de rentabilité : environ ${fmt(be,0)} CHF de courses (prix suisses) avec ce panier.</p>`;
-    if (frCost > franchise) html += `<p class="notice">Au-delà de ${franchise} CHF d'achats, la TVA suisse s'applique sur tout le montant. Déclarez-la au passage de la douane.</p>`;
-    const avgMeatKg = meat.length ? meatCH / meat.reduce((a,v)=>a+v.qty,0) : 40;
-    if (w.viande*spend/avgMeatKg > persons) html += `<p class="notice">Attention : avec ce panier, vous dépassez probablement 1 kg de viande par personne, la limite en franchise.</p>`;
-    $('#receipt').innerHTML = html;
+    const spend=+$('#spend').value||0, km=+$('#km').value||0, conso=+$('#conso').value||0, persons=Math.max(1,+$('#persons').value||1);
+    const w = MIX.find(m=>m.id===st.mix).w, {idx,label} = currentIdx(), z = zf(st.zone);
+    const rate = w.m*save1(adj(gMeat,idx)) + w.f*save1(adj(gFL,idx)) + w.b*save1(adj(gBrand,idx));
+    const fr = spend*(1-rate), gross = spend-fr;
+    const pCH = fch.sp95 ? fch.sp95.ch_chf : 2.3;
+    const trip = 2*km*conso/100*pCH;
+    let fuelG = 0; if($('#fill').checked && z && z.moyenne_chf.sp95 && fch.sp95) fuelG = (+$('#tank').value||0)*(fch.sp95.ch_chf - z.moyenne_chf.sp95);
+    const fr150 = 150*persons, vat = fr>fr150 ? fr*0.026 : 0;
+    const net = gross - trip + fuelG - vat;
+    const ln = (a,b) => `<div class="line"><span>${a}</span><span>${b}</span></div>`;
+    const sg = v => (v>=0?'− ':'+ ')+nf(Math.abs(v))+' CHF';
+    let h = `<span class="eyebrow">${net>=0?'Vous économisez':'Vous perdez'}</span><span class="big num ${net<0?'neg':''}">${nf(Math.abs(net),0)} CHF</span>`;
+    h += `<span class="verdict">${net>10?'Le trajet en vaut la peine.':net>-5?'Ça se vaut à peu près.':'Mieux vaut rester en Suisse.'}</span>`;
+    h += `<span class="where">${esc(label)} · ${esc(ZONES[st.zone])}</span><div class="lines">`;
+    h += ln('Courses en Suisse', nf(spend)+' CHF') + ln('Mêmes courses en France', nf(fr)+' CHF') + ln('Différence', sg(gross));
+    h += ln(`Trajet, ${2*km} km`, '+ '+nf(trip)+' CHF');
+    if($('#fill').checked) h += ln('Plein en France', sg(fuelG));
+    if(vat) h += ln('TVA suisse', '+ '+nf(vat)+' CHF');
+    h += '</div>';
+    const be = rate>0 ? (trip-fuelG)/rate : null;
+    if(be && be>0) h += `<p class="small">À partir d'environ ${nf(be,0)} CHF de courses, le trajet est rentable.</p>`;
+    if(fr>fr150) h += `<p class="note">Plus de ${fr150} CHF d'achats : déclarez-les à la douane, la TVA suisse s'applique sur tout.</p>`;
+    const avgKg = meat.length ? meat.reduce((a,v)=>a+v.ch*v.qty,0)/meat.reduce((a,v)=>a+v.qty,0) : 40;
+    if(w.m*spend/avgKg > persons) h += `<p class="note">Vous dépassez sans doute 1 kg de viande par personne, la limite en franchise.</p>`;
+    $('#result').innerHTML = h;
+  }
+
+  // ---------- classement des magasins
+  function renderRank(){
+    const zm = zoneMag();
+    if(!zm){ $('#magasins').hidden = true; return; }
+    $('#magasins').hidden = false;
+    const ms = zm.magasins, min = Math.min(...ms.map(m=>m.indice), .85), max = Math.max(...ms.map(m=>m.indice), 1.15);
+    const pos = v => ((v-min)/(max-min)*100).toFixed(1);
+    $('#rank').innerHTML = ms.map((m,i)=>`<div class="rk"><span class="pos">${i+1}</span><span><span class="n">${esc(m.nom)}</span><br><span class="a">${m.cp||''} · panier ${nf(m.panier,0)} €</span></span>
+      <span class="track" aria-hidden="true"><i style="left:${pos(Math.min(1,m.indice))}%;right:${(100-pos(Math.max(1,m.indice))).toFixed(1)}%"></i><b style="left:${pos(1)}%"></b></span>
+      <span class="v">${pc((m.indice-1)*100)}</span></div>`).join('');
+    $('#magSrc').innerHTML = `Écart avec la médiane de ${MAG.panel.n} magasins français tirés au hasard (${nf(MAG.panel.mediane,0)} €). Trait rouge : magasin français typique. Source : <a href="https://www.quechoisir.org/carte-interactive-drives-n21243/" target="_blank" rel="noopener">UFC-Que Choisir</a>.`;
   }
 
   // ---------- tableaux
-  const bar = g => { if(g==null) return ''; const w=Math.min(60,Math.abs(g)*0.6); return `<span class="bar" style="width:${w}px;background:var(${g>0?'--ch':'--fr'});margin-left:6px"></span>`; };
+  const gp = g => `<span class="gap ${g>0?'up':'down'}">${pc(g)}</span>`;
   const off = (L.officiel.produits||[]).filter(p=>p.ecart!=null);
-  $('#tblOff tbody').innerHTML = off.map(p => `<tr class="clickable" tabindex="0" data-id="${p.id}"><td>${p.label}</td><td class="num">${fmt(p.ch)}</td><td class="num">${fmt(p.fr_chf)} <span class="small">(${fmt(p.fr_eur)} €)</span></td><td class="num">${pct(p.ecart)}${bar(p.ecart)}</td><td class="small">${mlabel(p.mois)}</td></tr>`).join('');
-  $('#tblMeat tbody').innerHTML = (L.viande||[]).map(v => `<tr><td>${v.label}</td><td class="num">${fmt(v.ch)}</td><td class="num">${fmt(v.fr_chf)} <span class="small">(${fmt(v.fr_eur)} €, ${mlabel(v.fr_mois)})</span></td><td class="num">${pct(v.ecart)}${bar(v.ecart)}</td><td class="small" title="${(v.ch_produits||[]).join(' · ').replace(/"/g,'')}">${v.ch_n} produits</td></tr>`).join('');
-  $('#tblBrand tbody').innerHTML = (L.marques||[]).map(v => `<tr><td>${v.label}<br><span class="small">${v.ch_produit||''}</span></td><td class="num">${fmt(v.ch_unit)} <span class="small">/${v.unit}</span></td><td class="num">${v.fr_unit_chf!=null?fmt(v.fr_unit_chf)+' <span class="small">/'+v.unit+'</span>':'—'}</td><td class="num">${pct(v.ecart)}${bar(v.ecart)}</td><td class="num">${v.fr_n}${v.fr_n && v.fr_n<5?' <span class="small">indicatif</span>':''}</td></tr>`).join('');
-  $('#tblFuel tbody').innerHTML = Object.keys(ZONES).map(z => { const f = zFuel(z); if(!f) return `<tr><td>${ZONES[z]}</td><td colspan="5" class="small">Données indisponibles ce mois-ci</td></tr>`;
-    return `<tr><td>${ZONES[z]}</td><td class="num">${f.n}</td><td class="num">${fmt(f.moyenne_chf.sp95)} <span class="small">(${fmt(f.moyenne.sp95,3)} €)</span></td><td class="num">${fch.sp95?fmt(fch.sp95.ch_chf):'—'}</td><td class="num">${fmt(f.moyenne_chf.diesel)} <span class="small">(${fmt(f.moyenne.diesel,3)} €)</span></td><td class="num">${fch.diesel?fmt(fch.diesel.ch_chf):'—'}</td></tr>`; }).join('')
-    + `<tr><td colspan="6" class="small" style="text-align:left">CHF par litre. Suisse : OFDF, état au ${fch.date_texte||'—'} (zone frontière de Genève, valable pour les trois zones).</td></tr>`;
+  $('#tOff tbody').innerHTML = off.map(p=>`<tr class="click" tabindex="0" data-id="${p.id}"><td>${esc(p.label)}<span class="eur">${ml(p.mois)}</span></td><td class="v">${nf(p.ch)}</td><td class="v">${nf(p.fr_chf)}<span class="eur">${nf(p.fr_eur)} €</span></td><td>${gp(p.ecart)}</td></tr>`).join('');
+  $('#tMeat tbody').innerHTML = (L.viande||[]).map(v=>`<tr><td>${esc(v.label)}<span class="eur">Suisse : médiane de ${v.ch_n} produits Migros</span></td><td class="v">${nf(v.ch)}</td><td class="v">${nf(v.fr_chf)}<span class="eur">${nf(v.fr_eur)} €</span></td><td>${gp(v.ecart)}</td></tr>`).join('');
+  $('#tBrand tbody').innerHTML = (L.marques||[]).map(v=>`<tr><td>${esc(v.label)}<span class="eur">par ${v.unit==='L'?'litre':'kg'} · ${v.fr_n} relevé${v.fr_n>1?'s':''} en France${v.fr_n&&v.fr_n<5?', indicatif':''}</span></td><td class="v">${nf(v.ch_unit)}</td><td class="v">${v.fr_unit_chf!=null?nf(v.fr_unit_chf):'—'}</td><td>${v.ecart!=null?gp(v.ecart):'—'}</td></tr>`).join('');
+  $('#tFuel tbody').innerHTML = `<tr><td>Suisse, zone frontière de Genève<span class="eur">OFDF, ${esc(fch.date_texte||'')}</span></td><td class="v">${fch.sp95?nf(fch.sp95.ch_chf):'—'}</td><td class="v">${fch.diesel?nf(fch.diesel.ch_chf):'—'}</td><td></td></tr>`
+    + Object.keys(ZONES).map(z=>{const f=zf(z); return f ? `<tr><td>${esc(ZONES[z])}</td><td class="v">${nf(f.moyenne_chf.sp95)}<span class="eur">${nf(f.moyenne.sp95,3)} €</span></td><td class="v">${nf(f.moyenne_chf.diesel)}<span class="eur">${nf(f.moyenne.diesel,3)} €</span></td><td class="v">${f.n}</td></tr>` : `<tr><td>${esc(ZONES[z])}</td><td colspan="3" class="small">indisponible</td></tr>`;}).join('');
+
+  renderStores(); renderRank(); calc();
 
   // ---------- graphiques
-  if (!window.Chart) { document.querySelectorAll('.canvas').forEach(c=>c.innerHTML='<p class="small">Graphique indisponible (bibliothèque non chargée).</p>'); calc(); return; }
-  Chart.defaults.font.family = css('--f-body').split(',')[0].replace(/"/g,'');
-  const grid = () => ({color: css('--rule'), drawTicks:false});
-  const tick = () => ({color: css('--muted'), font:{size:11}});
-  const hexA = (h,a) => { const n=parseInt(h.replace('#',''),16); return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`; };
-  let charts = [];
+  if(!window.Chart){ document.querySelectorAll('.canvas').forEach(c=>c.innerHTML='<p class="small">Graphique indisponible.</p>'); return; }
+  const hexA=(h,a)=>{const n=parseInt(h.replace('#',''),16);return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`;};
+  Chart.defaults.font.family = 'Instrument Sans, Helvetica, Arial, sans-serif';
+  const tk = () => ({color:css('--muted'),font:{size:11}});
+  const yr = arr => (v,i)=> arr[i] && arr[i].endsWith('-01') && (+arr[i].slice(0,4))%2===0 ? arr[i].slice(0,4) : '';
+  let charts=[], itemC=null, cur = off.length?off[0].id:null;
+  const fxMap = Object.fromEntries(H.fx);
   function draw(){
     charts.forEach(c=>c.destroy()); charts=[];
-    const labels = pan.map(p=>p.m);
-    charts.push(new Chart($('#gapChart'), {type:'line', data:{labels, datasets:[
-      {label:'Mois par mois', data:pan.map(p=>p.ecart), borderColor:css('--muted'), borderWidth:1, pointRadius:0, tension:.2, order:2},
-      {label:'Moyenne 12 mois', data:roll, borderColor:css('--ink'), borderWidth:2.5, pointRadius:0, tension:.3, order:1,
-        fill:{target:{value:0}, above:hexA(css('--ch'),.16), below:hexA(css('--fr'),.18)}}]},
-      options:{maintainAspectRatio:false, interaction:{mode:'index', intersect:false}, plugins:{legend:{display:false},
-        tooltip:{callbacks:{title:i=>mlabel(i[0].label), label:c=>c.dataset.label+' : '+pct(c.parsed.y)}}},
-        scales:{x:{grid:{display:false}, ticks:{...tick(), maxTicksLimit:10, callback:(v,i)=>labels[i].endsWith('-01')?labels[i].slice(0,4):''}},
-                y:{grid:grid(), ticks:{...tick(), callback:v=>(v>0?'+':'')+v+' %'}}}}}));
-    charts.push(new Chart($('#fxChart'), {type:'line', data:{labels:H.fx.map(f=>f[0]), datasets:[{label:'CHF pour 1 €', data:H.fx.map(f=>f[1]), borderColor:css('--accent'), borderWidth:2, pointRadius:0, tension:.2}]},
-      options:{maintainAspectRatio:false, interaction:{mode:'index',intersect:false}, plugins:{legend:{display:false}, tooltip:{callbacks:{title:i=>mlabel(i[0].label), label:c=>'1 € = '+fmt(c.parsed.y,4)+' CHF'}}},
-        scales:{x:{grid:{display:false}, ticks:{...tick(), maxTicksLimit:9, callback:(v,i)=>H.fx[i][0].endsWith('-01') && (+H.fx[i][0].slice(0,4))%3===0 ? H.fx[i][0].slice(0,4):''}}, y:{grid:grid(), ticks:tick()}}}}));
-    drawItem(current);
+    const lb = pan.map(p=>p.m);
+    charts.push(new Chart($('#gap'),{type:'line',data:{labels:lb,datasets:[
+      {label:'Chaque mois',data:pan.map(p=>p.ecart),borderColor:css('--muted'),borderWidth:1,pointRadius:0,tension:.2},
+      {label:'Moyenne 12 mois',data:roll,borderColor:css('--ink'),borderWidth:2.5,pointRadius:0,tension:.3,
+       fill:{target:{value:0},above:hexA(css('--red'),.12),below:hexA(css('--fr'),.14)}}]},
+      options:{maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},
+        tooltip:{callbacks:{title:i=>ml(i[0].label),label:c=>c.dataset.label+' : '+pc(c.parsed.y)}}},
+        scales:{x:{grid:{display:false},border:{color:css('--ink')},ticks:{...tk(),autoSkip:false,maxRotation:0,callback:yr(lb)}},
+                y:{grid:{color:css('--rule')},border:{display:false},ticks:{...tk(),callback:v=>(v>0?'+':'')+v+' %'}}}}}));
+    const fl = H.fx.map(f=>f[0]);
+    charts.push(new Chart($('#fx'),{type:'line',data:{labels:fl,datasets:[{data:H.fx.map(f=>f[1]),borderColor:css('--ink'),borderWidth:1.5,pointRadius:0,tension:.2}]},
+      options:{maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{callbacks:{title:i=>ml(i[0].label),label:c=>'1 € = '+nf(c.parsed.y,4)+' CHF'}}},
+        scales:{x:{grid:{display:false},border:{color:css('--ink')},ticks:{...tk(),autoSkip:false,maxRotation:0,callback:(v,i)=>fl[i].endsWith('-01')&&(+fl[i].slice(0,4))%4===0?fl[i].slice(0,4):''}},y:{grid:{color:css('--rule')},border:{display:false},ticks:tk()}}}}));
+    drawItem(cur);
   }
-  let current = off.length ? off[0].id : null, itemChart = null;
-  const fxMap = Object.fromEntries(H.fx);
   function drawItem(id){
-    if(!id) return; current = id;
-    document.querySelectorAll('#tblOff tbody tr').forEach(tr=>tr.setAttribute('aria-selected', tr.dataset.id===id));
-    const rows = (H.produits[id]||[]).filter(r=>fxMap[r[0]]);
-    const meta = off.find(p=>p.id===id);
-    $('#itemTitle').textContent = (meta?meta.label:id) + ' · CHF par kg';
-    if(itemChart) itemChart.destroy();
-    itemChart = new Chart($('#itemChart'), {type:'line', data:{labels:rows.map(r=>r[0]), datasets:[
-      {label:'Suisse', data:rows.map(r=>r[1]), borderColor:css('--ch'), borderWidth:2, pointRadius:0, tension:.25},
-      {label:'France', data:rows.map(r=>+(r[2]*fxMap[r[0]]).toFixed(3)), borderColor:css('--fr'), borderWidth:2, pointRadius:0, tension:.25}]},
-      options:{maintainAspectRatio:false, interaction:{mode:'index',intersect:false}, plugins:{legend:{display:false},
-        tooltip:{callbacks:{title:i=>mlabel(i[0].label), label:c=>c.dataset.label+' : '+fmt(c.parsed.y)+' CHF'}}},
-        scales:{x:{grid:{display:false}, ticks:{...tick(), maxTicksLimit:10, callback:(v,i)=>rows[i][0].endsWith('-01')?rows[i][0].slice(0,4):''}}, y:{grid:grid(), ticks:tick(), beginAtZero:true}}}});
+    if(!id) return; cur=id;
+    document.querySelectorAll('#tOff tbody tr').forEach(tr=>tr.setAttribute('aria-selected',tr.dataset.id===id));
+    const rows=(H.produits[id]||[]).filter(r=>fxMap[r[0]]), meta=off.find(p=>p.id===id);
+    $('#itemTitle').textContent = (meta?meta.label:id)+' · CHF par kg';
+    if(itemC) itemC.destroy();
+    const lb=rows.map(r=>r[0]);
+    itemC=new Chart($('#item'),{type:'line',data:{labels:lb,datasets:[
+      {label:'Suisse',data:rows.map(r=>r[1]),borderColor:css('--red'),borderWidth:2,pointRadius:0,tension:.25},
+      {label:'France',data:rows.map(r=>+(r[2]*fxMap[r[0]]).toFixed(3)),borderColor:css('--fr'),borderWidth:2,pointRadius:0,tension:.25}]},
+      options:{maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{callbacks:{title:i=>ml(i[0].label),label:c=>c.dataset.label+' : '+nf(c.parsed.y)+' CHF'}}},
+        scales:{x:{grid:{display:false},border:{color:css('--ink')},ticks:{...tk(),autoSkip:false,maxRotation:0,callback:yr(lb)}},y:{beginAtZero:true,grid:{color:css('--rule')},border:{display:false},ticks:tk()}}}});
   }
-  $('#tblOff tbody').addEventListener('click', e=>{const tr=e.target.closest('tr'); if(tr) drawItem(tr.dataset.id);});
-  $('#tblOff tbody').addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){const tr=e.target.closest('tr'); if(tr){e.preventDefault(); drawItem(tr.dataset.id);}}});
+  $('#tOff tbody').addEventListener('click',e=>{const tr=e.target.closest('tr');if(tr)drawItem(tr.dataset.id);});
+  $('#tOff tbody').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const tr=e.target.closest('tr');if(tr){e.preventDefault();drawItem(tr.dataset.id);}}});
   draw();
-  try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
-        new MutationObserver(draw).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']}); } catch(e){}
-  calc();
+  try{ matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw); new MutationObserver(draw).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']}); }catch(e){}
 })();
 </script>
