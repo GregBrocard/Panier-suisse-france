@@ -486,16 +486,16 @@
    "ch_unit": 7.3333,
    "ch_produit": "Nutella Nutella · Pâte à tartiner (0.75 kg) à 5.50",
    "ch_url": "https://www.migros.ch/fr/product/151212300000",
-   "fr_unit_eur": 8.46,
-   "fr_n": 2,
+   "fr_unit_eur": 7.147,
+   "fr_n": 9,
    "fr_produit": "Pâte à tartiner Nutella noisettes et cacao - 750g 750g",
-   "fr_prix_eur": 6.345,
-   "fr_depuis": "2026-04-28",
+   "fr_prix_eur": 5.36,
+   "fr_depuis": "2025-10-25",
    "ean_fr": [
     "3017620421006"
    ],
-   "fr_unit_chf": 7.806,
-   "ecart": -6.1
+   "fr_unit_chf": 6.595,
+   "ecart": 11.2
   },
   {
    "id": "coca",
@@ -505,16 +505,16 @@
    "ch_unit": 1.6,
    "ch_produit": "Coca-Cola Coca-Cola · Classic  (1.5 L) à 2.40",
    "ch_url": "https://www.migros.ch/fr/product/120974000000",
-   "fr_unit_eur": 2.4,
-   "fr_n": 1,
+   "fr_unit_eur": 1.72,
+   "fr_n": 16,
    "fr_produit": "Coca-Cola goût original 1250ml",
-   "fr_prix_eur": 3.0,
-   "fr_depuis": "2026-04-28",
+   "fr_prix_eur": 2.15,
+   "fr_depuis": "2025-10-25",
    "ean_fr": [
     "5449000267412"
    ],
-   "fr_unit_chf": 2.214,
-   "ecart": -27.7
+   "fr_unit_chf": 1.587,
+   "ecart": 0.8
   },
   {
    "id": "redbull",
@@ -524,16 +524,16 @@
    "ch_unit": 6.0,
    "ch_produit": "Red Bull Red Bull · Energy Drink (0.25 L) à 1.50",
    "ch_url": "https://www.migros.ch/fr/product/120265000000",
-   "fr_unit_eur": 4.6,
-   "fr_n": 1,
+   "fr_unit_eur": 4.52,
+   "fr_n": 21,
    "fr_produit": "25 cl Red Bull - Energy Drink 250ml",
-   "fr_prix_eur": 1.15,
-   "fr_depuis": "2026-04-28",
+   "fr_prix_eur": 1.13,
+   "fr_depuis": "2025-10-25",
    "ean_fr": [
     "9002490205973"
    ],
-   "fr_unit_chf": 4.244,
-   "ecart": 41.4
+   "fr_unit_chf": 4.171,
+   "ecart": 43.9
   },
   {
    "id": "pringles",
@@ -543,16 +543,16 @@
    "ch_unit": 17.8378,
    "ch_produit": "Pringles Pringles · Original (0.185 kg) à 3.30",
    "ch_url": "https://www.migros.ch/fr/product/101980000000",
-   "fr_unit_eur": 19.229,
-   "fr_n": 2,
+   "fr_unit_eur": 10.943,
+   "fr_n": 16,
    "fr_produit": "Pringles Original 175g",
-   "fr_prix_eur": 3.365,
-   "fr_depuis": "2026-04-28",
+   "fr_prix_eur": 1.915,
+   "fr_depuis": "2025-10-25",
    "ean_fr": [
     "5053990156009"
    ],
-   "fr_unit_chf": 17.743,
-   "ecart": 0.5
+   "fr_unit_chf": 10.097,
+   "ecart": 76.7
   },
   {
    "id": "kinder",
@@ -562,16 +562,16 @@
    "ch_unit": 21.7054,
    "ch_produit": "Kinder Kinder · Bueno (0.129 kg) à 2.80",
    "ch_url": "https://www.migros.ch/fr/product/101578500000",
-   "fr_unit_eur": 29.38,
-   "fr_n": 1,
+   "fr_unit_eur": 20.543,
+   "fr_n": 25,
    "fr_produit": "Barre Chocolatée Kinder Bueno Chocolat au Lait 129g",
-   "fr_prix_eur": 3.79,
-   "fr_depuis": "2026-04-28",
+   "fr_prix_eur": 2.65,
+   "fr_depuis": "2025-10-25",
    "ean_fr": [
     "8000500025857"
    ],
-   "fr_unit_chf": 27.109,
-   "ecart": -19.9
+   "fr_unit_chf": 18.955,
+   "ecart": 14.5
   },
   {
    "id": "lindt",
@@ -581,14 +581,16 @@
    "ch_unit": 48.0,
    "ch_produit": "Excellence Lindt Excellence · Noir · 70% cacao (0.1 kg) à 4.80",
    "ch_url": "https://www.migros.ch/fr/product/100189700000",
-   "fr_unit_eur": null,
-   "fr_n": 0,
-   "fr_produit": null,
-   "fr_prix_eur": null,
-   "fr_depuis": null,
+   "fr_unit_eur": 30.9,
+   "fr_n": 7,
+   "fr_produit": "LINDT EXCELLENCE Smooth Dark 78% 100g",
+   "fr_prix_eur": 3.09,
+   "fr_depuis": "2025-10-25",
    "ean_fr": [
     "3046920010047"
-   ]
+   ],
+   "fr_unit_chf": 28.511,
+   "ecart": 68.4
   }
  ],
  "carburant": {
@@ -4139,12 +4141,12 @@
   "   viande porc       CH 19.29 (15 produits) | FR 13.98 € (2026-09)",
   "   viande jambon     CH 39.29 (7 produits) | FR 19.56 € (2026-09)",
   "== Marques (Migros / Open Prices)",
-  "   marque nutella  CH 7.3333/kg (Nutella Nutella · Pâte à tartiner (0.75 kg) à 5.50) | FR 8.46 €/kg (n=2)",
-  "   marque coca     CH 1.6/L (Coca-Cola Coca-Cola · Classic  (1.5 L) à 2.40) | FR 2.4 €/L (n=1)",
-  "   marque redbull  CH 6.0/L (Red Bull Red Bull · Energy Drink (0.25 L) à 1.50) | FR 4.6 €/L (n=1)",
-  "   marque pringles CH 17.8378/kg (Pringles Pringles · Original (0.185 kg) à 3.30) | FR 19.229 €/kg (n=2)",
-  "   marque kinder   CH 21.7054/kg (Kinder Kinder · Bueno (0.129 kg) à 2.80) | FR 29.38 €/kg (n=1)",
-  "   marque lindt    CH 48.0/kg (Excellence Lindt Excellence · Noir · 70% cacao (0.1 kg) à 4.80) | FR None €/kg (n=0)",
+  "   marque nutella  CH 7.3333/kg (Nutella Nutella · Pâte à tartiner (0.75 kg) à 5.50) | FR 7.147 €/kg (n=9)",
+  "   marque coca     CH 1.6/L (Coca-Cola Coca-Cola · Classic  (1.5 L) à 2.40) | FR 1.72 €/L (n=16)",
+  "   marque redbull  CH 6.0/L (Red Bull Red Bull · Energy Drink (0.25 L) à 1.50) | FR 4.52 €/L (n=21)",
+  "   marque pringles CH 17.8378/kg (Pringles Pringles · Original (0.185 kg) à 3.30) | FR 10.943 €/kg (n=16)",
+  "   marque kinder   CH 21.7054/kg (Kinder Kinder · Bueno (0.129 kg) à 2.80) | FR 20.543 €/kg (n=25)",
+  "   marque lindt    CH 48.0/kg (Excellence Lindt Excellence · Noir · 70% cacao (0.1 kg) à 4.80) | FR 30.9 €/kg (n=7)",
   "== Carburant",
   "   carburant annemasse  9 stations, moyenne {'sp95': 2.123, 'diesel': 2.381}",
   "   carburant divonne    10 stations, moyenne {'sp95': 2.205, 'diesel': 2.401}",
