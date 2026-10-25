@@ -597,8 +597,8 @@ def main(out: Path):
     gen = latest.get("genere_le")
     nx = dt.date.fromisoformat(gen)
     nxt = (nx.replace(day=20) if nx.day < 20 else (nx.replace(day=1) + dt.timedelta(days=32)).replace(day=20))
-    upd = (f"Prix mis à jour automatiquement le 20 de chaque mois, essence chaque jour. Dernière mise à jour : "
-           f"{date_longue(gen)}. Prochaine : {nxt.day} {MOIS[nxt.month - 1]}.")
+    upd = (f"Prix mis à jour le 20 de chaque mois, essence chaque jour. Dernier relevé : {date_longue(gen)}, "
+           f"prochain : {nxt.day} {MOIS[nxt.month - 1]}.")
     titre_fl, titre_viande, resume_fl, resume_fx = textes_synthese(sy, series)
     payload = {"latest": pub, "series": series, "carte": extra.get("carte"), "credits": extra.get("credits"),
                "essence": {"zones": zones_ess, "genere_le": maj_ess}, "synth": sy, "root": ""}
