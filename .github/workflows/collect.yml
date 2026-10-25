@@ -2,19 +2,18 @@ name: Relevé mensuel des prix
 
 on:
   schedule:
-    # le 2 de chaque mois à 06:17 UTC (jour ouvrable après le 1er, hors pic de début de mois)
-    - cron: "17 6 2 * *"
+    # le 20 de chaque mois à 06:17 UTC (après publication des séries OFAG et INSEE du mois précédent)
+    - cron: "17 6 20 * *"
   workflow_dispatch:
-    inputs:
-      only:
-        description: "Limiter à certaines enseignes (ex. ch_coop,fr_leclerc_annemasse)"
-        default: ""
-      debug:
-        description: "Garder les pages téléchargées (1 = oui)"
-        default: ""
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: releve
+  cancel-in-progress: false
 
 jobs:
   collect:
@@ -27,23 +26,31 @@ jobs:
           python-version: "3.12"
       - run: pip install -r requirements.txt
       - name: Construire les données
-        env:
-          SCRAPER_ONLY: ${{ inputs.only }}
-          SCRAPER_DEBUG: ${{ inputs.debug }}
         run: python -m scraper.build
+      - name: Construire le site
+        run: python -m scraper.site
       - name: Enregistrer le relevé
-        if: ${{ inputs.only == '' || inputs.only == null }}
         run: |
           git config user.name "releve-bot"
           git config user.email "releve-bot@users.noreply.github.com"
-          git add data/
-          git diff --cached --quiet || git commit -m "Relevé $(date +%Y-%m)"
+          git add data/ site/index.html
+          git diff --cached --quiet || git commit -m "Relevé $(date +%Y-%m-%d)"
           git push
-      - uses: actions/upload-artifact@v4
-        if: always()
+      - name: Préparer la publication
+        run: |
+          mkdir -p _site
+          cp site/index.html _site/index.html
+          cp data/latest.json data/series.json METHODOLOGIE.md _site/
+      - uses: actions/upload-pages-artifact@v3
         with:
-          name: releve
-          path: |
-            data/latest.json
-            debug/
-          retention-days: 14
+          path: _site
+
+  deploy:
+    needs: collect
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,93 +1,78 @@
-# Méthodologie — Comparateur de panier Suisse / France
+# Méthodologie — Panier Suisse × France
 
 Version 1 · octobre 2026
 
 ## 1. Question posée
 
-Combien coûte le même panier de courses du quotidien en Suisse et dans la France voisine, et à partir de quand le déplacement vaut-il la peine ?
+Combien coûtent les mêmes courses du quotidien en Suisse romande et dans la France voisine, et à partir de quand le déplacement vaut-il la peine ? Trois passages frontaliers sont couverts : Genève ↔ Annemasse, Nyon ↔ Divonne / La Cure, Vallorbe ↔ Jougne / Pontarlier.
 
-Le comparateur répond pour trois passages frontaliers de Suisse romande :
+## 2. Principe : des sources publiques, vérifiables et automatisées
 
-| Zone | Côté suisse | Côté français |
+Le comparateur n'utilise que des données publiées ouvertement. Il ne contourne aucune protection technique de site marchand. Les enseignes dont le site bloque les robots (Coop, Aldi Suisse, E.Leclerc, Carrefour, Intermarché, Super U) ne sont pas relevées.
+
+Les données sont reconstruites automatiquement le 20 de chaque mois par un workflow GitHub Actions public. Chaque chiffre affiché peut être retrouvé dans `data/latest.json` (photo du mois), `data/series.json` (historique) et `data/releves/AAAA-MM.json` (archives des relevés automatiques).
+
+## 3. Les quatre couches du panier
+
+Le panier est défini dans `config/panier.yaml`. Il décrit des produits courants comparables, et non une liste de produits d'un seul pays.
+
+### 3.1 Fruits et légumes : séries statistiques officielles (historique depuis 2006)
+
+| | Suisse | France |
 |---|---|---|
-| Genève ↔ Annemasse | prix nationaux des chaînes suisses | E.Leclerc Drive Ville-la-Grand (Annemasse) |
-| Nyon ↔ Divonne / La Cure | prix nationaux des chaînes suisses | E.Leclerc Drive du Pays de Gex |
-| Vallorbe ↔ Jougne / Pontarlier | prix nationaux des chaînes suisses | E.Leclerc Drive Pontarlier |
+| Source | Office fédéral de l'agriculture (OFAG), prix de consommation mensuels relevés dans le commerce de détail, région de vente « Suisse » (données ouvertes LINDAS) | INSEE, prix moyens mensuels de vente au détail en métropole (base BDM) |
+| Unité | CHF par kg | EUR par kg |
 
-## 2. Le panier : des besoins, pas des produits
+14 produits : bananes, pommes, poires, clémentines, oranges, tomates, carottes, courgettes, champignons de Paris, oignons jaunes, poireaux, endives, poivrons, pommes de terre. Quand l'OFAG publie plusieurs variétés pour un même produit (ex. pommes Golden, Gala et Braeburn), on prend leur moyenne. Quand l'OFAG publie plusieurs séries pour un même produit et un même mois, on prend également leur moyenne.
 
-Le panier n'est ni « suisse » ni « français ». Chaque ligne décrit un **besoin** défini de façon neutre, par exemple « 1 L de lait UHT demi-écrémé » ou « 500 g de viande hachée de bœuf ». Dans chaque enseigne, on retient le produit qui remplit ce besoin selon des règles écrites à l'avance (fichier `config/basket.yaml`), puis on ramène son prix à l'unité (par kg, par litre ou par pièce).
+Le pain est affiché à titre indicatif mais n'entre pas dans le total : le pain mi-blanc suisse et la baguette française ne sont pas le même produit.
 
-Cela évite deux biais fréquents :
-- partir d'une liste de produits suisses (on pénalise la France, où ces produits n'existent pas) ;
-- comparer des formats différents (un pot de 600 g contre un de 750 g).
+### 3.2 Viande
 
-Le panier compte 25 lignes, regroupées en deux sous-paniers :
+France : INSEE (entrecôte de bœuf, escalope de veau, rôti de porc dans le filet, jambon supérieur). Suisse : relevé automatique du site Migros, **médiane** des produits correspondants au kilo, hors bio et hors promotion. La médiane est utilisée parce que la référence française est elle-même une moyenne de marché, et non un premier prix.
 
-**Panier « premier prix » (20 besoins).** Laitier, épicerie, viande, fruits et légumes, ménage. Pour chaque besoin, on retient dans chaque enseigne **le produit valide au prix unitaire le plus bas**, marques de distributeur comprises. C'est le panier de quelqu'un qui cherche à dépenser le moins possible, des deux côtés de la frontière.
+### 3.3 Produits de marque identiques
 
-**Panier « marques » (5 produits).** Nutella 750 g, Coca-Cola 1,5 L, Barilla Spaghetti n°5 500 g, Evian 1,5 L, Kellogg's Corn Flakes. Ce sont des produits identiques vendus des deux côtés : la comparaison y est pure, sans débat sur la qualité.
+Nutella, Coca-Cola (bouteille PET), Red Bull 25 cl, Pringles Original, Kinder Bueno, Lindt Excellence noir. Comparaison au **prix unitaire** (par kg ou par litre), pour neutraliser les différences de format.
+- Suisse : Migros, produit de la même marque et de la même gamme, prix régulier.
+- France : Open Prices (Open Food Facts), base ouverte de tickets de caisse : médiane des prix hors promotion relevés en France sur 12 mois, pour le code-barres indiqué. Le nombre de relevés est affiché ; sous 5 relevés, le chiffre est signalé comme indicatif.
 
-Chaque besoin a une **quantité de référence** (`ref_qty`) correspondant à un achat courant (2 L de lait, 250 g de beurre, 10 œufs…). Le total du panier est la somme des quantités de référence multipliées par les prix unitaires. Il représente environ un panier hebdomadaire pour un ménage d'une ou deux personnes.
+### 3.4 Carburant
 
-## 3. Règles de sélection d'un produit
+- France : flux officiel des prix des stations (ministère de l'Économie, data.economie.gouv.fr), moyenne des stations de chaque zone : Annemasse (74100, 74240), Divonne / Gex / Les Rousses (01220, 01170, 39220), Jougne / Pontarlier (25370, 25300). Le SP95 pur ayant presque disparu, on retient le SP95 ou, à défaut, l'E10.
+- Suisse : tableau T 4.4 de l'Office fédéral de la douane et de la sécurité des frontières (OFDF), prix à la colonne en zone frontière genevoise, publié mensuellement.
+- Historique France : INSEE, prix moyens mensuels des carburants.
 
-Pour qu'un produit soit retenu pour un besoin, il doit :
-1. contenir les mots obligatoires du besoin (ex. « poulet » et « filet » ou « émincé ») ;
-2. ne contenir aucun mot exclu (ex. « bio », « pané », « mariné ») ;
-3. avoir un conditionnement compris dans les bornes du besoin (ex. 0,2 à 2 kg).
+## 4. Calculs
 
-Les produits **bio** sont exclus partout, pour comparer des gammes équivalentes. Les **multipacks** hors bornes sont écartés : on compare un conditionnement unitaire courant.
+**Change.** Les prix français sont convertis au taux de référence EUR/CHF de la Banque centrale européenne : moyenne mensuelle pour l'historique, dernier taux quotidien pour la photo du mois. Le taux réellement obtenu par carte est en général 1 à 2 % moins favorable.
 
-Parmi les produits valides, on retient le moins cher au prix unitaire, **hors promotion** quand un prix régulier existe. Les promotions faussent une comparaison mensuelle : un relevé tombé un jour de promo ne dit rien du prix habituel.
+**Écart.** Pour un produit : écart = prix suisse ÷ prix français en CHF − 1. Pour un panier : somme des prix suisses ÷ somme des prix français, chaque produit étant pondéré par sa quantité de référence `qty` (panier hebdomadaire d'un ménage de deux personnes). Un mois n'est calculé que si au moins 60 % des produits sont disponibles des deux côtés ; seuls les produits disponibles des deux côtés ce mois-là entrent dans le calcul.
 
-## 4. Panier moyen et panier le moins cher
+**Moyenne sur 12 mois.** Les fruits et légumes étant saisonniers, l'indicateur principal est la moyenne des écarts mensuels sur les 12 derniers mois.
 
-Pour chaque zone et chaque besoin :
-- **moyenne** : moyenne des prix des enseignes du pays qui proposent ce besoin ;
-- **minimum** : prix de l'enseigne la moins chère du pays.
+**Calculateur de trajet.**
+- économie sur les courses = dépense × taux d'économie pondéré selon la composition du panier choisie (viande, fruits et légumes, marques) ;
+- coût du trajet = distance aller-retour × consommation ÷ 100 × prix suisse du carburant ;
+- plein en France (option) = litres × (prix suisse − prix moyen de la zone) ;
+- TVA suisse : si les achats dépassent 150 CHF par personne, 2,6 % (taux réduit alimentaire) sur la totalité ;
+- seuil de rentabilité = coût du trajet ÷ taux d'économie.
+Le temps passé et l'usure du véhicule ne sont pas comptés.
 
-Le chiffre principal affiché est la **moyenne** (le panier « typique »). Le minimum est affiché en détail.
+## 5. Règles douanières rappelées (OFDF, ch.ch, 2026)
 
-Un besoin n'entre dans le total d'une zone que s'il a été trouvé **des deux côtés**. Le nombre de besoins effectivement comparés est toujours indiqué à côté du total.
+- Franchise de valeur : 150 CHF par personne et par jour ; au-delà, TVA suisse sur la totalité.
+- Viande : 1 kg par personne et par jour en franchise ; au-delà, droits de douane sur l'excédent.
+- Alcool : 5 L sous 18 % vol., 1 L au-dessus ; tabac : 250 cigarettes.
 
-## 5. Change
+## 6. Limites connues
 
-Les prix français sont convertis en francs au **taux de référence de la Banque centrale européenne** (EUR/CHF) du jour du relevé. C'est un taux interbancaire : le taux réellement obtenu dépend de la carte ou du compte utilisé (souvent 0,5 à 2 % moins favorable).
+- Les prix alimentaires français sont des moyennes nationales (INSEE, Open Prices) : les magasins frontaliers peuvent s'en écarter. Seul le carburant est relevé zone par zone.
+- La viande suisse provient d'une seule enseigne (Migros), faute de série officielle ouverte.
+- Open Prices dépend des tickets partagés par ses contributeurs : certains produits ont peu de relevés.
+- L'origine et la qualité des fruits et légumes ne sont pas contrôlées.
+- Les quantités de référence sont forfaitaires ; une pondération selon l'IPC de l'OFS est prévue dans une version ultérieure.
 
-## 6. Sources et fréquence
+## 7. Citer
 
-Les prix sont relevés automatiquement **une fois par mois** (le 2), sur les sites publics des enseignes :
-- Suisse : Coop, Migros, Lidl Suisse, Aldi Suisse (prix nationaux, valables dans les trois zones) ;
-- France : E.Leclerc Drive, un magasin par zone (les prix varient d'un magasin à l'autre).
-
-Chaque relevé est archivé avec, pour chaque ligne, le nom exact du produit retenu, son prix, son conditionnement et l'URL de la page source (`data/releves/AAAA-MM.json`). L'historique résumé est dans `data/history.json`.
-
-Le code de relevé est public et versionné. Toute modification du panier incrémente `basket_version` ; une rupture de série est alors signalée sur le graphique.
-
-## 7. Le déplacement
-
-Le calculateur estime le coût du trajet aller-retour :
-
-coût = distance aller-retour (km) × consommation (L/100 km) ÷ 100 × prix du carburant (CHF/L)
-
-L'économie nette est la différence de prix du panier moins ce coût. Le **seuil de rentabilité** est le montant de courses à partir duquel l'économie couvre le trajet. Le temps passé et l'usure du véhicule ne sont pas comptés ; ils sont mentionnés à titre indicatif.
-
-## 8. Règles douanières rappelées
-
-Pour les achats rapportés en Suisse pour un usage privé (source : OFDF, ch.ch) :
-- franchise de valeur : 150 CHF par personne et par jour ; au-delà, la TVA suisse est due sur la **totalité** du montant ;
-- viande : 1 kg par personne et par jour en franchise ; au-delà, droits de douane sur l'excédent ;
-- alcool : 5 L sous 18 % vol., 1 L au-dessus ; tabac : 250 cigarettes.
-
-## 9. Limites connues
-
-- Un seul drive par zone côté français : un hypermarché n'est pas représentatif de tous les commerces de la zone. Lidl France ne publie pas ses prix alimentaires en ligne et n'est donc pas relevé.
-- Les prix en ligne des drives peuvent différer légèrement des prix en rayon.
-- Les fruits, légumes et la viande varient selon la saison et l'origine ; l'origine n'est pas contrôlée.
-- La sélection automatique peut retenir un produit imparfait. Chaque ligne étant tracée avec son URL, les erreurs sont vérifiables et corrigeables.
-- Le panier pondère chaque besoin par une quantité forfaitaire, pas par la structure de consommation réelle d'un ménage (pondération de l'IPC de l'OFS envisagée dans une version ultérieure).
-
-## 10. Citer
-
-> Comparateur de panier Suisse / France, méthodologie v1 (octobre 2026). Relevés mensuels automatisés, code et données : github.com/<compte>/panier-suisse-france.
+> Brocard, G. (2026). *Panier Suisse × France*, méthodologie v1. Données OFAG, INSEE, BCE, OFDF, Open Prices. Code et données : https://github.com/GregBrocard/Panier-suisse-france

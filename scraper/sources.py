@@ -171,7 +171,7 @@ def fuel_ch_ofdf() -> dict:
 
 # ------------------------------------------------------------------ Open Prices (France)
 
-def openprices_fr(eans: list[str], days: int = 180) -> dict | None:
+def openprices_fr(eans: list[str], days: int = 365) -> dict | None:
     """Médiane des prix relevés en France pour ces codes-barres sur les `days` derniers jours."""
     since = (dt.date.today() - dt.timedelta(days=days)).isoformat()
     prices, products = [], set()

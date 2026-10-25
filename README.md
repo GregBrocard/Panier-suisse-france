@@ -1,22 +1,20 @@
-# Panier Suisse / France
+# Panier Suisse × France
 
-Relevé mensuel automatisé du prix d'un même panier de courses en Suisse romande et dans la France voisine (Annemasse, Divonne / La Cure, Vallorbe / Pontarlier).
+Comparaison mensuelle automatisée du prix des courses entre la Suisse romande et la France voisine (Annemasse, Divonne / La Cure, Vallorbe / Pontarlier), à partir de données publiques : OFAG, INSEE, BCE, OFDF, Open Prices, flux officiel des prix des carburants et relevé Migros.
 
 - **Méthodologie** : [METHODOLOGIE.md](METHODOLOGIE.md)
-- **Panier** : [config/basket.yaml](config/basket.yaml) · **Enseignes** : [config/stores.yaml](config/stores.yaml)
-- **Données** : `data/history.json` (série mensuelle), `data/latest.json` (dernier relevé détaillé), `data/releves/` (archives)
+- **Panier** : [config/panier.yaml](config/panier.yaml)
+- **Données** : `data/series.json` (historique depuis 2006), `data/latest.json` (dernier relevé), `data/releves/` (archives)
+- **Site** : `site/index.html` (page autonome, publiée sur GitHub Pages)
 
 ## Fonctionnement
 
-Le workflow GitHub Actions `Relevé mensuel des prix` tourne le 2 de chaque mois. Il lit les sites publics des enseignes, retient pour chaque besoin le produit qui correspond aux règles du panier, convertit au taux BCE et enregistre le résultat dans `data/`.
+Le workflow **Relevé mensuel des prix** tourne le 20 de chaque mois : il interroge les sources (`scraper/build.py`), assemble le site (`scraper/site.py`), enregistre les données dans le dépôt et publie la page.
 
 Lancer à la main : onglet **Actions** → *Relevé mensuel des prix* → *Run workflow*.
 
-En local :
-
 ```bash
 pip install -r requirements.txt
-python -m scraper.run                          # relevé complet
-SCRAPER_ONLY=ch_coop python -m scraper.run     # une seule enseigne
-SCRAPER_DEBUG=1 python -m scraper.probe        # sonde les sites (pages gardées dans debug/)
+python -m scraper.build   # données
+python -m scraper.site    # site/index.html
 ```

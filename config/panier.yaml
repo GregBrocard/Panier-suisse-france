@@ -77,7 +77,7 @@ viande:
 
 marques:
   # Produits de marque identiques des deux côtés, comparés au prix unitaire (par kg ou par litre).
-  # France : Open Prices, médiane nationale des relevés hors promotion sur 6 mois (code-barres ean_fr,
+  # France : Open Prices, médiane nationale des relevés hors promotion sur 12 mois (code-barres ean_fr,
   #          conditionnement size_fr). Suisse : Migros, produit de la même marque et gamme.
   - { id: nutella,  label: "Nutella",                   unit: kg, qty: 0.75, ean_fr: ["3017620421006"], size_fr: 0.75,
       migros: { query: nutella, include: [nutella], exclude: [biscuits, b-ready, plant, go], size: [0.35, 1.0] } }
