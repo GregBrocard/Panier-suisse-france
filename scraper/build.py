@@ -91,7 +91,8 @@ def build_officiel(cfg, fx):
             ch = ffill(ch, month_range(min(ch), max(max(ch), max(fr) if fr else max(ch))), it["fill_months"])
         log(f"   {it['id']:12s} OFAG {len(ch):4d} mois ({min(ch) if ch else '-'}→{max(ch) if ch else '-'})"
             f" | INSEE {len(fr):4d} mois ({min(fr) if fr else '-'}→{max(fr) if fr else '-'})")
-        items[it["id"]] = {"meta": {k: it[k] for k in ("id", "label", "cat", "unit", "qty")},
+        items[it["id"]] = {"meta": {**{k: it[k] for k in ("id", "label", "cat", "unit", "qty")},
+                                    "in_total": it.get("in_total", True)},
                            "sources": {"ofag": it["ofag"]["products"], "insee": it["insee"], "insee_titres": titles},
                            "ch": ch, "fr": fr}
 
@@ -100,7 +101,7 @@ def build_officiel(cfg, fx):
     n_total = len(items)
     series = []
     for m in months:
-        common = [k for k, v in items.items() if m in v["ch"] and m in v["fr"]]
+        common = [k for k, v in items.items() if m in v["ch"] and m in v["fr"] and v["meta"]["in_total"]]
         if len(common) < max(3, int(0.6 * n_total)):
             continue
         ch_t = sum(items[k]["ch"][m] * items[k]["meta"]["qty"] for k in common)
@@ -168,26 +169,32 @@ def build_viande(cfg, fx, s):
 
 
 def build_marques(cfg, fx_today, s):
+    """Même marque des deux côtés, comparée au prix unitaire (CHF/kg ou CHF/L)."""
     mig = Migros(s, {})
     out = []
     for it in cfg["marques"]:
+        lo, hi = it["migros"]["size"]
         rule = {"match": {k: it["migros"].get(k, []) for k in ("include", "any", "exclude")},
-                "unit": it["unit"], "size": {"min": it["size"] * 0.98, "max": it["size"] * 1.02}}
+                "unit": it["unit"], "size": {"min": lo * 0.98, "max": hi * 1.02}}
         cands = safe(migros_candidates, mig, it["migros"]["query"], default=[], label=f"Migros {it['id']}")
         valid = [c for c in (finalize(rule, c) for c in cands if matches(rule, c)) if c]
         regular = [c for c in valid if not c.promo] or valid
-        best = min(regular, key=lambda c: c.price) if regular else None
+        best = min(regular, key=lambda c: c.unit_price) if regular else None
         op = safe(S.openprices_fr, it["ean_fr"], default=None, label=f"Open Prices {it['id']}")
-        row = {"id": it["id"], "label": it["label"],
-               "ch": best.price if best else None, "ch_produit": best.name if best else None,
+        row = {"id": it["id"], "label": it["label"], "unit": it["unit"], "qty": it["qty"],
+               "ch_unit": best.unit_price if best else None,
+               "ch_produit": f"{best.name} ({best.size:g} {best.unit}) à {best.price:.2f}" if best else None,
                "ch_url": best.url if best else None,
-               "fr_eur": op["median"] if op else None, "fr_n": op["n"] if op else 0,
-               "fr_produits": op["products"] if op else [], "fr_depuis": op["since"] if op else None}
-        if row["fr_eur"]:
-            row["fr_chf"] = round(row["fr_eur"] * fx_today, 2)
-        if row["ch"] and row.get("fr_chf"):
-            row["ecart"] = round((row["ch"] / row["fr_chf"] - 1) * 100, 1)
-        log(f"   marque {it['id']:8s} CH {row['ch']} | FR {row['fr_eur']} € (n={row['fr_n']})")
+               "fr_unit_eur": round(op["median"] / it["size_fr"], 3) if op else None, "fr_n": op["n"] if op else 0,
+               "fr_produit": (op["products"][0] if op and op["products"] else None),
+               "fr_prix_eur": op["median"] if op else None, "fr_depuis": op["since"] if op else None,
+               "ean_fr": it["ean_fr"]}
+        if row["fr_unit_eur"]:
+            row["fr_unit_chf"] = round(row["fr_unit_eur"] * fx_today, 3)
+        if row["ch_unit"] and row.get("fr_unit_chf"):
+            row["ecart"] = round((row["ch_unit"] / row["fr_unit_chf"] - 1) * 100, 1)
+        log(f"   marque {it['id']:8s} CH {row['ch_unit']}/{it['unit']} ({row['ch_produit']}) | "
+            f"FR {row['fr_unit_eur']} €/{it['unit']} (n={row['fr_n']})")
         out.append(row)
     return out
 

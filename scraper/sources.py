@@ -155,11 +155,11 @@ def fuel_ch_ofdf() -> dict:
     from pypdf import PdfReader
     r = _get(OFDF_T44)
     text = "\n".join(p.extract_text() or "" for p in PdfReader(io.BytesIO(r.content)).pages)
-    date = re.search(r"(\d{1,2}\.\s?\d{1,2}\.\s?\d{4}|\d{1,2}\s+\w+\s+\d{4})", text)
+    date = re.search(r"[ÉE]tat\s*:\s*([^\n]+)", text)
     out = {"source": OFDF_T44, "date_texte": date.group(1) if date else None, "raw": text[:3000]}
     # lignes "Genève (France) 219,00 220,00 ..." ; la 1re occurrence = diesel, la 2e = essence 95
     lines = [l for l in text.splitlines() if re.search(r"Gen[eè]ve", l)]
-    nums = [re.findall(r"\d{3},\d{2}", l) for l in lines]
+    nums = [re.findall(r"\d{3}[.,]\d{2}", l) for l in lines]
     nums = [n for n in nums if len(n) >= 2]
     if len(nums) >= 2:
         out["diesel"] = {"ch_chf": float(nums[0][0].replace(",", ".")) / 100,

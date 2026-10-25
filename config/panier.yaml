@@ -60,7 +60,8 @@ officiel:
       ofag: { cube: FruitsVegetablesPotatoes, products: ["Chair ferme : vert", "Chair farineuse : bleu"] },
       insee: ["000641360"] }
   # ---------------- Pain ----------------
-  - { id: pain,        label: Pain courant (CH mi-blanc / FR baguette), cat: Pain, unit: kg, qty: 1.0,
+  # Pain : types différents (mi-blanc en Suisse, baguette en France) -> affiché à part, hors total
+  - { id: pain,        label: "Pain courant (CH mi-blanc, FR baguette)", cat: Pain, unit: kg, qty: 1.0, in_total: false,
       ofag: { cube: BreadCerealsFlourBakedGoods, products: ["Pain mi-blanc , non bio, moyenne"] },
       insee: ["000442423"], fill_months: 3 }
 
@@ -75,15 +76,21 @@ viande:
       migros: { query: jambon cuit, include: [jambon], exclude: [cru, parme, serrano, poulet, dinde, bio, croissant, sandwich, pizza, fumé] } }
 
 marques:
-  # ean_fr : code-barres du produit vendu en France (Open Prices) ; en Suisse, appariement nom + format
-  - { id: nutella, label: Nutella 750 g,           unit: kg, size: 0.75, qty: 0.75, ean_fr: ["3017620421006"],
-      migros: { query: nutella, include: [nutella], exclude: [biscuits, b-ready, plant, go] } }
-  - { id: coca,    label: Coca-Cola 1,5 L,         unit: L,  size: 1.5,  qty: 1.5,  ean_fr: ["5449000000286", "5449000054227"],
-      migros: { query: coca-cola, include: [coca], exclude: [zero, light, cherry, vanille, sans sucre] } }
-  - { id: barilla, label: Barilla Spaghetti n°5 500 g, unit: kg, size: 0.5, qty: 0.5, ean_fr: ["8076800195057"],
-      migros: { query: barilla spaghetti, include: [barilla, spaghetti], exclude: [integrale, complet, protein, sans gluten] } }
-  - { id: evian,   label: Evian 1,5 L,             unit: L,  size: 1.5,  qty: 1.5,  ean_fr: ["3068320114453", "3068320055008"],
-      migros: { query: evian, include: [evian], exclude: [brumisateur, spray, citron, 6 x, 6x] } }
+  # Produits de marque identiques des deux côtés, comparés au prix unitaire (par kg ou par litre).
+  # France : Open Prices, médiane nationale des relevés hors promotion sur 6 mois (code-barres ean_fr,
+  #          conditionnement size_fr). Suisse : Migros, produit de la même marque et gamme.
+  - { id: nutella,  label: "Nutella",                   unit: kg, qty: 0.75, ean_fr: ["3017620421006"], size_fr: 0.75,
+      migros: { query: nutella, include: [nutella], exclude: [biscuits, b-ready, plant, go], size: [0.35, 1.0] } }
+  - { id: coca,     label: "Coca-Cola (bouteille PET)", unit: L,  qty: 1.5,  ean_fr: ["5449000267412"], size_fr: 1.25,
+      migros: { query: coca-cola, include: [coca], exclude: [zero, light, cherry, vanille, sans sucre, verre], size: [1.0, 2.0] } }
+  - { id: redbull,  label: "Red Bull 25 cl",            unit: L,  qty: 0.25, ean_fr: ["9002490205973"], size_fr: 0.25,
+      migros: { query: red bull, include: [red bull], exclude: [sugarfree, sans sucre, zero, edition, light], size: [0.25, 0.25] } }
+  - { id: pringles, label: "Pringles Original",         unit: kg, qty: 0.175, ean_fr: ["5053990156009"], size_fr: 0.175,
+      migros: { query: pringles original, include: [pringles, original], exclude: [], size: [0.15, 0.2] } }
+  - { id: kinder,   label: "Kinder Bueno",              unit: kg, qty: 0.129, ean_fr: ["8000500025857"], size_fr: 0.129,
+      migros: { query: kinder bueno, include: [kinder, bueno], exclude: [white, mini, ice, glace, eis], size: [0.04, 0.5] } }
+  - { id: lindt,    label: "Lindt Excellence noir 100 g", unit: kg, qty: 0.1, ean_fr: ["3046920010047"], size_fr: 0.1,
+      migros: { query: lindt excellence, include: [lindt, excellence], exclude: [lait, milk, orange, menthe, poire, sel, caramel, blanc], size: [0.1, 0.1] } }
 
 carburant:
   # France : prix officiels station par station (data.economie.gouv.fr), par zone frontalière
