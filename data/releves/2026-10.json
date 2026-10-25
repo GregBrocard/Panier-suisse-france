@@ -197,7 +197,7 @@
    "ch_url": "https://www.migros.ch/fr/product/100189700000",
    "fr_unit_eur": 30.9,
    "fr_n": 7,
-   "fr_produit": "LINDT EXCELLENCE Smooth Dark 78% 100g",
+   "fr_produit": "Cioccolato Fondente 78% 100g",
    "fr_prix_eur": 3.09,
    "fr_depuis": "2025-10-25",
    "ean_fr": [
@@ -231,7 +231,7 @@
      "diesel": 2.398
     }
    },
-   "stgenis": {
+   "genisferney": {
     "n": 7,
     "moyenne": {
      "sp95": 2.13,
@@ -242,33 +242,11 @@
      "diesel": 2.345
     }
    },
-   "ferney": {
-    "n": 6,
-    "moyenne": {
-     "sp95": 2.135,
-     "diesel": 2.397
-    },
-    "min": {
-     "sp95": 2.079,
-     "diesel": 2.345
-    }
-   },
-   "gex": {
+   "divonnegex": {
     "n": 5,
     "moyenne": {
      "sp95": 2.156,
      "diesel": 2.395
-    },
-    "min": {
-     "sp95": 2.099,
-     "diesel": 2.359
-    }
-   },
-   "divonne": {
-    "n": 4,
-    "moyenne": {
-     "sp95": 2.169,
-     "diesel": 2.404
     },
     "min": {
      "sp95": 2.099,
