@@ -4138,7 +4138,7 @@
  },
  "magasins": {
   "source": "UFC-Que Choisir, comparateur des supermarchés",
-  "publier": false,
+  "publier": true,
   "panel": {
    "n": 168,
    "tires": 600,
