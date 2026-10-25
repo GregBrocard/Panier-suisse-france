@@ -208,19 +208,52 @@
   }
  ],
  "carburant": {
-  "zones": {
+  "destinations": {
    "annemasse": {
-    "n": 9,
+    "n": 11,
     "moyenne": {
-     "sp95": 2.123,
-     "diesel": 2.381
+     "sp95": 2.139,
+     "diesel": 2.386
     },
     "min": {
      "sp95": 1.99,
      "diesel": 2.25
     }
    },
-   "divonne": {
+   "stjulien": {
+    "n": 1,
+    "moyenne": {
+     "sp95": 2.225,
+     "diesel": 2.398
+    },
+    "min": {
+     "sp95": 2.225,
+     "diesel": 2.398
+    }
+   },
+   "stgenis": {
+    "n": 7,
+    "moyenne": {
+     "sp95": 2.13,
+     "diesel": 2.395
+    },
+    "min": {
+     "sp95": 2.079,
+     "diesel": 2.345
+    }
+   },
+   "ferney": {
+    "n": 6,
+    "moyenne": {
+     "sp95": 2.135,
+     "diesel": 2.397
+    },
+    "min": {
+     "sp95": 2.079,
+     "diesel": 2.345
+    }
+   },
+   "gex": {
     "n": 5,
     "moyenne": {
      "sp95": 2.156,
@@ -231,26 +264,103 @@
      "diesel": 2.359
     }
    },
-   "lesrousses": {
-    "n": 5,
+   "divonne": {
+    "n": 4,
     "moyenne": {
-     "sp95": 2.253,
-     "diesel": 2.407
+     "sp95": 2.169,
+     "diesel": 2.404
+    },
+    "min": {
+     "sp95": 2.099,
+     "diesel": 2.359
+    }
+   },
+   "thonon": {
+    "n": 11,
+    "moyenne": {
+     "sp95": 2.145,
+     "diesel": 2.405
+    },
+    "min": {
+     "sp95": 2.036,
+     "diesel": 2.363
+    }
+   },
+   "evian": {
+    "n": 7,
+    "moyenne": {
+     "sp95": 2.088,
+     "diesel": 2.381
+    },
+    "min": {
+     "sp95": 2.036,
+     "diesel": 2.359
+    }
+   },
+   "lesrousses": {
+    "n": 6,
+    "moyenne": {
+     "sp95": 2.261,
+     "diesel": 2.414
     },
     "min": {
      "sp95": 2.169,
      "diesel": 2.369
     }
    },
-   "vallorbe": {
-    "n": 8,
+   "jougne": {
+    "n": 1,
     "moyenne": {
-     "sp95": 2.225,
-     "diesel": 2.402
+     "sp95": 2.178,
+     "diesel": 2.365
     },
     "min": {
      "sp95": 2.178,
      "diesel": 2.365
+    }
+   },
+   "pontarlier": {
+    "n": 7,
+    "moyenne": {
+     "sp95": 2.235,
+     "diesel": 2.408
+    },
+    "min": {
+     "sp95": 2.199,
+     "diesel": 2.379
+    }
+   },
+   "morteau": {
+    "n": 6,
+    "moyenne": {
+     "sp95": 2.239,
+     "diesel": 2.419
+    },
+    "min": {
+     "sp95": 2.149,
+     "diesel": 2.399
+    }
+   },
+   "delle": {
+    "n": 5,
+    "moyenne": {
+     "sp95": 2.223,
+     "diesel": 2.425
+    },
+    "min": {
+     "sp95": 2.054,
+     "diesel": 2.342
+    }
+   },
+   "stlouis": {
+    "n": 8,
+    "moyenne": {
+     "sp95": 2.32,
+     "diesel": 2.445
+    },
+    "min": {
+     "sp95": 2.278,
+     "diesel": 2.25
     }
    }
   },
