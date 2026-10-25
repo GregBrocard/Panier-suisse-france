@@ -5,6 +5,10 @@ on:
     # le 20 de chaque mois à 06:17 UTC (après publication des séries OFAG et INSEE du mois précédent)
     - cron: "17 6 20 * *"
   workflow_dispatch:
+    inputs:
+      site_seulement:
+        description: "Republier le site sans refaire le relevé (true/false)"
+        default: "false"
 
 permissions:
   contents: write
@@ -26,6 +30,7 @@ jobs:
           python-version: "3.12"
       - run: pip install -r requirements.txt
       - name: Construire les données
+        if: ${{ inputs.site_seulement != 'true' }}
         run: python -m scraper.build
       - name: Construire le site
         run: python -m scraper.site
