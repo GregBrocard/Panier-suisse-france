@@ -79,3 +79,21 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+      - name: Vérifier le site publié
+        env:
+          GH_TOKEN: ${{ github.token }}
+          URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          sleep 20
+          ok=1
+          for p in "" "essence/" "methodologie/" "data/latest.json"; do
+            code=$(curl -s -o /tmp/page -w '%{http_code}' "${URL}${p}")
+            if [ "$code" != "200" ] || [ ! -s /tmp/page ]; then echo "Échec : ${URL}${p} ($code)"; ok=0; fi
+          done
+          grep -q "Panier Suisse France" <(curl -s "$URL") || { echo "Accueil sans titre"; ok=0; }
+          if [ "$ok" = 0 ]; then
+            t="Site publié inaccessible ou incomplet"
+            n=$(gh issue list -R "$GITHUB_REPOSITORY" --state open --search "$t in:title" --json number -q length)
+            [ "$n" = "0" ] && gh issue create -R "$GITHUB_REPOSITORY" --title "$t" --body "La vérification après publication a échoué : ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+            exit 1
+          fi

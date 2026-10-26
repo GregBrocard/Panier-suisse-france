@@ -2,7 +2,7 @@
 (function(){
   'use strict';
   const D = JSON.parse(document.getElementById('data').textContent);
-  const L = D.latest, H = D.series, SY = D.synth, ROOT = D.root || '';
+  const L = D.latest, SY = D.synth, ROOT = D.root || ''; let H = null;
   const $ = s => document.querySelector(s);
   const nf = (v,d=2) => v==null||isNaN(v) ? '—' : v.toLocaleString('fr-FR',{minimumFractionDigits:d,maximumFractionDigits:d}).replace(/[  ]/g,' ');
   const pc = v => v==null||isNaN(v) ? '—' : (v>0?'+':v<0?'−':'') + Math.abs(Math.round(v)) + ' %';
@@ -23,7 +23,7 @@
   const fuel = L.carburant||{}, fch = fuel.ch||{};
   const ESS = D.essence && D.essence.zones ? D.essence.zones : null;
   const fd = id => (ESS && ESS[id]) || (fuel.destinations||{})[id] || null;
-  const pan = H.panier||[], roll = SY.fl_roll||[];
+  const roll = SY.fl_roll||[];
   const meat = (L.viande||[]).filter(v=>v.ecart!=null);
   const br = (L.marques||[]).filter(v=>v.ecart!=null);
   const G = SY.gaps;
@@ -103,7 +103,7 @@
   $('#mode').addEventListener('change',()=>{ syncMode(); update(); });
   $('#km').addEventListener('input',()=>{st.kmManual=true;update();});
   ['#spend','#conso','#persons','#tank','#vtime','#tpCost'].forEach(s=>$(s).addEventListener('input',()=>{ if(s==='#spend') $('#slotSpend').classList.remove('bad'); update(); }));
-  ['#wear','#card'].forEach(s=>$(s).addEventListener('change',update));
+  ['#wear','#card','#storeCH'].forEach(s=>$(s).addEventListener('change',update));
   document.querySelectorAll('.info').forEach(box=>{ const b=box.querySelector('.ibtn'), p=box.querySelector('.pop');
     b.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); const open=p.hidden; document.querySelectorAll('.info .pop').forEach(x=>x.hidden=true); document.querySelectorAll('.info .ibtn').forEach(x=>x.setAttribute('aria-expanded','false')); p.hidden=!open; b.setAttribute('aria-expanded',String(open)); }); });
   document.addEventListener('click',e=>{ if(!e.target.closest('.info')){ document.querySelectorAll('.info .pop').forEach(x=>x.hidden=true); document.querySelectorAll('.info .ibtn').forEach(x=>x.setAttribute('aria-expanded','false')); } });
@@ -130,7 +130,8 @@
     return { spend: spend!=null?spend:+$('#spend').value||0, km:+$('#km').value||0, minutes: t&&!st.kmManual?t[1]:null,
       w: MIX.find(m=>m.id===st.mix).w, idx, persons:+$('#persons').value||1, mode, conso:+$('#conso').value||0,
       tpCost:+$('#tpCost').value||0, wear:$('#wear').checked, fill:$('#fill').checked, tank:+$('#tank').value||0,
-      fuelFR: z&&z.moyenne_chf?z.moyenne_chf[fk]:null, card:$('#card').checked, vtime:+$('#vtime').value };
+      fuelFR: z&&z.moyenne_chf?z.moyenne_chf[fk]:null, card:$('#card').checked, vtime:+$('#vtime').value,
+      fch: (SY.magasins_ch.find(m=>m.id===$('#storeCH').value)||{f:1}).f };
   }
   const compute = (idx, spend) => PSF.compute(params(idx, spend), SY);
   function idxNow(){
@@ -141,7 +142,7 @@
   function save(){
     store.set({o: st.o!=null&&ORI ? ORI.liste[st.o].slice(0,2).join('|') : null, dest: st.dest, spend: $('#spend').value, mix: st.mix,
       conso: $('#conso').value, persons: $('#persons').value, vtime: $('#vtime').value, fill: $('#fill').checked, tank: $('#tank').value,
-      mode: $('#mode').value, wear: $('#wear').checked, card: $('#card').checked, tp: $('#tpCost').value});
+      mode: $('#mode').value, wear: $('#wear').checked, card: $('#card').checked, tp: $('#tpCost').value, storeCH: $('#storeCH').value});
   }
   function update(){ if(!st.kmManual){ const t=trip(st.o,st.dest); if(t) $('#km').value=t[0]; } renderStores(); drawMap(); if(st.shown && !missing().length) showResult(); save(); }
   function shareURL(){
@@ -150,6 +151,7 @@
     if(st.dest) p.set('a', st.dest); if(+$('#spend').value>0) p.set('m', $('#spend').value);
     if(st.mix!=='mixte') p.set('mix', st.mix); if(+$('#persons').value>1) p.set('p', $('#persons').value);
     if($('#mode').value!=='essence') p.set('mode', $('#mode').value);
+    if($('#storeCH').value!=='discount') p.set('ch', $('#storeCH').value);
     return u.toString();
   }
   function bePlot(p, be){
@@ -165,26 +167,32 @@
     const {idx,name}=idxNow(), p=params(idx), c=PSF.compute(p,SY), dd=DEST.find(x=>x.id===st.dest)||{}, o=ORI&&st.o!=null?ORI.liste[st.o]:null;
     $('#waiting').hidden=true; $('#res').hidden=false;
     const t=trip(st.o,st.dest);
+    // fourchette : du magasin le moins cher au plus cher de la ville
+    const ms=(MAG[st.dest]&&MAG[st.dest].magasins)||[];
+    let rng='';
+    if(ms.length>1 && st.store==='avg'){ const ix=ms.map(x=>x.indice); const lo=PSF.compute(Object.assign({},p,{idx:Math.max(...ix)}),SY).net, hi=PSF.compute(Object.assign({},p,{idx:Math.min(...ix)}),SY).net;
+      rng=`<p class="how">Selon le magasin choisi : de ${lo<0?'−':''}${nf(Math.abs(lo),0)} à ${hi<0?'−':''}${nf(Math.abs(hi),0)} CHF.</p>`; }
     $('#verdict').innerHTML=(c.net>=0
       ? `<span class="amount">${nf(c.net,0)}<small>CHF</small></span><span class="what">d'économie à ${esc(name||dd.nom)}</span>`
       : `<span class="amount loss">−${nf(-c.net,0)}<small>CHF</small></span><span class="what">de perte : mieux vaut rester en Suisse</span>`)
       + `<p class="how">${esc(o?o[0]:'')} → ${esc(dd.nom)} : ${c.km} km${t?`, environ ${t[1]} min`:''}${dd.passage?', '+esc(dd.passage):''}. Trajet aller-retour compris.</p>`
-      + `<p class="how">Franchise : jusqu'à ${nf(c.lim,0)} CHF d'achats sans TVA suisse (${c.persons} adulte${c.persons>1?'s':''}).</p>`
+      + rng + `<p class="how">Franchise : jusqu'à ${nf(c.lim,0)} CHF d'achats sans TVA suisse (${c.persons} adulte${c.persons>1?'s':''}).</p>`
       + `<div class="share"><button type="button" id="shareBtn">Partager ce calcul</button><a id="waBtn" href="https://wa.me/?text=${encodeURIComponent('Mes courses en France : '+(c.net>=0?nf(c.net,0)+' CHF d\'économie':'pas rentable')+' — '+shareURL())}" target="_blank" rel="noopener">WhatsApp</a><span class="muted" id="shareMsg" aria-live="polite"></span></div>`;
-    const r=(a,b,cls='')=>`<div class="r ${cls}"><span>${a}</span><span>${b}</span></div>`, sg=v=>(v>=0?'− ':'+ ')+nf(Math.abs(v))+' CHF';
-    let h=r('Vos courses en Suisse',nf(c.spend)+' CHF')+r('Les mêmes en France',nf(c.fr)+' CHF')+r('Différence',sg(c.gross));
-    if(p.mode==='tp') h+=r('Billet aller-retour','+ '+nf(c.roadEnergy)+' CHF');
-    else h+=r(`${p.mode==='ev'?'Électricité':p.mode==='diesel'?'Diesel':'Essence'} aller-retour, ${2*c.km} km`,'+ '+nf(c.roadEnergy)+' CHF');
-    if(c.roadWear) h+=r('Usure de la voiture (TCS)','+ '+nf(c.roadWear)+' CHF');
+    const r=(a,b,cls='')=>`<div class="r ${cls}"><span>${a}</span><span>${b}</span></div>`, sg=v=>(v>=0?'− ':'+ ')+nf(Math.abs(v),0)+' CHF';
+    let h=r('Vos courses en Suisse',nf(c.spend,0)+' CHF')+r('Les mêmes en France',nf(c.fr,0)+' CHF')+r('Différence',sg(c.gross));
+    if(p.mode==='tp') h+=r('Billet aller-retour','+ '+nf(c.roadEnergy,0)+' CHF');
+    else h+=r(`${p.mode==='ev'?'Électricité':p.mode==='diesel'?'Diesel':'Essence'} aller-retour, ${2*c.km} km`,'+ '+nf(c.roadEnergy,0)+' CHF');
+    if(c.roadWear) h+=r('Usure de la voiture (TCS)','+ '+nf(c.roadWear,0)+' CHF');
     if(p.fill && c.fuelG) h+=r('Plein en France',sg(c.fuelG));
-    if(c.cardFee) h+=r('Frais de carte en euros','+ '+nf(c.cardFee)+' CHF');
-    if(c.vat) h+=r('TVA à la douane','+ '+nf(c.vat)+' CHF');
-    if(c.duty) h+=r('Droits de douane sur la viande','+ '+nf(c.duty)+' CHF');
-    h+=r(c.net>=0?'Vous économisez':'Vous perdez',nf(Math.abs(c.net))+' CHF','t');
+    if(c.cardFee) h+=r('Frais de carte en euros','+ '+nf(c.cardFee,0)+' CHF');
+    if(c.vat) h+=r('TVA à la douane','+ '+nf(c.vat,0)+' CHF');
+    h+=r(c.net>=0?'Vous économisez':'Vous perdez',nf(Math.abs(c.net),0)+' CHF','t');
     const be=PSF.breakEven(p,SY);
-    h+=`<div class="be"><span>${be==null?'<b>Pas rentable</b>, même avec 5000 CHF de courses.':be===0?'<b>Rentable dès le premier franc.</b>':`Rentable dès <b>${nf(Math.ceil(be/5)*5,0)} CHF</b> de courses.`}</span>${bePlot(p,be)}</div>`;
+    const beTxt = be==null?'<b>Pas rentable</b>, même avec 5000 CHF de courses.':be===0?'<b>Rentable dès le premier franc.</b>':`Rentable dès <b>${nf(Math.ceil(be/5)*5,0)} CHF</b> de courses.`;
+    const vatTxt = be!=null && be < c.lim ? ` Attention : au-delà de ${nf(c.lim,0)} CHF, la TVA suisse s'ajoute sur tout, d'où la marche sur la courbe.` : '';
+    h+=`<div class="be"><span>${beTxt}${vatTxt}</span>${bePlot(p,be)}</div>`;
     if(c.fr>c.lim) h+=`<p class="warn">Plus de ${nf(c.lim,0)} CHF d'achats : déclarez-les à la douane, la TVA suisse s'applique sur tout.</p>`;
-    if(c.meatExcess>0) h+=`<p class="warn">Environ ${nf(c.meatKg,1)} kg de viande : au-delà de ${c.persons} kg, droits de douane de 17 CHF par kg (compris ci-dessus).</p>`;
+    if(c.meatExcess>0) h+=`<p class="warn">Votre budget correspond à environ ${nf(c.meatKg,1)} kg de viande. Au-delà de ${c.persons} kg, la douane prend 17 CHF par kg en plus (environ ${nf(c.duty,0)} CHF ici, non compté ci-dessus).</p>`;
     if(c.detaxe>0) h+=`<p class="muted">Détaxe possible : jusqu'à ${nf(c.detaxe,0)} CHF de TVA française remboursable si vous dépensez plus de 100 € dans le même magasin, moins les frais de l'opérateur (non compté). <a href="${ROOT}douane/">Comment faire</a>.</p>`;
     const after=c.net-c.timeC;
     h+=`<div class="opp"><b>${c.mins} minutes</b> (aller-retour ${c.minsRoad} min, plus 15 min de douane et de parking). C'est le coût d'opportunité : ce temps, vous pourriez le passer à autre chose. ${c.vGiven?'À':'À titre d\'exemple, à'} ${nf(c.vt,0)} CHF de l'heure, il vaut <b>${nf(c.timeC,0)} CHF</b>${after>=0?`, et le trajet reste avantageux (${nf(after,0)} CHF de gain).`:`, soit plus que ce que vous économisez (${nf(-after,0)} CHF de perte si l'on compte le temps).`}</div>`;
@@ -199,6 +207,7 @@
     $('#magTitle').textContent = dd ? 'Les magasins à '+dd.nom : 'Les magasins';
     $('#magPhoto').hidden = !dd; $('#magSplit').classList.toggle('solo', !dd);
     $('#magLede').innerHTML = dd ? `Du moins cher au plus cher. Choisissez un magasin pour refaire le calcul à son niveau de prix. <a href="${ROOT}zones/${dd.id}/">Tout sur ${esc(dd.nom)}</a>.` : 'Choisissez une ville dans le formulaire pour voir ses magasins, du moins cher au plus cher.';
+    $('#magasins').hidden=!dd;
     if(!dd){ $('#stores').innerHTML='<p class="muted" style="padding:14px 0;border-top:1px solid var(--ink)">Choisissez une ville dans le formulaire pour voir ses magasins.</p>'; $('#magSrc').textContent=''; $('#how2').hidden=true; return; }
     if(!m||!m.magasins.length){ $('#stores').innerHTML='<p class="muted" style="padding:14px 0;border-top:1px solid var(--ink)">Pas encore de prix par magasin pour cette ville : le calcul utilise la moyenne française.</p>'; $('#magSrc').textContent=''; return; }
     const ready=st.o!=null && +$('#spend').value>0;
@@ -216,7 +225,8 @@
   const C=D.carte;
   function drawMap(){
     const el=$('#map'); if(!C||!el) return;
-    const o=st.o!=null&&ORI?ORI.liste[st.o]:null, oc=(o&&ORI.coords)?[ORI.coords[st.o][1],ORI.coords[st.o][0]]:null, dd=DEST.find(x=>x.id===st.dest);
+    const o=st.o!=null&&ORI?ORI.liste[st.o]:null; let oc=(o&&ORI.coords)?[ORI.coords[st.o][1],ORI.coords[st.o][0]]:null; const dd=DEST.find(x=>x.id===st.dest);
+    const horsCarte = oc && (oc[0]>C.bbox[2] || oc[1]>C.bbox[3] || oc[0]<C.bbox[0] || oc[1]<C.bbox[1]); if(horsCarte) oc=null;
     const pts=DEST.map(x=>[x.lon,x.lat]); if(oc) pts.push(oc);
     let x0=Math.min(...pts.map(p=>p[0]))-.25,x1=Math.max(...pts.map(p=>p[0]))+.25,y0=Math.min(...pts.map(p=>p[1]))-.2,y1=Math.max(...pts.map(p=>p[1]))+.2;
     const k=Math.cos((y0+y1)/2*Math.PI/180); let w=(x1-x0)*k,h=y1-y0;
@@ -230,7 +240,7 @@
     for(const x of DEST){const on=x.id===st.dest; svg+=`<g data-d="${x.id}"><title>${esc(x.nom)}</title><circle class="hit" cx="${X(x.lon)}" cy="${Y(x.lat)}" r="22"/><circle class="dst ${on?'on':''}" cx="${X(x.lon)}" cy="${Y(x.lat)}" r="${on?10:6}"/></g>`;}
     if(dd) svg+=`<text x="${X(dd.lon)-16}" y="${Y(dd.lat)+8}" text-anchor="end">${esc(dd.nom)}</text>`;
     if(oc) svg+=`<rect class="org" x="${X(oc[0])-8}" y="${Y(oc[1])-8}" width="16" height="16"/><text x="${X(oc[0])+16}" y="${Y(oc[1])+8}" style="font-weight:500">${esc(o[0])}</text>`;
-    svg+=`</svg><span class="cap">Touchez un point pour choisir la ville</span>`;
+    svg+=`</svg><span class="cap">${horsCarte?'Votre localité est hors de cette carte. ':''}Touchez un point pour choisir la ville</span>`;
     el.innerHTML=svg;
     el.querySelectorAll('g[data-d]').forEach(g=>g.addEventListener('click',()=>setDest(g.dataset.d)));
   }
@@ -242,19 +252,19 @@
   // ---------- chiffres du mois et tableaux
   const E=SY.essence||{};
   const fig=(k,v,s)=>`<div class="fig"><span>${k}</span><b>${pc(v)}</b><small>${s}</small></div>`;
-  $('#figs').innerHTML=fig('Viande',G.m,'plus cher en Suisse, 4 morceaux')+fig('Fruits et légumes',G.f,'moyenne sur 12 mois')+fig('Produits laitiers',G.c,'5 produits, estimation')
-    +fig('Mêmes marques',G.b,br.length+' produits identiques')+fig('Essence',E.sp95_ecart,'sans plomb, Genève comparé aux zones françaises');
+  $('#figs').innerHTML=fig('Viande',G.m,'plus cher en Suisse')+fig('Fruits et légumes',G.f,'plus cher en Suisse')+fig('Produits laitiers',G.c,'plus cher en Suisse')
+    +fig('Épicerie et boissons',G.b,'plus cher en Suisse')+fig('Essence',E.sp95_ecart,'sans plomb, Genève comparé à la France voisine');
   const gp=g=>`<span class="${g>0?'up':'down'}">${pc(g)}</span>`;
-  const rep=x=>x?`<span class="flag" title="Valeur du mois précédent reprise">${esc(String(x).slice(0,7))}</span>`:'';
+  const rep=x=>x?`<span class="flag" title="Trop peu de produits ce mois-ci">valeur du mois précédent</span>`:'';
   const off=(L.officiel.produits||[]).filter(p=>p.ecart!=null && (p.groupe||'fl')==='fl');
   const crem=(L.officiel.produits||[]).filter(p=>p.ecart!=null && p.groupe==='cremerie');
   const un=u=>u==='L'?'L':u;
+  const lab=(t,h)=>{ const hs=[...document.querySelectorAll(t+' thead th')].map(x=>x.textContent); document.querySelectorAll(t+' tbody tr').forEach(tr=>[...tr.children].forEach((td,i)=>td.setAttribute('data-label',hs[i]||''))); };
   $('#tOff tbody').innerHTML=off.map(p=>`<tr class="click" tabindex="0" data-id="${p.id}"><td>${esc(p.label)}<small>${ml(p.mois)}</small></td><td>${nf(p.ch)} CHF</td><td>${nf(p.fr_chf)} CHF<small>soit ${nf(p.fr_eur)} EUR</small></td><td>${gp(p.ecart)}</td></tr>`).join('');
   $('#tCrem tbody').innerHTML=crem.map(p=>`<tr><td>${esc(p.label)}<small>${ml(p.mois)}, par ${un(p.unit)}</small></td><td>${nf(p.ch)} CHF/${un(p.unit)}</td><td>${nf(p.fr_chf)} CHF/${un(p.unit)}<small>soit ${nf(p.fr_eur)} EUR</small></td><td>${gp(p.ecart)}</td></tr>`).join('') || '<tr><td colspan="4" class="muted">Disponible au prochain relevé.</td></tr>';
-  $('#tMeat tbody').innerHTML=(L.viande||[]).map(v=>`<tr><td>${esc(v.label)}${rep(v.reprise)}<small>Suisse : ${v.ch_migros?`${nf(v.ch_migros)} CHF chez Migros, moins ${Math.round((v.ajustement_discount||0)*100)} %`:`médiane de ${v.ch_n} produits Migros`}${v.ch_n?`, ${v.ch_n} produits`:''}</small></td><td>${nf(v.ch)} CHF</td><td>${nf(v.fr_chf)} CHF<small>soit ${nf(v.fr_eur)} EUR</small></td><td>${gp(v.ecart)}</td></tr>`).join('');
-  $('#tBrand tbody').innerHTML=(L.marques||[]).map(v=>{const u=v.unit==='L'?'L':'kg', n=v.fr_n||0; return `<tr><td>${esc(v.label)}${rep(v.reprise_ch||v.reprise_fr)}<small>${n} relevé${n>1?'s':''} en France${v.fenetre_mois?' sur '+v.fenetre_mois+' mois':''}${n&&n<10?', indicatif':''}</small></td><td>${v.ch_unit!=null?nf(v.ch_unit)+' CHF/'+u:'—'}</td><td>${v.fr_unit_chf!=null?nf(v.fr_unit_chf)+' CHF/'+u+`<small>soit ${nf(v.fr_unit_eur)} EUR/${u}</small>`:'—'}</td><td>${v.ecart!=null?gp(v.ecart):'—'}</td></tr>`;}).join('');
-  $('#tFuel tbody').innerHTML=`<tr><td>Suisse, zone frontière de Genève<small>OFDF, ${esc(fch.date_texte||'')}</small></td><td>${fch.sp95?nf(fch.sp95.ch_chf)+' CHF':'—'}</td><td>${fch.diesel?nf(fch.diesel.ch_chf)+' CHF':'—'}</td><td></td></tr>`
-    +DEST.map(x=>{const f=fd(x.id); return f&&f.n&&f.moyenne_chf?`<tr><td>${esc(x.nom)}</td><td>${nf(f.moyenne_chf.sp95)} CHF<small>soit ${nf(f.moyenne.sp95,3)} EUR</small></td><td>${nf(f.moyenne_chf.diesel)} CHF<small>soit ${nf(f.moyenne.diesel,3)} EUR</small></td><td>${f.n}</td></tr>`:'';}).join('');
+  $('#tMeat tbody').innerHTML=(L.viande||[]).map(v=>`<tr><td>${esc(v.label)}${rep(v.reprise)}<small>Suisse : prix Migros, médiane de ${v.ch_n} produit${v.ch_n>1?'s':''}</small></td><td>${nf(v.ch_migros||v.ch)} CHF</td><td>${nf(v.fr_chf)} CHF<small>soit ${nf(v.fr_eur)} EUR</small></td><td>${gp(v.ch_migros&&v.fr_chf?(v.ch_migros/v.fr_chf-1)*100:v.ecart)}</td></tr>`).join('');
+  $('#tBrand tbody').innerHTML=(L.marques||[]).filter(v=>(v.fr_n||0)>=5).map(v=>{const u=v.unit==='L'?'L':'kg', n=v.fr_n||0; return `<tr><td>${esc(v.label)}${rep(v.reprise_ch||v.reprise_fr)}<small>${n} relevés en France${v.fenetre_mois?' sur '+v.fenetre_mois+' mois':''}${n<10?', indicatif':''}</small></td><td>${v.ch_unit!=null?nf(v.ch_unit)+' CHF/'+u:'—'}</td><td>${v.fr_unit_chf!=null?nf(v.fr_unit_chf)+' CHF/'+u+`<small>soit ${nf(v.fr_unit_eur)} EUR/${u}</small>`:'—'}</td><td>${v.ecart!=null?gp(v.ecart):'—'}</td></tr>`;}).join('');
+  ['#tOff','#tCrem','#tMeat','#tBrand'].forEach(lab);
 
   // ---------- état initial : lien partagé, sinon derniers réglages
   (function restore(){
@@ -264,6 +274,7 @@
     const mx=v('mix','mix'); if(mx) setMix(mx);
     const pp=v('p','persons'); if(pp) $('#persons').value=pp;
     const md=v('mode','mode'); if(md && [...$('#mode').options].some(o=>o.value===md)) $('#mode').value=md;
+    const sc=v('ch','storeCH'); if(sc && [...$('#storeCH').options].some(o=>o.value===sc)) $('#storeCH').value=sc;
     if(!has){ if(S.conso) $('#conso').value=S.conso; if(S.vtime) $('#vtime').value=S.vtime; if(S.tank) $('#tank').value=S.tank;
       if(S.fill) $('#fill').checked=true; if(S.wear===false) $('#wear').checked=false; if(S.card) $('#card').checked=true; if(S.tp) $('#tpCost').value=S.tp; }
     syncMode();
@@ -275,13 +286,23 @@
     else if(st.dest) update();
   })();
 
-  // ---------- graphiques
-  if(!window.Chart){ document.querySelectorAll('.canvas').forEach(c=>c.innerHTML='<p class="muted">Graphique indisponible.</p>'); return; }
+  // ---------- graphiques : chargés seulement quand on arrive à la section (historique + bibliothèque)
+  let charts=[], itemC=null, curItem=off.length?off[0].id:null, fxMap={}, pan=[], ready=false;
   const hexA=(h,a)=>{const n=parseInt(h.replace('#',''),16);return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`;};
-  Chart.defaults.font.family='IBM Plex Sans, Helvetica, Arial, sans-serif';
-  const tk=()=>({color:css('--muted'),font:{size:11}}), yr=arr=>(v,i)=>arr[i]&&arr[i].endsWith('-01')&&(+arr[i].slice(0,4))%2===0?arr[i].slice(0,4):'';
-  let charts=[], itemC=null, curItem=off.length?off[0].id:null; const fxMap=Object.fromEntries(H.fx);
+  const tk=()=>({color:css('--muted'),font:{size:11}});
+  const step=()=> innerWidth<600 ? 4 : 2;
+  const yr=arr=>(v,i)=>arr[i]&&arr[i].endsWith('-01')&&(+arr[i].slice(0,4))%step()===0?arr[i].slice(0,4):'';
+  function loadScript(src){ return new Promise((ok,ko)=>{ const s=document.createElement('script'); s.src=src; s.onload=ok; s.onerror=ko; document.head.appendChild(s); }); }
+  let chartsP=null;
+  function initCharts(){
+    if(chartsP) return chartsP;
+    chartsP=Promise.all([fetch(ROOT+'data/series.json').then(r=>r.json()), window.Chart?Promise.resolve():loadScript(ROOT+'vendor/chart.umd.min.js')])
+      .then(([series])=>{ H=series; pan=H.panier||[]; fxMap=Object.fromEntries(H.fx); Chart.defaults.font.family='IBM Plex Sans, Helvetica, Arial, sans-serif'; ready=true; draw(); })
+      .catch(()=>{ document.querySelectorAll('.canvas').forEach(c=>c.innerHTML='<p class="muted">Graphique indisponible.</p>'); });
+    return chartsP;
+  }
   function draw(){
+    if(!ready) return;
     charts.forEach(c=>c.destroy()); charts=[];
     const lb=pan.map(p=>p.m);
     charts.push(new Chart($('#gap'),{type:'line',data:{labels:lb,datasets:[
@@ -292,17 +313,17 @@
     const fl=H.fx.map(f=>f[0]);
     charts.push(new Chart($('#fx'),{type:'line',data:{labels:fl,datasets:[{data:H.fx.map(f=>f[1]),borderColor:css('--ink'),borderWidth:1.5,pointRadius:0,tension:.2}]},
       options:{maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{callbacks:{title:i=>ml(i[0].label),label:c=>'1 EUR = '+nf(c.parsed.y,4)+' CHF'}}},
-        scales:{x:{grid:{display:false},border:{color:css('--ink')},ticks:{...tk(),autoSkip:false,maxRotation:0,callback:(v,i)=>fl[i].endsWith('-01')&&(+fl[i].slice(0,4))%4===0?fl[i].slice(0,4):''}},y:{grid:{color:css('--line')},border:{display:false},ticks:{...tk(),callback:v=>nf(v,2)+' CHF'}}}}}));
-    const mv=(L.viande||[]).filter(v=>v.ch&&v.fr_chf);
+        scales:{x:{grid:{display:false},border:{color:css('--ink')},ticks:{...tk(),autoSkip:false,maxRotation:0,callback:(v,i)=>fl[i].endsWith('-01')&&(+fl[i].slice(0,4))%(step()*2)===0?fl[i].slice(0,4):''}},y:{grid:{color:css('--line')},border:{display:false},ticks:{...tk(),callback:v=>nf(v,2)+' CHF'}}}}}));
+    const mv=(L.viande||[]).filter(v=>(v.ch_migros||v.ch)&&v.fr_chf);
     charts.push(new Chart($('#meatC'),{type:'bar',data:{labels:mv.map(v=>v.label),datasets:[
-      {label:'Suisse',data:mv.map(v=>v.ch),backgroundColor:css('--red'),borderRadius:4,barPercentage:.7,categoryPercentage:.7},
+      {label:'Suisse',data:mv.map(v=>v.ch_migros||v.ch),backgroundColor:css('--red'),borderRadius:4,barPercentage:.7,categoryPercentage:.7},
       {label:'France',data:mv.map(v=>v.fr_chf),backgroundColor:css('--fr'),borderRadius:4,barPercentage:.7,categoryPercentage:.7}]},
       options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.dataset.label+' : '+nf(c.parsed.x)+' CHF/kg'}}},
         scales:{x:{beginAtZero:true,grid:{color:css('--line')},border:{display:false},ticks:{...tk(),callback:v=>v+' CHF'}},y:{grid:{display:false},border:{color:css('--ink')},ticks:{color:css('--ink'),font:{size:13}}}}}}));
-    drawItem(curItem);
+    if($('#detail').open) drawItem(curItem);
   }
   function drawItem(id){
-    if(!id) return; curItem=id;
+    if(!id||!ready) return; curItem=id;
     document.querySelectorAll('#tOff tbody tr').forEach(tr=>tr.setAttribute('aria-selected',tr.dataset.id===id));
     const rows=(H.produits[id]||[]).filter(r=>fxMap[r[0]]), meta=off.find(p=>p.id===id);
     $('#itemTitle').textContent=(meta?meta.label:id)+' : prix en CHF par kg';
@@ -316,6 +337,12 @@
   }
   $('#tOff tbody').addEventListener('click',e=>{const tr=e.target.closest('tr');if(tr)drawItem(tr.dataset.id);});
   $('#tOff tbody').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const tr=e.target.closest('tr');if(tr){e.preventDefault();drawItem(tr.dataset.id);}}});
-  if(!document.body.classList.contains('embed')) draw();
+  $('#detail').addEventListener('toggle',()=>{ if($('#detail').open) initCharts().then(()=>drawItem(curItem)); });
+  if(!document.body.classList.contains('embed')){
+    const target=document.getElementById('histoire');
+    if('IntersectionObserver' in window){ const io=new IntersectionObserver(es=>{ if(es.some(x=>x.isIntersecting)){ io.disconnect(); initCharts(); } },{rootMargin:'600px'}); io.observe(target); }
+    else initCharts();
+  }
+  let rw=innerWidth; addEventListener('resize',()=>{ if(Math.abs(innerWidth-rw)>100){ rw=innerWidth; draw(); } });
   try{ matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{draw();drawMap();}); new MutationObserver(()=>{draw();drawMap();}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']}); }catch(e){}
 })();

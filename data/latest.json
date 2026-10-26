@@ -591,9 +591,9 @@
    "label": "Entrecôte de bœuf",
    "unit": "kg",
    "qty": 0.3,
-   "ch": 74.81,
+   "ch": 78.75,
    "ch_migros": 78.75,
-   "ajustement_discount": 0.05,
+   "ajustement_discount": 0.0,
    "ch_n": 10,
    "ch_produits": [
     "M-Classic M-Classic · Entrecôte de bœuf  — 44.50/kg",
@@ -609,16 +609,16 @@
    "fr_mois": "2026-09",
    "fr_chf": 30.67,
    "insee": "000442435",
-   "ecart": 143.9
+   "ecart": 156.8
   },
   {
    "id": "veau",
    "label": "Escalope de veau",
    "unit": "kg",
    "qty": 0.2,
-   "ch": 54.86,
+   "ch": 57.75,
    "ch_migros": 57.75,
-   "ajustement_discount": 0.05,
+   "ajustement_discount": 0.0,
    "ch_n": 2,
    "ch_produits": [
     "Migros Migros · Escalope à la chair à saucisse de veau · De la région — 29.50/kg",
@@ -628,7 +628,7 @@
    "fr_mois": "2026-09",
    "fr_chf": 27.88,
    "insee": "000442441",
-   "ecart": 96.8,
+   "ecart": 107.1,
    "reprise": "2026-10-25"
   },
   {
@@ -636,9 +636,9 @@
    "label": "Rôti de porc",
    "unit": "kg",
    "qty": 0.4,
-   "ch": 18.33,
+   "ch": 19.29,
    "ch_migros": 19.29,
-   "ajustement_discount": 0.05,
+   "ajustement_discount": 0.0,
    "ch_n": 15,
    "ch_produits": [
     "M-Budget M-Budget · saucisse à rôtir de porc — 10.13/kg",
@@ -654,16 +654,16 @@
    "fr_mois": "2026-09",
    "fr_chf": 13.18,
    "insee": "000442448",
-   "ecart": 39.1
+   "ecart": 46.4
   },
   {
    "id": "jambon",
    "label": "Jambon cuit supérieur",
    "unit": "kg",
    "qty": 0.2,
-   "ch": 37.33,
+   "ch": 39.29,
    "ch_migros": 39.29,
-   "ajustement_discount": 0.05,
+   "ajustement_discount": 0.0,
    "ch_n": 7,
    "ch_produits": [
     "Da Emilio Da Emilio · Pinsa · au jambon cuit — 18.06/kg",
@@ -678,7 +678,7 @@
    "fr_mois": "2026-09",
    "fr_chf": 18.44,
    "insee": "000849397",
-   "ecart": 102.4
+   "ecart": 113.1
   }
  ],
  "marques": [

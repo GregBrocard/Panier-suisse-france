@@ -8,7 +8,7 @@ import pytest
 
 from scraper.controles import controler, verifier_ofdf
 from scraper.sources import parse_ofdf
-from scraper.synthese import MIX, REGLES, calcul, synthese, taux_economie
+from scraper.synthese import MAGASINS_CH, MIX, REGLES, calcul, ecarts_officiels, synthese, taux_economie
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -82,6 +82,32 @@ def test_taux_economie():
     assert taux_economie({"m": 100}, {"m": 1}, 0.9) == pytest.approx(1 - 0.9 / 2)
     # catégorie manquante : les poids restants sont renormalisés
     assert taux_economie({"m": 100, "c": None}, {"m": .5, "c": .5}) == pytest.approx(0.5)
+    # supermarché suisse moins cher (facteur 0,9) : prix suisse × 0,9, sauf épicerie et boissons
+    assert taux_economie({"m": 100}, {"m": 1}, 1.0, 0.9) == pytest.approx(1 - 1 / 1.8)
+    assert taux_economie({"b": 100}, {"b": 1}, 1.0, 0.9) == pytest.approx(0.5)
+
+
+def test_facteurs_k_tipp():
+    f = {m["id"]: m["f"] for m in MAGASINS_CH}
+    assert f["migros"] == 1.0 and f["discount"] == pytest.approx(231.885 / 243.54, abs=1e-3)
+    assert f["coop"] == pytest.approx(250.70 / 243.54, abs=1e-3)
+
+
+def test_ecarts_officiels_change_et_evolution():
+    pli = {"annee": "2024", "categories": {c: {"CH": 150.0, "FR": 100.0} for c in
+           ("A01010101", "A01010102", "A01010103", "A01010104", "A01010105", "A01010106", "A01010199", "A010102")}}
+    # taux moyen 2024 = 0,95 ; aujourd'hui 0,95 ; relevés identiques en 2024 et récemment -> écart officiel inchangé
+    rows = [{"m": f"2024-{i:02d}", "ch": 3.0, "fr": 2.0, "fx": 0.95} for i in range(1, 13)]
+    series = {"fx": [[r["m"], 0.95] for r in rows], "panier": rows, "cremerie": rows}
+    o = ecarts_officiels(pli, series, 0.95)
+    assert all(v == pytest.approx(50.0) for v in o["gaps"].values())
+    # franc plus fort de 5 % : l'écart augmente d'autant
+    o = ecarts_officiels(pli, series, 0.95 / 1.05)
+    assert o["gaps"]["m"] == pytest.approx((1.5 * 1.05 - 1) * 100, abs=0.1)
+    # prix suisses des fruits et légumes +10 % dans les 12 derniers mois relevés
+    rows2 = rows + [{"m": f"2025-{i:02d}", "ch": 3.3, "fr": 2.0, "fx": 0.95} for i in range(1, 13)]
+    o = ecarts_officiels(pli, {**series, "panier": rows2}, 0.95)
+    assert o["gaps"]["f"] == pytest.approx(65.0, abs=0.1) and o["gaps"]["m"] == pytest.approx(50.0)
 
 
 def test_calcul_cas_simple():
@@ -105,7 +131,8 @@ def test_js_et_python_donnent_le_meme_resultat():
     cas = [{"spend": 200, "km": 42, "minutes": 37, "w": MIX[0]["w"], "idx": 0.96, "persons": 1, "mode": "essence",
             "conso": 7, "wear": True, "fill": False, "card": True},
            {"spend": 350, "km": 80, "w": MIX[1]["w"], "idx": 1.05, "persons": 2, "mode": "diesel", "conso": 6, "wear": False},
-           {"spend": 120, "km": 30, "w": MIX[3]["w"], "idx": 1.0, "persons": 1, "mode": "ev", "conso": 18, "wear": True},
+           {"spend": 120, "km": 30, "w": MIX[3]["w"], "idx": 1.0, "persons": 1, "mode": "ev", "conso": 18, "wear": True, "fch": 0.952},
+           {"spend": 260, "km": 25, "w": MIX[0]["w"], "idx": 0.93, "persons": 1, "mode": "essence", "conso": 7, "fch": 1.029},
            {"spend": 90, "km": 12, "w": MIX[2]["w"], "idx": 0.9, "persons": 1, "mode": "tp", "tpCost": 8}]
     js = ("const P=require('./site/calc.js');const S=" + json.dumps(S) + ";const C=" + json.dumps(cas) +
           ";console.log(JSON.stringify(C.map(c=>P.compute(c,S).net)))")
@@ -119,6 +146,10 @@ def test_synthese_sur_les_donnees_publiees():
     series = json.loads((ROOT / "data/series.json").read_text(encoding="utf-8"))
     sy = synthese(latest, series)
     assert sy["gaps"]["m"] is not None and sy["gaps"]["m"] > 0
+    pli = json.loads((ROOT / "data/pli.json").read_text(encoding="utf-8"))
+    sy = synthese(latest, series, pli)
+    assert sy["officiel"] and 0 < sy["total"]["economie"] < 60
+    assert all(-20 < v < 120 for v in sy["gaps"].values())
     assert abs(sum(MIX[0]["w"].values()) - 1) < 0.01
 
 

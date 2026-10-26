@@ -1,4 +1,4 @@
-"""Génère le site public complet (version 2) dans un dossier prêt à publier.
+"""Génère le site public complet (version 3) dans un dossier prêt à publier.
 
   python -m scraper.site                 -> dist/
   python -m scraper.site --out _site     -> _site/ (publication GitHub Pages)
@@ -8,6 +8,8 @@ méthodologie, données ouvertes, widget, à propos, mentions légales, confiden
 Fichiers : style, scripts, polices, images, images de partage, icônes, manifeste, plan du site, données JSON.
 """
 from __future__ import annotations
+
+import re
 
 import argparse
 import copy
@@ -29,7 +31,7 @@ DATA = ROOT / "data"
 MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre",
         "novembre", "décembre"]
 NAV = [("", "Calculateur", "index"), ("essence/", "Essence", "essence"), ("zones/", "Villes", "zones"),
-       ("douane/", "Douane", "douane"), ("barometre/", "Baromètre", "barometre"),
+       ("prix/", "Prix", "prix"), ("douane/", "Douane", "douane"), ("barometre/", "Baromètre", "barometre"),
        ("methodologie/", "Méthode", "methodologie")]
 
 
@@ -82,6 +84,8 @@ def charger():
                       ("essence", DATA / "essence.json")):
         if path.exists():
             extra[key] = json.loads(path.read_text(encoding="utf-8"))
+    if (DATA / "pli.json").exists():
+        extra["pli"] = json.loads((DATA / "pli.json").read_text(encoding="utf-8"))
     site = yaml.safe_load((ROOT / "config/site.yaml").read_text(encoding="utf-8"))
     site["base_url"] = site["base_url"].rstrip("/")
     return latest, series, extra, site
@@ -129,6 +133,9 @@ def croix(draw, x, y, s):
     draw.rectangle([x + c - b / 2, y + c - l / 2, x + c + b / 2, y + c + l / 2], fill="white")
 
 
+PIED_IMAGE = "gregbrocard.github.io/Panier-suisse-france"
+
+
 def image_partage(path: Path, titre: str, sous_titre: str, chiffres: list[tuple[str, str]]):
     from PIL import Image, ImageDraw
     W, H = 1200, 630
@@ -146,7 +153,7 @@ def image_partage(path: Path, titre: str, sous_titre: str, chiffres: list[tuple[
         d.text((x, 340), val, font=_font(84, "Bold"), fill=(218, 41, 28))
         for j, ligne in enumerate(lab.split("\n")):
             d.text((x, 452 + j * 36), ligne, font=_font(28, "SemiBold" if j == 0 else "Regular"), fill=(23, 23, 23))
-    d.text((64, H - 62), "Données publiques, mises à jour chaque mois · gregbrocard.github.io/Panier-suisse-france",
+    d.text((64, H - 62), "Données publiques, mises à jour chaque mois · " + PIED_IMAGE,
            font=_font(24), fill=(107, 107, 107))
     path.parent.mkdir(parents=True, exist_ok=True)
     im.save(path, "PNG", optimize=True)
@@ -163,6 +170,43 @@ def icones(out: Path):
         im.save(out / f"icon-{s}.png", "PNG", optimize=True)
 
 
+
+# ------------------------------------------------------------------ petits graphiques SVG (pages générées)
+
+def svg_lignes(series_list, titre, unite="", hauteur=220, largeur=640, zero=False):
+    """series_list : [(nom, couleur_css, [(mois, valeur), ...]), ...] -> SVG responsive, sans bibliothèque."""
+    pts = [v for _, _, rows in series_list for _, v in rows if v is not None]
+    if len(pts) < 2:
+        return ""
+    allm = sorted({m for _, _, rows in series_list for m, _ in rows})
+    lo, hi = min(pts), max(pts)
+    if zero:
+        lo, hi = min(lo, 0), max(hi, 0)
+    if hi == lo:
+        hi += 1
+    pad_l, pad_b, pad_t = 52, 26, 10
+    W, H = largeur, hauteur
+    X = lambda m: pad_l + (allm.index(m) / max(1, len(allm) - 1)) * (W - pad_l - 8)
+    Y = lambda v: pad_t + (hi - v) / (hi - lo) * (H - pad_t - pad_b)
+    out = [f'<svg class="sv" viewBox="0 0 {W} {H}" role="img" aria-label="{e(titre)}">']
+    for k in range(5):
+        v = lo + (hi - lo) * k / 4
+        out.append(f'<line class="g" x1="{pad_l}" x2="{W - 8}" y1="{Y(v):.1f}" y2="{Y(v):.1f}"/>'
+                   f'<text x="{pad_l - 6}" y="{Y(v) + 4:.1f}" text-anchor="end">{nf(v, 0 if abs(hi - lo) > 20 else 1)}{unite}</text>')
+    if zero and lo < 0 < hi:
+        out.append(f'<line class="z" x1="{pad_l}" x2="{W - 8}" y1="{Y(0):.1f}" y2="{Y(0):.1f}"/>')
+    years = sorted({m[:4] for m in allm})
+    stepy = max(1, len(years) // 6)
+    for y in years[::stepy]:
+        m = next(x for x in allm if x.startswith(y))
+        out.append(f'<text x="{X(m):.1f}" y="{H - 6}" text-anchor="middle">{y}</text>')
+    for nom, col, rows in series_list:
+        d = "M" + "L".join(f"{X(m):.1f} {Y(v):.1f}" for m, v in rows if v is not None)
+        out.append(f'<path d="{d}" fill="none" stroke="var({col})" stroke-width="2"/>')
+    out.append("</svg>")
+    leg = "".join(f'<span><span class="sw" style="background:var({col})"></span>{e(n)}</span>' for n, col, _ in series_list)
+    return f'<figure class="chart"><div class="cap2"><span>{e(titre)}</span><span class="legend">{leg}</span></div>{"".join(out)}</figure>'
+
 # ------------------------------------------------------------------ contenus des pages
 
 def tableau(entetes, lignes, caption=None):
@@ -170,7 +214,10 @@ def tableau(entetes, lignes, caption=None):
     if caption:
         h += f"<caption>{caption}</caption>"
     h += "<thead><tr>" + "".join(f"<th>{x}</th>" for x in entetes) + "</tr></thead><tbody>"
-    h += "".join("<tr>" + "".join(f"<td>{c}</td>" for c in l) + "</tr>" for l in lignes)
+    import re as _re
+    labs = [_re.sub("<[^>]+>", "", str(x)) for x in entetes]
+    h += "".join("<tr>" + "".join(f"<td data-label=\"{html.escape(labs[i]) if i < len(labs) else ''}\">{c}</td>"
+                                  for i, c in enumerate(l)) + "</tr>" for l in lignes)
     return h + "</tbody></table></div>"
 
 
@@ -191,8 +238,7 @@ def textes_synthese(sy, series):
         titre_fl = f"Fruits et légumes : l'écart a augmenté de {nf(delta, 0)} points en un an"
     else:
         titre_fl = "Fruits et légumes : l'écart est stable sur un an"
-    titre_viande = (f"Viande : {nf(g['m'], 0)} % plus chère en Suisse" if g["m"] is not None and g["m"] > 0
-                    else "Viande : l'écart avec la France")
+    titre_viande = "Viande : quelques exemples de prix au kilo"
     pan = series.get("panier") or []
     if pan:
         mx = max(pan, key=lambda p: p["ecart"])
@@ -295,8 +341,9 @@ def page_zone(d, sy, mag, zone_fuel, ori, magasins_publies):
     proches = villes_proches(ori, d["id"])
     lignes = []
     for nom, ct, km, mn in proches:
-        r1 = calcul({"spend": 150, "km": km, "w": w, "idx": idx, "persons": 1, "mode": "essence", "conso": 7, "wear": True}, sy)
-        r2 = calcul({"spend": 300, "km": km, "w": w, "idx": idx, "persons": 2, "mode": "essence", "conso": 7, "wear": True}, sy)
+        fch = sy["magasins_ch"][0]["f"]
+        r1 = calcul({"spend": 150, "km": km, "w": w, "idx": idx, "persons": 1, "mode": "essence", "conso": 7, "wear": True, "fch": fch}, sy)
+        r2 = calcul({"spend": 300, "km": km, "w": w, "idx": idx, "persons": 2, "mode": "essence", "conso": 7, "wear": True, "fch": fch}, sy)
         f = lambda v: (f"{nf(v, 0)} CHF" if v >= 0 else f"<span class=up>−{nf(-v, 0)} CHF</span>")
         lignes.append((f"{e(nom)} <small>{e(ct)}</small>", f"{km} km<small>{mn} min</small>", f(r1["net"]), f(r2["net"])))
     ms = (mag or {}).get("magasins") or []
@@ -310,7 +357,7 @@ def page_zone(d, sy, mag, zone_fuel, ori, magasins_publies):
 <p class="lede">{lede}</p>
 <p><a class="btn" href="../../?a={e(d['id'])}">Calculer depuis ma ville</a></p>
 <h2>Combien on économise, depuis les villes proches</h2>
-<p>Pour des courses « un peu de tout », en voiture à essence (7 L/100 km), usure comprise, au niveau de prix du magasin du milieu. Le temps de trajet n'est pas déduit.</p>
+<p>Pour des courses « un peu de tout », pour quelqu'un qui fait d'habitude ses courses chez Aldi ou Lidl en Suisse, en voiture à essence (7 L/100 km), usure comprise, au niveau de prix du magasin du milieu. Le temps de trajet n'est pas déduit.</p>
 {tableau(["Départ", "Trajet", "150 CHF, 1 adulte", "300 CHF, 2 adultes"], lignes) if lignes else '<p class="muted">Distances indisponibles.</p>'}"""
     if magasins_publies and ms:
         h += "<h2>Les supermarchés</h2>" + tableau(
@@ -343,55 +390,119 @@ def page_zones_index(dests, mags, zones_fuel, magasins_publies):
             + tableau(["Ville", "Passage", "Supermarchés", "Niveau de prix (vs moyenne française)", "SP95 du jour"], rows))
 
 
+def mags_pub(pub):
+    return {d["id"]: d for d in ((pub.get("magasins") or {}).get("destinations") or [])}
+
+
+def faq_accueil(sy, mags, publies, dests):
+    g, R, ess = sy["gaps"], sy["regles"], sy["essence"]
+    q = [("Faire ses courses en France, est-ce vraiment moins cher ?",
+          f"Oui : en moyenne, les mêmes courses coûtent {nf(sy['total']['economie'], 0)} % de moins en France, d'après la "
+          f"comparaison officielle des prix d'Eurostat et de l'Office fédéral de la statistique, mise à jour chaque mois. "
+          f"L'écart est le plus fort sur la viande ({pc(g['m'])}) et les produits laitiers ({pc(g['c'])}), plus faible sur "
+          f"les fruits et légumes ({pc(g['f'])}). Le trajet, l'usure de la voiture et la douane réduisent l'économie : le "
+          f"calculateur fait le compte depuis votre localité."),
+         ("Combien peut-on acheter en France sans payer de TVA ?",
+          f"{R['franchise_chf']} CHF par personne et par jour. Au-delà, la TVA suisse est due sur la totalité des achats "
+          f"({nf(R['tva_alimentaire'] * 100, 1)} % pour l'alimentation), et il faut les déclarer."),
+         ("Combien de viande peut-on ramener de France ?",
+          f"{R['viande_franchise_kg']} kg par personne et par jour sans droits de douane. Au-delà, 17 CHF par kg jusqu'à "
+          f"10 kg, puis 23 CHF par kg. Beurre et crème : 1 kg. Alcool : 5 litres sous 18 % vol., 1 litre au-dessus."),
+         ("Comment déclarer ses achats à la douane ?",
+          "En passant par le passage rouge, ou avant la frontière avec l'application officielle QuickZoll de l'OFDF, "
+          "qui permet aussi de payer la TVA et les droits.")]
+    if publies and mags:
+        rows = [(d["nom"], mags[d["id"]]["indice_median"]) for d in dests if mags.get(d["id"], {}).get("indice_median")]
+        if rows:
+            lo = min(rows, key=lambda x: x[1])
+            q.append(("Dans quelle ville française les supermarchés sont-ils les moins chers ?",
+                      f"Parmi les villes proches de la Suisse, les supermarchés de {lo[0]} sont les moins chers : "
+                      f"{nf(abs(lo[1] - 1) * 100, 0)} % sous la moyenne française (comparateur de l'UFC-Que Choisir). "
+                      f"Mais la ville la plus proche de chez vous reste souvent la plus rentable, trajet compris."))
+    if ess.get("sp95_ch") and ess.get("sp95_fr"):
+        q.append(("Le plein en France vaut-il le coup ?",
+                  f"Le sans plomb coûte en moyenne {nf(ess['sp95_fr'])} CHF le litre dans les stations françaises proches, "
+                  f"contre {nf(ess['sp95_ch'])} CHF en zone frontière genevoise : environ "
+                  f"{nf((ess['sp95_ch'] - ess['sp95_fr']) * 50, 0)} CHF de moins pour 50 litres. Ça ne vaut le détour que si "
+                  f"vous habitez près de la frontière ; la page Essence fait le calcul."))
+    return q
+
+
 def snapshot_barometre(sy, latest):
-    return {"mois": latest["genere_le"][:7], "date": latest["genere_le"], "gaps": sy["gaps"],
-            "essence": sy["essence"], "fx": sy["fx"], "fl_12m_il_y_a_un_an": sy["fl_12m_il_y_a_un_an"]}
+    return {"mois": latest["genere_le"][:7], "date": latest["genere_le"], "gaps": sy["gaps"], "total": sy.get("total"),
+            "officiel": sy.get("officiel"), "releves": sy.get("releves"), "mois_releves": (latest.get("officiel") or {}).get("mois"),
+            "essence": sy["essence"], "fx": sy["fx"], "fl_12m_il_y_a_un_an": sy["fl_12m_il_y_a_un_an"], "version": 3}
 
 
-def page_barometre(snap, prev, archives, base_url, courant=True):
-    g, p = snap["gaps"], (prev or {}).get("gaps") or {}
-    var = lambda k: (f"{pts(g[k] - p[k])} sur un mois" if g.get(k) is not None and p.get(k) is not None else "")
+def page_barometre(snap, prev, archives, base_url, courant=True, series=None):
+    g = snap["gaps"]
+    comparable = prev and prev.get("version") == snap.get("version")
+    p = (prev or {}).get("gaps") or {} if comparable else {}
+    var = lambda k: (f", {pts(g[k] - p[k])} sur un mois" if g.get(k) is not None and p.get(k) is not None else "")
     ess = snap["essence"]
     mois = mois_long(snap["mois"])
     plein = (ess["sp95_ch"] - ess["sp95_fr"]) * 50 if ess.get("sp95_ch") and ess.get("sp95_fr") else None
-    k = kpis([("Viande", pc(g.get("m")), "plus cher en Suisse " + var("m")),
-              ("Fruits et légumes", pc(g.get("f")), "moyenne sur 12 mois " + var("f")),
-              ("Produits laitiers", pc(g.get("c")), "estimation " + var("c")),
-              ("Mêmes marques", pc(g.get("b")), "prix unitaires " + var("b")),
+    tot = snap.get("total") or {}
+    items = []
+    if tot.get("economie") is not None:
+        items.append(("Les mêmes courses", f"−{nf(tot['economie'], 0)} %", "en France, avant trajet"))
+    items += [("Viande", pc(g.get("m")), "plus cher en Suisse" + var("m")),
+              ("Fruits et légumes", pc(g.get("f")), "plus cher en Suisse" + var("f")),
+              ("Produits laitiers", pc(g.get("c")), "plus cher en Suisse" + var("c")),
+              ("Épicerie et boissons", pc(g.get("b")), "plus cher en Suisse" + var("b")),
               ("Plein de 50 L", nf(plein, 0) + " CHF" if plein else "—", "économisés en France (SP95)"),
-              ("1 euro", nf(snap.get("fx"), 4) + " CHF", "taux BCE")])
-    fl_an = snap.get("fl_12m_il_y_a_un_an")
+              ("1 euro", nf(snap.get("fx"), 4) + " CHF", "taux BCE")]
+    k = kpis(items)
     pm = lambda v, mot="chère": f"{nf(abs(v), 0)} % {'plus' if v >= 0 else 'moins'} {mot}"
     phrases = []
+    if tot.get("economie") is not None:
+        phrases.append(f"En {mois}, les mêmes courses coûtent en moyenne {nf(tot['economie'], 0)} % de moins en France qu'en Suisse, avant les frais de trajet.")
     if g.get("m") is not None:
-        phrases.append(f"La viande reste le poste où l'écart est le plus fort : {pm(g['m'])} en Suisse qu'en France, pour les mêmes morceaux.")
-    if g.get("f") is not None:
-        s = (f"Pour les fruits et légumes, la Suisse est en moyenne {pm(g['f'])} que la France sur les douze derniers mois"
-             if abs(g["f"]) >= 0.5 else "Pour les fruits et légumes, les prix sont presque au même niveau des deux côtés sur les douze derniers mois")
-        if fl_an is not None:
-            s += f", contre {'+' if fl_an > 0 else '−' if fl_an < 0 else ''}{nf(abs(fl_an), 0)} % un an plus tôt"
-        phrases.append(s + ".")
+        phrases.append(f"La viande reste le rayon où l'écart est le plus fort : {pm(g['m'])} en Suisse.")
     if g.get("c") is not None:
-        phrases.append(f"Les produits laitiers sont environ {pm(g['c'], 'chers')} en Suisse (estimation).")
-    if g.get("b") is not None:
-        phrases.append(f"Pour des produits de marque strictement identiques, la Suisse est en moyenne {pm(g['b'])}.")
+        phrases.append(f"Les produits laitiers sont {pm(g['c'], 'chers')} en Suisse, l'épicerie et les boissons {pm(g.get('b') or 0, 'chères')}.")
+    if g.get("f") is not None:
+        phrases.append(f"L'écart est plus faible sur les fruits et légumes ({pm(g['f'], 'chers')}).")
     if plein:
         phrases.append(f"À la pompe, un plein de 50 litres de sans plomb coûte environ {nf(plein, 0)} francs de moins côté français.")
     texte = " ".join(phrases)
-    cite = (f"Panier Suisse France, baromètre de {mois}, d'après les données de l'OFAG, de l'INSEE, d'Open Prices, "
-            f"de l'OFDF et de la BCE. {base_url}/barometre/{snap['mois']}/")
-    h = f"""<h1>Baromètre des prix Suisse – France : {mois}</h1>
-<p class="lede">Chaque mois, les mêmes courses comparées des deux côtés de la frontière, tout en francs suisses. Publié le {date_longue(snap['date'])}.</p>
+    cite = (f"Panier Suisse France, baromètre de {mois}, d'après la comparaison des prix d'Eurostat et de l'OFS, les données de "
+            f"l'OFAG, de l'INSEE, de l'OFDF et de la BCE. {base_url}/barometre/{snap['mois']}/")
+    up = "../" if courant else "../../"
+    off = snap.get("officiel") or {}
+    det = ""
+    if off.get("detail"):
+        det = "<h2>D'où vient chaque chiffre</h2>" + tableau(
+            ["Rayon", f"Écart officiel {off.get('annee', '')}", "Effet du change depuis", "Évolution de nos relevés", "Écart ce mois-ci"],
+            [(RAYON_NOM[c].capitalize(), pc(off['detail'][c]['officiel']), f"{off['detail'][c]['change']:+.1f} %".replace(".", ","),
+              (f"{off['detail'][c]['evolution']:+.1f} %".replace(".", ",") if off['detail'][c]['evolution'] else "—"), f"<b>{pc(g[c])}</b>")
+             for c in ("m", "f", "c", "b")])
+        det += ("<p class=\"muted\">Écart officiel : comparaison des niveaux de prix d'Eurostat et de l'Office fédéral de la statistique "
+                "(milliers de produits par pays). Effet du change : le franc s'est renforcé ou affaibli face à l'euro depuis. "
+                "Évolution de nos relevés : variation de l'écart mesuré sur nos produits (fruits et légumes, laitages).</p>")
+    chart = ""
+    if series and series.get("panier"):
+        from .synthese import rolling12
+        pan = series["panier"]
+        roll = rolling12(pan)
+        rows = [(x["m"], r) for x, r in zip(pan, roll) if r is not None][-72:]
+        chart = svg_lignes([("Fruits et légumes, moyenne sur 12 mois", "--ink", rows)],
+                           "Nos relevés : écart Suisse/France sur 14 fruits et légumes, en %", " %", zero=True)
+    nb_releves = f" Prix relevés les plus récents : {mois_long(snap['mois_releves'])}." if snap.get("mois_releves") else ""
+    h = f"""<h1>Prix Suisse–France : le baromètre de {mois}</h1>
+<p class="lede">Chaque mois, les mêmes courses comparées des deux côtés de la frontière, tout en francs suisses. Publié le {date_longue(snap['date'])}.{nb_releves}</p>
 {k}
 <h2>Ce qu'il faut retenir</h2>
 <p>{e(texte)}</p>
+{det}
+{chart}
 <h2>Texte prêt à reprendre</h2>
 <div class="note"><p id="txt">{e(texte)} Source : {e(cite)}</p><p style="margin-top:10px"><button type="button" class="btn ghost" id="copy">Copier le texte</button> <span class="muted" id="copied" aria-live="polite"></span></p></div>
 <h2>Citer</h2>
 <p class="quote">{e(cite)}</p>
-<p><a href="../{'' if courant else '../'}og/barometre-{snap['mois']}.png" download>Télécharger l'image du mois</a> · <a href="../{'' if courant else '../'}donnees/">Données ouvertes</a> · <a href="../{'' if courant else '../'}methodologie/">Méthodologie</a></p>
+<p><a href="{up}og/barometre-{snap['mois']}.png" download>Télécharger l'image du mois</a> · <a href="{up}donnees/">Données ouvertes</a> · <a href="{up}methodologie/">Méthodologie</a></p>
 <h2>Les mois précédents</h2>
-<ul>{''.join(f'<li><a href="../{"" if courant else "../"}barometre/{m}/">{mois_long(m)}</a></li>' for m in archives) or '<li>Premier baromètre.</li>'}</ul>"""
+<ul>{''.join(f'<li><a href="{up}barometre/{m}/">{mois_long(m)}</a></li>' for m in archives) or '<li>Premier baromètre.</li>'}</ul>"""
     return h
 
 
@@ -457,13 +568,17 @@ def page_widget(base_url):
 <pre>{e(code)}</pre>
 <p>Le calculateur intégré affiche le formulaire et le résultat, avec un lien vers ce site. Merci de ne pas masquer ce lien.</p>
 <h2>Aperçu</h2>
-<p><a href="../?embed=1">Voir le calculateur tel qu'il apparaît une fois intégré</a>.</p>
+<iframe src="../?embed=1" title="Aperçu du calculateur intégré" style="width:100%;height:1150px;border:1px solid var(--line)" loading="lazy"></iframe>
 <h2>Reprendre les chiffres</h2>
 <p>Les chiffres du <a href="../barometre/">baromètre mensuel</a> peuvent être cités librement avec la mention « Panier Suisse France » et un lien. Les données sont disponibles en <a href="../donnees/">format ouvert</a>.</p>"""
 
 
 def page_donnees(controles, magasins_publies):
-    fichiers = [("data/latest.json", "Photo du mois : tous les prix, écarts, magasins, essence, contrôles"),
+    fichiers = [("data/ecarts_par_rayon.csv", "Tableur : écart Suisse/France par rayon ce mois-ci, avec sa décomposition"),
+                ("data/produits.csv", "Tableur : prix de chaque produit relevé en Suisse et en France"),
+                ("data/historique_fruits_legumes.csv", "Tableur : écart mensuel sur 14 fruits et légumes depuis 2006"),
+                ("data/pli.json", "Comparaison officielle des niveaux de prix (Eurostat–OFS) utilisée comme base"),
+                ("data/latest.json", "Photo du mois : tous les prix, écarts, magasins, essence, contrôles"),
                 ("data/series.json", "Historique mensuel : écarts fruits et légumes depuis 2006, crèmerie, change, prix par produit"),
                 ("data/essence.json", "Essence : prix du jour par zone et stations les moins chères"),
                 ("data/stations.json", "Stations françaises au prix du jour et stations suisses avec un prix relevé (mode « Où faire le plein »)"),
@@ -530,9 +645,10 @@ def page_confidentialite(site):
 def page_methodologie():
     import markdown
     md = (ROOT / "METHODOLOGIE.md").read_text(encoding="utf-8")
+    md = re.sub(r"(?m)^(?!\s*[-*] |\s*\d+\. |\s*$)(.+)\n(?=\s*(?:[-*] |\d+\. ))", r"\1\n\n", md)  # liste sans ligne vide avant
     body = markdown.markdown(md, extensions=["tables"])
-    body = body.replace("<table>", '<div class="tbl"><table>').replace("</table>", "</table></div>")
-    return body + '<p><a href="../METHODOLOGIE.md">Version texte (Markdown)</a> · <a href="../v1/">Version 1 du site (archive)</a></p>'
+    body = body.replace("<table>", '<div class="tscroll"><table>').replace("</table>", "</table></div>")
+    return body + '<p><a href="../METHODOLOGIE.md">Version texte (Markdown)</a> · <a href="../v2/">Version 2 (archive)</a> · <a href="../v1/">Version 1 (archive)</a></p>'
 
 
 
@@ -639,16 +755,164 @@ def donnees_stations(extra, dests, ch_ess, fx):
     return {"fr": fr, "ch": ch, "ch_osm": ch_osm, "ch_total": len(osm_ch), "maj_fr": ess.get("genere_le")}, zones
 
 
+
+# ------------------------------------------------------------------ pages produit, Suisse, partenaires (v3)
+
+CAT_RAYON = {"Fruits": "f", "Légumes": "f", "Crèmerie": "c", "Pain": "b"}
+RAYON_NOM = {"m": "viande", "f": "fruits et légumes", "c": "produits laitiers", "b": "épicerie et boissons"}
+
+
+def produits_liste(latest):
+    """Tous les produits relevés, sous une forme commune."""
+    out = []
+    for p in (latest.get("officiel") or {}).get("produits") or []:
+        if p.get("ecart") is None:
+            continue
+        u = "L" if p["unit"] == "L" else p["unit"]
+        src = ("OFAG (moyenne du commerce de détail suisse)", "INSEE, prix estimé à partir du dernier prix moyen publié" if p.get("estime")
+               else "INSEE (prix moyen de vente au détail)")
+        out.append({"id": p["id"], "label": p["label"], "rayon": CAT_RAYON.get(p.get("cat"), "f"), "unite": u,
+                    "ch": p["ch"], "fr": p["fr_chf"], "fr_eur": p["fr_eur"], "ecart": p["ecart"], "mois": p.get("mois"),
+                    "src_ch": src[0], "src_fr": src[1], "histo": True})
+    for v in latest.get("viande") or []:
+        ch = v.get("ch_migros") or v.get("ch")
+        if not (ch and v.get("fr_chf")):
+            continue
+        out.append({"id": v["id"], "label": v["label"], "rayon": "m", "unite": "kg", "ch": ch, "fr": v["fr_chf"],
+                    "fr_eur": v.get("fr_eur"), "ecart": round((ch / v["fr_chf"] - 1) * 100, 1), "mois": v.get("fr_mois"),
+                    "src_ch": f"Migros, médiane de {v.get('ch_n')} produits, hors bio et promotions", "src_fr": "INSEE (prix moyen)",
+                    "exemples": v.get("ch_produits") or []})
+    for m in latest.get("marques") or []:
+        if not (m.get("ch_unit") and m.get("fr_unit_chf")) or (m.get("fr_n") or 0) < 5:
+            continue
+        u = "L" if m["unit"] == "L" else "kg"
+        out.append({"id": m["id"], "label": m["label"], "rayon": "b", "unite": u, "ch": m["ch_unit"], "fr": m["fr_unit_chf"],
+                    "fr_eur": m.get("fr_unit_eur"), "ecart": m.get("ecart"), "mois": None,
+                    "src_ch": f"Migros : {m.get('ch_produit') or ''}", "src_fr": f"Open Prices, {m.get('fr_n')} tickets de caisse en France",
+                    "marque": True})
+    return out
+
+
+def page_produit(p, series, sy):
+    g = sy["gaps"].get(p["rayon"])
+    plus = "plus cher" if p["ecart"] >= 0 else "moins cher"
+    h = f"""<h1>Prix {e(p['label'].lower() if not p.get('marque') else p['label'])} : Suisse ou France ?</h1>
+<p class="lede">{e(p['label'])} coûte {nf(p['ch'])} CHF par {p['unite']} en Suisse et {nf(p['fr'])} CHF en France ({nf(p['fr_eur'])} EUR), soit {nf(abs(p['ecart']), 0)} % {plus} en Suisse{(' (' + mois_long(p['mois']) + ')') if p.get('mois') else ''}.</p>
+{kpis([("En Suisse", nf(p['ch']) + " CHF", "par " + p['unite']), ("En France", nf(p['fr']) + " CHF", "par " + p['unite'] + ", " + nf(p['fr_eur']) + " EUR"), ("Écart", pc(p['ecart']), "Suisse comparée à la France")])}"""
+    if p.get("histo"):
+        fx = dict(series.get("fx") or [])
+        rows = [r for r in (series.get("produits") or {}).get(p["id"], []) if r[0] in fx][-120:]
+        if len(rows) > 6:
+            h += svg_lignes([("Suisse", "--red", [(r[0], r[1]) for r in rows]), ("France", "--fr", [(r[0], r[2] * fx[r[0]]) for r in rows])],
+                            f"Prix en CHF par {p['unite']}, 10 dernières années", " CHF")
+    if p.get("exemples"):
+        h += "<h2>Produits suisses relevés</h2><ul>" + "".join(f"<li>{e(x)}</li>" for x in p["exemples"][:6]) + "</ul>"
+    h += f"""<h2>Et pour tout le rayon ?</h2>
+<p>Sur l'ensemble du rayon {RAYON_NOM[p['rayon']]}, la Suisse est en moyenne {pc(g)} plus chère que la France (comparaison officielle Eurostat–OFS, mise à jour ce mois-ci). Un seul produit peut s'en écarter beaucoup.</p>
+<p><a class="btn" href="../../">Calculer mon économie, trajet compris</a></p>
+<p class="muted">Sources : Suisse, {e(p['src_ch'])} ; France, {e(p['src_fr'])}. Change : BCE. <a href="../">Tous les produits</a> · <a href="../../methodologie/">Méthode</a>.</p>"""
+    return h
+
+
+def page_produits_index(prods, sy):
+    rows = []
+    for r in ("m", "f", "c", "b"):
+        for p in sorted([x for x in prods if x["rayon"] == r], key=lambda x: -x["ecart"]):
+            rows.append((f"<a href=\"{p['id']}/\">{e(p['label'])}</a><small>{RAYON_NOM[r]}</small>",
+                         f"{nf(p['ch'])} CHF/{p['unite']}", f"{nf(p['fr'])} CHF/{p['unite']}", f"<b>{pc(p['ecart'])}</b>"))
+    return ("<h1>Prix produit par produit : Suisse et France</h1>"
+            "<p class=\"lede\">Une trentaine de produits relevés chaque mois des deux côtés de la frontière, en francs suisses. "
+            "Ce sont des exemples : l'écart moyen de chaque rayon vient de la comparaison officielle Eurostat–OFS.</p>"
+            + kpis([(RAYON_NOM[k].capitalize(), pc(sy["gaps"][k]), "écart moyen du rayon") for k in ("m", "f", "c", "b")])
+            + tableau(["Produit", "Suisse", "France", "Écart"], rows))
+
+
+SOURCES_SUISSE = [
+    ("Rappn, classement 2026 des supermarchés suisses (reprend le test K-Tipp d'août 2025)", "https://rappn.ch/en/cheapest-supermarket-switzerland"),
+    ("Blick, test d'À bon entendeur (RTS), avril 2024", "https://www.blick.ch/fr/suisse/denner-le-plus-cher-faire-ses-courses-a-lidl-ou-a-la-coop-la-difference-de-prix-est-minime-id19648764.html"),
+    ("Blick, comparaison des prix de la viande, septembre 2025", "https://www.blick.ch/wirtschaft/in-welchem-supermarkt-ist-fleisch-wirklich-am-billigsten-preisschlacht-zwischen-den-detailhaendlern-die-grosse-blick-analyse-id21205522.html"),
+    ("Tio.ch, test K-Tipp de 25 produits, novembre 2024", "https://www.tio.ch/svizzera/economia/1796522/la-carne-costa-meno-e-in-qualche-caso-molto-meno"),
+]
+
+
+def page_suisse(sy):
+    mags = sy["magasins_ch"]
+    h = """<h1>Quel supermarché suisse est le moins cher ?</h1>
+<p class="lede">Avant d'aller en France, la première économie se fait souvent en Suisse : les discounters coûtent environ 5 % de moins que Migros, et Coop environ 3 % de plus. Synthèse des tests de prix publiés, avec leurs sources.</p>
+"""
+    h += tableau(["Enseigne", "Panier de 100 produits (K-Tipp, août 2025)", "Par rapport à Migros"],
+                 [("Aldi", "230,94 CHF", "−5,2 %"), ("Lidl", "232,83 CHF", "−4,4 %"), ("Migros", "243,54 CHF", "référence"),
+                  ("Coop", "250,70 CHF", "+2,9 %")], "Le test le plus récent")
+    h += tableau(["Enseigne", "30 produits, toujours le moins cher du rayon (À bon entendeur, 2024)"],
+                 [("Lidl", "162,05 CHF"), ("Aldi", "166,59 CHF"), ("Coop", "167,82 CHF"), ("Migros", "179,37 CHF"), ("Denner", "181,67 CHF")],
+                 "Les premiers prix")
+    h += """<h2>Ce qu'il faut retenir</h2>
+<ul><li><b>Les discounters (Aldi, Lidl) sont les moins chers</b> sur un panier courant, de 4 à 5 % sous Migros.</li>
+<li><b>Les produits de marque</b> (Nutella, Coca-Cola…) coûtent pratiquement le même prix partout.</li>
+<li><b>Sur les premiers prix</b> (M-Budget, Prix Garantie), Migros et Coop s'alignent souvent sur les discounters ; l'écart se joue sur les produits courants.</li>
+<li><b>Viande</b> : en septembre 2025, Lidl, Coop et Aldi étaient à quelques centimes les uns des autres, Migros et Denner derrière.</li></ul>
+<h2>Et dans le calculateur ?</h2>
+<p>Le calculateur vous demande où vous faites vos courses en Suisse et ajuste les prix suisses en conséquence : """ + ", ".join(
+        f"{e(m['label'])} : {pc((m['f'] - 1) * 100) if m['f'] != 1 else 'moyenne suisse'}" for m in mags) + """. Plus vous achetez déjà chez un discounter, plus l'économie en France est petite.</p>
+<p><a class="btn" href="../">Faire le calcul</a></p>
+<h2>Sources</h2><ul>""" + "".join(f'<li><a href="{u}" rel="noopener">{e(t)}</a></li>' for t, u in SOURCES_SUISSE) + """</ul>
+<p class="muted">Les tests portent sur des paniers et des dates précis ; les prix changent souvent. Aucune enseigne n'a été consultée ni rémunérée.</p>"""
+    return h
+
+
+def page_partenaires(site):
+    contact = (f'<a href="mailto:{e(site["contact_email"])}">{e(site["contact_email"])}</a>' if site.get("contact_email")
+               else f'<a href="{e(site["contact_url"])}" rel="noopener">formulaire de contact</a>')
+    return f"""<h1>Partenaires et licences</h1>
+<p class="lede">Panier Suisse France est indépendant. Ses chiffres ne sont jamais influencés par un partenaire ; ce qui peut l'être, c'est leur diffusion.</p>
+<h2>Ce que nous proposons</h2>
+<ul><li><b>Le calculateur sur votre site</b>, à vos couleurs, pour une ville, un centre commercial ou un média : gratuit en version standard (<a href="../widget/">widget</a>), sous licence pour une version personnalisée.</li>
+<li><b>Études sur le tourisme d'achat</b> : écarts de prix par rayon et par ville, évolution mensuelle depuis 2006, essence aux cinq frontières, pour associations du commerce, chambres de commerce, collectivités.</li>
+<li><b>Baromètre mensuel</b> pour les médias : chiffres, texte et image prêts à publier.</li></ul>
+<h2>Nos règles</h2>
+<ul><li>Aucune enseigne comparée ne peut acheter une place, un classement ou un texte.</li>
+<li>Toute licence ou tout partenariat rémunéré est indiqué publiquement sur cette page.</li>
+<li>La méthode et les données restent publiques.</li></ul>
+<h2>Partenaires actuels</h2><p>Aucun.</p>
+<h2>Contact</h2><p>{contact}</p>"""
+
+def ecrire_csv(d: Path, sy, series, pub):
+    """Exports tableur (séparateur point-virgule, décimales avec virgule, comme Excel en Suisse romande)."""
+    import csv
+    f = lambda v: "" if v is None else str(round(v, 4)).replace(".", ",")
+    with open(d / "ecarts_par_rayon.csv", "w", newline="", encoding="utf-8-sig") as fh:
+        w = csv.writer(fh, delimiter=";")
+        w.writerow(["rayon", "ecart_ce_mois_pct", "ecart_officiel_pct", "annee_officielle", "effet_change_pct", "evolution_releves_pct", "ecart_releves_pct"])
+        off = sy.get("officiel") or {}
+        for k in ("m", "f", "c", "b"):
+            dt_ = (off.get("detail") or {}).get(k, {})
+            w.writerow([RAYON_NOM[k], f(sy["gaps"][k]), f(dt_.get("officiel")), off.get("annee", ""), f(dt_.get("change")),
+                        f(dt_.get("evolution")), f((sy.get("releves") or {}).get(k))])
+    with open(d / "historique_fruits_legumes.csv", "w", newline="", encoding="utf-8-sig") as fh:
+        w = csv.writer(fh, delimiter=";")
+        w.writerow(["mois", "ecart_pct", "panier_suisse_chf", "panier_france_chf", "eur_chf", "nb_produits"])
+        for r in series.get("panier") or []:
+            w.writerow([r["m"], f(r["ecart"]), f(r["ch"]), f(r["fr"]), f(r["fx"]), r["n"]])
+    with open(d / "produits.csv", "w", newline="", encoding="utf-8-sig") as fh:
+        w = csv.writer(fh, delimiter=";")
+        w.writerow(["produit", "rayon", "unite", "prix_suisse_chf", "prix_france_chf", "prix_france_eur", "ecart_pct", "mois", "source_suisse", "source_france"])
+        for p in produits_liste(pub):
+            w.writerow([p["label"], RAYON_NOM[p["rayon"]], p["unite"], f(p["ch"]), f(p["fr"]), f(p["fr_eur"]), f(p["ecart"]),
+                        p.get("mois") or "", p["src_ch"], p["src_fr"]])
+
+
 # ------------------------------------------------------------------ main
 
 def main(out: Path):
     latest, series, extra, site = charger()
+    global PIED_IMAGE
+    PIED_IMAGE = site["base_url"].split("://", 1)[-1]
     pcfg = yaml.safe_load((ROOT / "config/panier.yaml").read_text(encoding="utf-8"))
     zones_ess, ch_ess, maj_ess = essence_effective(latest, extra)
     lat2 = copy.deepcopy(latest)
     lat2.setdefault("carburant", {})["destinations"] = zones_ess
     lat2["carburant"]["ch"] = ch_ess
-    sy = synthese(lat2, series)
+    sy = synthese(lat2, series, extra.get("pli"))
     pub = public_latest(latest, zones_ess, ch_ess)
     publies = bool(pub.get("magasins"))
     version = latest.get("genere_le", "").replace("-", "") + (maj_ess or "")[:10].replace("-", "")
@@ -669,7 +933,8 @@ def main(out: Path):
     shutil.copy(DATA / "series.json", out / "data/series.json")
     if latest.get("origines"):
         (out / "data/origines.json").write_text(json.dumps(latest["origines"], ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-    for f in ("essence.json", "controles.json"):
+    ecrire_csv(out / "data", sy, series, pub)
+    for f in ("essence.json", "controles.json", "pli.json"):
         if (DATA / f).exists():
             shutil.copy(DATA / f, out / "data" / f)
 
@@ -704,17 +969,23 @@ def main(out: Path):
     upd = (f"Prix mis à jour le 20 de chaque mois, essence chaque jour. Dernier relevé : {date_longue(gen)}, "
            f"prochain : {nxt.day} {MOIS[nxt.month - 1]}.")
     titre_fl, titre_viande, resume_fl, resume_fx = textes_synthese(sy, series)
-    payload = {"latest": pub, "series": series, "carte": extra.get("carte"), "credits": extra.get("credits"),
+    payload = {"latest": pub, "carte": extra.get("carte"), "credits": extra.get("credits"),
                "essence": {"zones": zones_ess, "genere_le": maj_ess}, "synth": sy, "root": ""}
     data_json = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     g = sy["gaps"]
-    desc = (f"Combien économisez-vous en faisant vos courses en France ? Calcul personnel depuis votre localité : prix du "
-            f"magasin, trajet, douane. Ce mois-ci : viande {pc(g['m'])}, fruits et légumes {pc(g['f'])} plus chers en Suisse.")
+    desc = (f"Les mêmes courses coûtent {nf(sy['total']['economie'], 0)} % de moins en France. Votre économie réelle, "
+            f"trajet, magasin et douane compris, depuis votre localité.")
     jsonld = json.dumps({"@context": "https://schema.org", "@type": "WebSite", "name": site["nom"], "url": site["base_url"] + "/",
                          "inLanguage": "fr-CH", "description": desc}, ensure_ascii=False)
-    render("index.html", "", 0, "Faire ses courses en France, ça vaut le coup ? | Panier Suisse France", desc, "index",
+    faq = faq_accueil(sy, mags_pub(pub), publies, latest.get("destinations") or [])
+    jsonld = json.dumps({"@context": "https://schema.org", "@graph": [
+        {"@type": "WebSite", "name": site["nom"], "url": site["base_url"] + "/", "inLanguage": "fr-CH", "description": desc},
+        {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}}
+                                            for q, a in faq]}]}, ensure_ascii=False)
+    render("index.html", "", 0, "Courses en France : combien vous économisez vraiment | Panier Suisse France", desc, "index",
            data_json=data_json, upd_text=upd, titre_fl=titre_fl, titre_viande=titre_viande, resume_fl=resume_fl,
-           resume_fx=resume_fx, regles=sy["regles"], jsonld=jsonld,
+           resume_fx=resume_fx, regles=sy["regles"], jsonld=jsonld, faq=faq, economie=nf(sy["total"]["economie"], 0),
+           magasins_ch=sy["magasins_ch"], pli_annee=(sy.get("officiel") or {}).get("annee", ""), gap_m=nf(g["m"], 0),
            og_title="Faire ses courses en France, ça vaut le coup ?")
 
     dests = latest.get("destinations") or []
@@ -730,45 +1001,47 @@ def main(out: Path):
                   if site.get("contact_email") else
                   "https://github.com/GregBrocard/Panier-suisse-france/issues/new?title=" + _u.quote("Prix essence : ")
                   + "&labels=prix&body=" + _u.quote(sig_body))
-    ess_data = {"root": "../", "lacs": (extra.get("carte") or {}).get("lacs", []), "usure": sy["regles"]["usure_chf_km"], "ofdf_zones": ofdf_zones, "route": route,
+    lacs = json.loads((DATA / "lacs.json").read_text(encoding="utf-8"))["lacs"] if (DATA / "lacs.json").exists() \
+        else (extra.get("carte") or {}).get("lacs", [])
+    ess_data = {"root": "../", "lacs": lacs, "usure": sy["regles"]["usure_chf_km"], "ofdf_zones": ofdf_zones, "route": route,
                 "ref_defaut": {"sp95": sy["essence"].get("sp95_ch"), "diesel": sy["essence"].get("diesel_ch")},
                 "ofdf_date": ch_ess.get("date_texte") or "", "signal_url": signal_url}
     upd_ess = (f"Stations françaises : prix officiels du {date_longue(maj_ess)}. " if maj_ess else "") + \
               f"Prix moyens suisses : douane suisse, {ch_ess.get('date_texte') or 'mensuel'}."
-    render("essence.html", "essence/", 1, "Où faire le plein ? Stations les moins chères près de chez vous | Panier Suisse France",
+    render("essence.html", "essence/", 1, "Prix de l'essence près de la Suisse : où faire le plein | Panier Suisse France",
            "Indiquez votre localité : la station qui vous fait le plus économiser, trajet compris, en Suisse ou en France voisine.",
            "essence", content=page_essence(sy, zones_ess, ch_ess, maj_ess, dests, fx_now), upd_text=upd_ess,
            usure=nf(sy["regles"]["usure_chf_km"]), data_json=json.dumps(ess_data, ensure_ascii=False).replace("</", "<\\/"))
-    render("page.html", "zones/", 1, "Les villes françaises où les Suisses font leurs courses | Panier Suisse France",
+    render("page.html", "zones/", 1, "Courses en France voisine : les 12 villes comparées | Panier Suisse France",
            "Annemasse, Saint-Julien, Pontarlier, Saint-Louis… Supermarchés, essence et économie depuis la Suisse, ville par ville.",
            "zones", content=page_zones_index(dests, mags, zones_ess, publies), wide=True)
     for d in dests:
-        render("page.html", f"zones/{d['id']}/", 2, f"Faire ses courses à {d['nom']} depuis la Suisse | Panier Suisse France",
+        render("page.html", f"zones/{d['id']}/", 2, f"Courses à {d['nom']} : magasins, prix, économie | Panier Suisse France",
                f"Supermarchés de {d['nom']} et leur niveau de prix, essence du jour, économie depuis les villes suisses proches.",
                "zones", content=page_zone(d, sy, mags.get(d["id"]), zones_ess.get(d["id"]), latest.get("origines"), publies), wide=True)
     # baromètre courant + archives
     for i, m in enumerate(mois_list):
         prev = snaps[mois_list[i - 1]] if i > 0 else None
         image_partage(out / "og" / f"barometre-{m}.png", f"Baromètre de {mois_long(m)}", "Les mêmes courses en Suisse et en France",
-                      [(pc(snaps[m]["gaps"].get("m")), "Viande\nplus cher en Suisse"),
-                       (pc(snaps[m]["gaps"].get("f")), "Fruits et légumes\nsur 12 mois"),
-                       (pc(snaps[m]["gaps"].get("b")), "Mêmes marques\nprix unitaires")])
+                      [(f"−{nf((snaps[m].get('total') or {}).get('economie'), 0)} %" if (snaps[m].get('total') or {}).get('economie') else pc(snaps[m]["gaps"].get("b")), "Les mêmes courses\nen France"),
+                       (pc(snaps[m]["gaps"].get("m")), "Viande\nplus cher en Suisse"),
+                       (pc(snaps[m]["gaps"].get("c")), "Produits laitiers\nplus cher en Suisse")])
         others = [x for x in reversed(mois_list) if x != m]
         render("page.html", f"barometre/{m}/", 2, f"Baromètre des prix Suisse – France, {mois_long(m)} | Panier Suisse France",
                f"Écarts de prix entre la Suisse et la France en {mois_long(m)} : viande, fruits et légumes, produits laitiers, marques, essence.",
-               "barometre", content=page_barometre(snaps[m], prev, others, site["base_url"], courant=False), script=SCRIPT_COPY,
+               "barometre", content=page_barometre(snaps[m], prev, others, site["base_url"], courant=False, series=series), script=SCRIPT_COPY,
                og_image=f"og/barometre-{m}.png")
     last = mois_list[-1]
-    render("page.html", "barometre/", 1, f"Baromètre des prix Suisse – France, {mois_long(last)} | Panier Suisse France",
+    render("page.html", "barometre/", 1, f"Prix Suisse–France : le baromètre de {mois_long(last)} | Panier Suisse France",
            f"Chaque mois, les mêmes courses comparées en Suisse et en France. {mois_long(last).capitalize()} : viande {pc(g['m'])}, fruits et légumes {pc(g['f'])}.",
            "barometre", content=page_barometre(snaps[last], snaps[mois_list[-2]] if len(mois_list) > 1 else None,
-                                               [x for x in reversed(mois_list) if x != last], site["base_url"]),
+                                               [x for x in reversed(mois_list) if x != last], site["base_url"], series=series),
            script=SCRIPT_COPY, og_image=f"og/barometre-{last}.png")
     h, sc = page_douane(sy["regles"])
-    render("page.html", "douane/", 1, "Douane suisse : franchises, TVA et détaxe pour les achats en France | Panier Suisse France",
+    render("page.html", "douane/", 1, "Douane : ce qu'on peut ramener de France en 2026 | Panier Suisse France",
            "Combien de viande, d'alcool et de tabac peut-on ramener de France ? Calcul de la TVA et des droits de douane, et mode d'emploi de la détaxe.",
            "douane", content=h, script=sc)
-    render("page.html", "methodologie/", 1, "Méthodologie | Panier Suisse France",
+    render("page.html", "methodologie/", 1, "Comment on compare les prix Suisse–France | Panier Suisse France",
            "Sources, calculs et limites du comparateur de prix Suisse – France.", "methodologie", content=page_methodologie())
     render("page.html", "donnees/", 1, "Données ouvertes | Panier Suisse France",
            "Tous les prix et écarts Suisse – France en fichiers JSON, mis à jour chaque mois.", None,
@@ -780,6 +1053,20 @@ def main(out: Path):
                               "temporalCoverage": f"2006-01/{gen[:7]}", "spatialCoverage": "Suisse, France"}, ensure_ascii=False))
     render("page.html", "widget/", 1, "Intégrer le calculateur | Panier Suisse France",
            "Affichez gratuitement le calculateur Suisse – France sur votre site.", None, content=page_widget(site["base_url"]))
+    prods = produits_liste(pub)
+    for pr in prods:
+        render("page.html", f"prix/{pr['id']}/", 2, f"Prix {pr['label']} : Suisse ou France ? | Panier Suisse France",
+               f"{pr['label']} : {nf(pr['ch'])} CHF en Suisse, {nf(pr['fr'])} CHF en France ({pc(pr['ecart'])}). Prix relevés chaque mois.",
+               "prix", content=page_produit(pr, series, sy))
+    render("page.html", "prix/", 1, "Prix Suisse–France produit par produit | Panier Suisse France",
+           "Une trentaine de produits relevés chaque mois en Suisse et en France : viande, fruits, légumes, laitages, marques.",
+           "prix", content=page_produits_index(prods, sy), wide=True)
+    render("page.html", "suisse/", 1, "Quel supermarché suisse est le moins cher ? | Panier Suisse France",
+           "Aldi, Lidl, Migros, Coop, Denner : la synthèse des tests de prix publiés, avec leurs sources.", None,
+           content=page_suisse(sy))
+    render("page.html", "partenaires/", 1, "Partenaires et licences | Panier Suisse France",
+           "Le calculateur et les données sur votre site, études sur le tourisme d'achat, règles de neutralité.", None,
+           content=page_partenaires(site))
     render("page.html", "a-propos/", 1, "À propos | Panier Suisse France", "Un projet indépendant, des sources publiques.", None,
            content=page_apropos())
     render("page.html", "mentions-legales/", 1, "Mentions légales | Panier Suisse France", "Éditeur, hébergement, sources.", None,
@@ -791,8 +1078,8 @@ def main(out: Path):
 
     # images et fichiers techniques
     image_partage(out / "og" / "accueil.png", "Faire ses courses en France,", "ça vaut le coup ? Le calcul depuis votre ville.",
-                  [(pc(g["m"]), "Viande\nplus cher en Suisse"), (pc(g["f"]), "Fruits et légumes\nsur 12 mois"),
-                   (pc(g["b"]), "Mêmes marques\nprix unitaires")])
+                  [(f"−{nf(sy['total']['economie'], 0)} %", "Les mêmes courses\nen France"), (pc(g["m"]), "Viande\nplus cher en Suisse"),
+                   (pc(g["c"]), "Produits laitiers\nplus cher en Suisse")])
     icones(out)
     (out / "manifest.webmanifest").write_text(json.dumps({
         "name": site["nom"], "short_name": "Panier CH-FR", "start_url": "./", "display": "standalone", "lang": "fr-CH",
@@ -805,7 +1092,7 @@ def main(out: Path):
                                      + "".join(f"  <url><loc>{site['base_url']}/{p}</loc><lastmod>{today}</lastmod></url>\n" for p in pages)
                                      + "</urlset>\n", encoding="utf-8")
     (out / ".nojekyll").write_text("", encoding="utf-8")
-    print(f"site v2 : {len(pages)} pages dans {out}")
+    print(f"site v3 : {len(pages)} pages dans {out}")
 
 
 if __name__ == "__main__":

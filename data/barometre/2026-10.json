@@ -2,11 +2,54 @@
  "mois": "2026-10",
  "date": "2026-10-25",
  "gaps": {
-  "m": 103.1,
+  "m": 62.8,
+  "f": 10.0,
+  "c": 55.7,
+  "b": 55.0
+ },
+ "total": {
+  "ecart": 44.2,
+  "economie": 30.7
+ },
+ "officiel": {
+  "gaps": {
+   "m": 62.8,
+   "f": 10.0,
+   "c": 55.7,
+   "b": 55.0
+  },
+  "detail": {
+   "m": {
+    "officiel": 57.7,
+    "change": 3.24,
+    "evolution": 0.0
+   },
+   "f": {
+    "officiel": 14.9,
+    "change": 3.24,
+    "evolution": -7.3
+   },
+   "c": {
+    "officiel": 54.2,
+    "change": 3.24,
+    "evolution": -2.2
+   },
+   "b": {
+    "officiel": 50.1,
+    "change": 3.24,
+    "evolution": 0.0
+   }
+  },
+  "annee": "2024",
+  "fx_annee": 0.9526
+ },
+ "releves": {
+  "m": 113.8,
   "f": -1.6,
   "c": 66.6,
   "b": 40.9
  },
+ "mois_releves": "2026-09",
  "essence": {
   "sp95_ch": 2.19,
   "diesel_ch": 2.48,
@@ -16,5 +59,6 @@
   "diesel_ecart": 11.9
  },
  "fx": 0.9227,
- "fl_12m_il_y_a_un_an": 0.7
+ "fl_12m_il_y_a_un_an": 0.7,
+ "version": 3
 }

@@ -242,3 +242,33 @@ def eurostat_hicp(geo: str, coicop: str, since: str = "2019-11") -> dict[str, fl
     j = r.json()
     t = {v: k for k, v in j["dimension"]["time"]["category"]["index"].items()}
     return {t[int(k)]: float(v) for k, v in j.get("value", {}).items()}
+
+
+# ------------------------------------------------------------------ Eurostat (niveaux de prix, PPA)
+
+PLI_CATS = ["A0101", "A01010101", "A01010102", "A01010103", "A01010104", "A01010105", "A01010106",
+            "A01010199", "A010102"]
+
+
+def eurostat_pli() -> dict:
+    """Indices de niveau des prix (UE27 = 100), Suisse et France, dernière année publiée."""
+    r = _get("https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/prc_ppp_ind",
+             params={"geo": ["CH", "FR"], "na_item": "PLI_EU27_2020", "ppp_cat": PLI_CATS, "sinceTimePeriod": "2020",
+                     "format": "JSON", "lang": "fr"})
+    j = r.json()
+    dims, size = j["id"], j["size"]
+    cats = {d: {v: k for k, v in j["dimension"][d]["category"]["index"].items()} for d in dims}
+    lab = j["dimension"]["ppp_cat"]["category"].get("label", {})
+    st = [1] * len(dims)
+    for i in range(len(dims) - 2, -1, -1):
+        st[i] = st[i + 1] * size[i + 1]
+    vals = {}
+    for k, v in j["value"].items():
+        k = int(k)
+        idx = {d: cats[d][(k // s_) % n] for d, s_, n in zip(dims, st, size)}
+        vals.setdefault(idx["time"], {}).setdefault(idx["ppp_cat"], {})[idx["geo"]] = v
+    years = [y for y in sorted(vals) if all(c in vals[y] and "CH" in vals[y][c] and "FR" in vals[y][c] for c in PLI_CATS)]
+    if not years:
+        raise ValueError("aucune année complète")
+    y = years[-1]
+    return {"annee": y, "categories": {c: {"label": lab.get(c, c), **vals[y][c]} for c in PLI_CATS}}

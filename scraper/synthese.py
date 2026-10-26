@@ -18,8 +18,25 @@ MIX = [
     {"id": "viande", "label": "Viande", "w": {"m": .55, "f": .15, "c": .15, "b": .15}},
     {"id": "fl", "label": "Fruits et légumes", "w": {"m": .10, "f": .60, "c": .15, "b": .15}},
     {"id": "cremerie", "label": "Produits laitiers", "w": {"m": .10, "f": .15, "c": .60, "b": .15}},
-    {"id": "marques", "label": "Épicerie et marques", "w": {"m": .10, "f": .15, "c": .15, "b": .60}},
+    {"id": "marques", "label": "Épicerie et boissons", "w": {"m": .10, "f": .15, "c": .15, "b": .60}},
 ]
+
+# Où l'on fait ses courses en Suisse : niveau de prix par rapport à la moyenne suisse.
+# Test K-Tipp d'août 2025, même panier de 100 produits : Aldi 230,94 CHF, Lidl 232,83, Migros 243,54, Coop 250,70.
+# Hypothèse documentée : la moyenne suisse (indice officiel) correspond au niveau Migros.
+# S'applique à la viande, aux fruits et légumes et aux produits laitiers ; pas aux produits de marque,
+# vendus pratiquement au même prix partout (relevé bonus.ch, août 2025).
+MAGASINS_CH = [
+    {"id": "discount", "label": "Aldi ou Lidl", "f": round(((230.94 + 232.83) / 2) / 243.54, 3)},
+    {"id": "migros", "label": "Migros ou Denner", "f": 1.0},
+    {"id": "coop", "label": "Coop", "f": round(250.70 / 243.54, 3)},
+]
+
+# Catégories du calculateur et postes de la comparaison officielle des niveaux de prix (Eurostat)
+PLI_MAP = {"m": {"A01010102": 17.93},
+           "f": {"A01010106": 20.57},
+           "c": {"A01010104": 15.80, "A01010105": 2.50},
+           "b": {"A01010101": 16.71, "A01010103": 2.81, "A01010199": 14.05, "A010102": 9.35}}
 
 # Règles et coûts (sources dans METHODOLOGIE.md, section 4 et 5)
 REGLES = {
@@ -56,7 +73,44 @@ def rolling12(series: list[dict], key: str = "ecart") -> list[float | None]:
     return out
 
 
-def synthese(latest: dict, series: dict) -> dict:
+def _mean(v):
+    v = [x for x in v if x is not None]
+    return sum(v) / len(v) if v else None
+
+
+def ecarts_officiels(pli: dict, series: dict, fx_now: float) -> dict:
+    """Écart Suisse / France par catégorie (en %), ancré sur la comparaison officielle Eurostat de l'année de
+    référence, puis mis à jour : (1) taux de change du jour, (2) évolution relative des prix mesurée par nos relevés
+    (fruits et légumes, produits laitiers) depuis l'année de référence. Les autres catégories ne suivent que le change."""
+    y = str(pli["annee"])
+    fxs = dict(series.get("fx") or [])
+    fx_y = _mean([v for m, v in fxs.items() if m.startswith(y)])
+    fx_adj = (fx_y / fx_now) if fx_y and fx_now else 1.0
+
+    def ratio_local(rows):  # prix suisse en CHF / prix français en EUR, par mois
+        return {r["m"]: r["ch"] * r["fx"] / r["fr"] for r in rows if r.get("fr")}
+
+    def evol(rows, recent_n):
+        rl = ratio_local(rows)
+        base = _mean([v for m, v in rl.items() if m.startswith(y)])
+        recent = [rl[m] for m in sorted(rl)[-recent_n:]]
+        now = _mean(recent)
+        return (now / base) if base and now and len(recent) == recent_n else 1.0
+    ev = {"m": 1.0, "f": evol(series.get("panier") or [], 12), "c": evol(series.get("cremerie") or [], 3), "b": 1.0}
+    out, detail = {}, {}
+    cats = pli["categories"]
+    for k, comp in PLI_MAP.items():
+        ch = sum(w * cats[c]["CH"] for c, w in comp.items())
+        fr = sum(w * cats[c]["FR"] for c, w in comp.items())
+        base = ch / fr - 1
+        g = (1 + base) * fx_adj * ev[k] - 1
+        out[k] = round(g * 100, 1)
+        detail[k] = {"officiel": round(base * 100, 1), "change": round((fx_adj - 1) * 100, 2),
+                     "evolution": round((ev[k] - 1) * 100, 1)}
+    return {"gaps": out, "detail": detail, "annee": y, "fx_annee": round(fx_y, 4) if fx_y else None}
+
+
+def synthese(latest: dict, series: dict, pli: dict | None = None) -> dict:
     """Écarts Suisse / France (en %) par catégorie, au niveau national, et autres chiffres clés."""
     pan = series.get("panier") or []
     roll = rolling12(pan)
@@ -82,8 +136,16 @@ def synthese(latest: dict, series: dict) -> dict:
         a, b = ess[f"{k}_ch"], ess[f"{k}_fr"]
         ess[f"{k}_ecart"] = round((a / b - 1) * 100, 1) if a and b else None
     meat_fr_kg = (sum(v["fr_chf"] * v["qty"] for v in meat) / sum(v["qty"] for v in meat)) if meat else 30.0
+    releves = {"m": _r(g_meat), "f": _r(g_fl), "c": _r(g_crem), "b": _r(g_brand)}
+    fx_now = (latest.get("fx") or {}).get("jour", {}).get("eur_chf")
+    off = ecarts_officiels(pli, series, fx_now) if pli else None
+    gaps = off["gaps"] if off else releves
+    w = MIX[0]["w"]
+    part_fr = sum(w[k] / (1 + gaps[k] / 100) for k in w if gaps.get(k) is not None) / sum(w[k] for k in w if gaps.get(k) is not None)
     return {
-        "gaps": {"m": _r(g_meat), "f": _r(g_fl), "c": _r(g_crem), "b": _r(g_brand)},
+        "gaps": gaps, "releves": releves, "officiel": off,
+        "total": {"ecart": round((1 / part_fr - 1) * 100, 1), "economie": round((1 - part_fr) * 100, 1)},
+        "magasins_ch": MAGASINS_CH,
         "fl_12m_il_y_a_un_an": _r(g_fl_prev), "fl_roll": roll,
         "essence": ess, "viande_fr_chf_kg": round(meat_fr_kg, 2),
         "mix": MIX, "regles": REGLES,
@@ -96,14 +158,15 @@ def _r(v):
     return None if v is None else round(v, 1)
 
 
-def taux_economie(gaps: dict, w: dict, idx: float = 1.0) -> float:
-    """Part de la dépense suisse économisée en France (même formule que site/calc.js)."""
+def taux_economie(gaps: dict, w: dict, idx: float = 1.0, f_ch: float = 1.0) -> float:
+    """Part de la dépense suisse économisée en France (même formule que site/calc.js).
+    f_ch : niveau de prix du magasin suisse habituel (1 = moyenne), appliqué hors produits de marque."""
     tot = sw = 0.0
     for k, wk in w.items():
         g = gaps.get(k)
         if g is None:
             continue
-        g_adj = (1 + g / 100) / idx - 1
+        g_adj = (1 + g / 100) * (f_ch if k != "b" else 1.0) / idx - 1
         tot += wk * (1 - 1 / (1 + g_adj))
         sw += wk
     return tot / sw if sw else 0.0
@@ -115,7 +178,7 @@ def calcul(p: dict, S: dict) -> dict:
     R = S["regles"]
     spend, km = max(0.0, p.get("spend", 0)), max(0.0, p.get("km", 0))
     persons = max(1, round(p.get("persons", 1)))
-    rate = taux_economie(S["gaps"], p["w"], p.get("idx", 1.0))
+    rate = taux_economie(S["gaps"], p["w"], p.get("idx", 1.0), p.get("fch", 1.0))
     fr = spend * (1 - rate)
     gross = spend - fr
     mode = p.get("mode", "essence")
@@ -142,5 +205,5 @@ def calcul(p: dict, S: dict) -> dict:
         done += q
         if rest <= 0:
             break
-    net = gross - energy - wear - vat - card - duty
+    net = gross - energy - wear - vat - card  # droits sur la viande : avertissement seulement, non déduits
     return {"rate": rate, "fr": fr, "gross": gross, "road": energy + wear, "vat": vat, "duty": duty, "net": net}

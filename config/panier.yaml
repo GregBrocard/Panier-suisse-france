@@ -85,9 +85,10 @@ officiel:
       ofag: { cube: Oilseeds, products: ["Huile de tournesol, non bio, import"] },
       fr_indexe: { insee_arrete: "000442493", base_mois: "2019-12", indice: "011812322", facteur: 1 } }
 
-# Prix suisse de la viande ramené au niveau des discounters (Aldi, Lidl) :
+# v2 : prix suisse de la viande ramené au niveau des discounters (Aldi, Lidl). v3 : 0, le niveau du magasin suisse
+# est choisi par l'utilisateur et appliqué à tous les rayons (voir scraper/synthese.py, MAGASINS_CH).
 # Migros environ 5 % plus cher qu'Aldi et Lidl sur un panier de 100 produits (K-Tipp, août 2025).
-viande_ajustement_discount: 0.05
+viande_ajustement_discount: 0.0   # v3 : remplacé par le choix du magasin suisse dans le calculateur (0,05 en v2)
 viande_ajustement_source: "K-Tipp, test de prix de 100 produits courants, août 2025"
 
 viande:

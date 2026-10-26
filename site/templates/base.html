@@ -35,7 +35,10 @@
 {% block main %}{% endblock %}
   <footer class="foot">
     <nav aria-label="Pied de page">
+      <a href="{{ root }}prix/">Prix par produit</a>
+      <a href="{{ root }}suisse/">Supermarchés suisses</a>
       <a href="{{ root }}a-propos/">À propos</a>
+      <a href="{{ root }}partenaires/">Partenaires</a>
       <a href="{{ root }}methodologie/">Méthodologie</a>
       <a href="{{ root }}barometre/">Baromètre du mois</a>
       <a href="{{ root }}widget/">Intégrer le calculateur</a>
@@ -44,8 +47,8 @@
       <a href="{{ root }}confidentialite/">Confidentialité</a>
       <a href="https://github.com/GregBrocard/Panier-suisse-france" rel="noopener">Code source</a>
     </nav>
-    <p>Données mises à jour automatiquement le 20 de chaque mois (essence : chaque jour). Méthode version {{ basket_version }}, site version 2. Aucun lien commercial avec les enseignes comparées.</p>
-    <p>Sources : OFAG, INSEE, BCE, OFDF, Open Prices (Open Food Facts), UFC-Que Choisir, relevé Migros, flux officiel des prix des carburants. Trajets et adresses : © contributeurs OpenStreetMap (ODbL), OSRM. Fond de carte : Natural Earth. Localités : swisstopo. Photos : Wikimedia Commons.</p>
+    <p>Données mises à jour automatiquement le 20 de chaque mois (essence : chaque jour). Méthode version {{ basket_version }}, site version 3. Aucun lien commercial avec les enseignes comparées.</p>
+    <p>Sources : Eurostat et OFS (comparaison officielle des prix), OFAG, INSEE, BCE, OFDF, K-Tipp, Open Prices (Open Food Facts), UFC-Que Choisir, relevé Migros, flux officiel des prix des carburants. Trajets et adresses : © contributeurs OpenStreetMap (ODbL), OSRM. Fond de carte : Natural Earth. Localités : swisstopo. Photos : Wikimedia Commons.</p>
   </footer>
 </div>
 {% block scripts %}{% endblock %}

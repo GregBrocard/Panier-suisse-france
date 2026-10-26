@@ -3,6 +3,7 @@
   <div class="intro">
     <h1>Faire ses courses en France, ça vaut le coup ?</h1>
     <p class="keep">Remplissez les cases, puis appuyez sur « Calculer ». Le calcul tient compte des prix du magasin, du trajet, de la douane et de l'usure de la voiture.</p>
+    <p class="headline">En moyenne, les mêmes courses coûtent <b>{{ economie }} % de moins</b> en France, avant trajet.</p>
     <p class="upd" id="upd">{{ upd_text }}</p>
   </div>
 
@@ -23,6 +24,8 @@
 
     <div class="panel side">
       <h3><span class="step">2</span>Vos habitudes</h3>
+      <div class="field"><label for="storeCH">En Suisse, vous faites vos courses surtout chez</label>
+        <select id="storeCH">{% for m in magasins_ch %}<option value="{{ m.id }}">{{ m.label }}</option>{% endfor %}</select></div>
       <div class="field"><span class="lab">Vous achetez surtout</span><div class="seg" id="mix" role="group" aria-label="Ce que vous achetez"></div></div>
       <div class="pair">
         <div class="field"><label for="conso" id="consoLab">Essence (L/100 km)</label><input id="conso" type="number" min="0" step="0.1" value="7"></div>
@@ -69,10 +72,10 @@
   <aside class="note" id="partners" hidden><b>Payer en euros sans frais</b> — {% for a in site.affiliation %}<a href="{{ a.url }}" rel="sponsored noopener" target="_blank">{{ a.nom }}</a>{% if a.texte %} ({{ a.texte }}){% endif %}{% if not loop.last %}, {% endif %}{% endfor %}. <span class="muted">Liens rémunérés : ils n'influencent aucun chiffre du site.</span></aside>
   {% endif %}
 
-  <section id="magasins">
+  <section id="magasins" hidden>
     <div class="head"><h2 id="magTitle">Les magasins</h2><p id="magLede">Choisissez une ville pour voir ses magasins, du moins cher au plus cher.</p></div>
     <div class="split" id="magSplit">
-      <figure class="photo-tall" id="magPhoto" hidden><img src="{{ root }}img/jura.webp" alt="Le poste des douanes françaises à Jougne, en venant de Vallorbe" loading="lazy">
+      <figure class="photo-tall" id="magPhoto" hidden><img src="{{ root }}img/jura.webp" srcset="{{ root }}img/jura-800.webp 800w, {{ root }}img/jura.webp 1800w" sizes="(max-width: 820px) 100vw, 900px" alt="Le poste des douanes françaises à Jougne, en venant de Vallorbe" loading="lazy">
         <figcaption>Douanes françaises à Jougne, en venant de Vallorbe. Photo : <span data-credit="jura"></span>.</figcaption></figure>
       <div><div class="how2" id="how2" hidden><b>Comment on estime les prix d'un magasin</b><ol>
         <li>On part des prix moyens en France.</li>
@@ -84,14 +87,14 @@
   </section>
 
   <section id="mois">
-    <div class="head"><h2>Les écarts de prix ce mois-ci</h2><p>Prix en Suisse comparés aux prix moyens en France, tout converti en francs suisses. <a href="{{ root }}barometre/">Baromètre détaillé</a>.</p></div>
+    <div class="head"><h2>De combien la Suisse est plus chère, rayon par rayon</h2><p>Écarts moyens de prix, en francs suisses. Base : la comparaison officielle des prix entre pays d'Eurostat et de l'Office fédéral de la statistique ({{ pli_annee }}), mise à jour chaque mois avec le taux de change et nos relevés. <a href="{{ root }}barometre/">Baromètre détaillé</a>.</p></div>
     <div class="figs" id="figs"></div>
   </section>
 
   <section id="histoire">
     <div class="head"><h2>{{ titre_fl }}</h2>
-      <p>Écart de prix entre la Suisse et la France sur 14 fruits et légumes, depuis 2006. Au-dessus de zéro, la Suisse est plus chère.</p></div>
-    <figure class="photo-wide bw"><img src="{{ root }}img/marchande.webp" alt="Une marchande des quatre-saisons et sa charrette de légumes, Paris, vers 1900" loading="lazy" style="object-position:50% 70%">
+      <p>Nos relevés de 14 fruits et légumes, chaque mois depuis 2006 (OFAG en Suisse, INSEE en France). Au-dessus de zéro, la Suisse est plus chère. Ils servent à suivre l'évolution de l'écart officiel.</p></div>
+    <figure class="photo-wide bw"><img src="{{ root }}img/marchande.webp" srcset="{{ root }}img/marchande-800.webp 800w, {{ root }}img/marchande.webp 1800w" sizes="(max-width: 820px) 100vw, 900px" alt="Une marchande des quatre-saisons et sa charrette de légumes, Paris, vers 1900" loading="lazy" style="object-position:50% 70%">
       <figcaption>Marchande des quatre-saisons, Paris, vers 1900. Photo : <span data-credit="marchande"></span>.</figcaption></figure>
     <div class="chart">
       <div class="cap2"><span>Écart Suisse / France, en %</span><span class="legend"><span><span class="sw" style="background:var(--ink)"></span>moyenne sur 12 mois</span><span><span class="sw" style="background:var(--muted)"></span>chaque mois</span></span></div>
@@ -107,8 +110,8 @@
 
   <section id="viande">
     <div class="head"><h2>{{ titre_viande }}</h2>
-      <p>Prix au kilo des morceaux courants. En France, moyenne nationale de l'INSEE. En Suisse, prix Migros (médiane des produits équivalents, hors bio et hors promotion) réduit de 5 % : c'est l'écart mesuré entre Migros et les discounters Aldi et Lidl (K-Tipp, août 2025). La viande suisse et la viande française vendue en moyenne en France ne sont pas toujours de même origine ni de même label. Tout est en francs suisses.</p></div>
-    <figure class="photo-wide bw"><img src="{{ root }}img/boucherie.webp" alt="Étal de boucherie parisien, années 1920" loading="lazy" style="object-position:50% 40%">
+      <p>Quatre exemples de prix au kilo. En France, moyenne nationale de l'INSEE ; en Suisse, prix Migros (médiane des produits équivalents, hors bio et hors promotion). Ces morceaux nobles creusent l'écart : sur toute la viande (volaille et charcuterie comprises), la Suisse est {{ gap_m }} % plus chère selon la comparaison officielle. Tout est en francs suisses.</p></div>
+    <figure class="photo-wide bw"><img src="{{ root }}img/boucherie.webp" srcset="{{ root }}img/boucherie-800.webp 800w, {{ root }}img/boucherie.webp 1800w" sizes="(max-width: 820px) 100vw, 900px" alt="Étal de boucherie parisien, années 1920" loading="lazy" style="object-position:50% 40%">
       <figcaption>« La vie chère à Paris », étal de boucherie, années 1920. Photo : <span data-credit="boucherie"></span>.</figcaption></figure>
     <div class="chart">
       <div class="cap2"><span>Prix au kilo, en CHF</span><span class="legend"><span><span class="sw" style="background:var(--red)"></span>Suisse</span><span><span class="sw" style="background:var(--fr)"></span>France</span></span></div>
@@ -118,8 +121,9 @@
   </section>
 
   <section id="prix">
-    <div class="head"><h2>Les prix produit par produit</h2><p>Tous les prix sont en francs suisses (CHF). Pour la France, le prix en euros est indiqué en petit, converti au taux de la BCE. Touchez une ligne de fruits et légumes pour voir son historique.</p></div>
-    <div class="tables">
+    <div class="head"><h2>Les prix produit par produit</h2><p>Une trentaine d'exemples relevés chaque mois. Tous les prix sont en francs suisses (CHF) ; pour la France, le prix en euros est indiqué en petit, converti au taux de la BCE. <a href="{{ root }}prix/">Une page par produit</a>.</p></div>
+    <details class="doc" id="detail"><summary>Voir tous les prix relevés</summary>
+    <div class="tables" style="padding-top:12px">
       <div class="tbl"><table id="tOff"><caption>Fruits et légumes</caption><thead><tr><th>Produit</th><th>Suisse, CHF/kg</th><th>France, CHF/kg</th><th>Écart</th></tr></thead><tbody></tbody></table></div>
       <div class="chart">
         <div class="cap2"><span id="itemTitle">Historique</span><span class="legend"><span><span class="sw" style="background:var(--red)"></span>Suisse</span><span><span class="sw" style="background:var(--fr)"></span>France</span></span></div>
@@ -128,9 +132,9 @@
       <div class="tbl"><table id="tCrem"><caption>Produits laitiers et huile</caption><thead><tr><th>Produit</th><th>Suisse, CHF</th><th>France, CHF (estimé)</th><th>Écart</th></tr></thead><tbody></tbody></table>
         <p class="chartnote">France : l'INSEE ne publie plus le prix moyen de ces produits depuis fin 2019. On part de ce dernier prix et on le fait évoluer chaque mois comme l'indice officiel des prix du même produit (INSEE). C'est une estimation.</p></div>
       <div class="tbl"><table id="tBrand"><caption>Produits de marque identiques</caption><thead><tr><th>Produit</th><th>Suisse, CHF</th><th>France, CHF</th><th>Écart</th></tr></thead><tbody></tbody></table></div>
-      <div class="tbl"><table id="tFuel"><caption>Carburant</caption><thead><tr><th>Où</th><th>Sans plomb, CHF/L</th><th>Diesel, CHF/L</th><th>Stations</th></tr></thead><tbody></tbody></table>
-        <p class="chartnote">Prix du jour, station par station : <a href="{{ root }}essence/">page Essence</a>.</p></div>
+      <p class="note">Essence : prix du jour station par station et meilleur endroit pour faire le plein sur la <a href="{{ root }}essence/">page Essence</a>.</p>
     </div>
+    </details>
   </section>
 
   {% if site.newsletter_url %}
@@ -138,17 +142,27 @@
   {% endif %}
 
   <section id="lac" style="padding-top:64px">
-    <figure class="photo-wide"><img src="{{ root }}img/leman.webp" alt="Saint-Gingolph au bord du Léman : la rivière Morge sépare le village suisse du village français" loading="lazy">
+    <figure class="photo-wide"><img src="{{ root }}img/leman.webp" srcset="{{ root }}img/leman-800.webp 800w, {{ root }}img/leman.webp 1800w" sizes="(max-width: 820px) 100vw, 900px" alt="Saint-Gingolph au bord du Léman : la rivière Morge sépare le village suisse du village français" loading="lazy">
       <figcaption>Saint-Gingolph, au bord du Léman : la Morge sépare la Suisse, à gauche, de la France. Photo : <span data-credit="leman"></span>.</figcaption></figure>
+  </section>
+
+  <section id="faq">
+    <div class="head"><h2>Questions fréquentes</h2></div>
+    <div class="docs">
+      {% for q, a in faq %}<details class="doc"><summary>{{ q }}</summary><div class="b"><p>{{ a }}</p></div></details>
+      {% endfor %}
+    </div>
   </section>
 
   <section id="methode">
     <div class="head"><h2>D'où viennent les chiffres</h2><p><a href="{{ root }}methodologie/">Méthodologie complète</a></p></div>
     <div class="docs">
       <details class="doc" open><summary>Sources</summary><div class="b"><ul>
+        <li><b>Écart moyen par rayon :</b> comparaison officielle des niveaux de prix entre pays (Eurostat et Office fédéral de la statistique, programme des parités de pouvoir d'achat), mise à jour chaque mois avec le taux de change et nos relevés.</li>
+        <li><b>Où vous faites vos courses en Suisse :</b> test de prix K-Tipp d'août 2025 (Aldi, Lidl, Migros, Coop). <a href="{{ root }}suisse/">Quel supermarché suisse est le moins cher ?</a></li>
         <li><b>Fruits, légumes, produits laitiers, Suisse :</b> Office fédéral de l'agriculture (OFAG), prix de consommation mensuels.</li>
         <li><b>Fruits, légumes, viande, France :</b> INSEE, prix moyens de vente au détail. <b>Produits laitiers, France :</b> dernier prix moyen INSEE (2019) actualisé avec l'indice des prix harmonisé de l'INSEE.</li>
-        <li><b>Viande et marques, Suisse :</b> relevé mensuel du site Migros. Pour la viande, prix réduit de 5 % pour correspondre aux discounters (Aldi, Lidl), d'après le test de prix K-Tipp d'août 2025.</li>
+        <li><b>Viande et marques, Suisse :</b> relevé mensuel du site Migros.</li>
         <li><b>Marques, France :</b> Open Prices (Open Food Facts), tickets de caisse partagés.</li>
         <li><b>Niveau de prix de chaque magasin :</b> comparateur des supermarchés de l'UFC-Que Choisir.</li>
         <li><b>Carburant :</b> prix officiels des stations françaises (chaque jour) ; tableau T 4.4 de l'OFDF pour la Suisse.</li>
@@ -164,7 +178,7 @@
         <p>Le temps affiché ajoute 15 minutes forfaitaires pour le passage de la douane et le parking. Il n'est pas déduit de l'économie.</p></div></details>
       <details class="doc"><summary>Limites</summary><div class="b">
         <p>Les fruits et légumes suivent les saisons : la moyenne sur 12 mois est plus fiable qu'un mois isolé. Leur origine n'est pas contrôlée. Les promotions ne sont comptées ni en Suisse ni en France.</p>
-        <p>La viande suisse vient d'une seule enseigne (Migros), ajustée de 5 % vers les prix des discounters. Pour les marques, quand Open Prices a moins de 5 relevés, le chiffre est indicatif.</p>
+        <p>Les exemples de prix suisses de viande et de marques viennent d'une seule enseigne (Migros). Les marques avec moins de 5 relevés en France ne sont pas affichées.</p>
         <p>Côté français, les discounters sans drive (Lidl, Aldi) ne sont pas couverts par Que Choisir : on compare un prix suisse de discounter à un supermarché français classique, ce qui tend à sous-estimer l'économie.</p>
         <p>Le taux de la BCE est interbancaire ; celui de votre carte est en général 1 à 2 % moins bon (option dans le calculateur).</p></div></details>
       <details class="doc"><summary>Douane suisse et détaxe française</summary><div class="b"><ul>
@@ -177,7 +191,6 @@
   </section>
 {% endblock %}
 {% block scripts %}
-<script src="{{ root }}vendor/chart.umd.min.js"></script>
 <script src="{{ root }}calc.js?v={{ version }}"></script>
 <script id="data" type="application/json">{{ data_json | safe }}</script>
 <script src="{{ root }}app.js?v={{ version }}"></script>

@@ -360,6 +360,14 @@ def main():
         {"date": max(fx), "eur_chf": fx[max(fx)]}
     log(f"   {len(fx)} mois, dernier jour {fx_day}")
 
+    log("== Niveaux de prix officiels (Eurostat)")
+    pli = safe(S.eurostat_pli, default=None, label="Eurostat PLI")
+    if pli:
+        pp = DATA / "pli.json"
+        old = json.loads(pp.read_text(encoding="utf-8")) if pp.exists() else {}
+        pp.write_text(json.dumps({**{k: old.get(k) for k in ("source", "url")}, **pli}, ensure_ascii=False, indent=1),
+                      encoding="utf-8")
+        log(f"   année {pli['annee']} : alimentation CH {pli['categories']['A0101']['CH']} / FR {pli['categories']['A0101']['FR']}")
     log("== Panier officiel (OFAG / INSEE)")
     series, series_cremerie, photo, per_item = build_officiel(cfg, fx)
     log(f"   fruits et légumes : {len(series)} mois de série, dernier : {series[-1] if series else '-'}")

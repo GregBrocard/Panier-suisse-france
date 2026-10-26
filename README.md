@@ -1,11 +1,11 @@
 # Panier Suisse France
 
-Faire ses courses en France, ça vaut le coup ? Comparaison automatisée du prix des courses entre la Suisse et la France voisine, avec un calculateur personnel (départ depuis toute localité suisse, 12 zones françaises), à partir de données publiques : OFAG, INSEE, Eurostat, BCE, OFDF, TCS, Open Prices, UFC-Que Choisir, flux officiel des prix des carburants et relevé Migros.
+Faire ses courses en France, ça vaut le coup ? Comparaison automatisée du prix des courses entre la Suisse et la France voisine, avec un calculateur personnel (départ depuis toute localité suisse, 12 zones françaises), à partir de données publiques : comparaison officielle des niveaux de prix (Eurostat–OFS), OFAG, INSEE, BCE, OFDF, TCS, Open Prices, UFC-Que Choisir, flux officiel des prix des carburants et relevé Migros.
 
-- **Site** : https://gregbrocard.github.io/Panier-suisse-france/ (version 2) · version 1 archivée : `/v1/` et branche `v1`
+- **Site** : https://gregbrocard.github.io/Panier-suisse-france/ (version 3) · archives : `/v2/` (branche `v2`) et `/v1/` (branche `v1`)
 - **Méthodologie** : [METHODOLOGIE.md](METHODOLOGIE.md)
 - **Réglages** : panier [config/panier.yaml](config/panier.yaml) · villes [config/destinations.yaml](config/destinations.yaml) · site [config/site.yaml](config/site.yaml)
-- **Données** : `data/latest.json`, `data/series.json`, `data/essence.json`, `data/barometre/`, `data/releves/`, `data/controles.json`
+- **Données** : tableurs `ecarts_par_rayon.csv`, `produits.csv`, `historique_fruits_legumes.csv` (générés dans le site, page Données ouvertes), `data/pli.json`, `data/latest.json`, `data/series.json`, `data/essence.json`, `data/barometre/`, `data/releves/`, `data/controles.json`
 
 ## Les robots (GitHub Actions)
 
@@ -27,6 +27,13 @@ Lancer à la main : onglet **Actions** → choisir le robot → *Run workflow*.
 ## À activer (aucune action technique de plus)
 
 Dans `config/site.yaml` : nom de domaine (`base_url`), statistiques sans cookies (`goatcounter`), lettre d'information (`newsletter_url`), liens rémunérés (`affiliation`), e-mail de contact (`contact_email`). Une valeur vide désactive la fonction.
+
+## Ce que fait la version 3
+
+- L'écart par rayon part de la comparaison officielle Eurostat–OFS (`data/pli.json`, relue chaque mois), mise à jour par le change et nos relevés : voir METHODOLOGIE.md § 3.0.
+- Le calculateur demande où l'on fait ses courses en Suisse (Aldi/Lidl par défaut, Migros, Coop ; test K-Tipp).
+- Pages générées : accueil, essence, 12 zones, prix par produit (`/prix/`), supermarchés suisses (`/suisse/`), partenaires, baromètre mensuel, douane, données ouvertes, widget, méthode.
+- Après chaque publication, le robot vérifie que le site répond et ouvre un ticket sinon.
 
 ## Ajouter un prix d'essence suisse
 

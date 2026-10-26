@@ -197,7 +197,7 @@ footer{margin-top:80px;padding-top:16px;border-top:1px solid var(--ink);display:
 .foot{margin-top:80px;padding-top:18px;border-top:1px solid var(--ink);display:grid;gap:10px;font-size:13px;color:var(--ink-2)}
 .foot nav{display:flex;flex-wrap:wrap;gap:6px 18px}
 .foot a{color:var(--ink-2)}
-.page{max-width:760px;margin:0 auto;display:grid;gap:18px;padding-top:44px}
+.page{max-width:760px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr);gap:18px;padding-top:44px}
 .page h1{font-size:clamp(28px,4vw,42px);line-height:1.1;font-weight:600}
 .page h2{font-size:clamp(21px,2.6vw,26px);margin-top:18px}
 .page h3{margin-top:8px}
@@ -264,3 +264,26 @@ body.embed .embedfoot{display:block!important;font-size:12px;color:var(--muted);
 .plist{list-style:none;margin:6px 0;padding:0;display:grid;gap:6px}
 .plist li{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding-bottom:6px;font-size:15px}
 .plist small{color:var(--muted);white-space:nowrap}
+.intro .headline{font-size:19px;color:var(--ink);max-width:40ch}
+.intro .headline b{color:var(--red)}
+/* tableaux empilés sur téléphone */
+@media (max-width:640px){
+  .tbl table thead{display:none}
+  .tbl table tr{display:grid;grid-template-columns:1fr 1fr;gap:2px 12px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .tbl table td{border:0;padding:2px 0;text-align:left;white-space:normal}
+  .tbl table td:first-child{grid-column:1/-1;font-weight:600;min-width:0}
+  .tbl table td[data-label]:not(:first-child)::before{content:attr(data-label);display:block;font-size:12px;color:var(--muted);font-weight:400}
+  .tbl caption{display:block}
+}
+/* menu compact sur téléphone */
+@media (max-width:760px){.top nav{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}.top nav::-webkit-scrollbar{display:none}.top nav a{white-space:nowrap}}
+.page pre,.page code{white-space:pre-wrap;word-break:break-word}
+.page img{max-width:100%}
+@media (max-width:640px){.tbl table td:first-child small{font-weight:400}}
+.sv{width:100%;height:auto;display:block}
+.sv text{font-family:var(--f);font-size:11px;fill:var(--muted)}
+.sv .g{stroke:var(--line)}.sv .z{stroke:var(--ink-2);stroke-dasharray:3 3}
+
+.tscroll{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+.tscroll table{min-width:520px}
+.page td,.page th{overflow-wrap:anywhere}
