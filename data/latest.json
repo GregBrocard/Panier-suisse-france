@@ -1,5 +1,5 @@
 {
- "genere_le": "2026-10-25",
+ "genere_le": "2026-10-26",
  "basket_version": 2,
  "fx": {
   "jour": {
@@ -694,7 +694,7 @@
    "fr_n": 9,
    "fr_produit": "Pâte à tartiner Nutella noisettes et cacao - 750g 750g",
    "fr_prix_eur": 5.36,
-   "fr_depuis": "2025-10-25",
+   "fr_depuis": "2025-10-26",
    "fenetre_mois": 12,
    "fr_n_12m": 9,
    "ean_fr": [
@@ -715,7 +715,7 @@
    "fr_n": 16,
    "fr_produit": "Coca-Cola goût original 1250ml",
    "fr_prix_eur": 2.15,
-   "fr_depuis": "2025-10-25",
+   "fr_depuis": "2025-10-26",
    "fenetre_mois": 12,
    "fr_n_12m": 16,
    "ean_fr": [
@@ -736,7 +736,7 @@
    "fr_n": 21,
    "fr_produit": "25 cl Red Bull - Energy Drink 250ml",
    "fr_prix_eur": 1.13,
-   "fr_depuis": "2025-10-25",
+   "fr_depuis": "2025-10-26",
    "fenetre_mois": 12,
    "fr_n_12m": 21,
    "ean_fr": [
@@ -757,7 +757,7 @@
    "fr_n": 16,
    "fr_produit": "Pringles Original 175g",
    "fr_prix_eur": 1.915,
-   "fr_depuis": "2025-10-25",
+   "fr_depuis": "2025-10-26",
    "fenetre_mois": 12,
    "fr_n_12m": 16,
    "ean_fr": [
@@ -778,7 +778,7 @@
    "fr_n": 25,
    "fr_produit": "Barre Chocolatée Kinder Bueno Chocolat au Lait 129g",
    "fr_prix_eur": 2.65,
-   "fr_depuis": "2025-10-25",
+   "fr_depuis": "2025-10-26",
    "fenetre_mois": 12,
    "fr_n_12m": 25,
    "ean_fr": [
@@ -799,7 +799,7 @@
    "fr_n": 7,
    "fr_produit": "Cioccolato Fondente 78% 100g",
    "fr_prix_eur": 3.09,
-   "fr_depuis": "2025-10-25",
+   "fr_depuis": "2025-10-26",
    "fenetre_mois": 12,
    "fr_n_12m": 7,
    "ean_fr": [
@@ -820,7 +820,7 @@
    "fr_n": 14,
    "fr_produit": "OREO ORIGINAL 154g",
    "fr_prix_eur": 1.495,
-   "fr_depuis": "2025-10-25",
+   "fr_depuis": "2025-10-26",
    "fenetre_mois": 12,
    "fr_n_12m": 14,
    "ean_fr": [
@@ -841,7 +841,7 @@
    "fr_n": 2,
    "fr_produit": "Babybel 264g",
    "fr_prix_eur": 4.815,
-   "fr_depuis": "2025-10-25",
+   "fr_depuis": "2025-10-26",
    "fenetre_mois": 12,
    "fr_n_12m": 2,
    "ean_fr": [
@@ -862,7 +862,7 @@
    "fr_n": 9,
    "fr_produit": "Evian 9000ml",
    "fr_prix_eur": 3.71,
-   "fr_depuis": "2025-10-25",
+   "fr_depuis": "2025-10-26",
    "fenetre_mois": 12,
    "fr_n_12m": 9,
    "ean_fr": [
@@ -883,7 +883,7 @@
    "fr_n": 14,
    "fr_produit": "Barilla PESTO alla GENOVESE 190g",
    "fr_prix_eur": 2.545,
-   "fr_depuis": "2026-04-25",
+   "fr_depuis": "2026-04-26",
    "fenetre_mois": 6,
    "fr_n_12m": 18,
    "ean_fr": [
@@ -936,7 +936,7 @@
    "genisferney": {
     "n": 7,
     "moyenne": {
-     "sp95": 2.13,
+     "sp95": 2.132,
      "diesel": 2.395
     },
     "min": {
@@ -944,7 +944,7 @@
      "diesel": 2.345
     },
     "moyenne_chf": {
-     "sp95": 1.965,
+     "sp95": 1.967,
      "diesel": 2.21
     },
     "min_chf": {
@@ -955,7 +955,7 @@
    "divonnegex": {
     "n": 5,
     "moyenne": {
-     "sp95": 2.156,
+     "sp95": 2.16,
      "diesel": 2.395
     },
     "min": {
@@ -963,7 +963,7 @@
      "diesel": 2.359
     },
     "moyenne_chf": {
-     "sp95": 1.989,
+     "sp95": 1.993,
      "diesel": 2.21
     },
     "min_chf": {
@@ -1045,7 +1045,8 @@
     "min_chf": {
      "sp95": 2.01,
      "diesel": 2.182
-    }
+    },
+    "reprise": "2026-10-25"
    },
    "pontarlier": {
     "n": 7,
@@ -150515,6 +150516,8 @@
  "journal": [
   "== Change BCE",
   "   333 mois, dernier jour {'date': '2026-10-23', 'eur_chf': 0.9227}",
+  "== Niveaux de prix officiels (Eurostat)",
+  "   année 2024 : alimentation CH 158.5 / FR 110.1",
   "== Panier officiel (OFAG / INSEE)",
   "   bananes      OFAG  248 mois (2006-02→2026-09) | INSEE  340 mois (1998-01→2026-09)",
   "   pommes       OFAG  248 mois (2006-02→2026-09) | INSEE  340 mois (1998-01→2026-09)",
@@ -150539,10 +150542,10 @@
   "   fruits et légumes : 243 mois de série, dernier : {'m': '2026-09', 'fx': 0.94299, 'n': 14, 'ch': 33.26, 'fr': 36.01, 'ecart': -7.6, 'cats': {'Fruits': -12.0, 'Légumes': -4.5}}",
   "   crèmerie : 81 mois, dernier : {'m': '2026-09', 'fx': 0.94299, 'n': 4, 'ch': 18.11, 'fr': 10.87, 'ecart': 66.6, 'cats': {'Crèmerie': 66.6}}",
   "== Viande (Migros / INSEE)",
-  "   viande entrecote  CH 74.81 (10 produits) | FR 32.52 € (2026-09)",
-  "   viande veau       CH 54.86 (2 produits) | FR 29.57 € (2026-09)",
-  "   viande porc       CH 18.33 (15 produits) | FR 13.98 € (2026-09)",
-  "   viande jambon     CH 37.33 (7 produits) | FR 19.56 € (2026-09)",
+  "   viande entrecote  CH 78.75 (10 produits) | FR 32.52 € (2026-09)",
+  "   viande veau       CH 57.75 (2 produits) | FR 29.57 € (2026-09)",
+  "   viande porc       CH 19.29 (15 produits) | FR 13.98 € (2026-09)",
+  "   viande jambon     CH 39.29 (7 produits) | FR 19.56 € (2026-09)",
   "== Marques (Migros / Open Prices)",
   "   marque nutella  CH 7.3333/kg (Nutella Nutella · Pâte à tartiner (0.75 kg) à 5.50) | FR 7.147 €/kg (n=9)",
   "   marque coca     CH 1.6/L (Coca-Cola Coca-Cola · Classic  (1.5 L) à 2.40) | FR 1.72 €/L (n=16)",
@@ -150557,12 +150560,12 @@
   "== Carburant",
   "   carburant annemasse   11 stations, moyenne {'sp95': 2.139, 'diesel': 2.386}",
   "   carburant stjulien    1 stations, moyenne {'sp95': 2.225, 'diesel': 2.398}",
-  "   carburant genisferney 7 stations, moyenne {'sp95': 2.13, 'diesel': 2.395}",
-  "   carburant divonnegex  5 stations, moyenne {'sp95': 2.156, 'diesel': 2.395}",
+  "   carburant genisferney 7 stations, moyenne {'sp95': 2.132, 'diesel': 2.395}",
+  "   carburant divonnegex  5 stations, moyenne {'sp95': 2.16, 'diesel': 2.395}",
   "   carburant thonon      11 stations, moyenne {'sp95': 2.145, 'diesel': 2.405}",
   "   carburant evian       7 stations, moyenne {'sp95': 2.088, 'diesel': 2.381}",
   "   carburant lesrousses  6 stations, moyenne {'sp95': 2.261, 'diesel': 2.414}",
-  "   carburant jougne      1 stations, moyenne {'sp95': 2.178, 'diesel': 2.365}",
+  "!! stations jougne : ReadTimeout: HTTPSConnectionPool(host='data.economie.gouv.fr', port=443): Read timed out. (read timeout=90)",
   "   carburant pontarlier  7 stations, moyenne {'sp95': 2.235, 'diesel': 2.408}",
   "   carburant morteau     6 stations, moyenne {'sp95': 2.239, 'diesel': 2.419}",
   "   carburant delle       5 stations, moyenne {'sp95': 2.223, 'diesel': 2.425}",
@@ -150594,12 +150597,14 @@
   "   trajets : 0 localités à calculer sur 4141",
   "   trajets disponibles pour 4141 localités",
   "== Contrôles",
-  "   reprise : Viande veau : prix suisse du 2026-10-25 repris (2 produits seulement)."
+  "   reprise : Viande veau : prix suisse du 2026-10-25 repris (2 produits seulement).",
+  "   reprise : Essence jougne : stations françaises du 2026-10-25 reprises."
  ],
  "controles": {
   "alertes": [],
   "reprises": [
-   "Viande veau : prix suisse du 2026-10-25 repris (2 produits seulement)."
+   "Viande veau : prix suisse du 2026-10-25 repris (2 produits seulement).",
+   "Essence jougne : stations françaises du 2026-10-25 reprises."
   ]
  }
 }
