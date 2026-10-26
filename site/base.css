@@ -296,3 +296,4 @@ body.embed .embedfoot{display:block!important;font-size:12px;color:var(--muted);
 .tag.ch{background:var(--red);color:#fff;border-color:var(--red)}
 .cards .card h3{font-size:18px;margin-bottom:6px}
 #choix .cards{grid-template-columns:repeat(3,minmax(0,1fr))}@media (max-width:820px){#choix .cards{grid-template-columns:1fr}}
+#direct{overflow-wrap:anywhere}#direct .dlist{list-style:none;padding:0;margin:0 0 18px;display:grid;gap:0;border-top:1px solid var(--ink)}#direct .dlist li{padding:10px 0;border-bottom:1px solid var(--line)}#direct h3{margin-top:22px}

@@ -13,10 +13,15 @@
   const hav = (a,b) => { const R=6371, r=Math.PI/180, dl=(b[0]-a[0])*r, dn=(b[1]-a[1])*r;
     const h=Math.sin(dl/2)**2+Math.cos(a[0]*r)*Math.cos(b[0]*r)*Math.sin(dn/2)**2; return 2*R*Math.asin(Math.sqrt(h)); };
   const ORDER = ['ferme','distributeur','boucherie','fromagerie','marche','cave'];
+  const PL = {ferme:['magasin à la ferme','magasins à la ferme'], distributeur:['distributeur de produits de la ferme','distributeurs de produits de la ferme'],
+    boucherie:['boucherie','boucheries'], fromagerie:['fromagerie','fromageries'], marche:['marché','marchés'], cave:['cave ou vigneron','caves et vignerons']};
+  const J = {Mo:'lu',Tu:'ma',We:'me',Th:'je',Fr:'ve',Sa:'sa',Su:'di'};
+  const heures = h => String(h).replace(/24\/7/g,'tous les jours, 24 h/24').replace(/PH off/g,'fermé les jours fériés').replace(/PH/g,'jours fériés')
+    .replace(/\boff\b/g,'fermé').replace(/\b(Mo|Tu|We|Th|Fr|Sa|Su)\b/g,m=>J[m]).replace(/;\s*/g,' ; ');
   let ORI=null, oriP=null, NAMES=[], F=null, fP=null, o=null;
   const S0 = store.get(); let types = new Set(S0.t || ORDER);
 
-  function loadOri(){ if(oriP) return oriP; oriP=fetch(ROOT+'data/origines.json').then(r=>r.json()).then(j=>{ ORI=j; NAMES=ORI.liste.map(x=>norm(x[0])); return ORI; }).catch(()=>{ oriP=null; }); return oriP; }
+  function loadOri(){ if(oriP) return oriP; oriP=fetch(ROOT+'data/origines.json').then(r=>r.json()).then(j=>{ ORI=j; NAMES=ORI.liste.map(x=>norm(x[0])); if(document.activeElement===inp && inp.value){ hits=search(inp.value); cur=hits.length?0:-1; renderList(); } return ORI; }).catch(()=>{ oriP=null; }); return oriP; }
   function loadF(){ if(!D.f) return Promise.resolve(null); if(fP) return fP; fP=fetch(ROOT+'data/fermes.json').then(r=>{ if(!r.ok) throw 0; return r.json(); }).then(j=>{ F=j; seg(); return F; }).catch(()=>{ fP=null; }); return fP; }
   loadF();
 
@@ -60,14 +65,14 @@
     const near=F.points.filter(p=>types.has(p[0])).map(p=>({p, km:hav(c,[p[1],p[2]])*ROUTE})).filter(x=>x.km<=R).sort((a,b)=>a.km-b.km);
     if(!near.length){ box.innerHTML=`<p>Aucun point de vente référencé à moins de ${R} km de ${esc(ORI.liste[o][0])}. Essayez une distance plus grande, ou <a href="https://www.openstreetmap.org/" rel="noopener">ajoutez une ferme que vous connaissez</a>.</p>`; return; }
     const cnt=ORDER.map(k=>[k,near.filter(x=>x.p[0]===k).length]).filter(x=>x[1]);
-    let h=`<p class="headline">Près de ${esc(ORI.liste[o][0])}, à moins de ${R} km : ${cnt.map(([k,n])=>`<b>${n}</b> ${esc((T[k]||k).toLowerCase())}${n>1&&!/s$/.test(T[k]||'')?'s':''}`).join(', ')}.</p>`;
+    let h=`<p class="headline">Près de ${esc(ORI.liste[o][0])}, à moins de ${R} km : ${cnt.map(([k,n])=>`<b>${n}</b> ${esc((PL[k]||[k,k])[n>1?1:0])}`).join(', ')}.</p>`;
     for(const [k] of cnt){
       const rows=near.filter(x=>x.p[0]===k).slice(0,8);
-      h+=`<h3>${esc(T[k]||k)}</h3><ul class="plist">`+rows.map(({p,km})=>{
+      h+=`<h3>${esc(T[k]||k)}</h3><ul class="dlist">`+rows.map(({p,km})=>{
         const [,lat,lon,nom,loc,prod,hrs,web]=p;
         const map=`https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=17/${lat}/${lon}`;
         return `<li><b>${esc(nom||T[k]||'Sans nom')}</b>${loc?' · '+esc(loc):''} <span class="muted">environ ${nf(km)} km</span>`
-          +(prod?`<br><small>${esc(prod)}</small>`:'')+(hrs?`<br><small>Horaires : ${esc(hrs)}</small>`:'')
+          +(prod?`<br><small>${esc(prod)}</small>`:'')+(hrs?`<br><small>Horaires : ${esc(heures(hrs))}</small>`:'')
           +`<br><small><a href="${map}" rel="noopener" target="_blank">Plan</a>${web?` · <a href="${esc(web)}" rel="noopener" target="_blank">Site</a>`:''}</small></li>`; }).join('')+'</ul>';
     }
     h+=`<p class="muted">Distances estimées (vol d'oiseau × ${String(ROUTE).replace('.',',')}). Liste OpenStreetMap du ${esc(F.genere_le||'')}.</p>`;

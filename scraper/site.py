@@ -411,7 +411,7 @@ def faq_accueil(sy, mags, publies, dests):
           f"saison sont surtout produits en Suisse : les acheter en France, c'est autant de ventes en moins pour les paysans "
           f"suisses. Le calculateur les laisse en Suisse par défaut ; vous pouvez changer ce réglage."),
          ("Pourquoi la viande suisse est-elle plus chère ?",
-          f"Elle coûte en moyenne {pc(g['m'])} de plus qu'en France. Une partie paie des coûts suisses (salaires, terrain) et la "
+          f"Elle coûte en moyenne {nf(g['m'], 0)} % de plus qu'en France. Une partie paie des coûts suisses (salaires, terrain) et la "
           f"protection douanière ; une autre des règles d'élevage plus strictes : élevages plafonnés, transport des animaux limité "
           f"à 6 heures, poules en cage interdites depuis 1991. Le paysan ne touche qu'environ 30 à 40 centimes par franc payé en "
           f"magasin ; en direct (caissettes, magasins à la ferme), il garde l'essentiel."),
@@ -905,7 +905,7 @@ def _sources(lst):
 def page_pourquoi(sy):
     g, grp = sy["gaps"], sy["groupes"]
     h = f"""<h1>Pourquoi c'est plus cher en Suisse, et ce que paie la différence</h1>
-<p class="lede">Ce que la Suisse produit elle-même (viande, laitages, fruits et légumes) coûte en moyenne {pc(grp['suisse']['ecart'])} de plus qu'en France. Ce qu'elle importe (épicerie, huiles, boissons) coûte {pc(grp['import']['ecart'])} de plus : un écart encore plus grand, qui ne revient pas aux producteurs suisses.</p>
+<p class="lede">Ce que la Suisse produit elle-même (viande, laitages, fruits et légumes) coûte en moyenne {nf(grp['suisse']['ecart'], 0)} % de plus qu'en France. Ce qu'elle importe (épicerie, huiles, boissons) coûte {nf(grp['import']['ecart'], 0)} % de plus : un écart encore plus grand, qui ne revient pas aux producteurs suisses.</p>
 {kpis([("Produit en Suisse", pc(grp['suisse']['ecart']), "plus cher qu'en France"), ("Importé", pc(grp['import']['ecart']), "plus cher qu'en France"), ("Part du producteur", "30 à 42 ct.", "par franc payé en magasin")])}
 <h2>Ce que la Suisse produit</h2>
 <p>Part de la consommation couverte par la production suisse, et écart de prix du rayon avec la France ce mois-ci.</p>
