@@ -33,7 +33,8 @@ jobs:
         run: |
           git config user.name "releve-bot"
           git config user.email "releve-bot@users.noreply.github.com"
-          git add data/essence.json data/barometre/ data/stations_osm.json data/fermes_osm.json 2>/dev/null; git add data/essence.json data/barometre/
+          git add data/essence.json data/barometre/
+          for f in data/stations_osm.json data/fermes_osm.json; do if [ -f "$f" ]; then git add "$f"; fi; done
           git diff --cached --quiet || git commit -m "Essence $(date +%Y-%m-%d)"
           git pull --rebase -X theirs origin main || true
           git push
