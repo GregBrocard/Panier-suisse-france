@@ -5,14 +5,14 @@
   'use strict';
 
   // Part de la dépense suisse économisée en France, pour un mélange de catégories.
-  // gaps : écart Suisse/France en % par catégorie (m viande, f fruits et légumes, c crèmerie, b épicerie et boissons)
+  // gaps : écart Suisse/France en % par rayon (m viande, c lait-fromage-œufs, f fruits et légumes, p pain, b épicerie et boissons)
   // idx  : niveau de prix du magasin choisi (1 = supermarché français moyen)
   // fch : niveau du magasin suisse habituel (1 = moyenne suisse), appliqué hors produits de marque (b)
-  function savingsRate(gaps, w, idx, fch) {
+  function savingsRate(gaps, w, idx, fch, suisse) {
     let tot = 0, sw = 0;
     for (const k of Object.keys(w)) {
       const g = gaps[k];
-      if (g == null || isNaN(g)) continue;
+      if (g == null || isNaN(g) || (suisse && suisse.includes(k))) continue;
       const gAdj = (1 + g / 100) * (k !== 'b' ? (fch || 1) : 1) / (idx || 1) - 1;
       tot += w[k] * (1 - 1 / (1 + gAdj));
       sw += w[k];
@@ -40,8 +40,14 @@
   function compute(p, S) {
     const R = S.regles, spend = Math.max(0, +p.spend || 0), km = Math.max(0, +p.km || 0);
     const persons = Math.max(1, Math.round(+p.persons || 1));
-    const rate = savingsRate(S.gaps, p.w, p.idx, p.fch);
-    const fr = spend * (1 - rate), gross = spend - fr;
+    // rayons achetés en Suisse (p.suisse) : exclus du trajet ; le reste est acheté en France
+    const suisse = p.suisse || [], w = {}, wFR = {};
+    for (const k of Object.keys(p.w)) if (S.gaps[k] != null && !isNaN(S.gaps[k])) { w[k] = p.w[k]; if (!suisse.includes(k)) wFR[k] = p.w[k]; }
+    const sum = o => Object.values(o).reduce((a, b) => a + b, 0);
+    const sw = sum(w) || 1, swFR = sum(wFR);
+    const spendFR = spend * swFR / sw, kept = spend - spendFR;
+    const rate = swFR > 0 ? savingsRate(S.gaps, wFR, p.idx, p.fch) : 0;
+    const fr = spendFR * (1 - rate), gross = spendFR - fr;
     const car = p.mode !== 'tp';
     const fuelCH = p.mode === 'diesel' ? S.essence.diesel_ch : S.essence.sp95_ch;
     let roadEnergy = 0;
@@ -55,7 +61,7 @@
     const cardFee = p.card ? fr * R.frais_carte : 0;
     const lim = R.franchise_chf * persons;
     const vat = fr > lim ? fr * R.tva_alimentaire : 0;
-    const meatKg = S.viande_fr_chf_kg ? (p.w.m || 0) * fr / S.viande_fr_chf_kg : 0;
+    const meatKg = S.viande_fr_chf_kg && swFR > 0 ? (wFR.m || 0) / swFR * fr / S.viande_fr_chf_kg : 0;
     const meatExcess = Math.max(0, meatKg - R.viande_franchise_kg * persons);
     const duty = meatDuty(meatExcess, R.viande_droits);
     // droits sur la viande : estimation affichée en avertissement, non déduite (la quantité réelle est inconnue)
@@ -65,7 +71,7 @@
     const minsRoad = p.minutes != null ? 2 * p.minutes : Math.round(2 * km);
     const mins = minsRoad + R.douane_minutes;
     const vt = +p.vtime > 0 ? +p.vtime : 25;
-    return { spend, km, rate, fr, gross, roadEnergy, roadWear, road, fuelG, cardFee, lim, vat, meatKg, meatExcess,
+    return { spend, spendFR, kept, km, rate, fr, gross, roadEnergy, roadWear, road, fuelG, cardFee, lim, vat, meatKg, meatExcess,
              duty, net, detaxe, minsRoad, mins, vt, vGiven: +p.vtime > 0, timeC: vt * mins / 60, persons };
   }
 

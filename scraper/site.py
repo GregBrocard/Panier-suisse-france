@@ -30,7 +30,8 @@ SITE = ROOT / "site"
 DATA = ROOT / "data"
 MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre",
         "novembre", "décembre"]
-NAV = [("", "Calculateur", "index"), ("essence/", "Essence", "essence"), ("zones/", "Villes", "zones"),
+K5 = ("m", "c", "f", "p", "b")
+NAV = [("", "Calculateur", "index"), ("acheter-suisse/", "Acheter suisse", "direct"), ("essence/", "Essence", "essence"), ("zones/", "Villes", "zones"),
        ("prix/", "Prix", "prix"), ("douane/", "Douane", "douane"), ("barometre/", "Baromètre", "barometre"),
        ("methodologie/", "Méthode", "methodologie")]
 
@@ -342,8 +343,9 @@ def page_zone(d, sy, mag, zone_fuel, ori, magasins_publies):
     lignes = []
     for nom, ct, km, mn in proches:
         fch = sy["magasins_ch"][0]["f"]
-        r1 = calcul({"spend": 150, "km": km, "w": w, "idx": idx, "persons": 1, "mode": "essence", "conso": 7, "wear": True, "fch": fch}, sy)
-        r2 = calcul({"spend": 300, "km": km, "w": w, "idx": idx, "persons": 2, "mode": "essence", "conso": 7, "wear": True, "fch": fch}, sy)
+        base = {"spend": 300, "km": km, "w": w, "idx": idx, "persons": 2, "mode": "essence", "conso": 7, "wear": True, "fch": fch}
+        r1 = calcul({**base, "suisse": sy.get("suisse_defaut") or []}, sy)
+        r2 = calcul(base, sy)
         f = lambda v: (f"{nf(v, 0)} CHF" if v >= 0 else f"<span class=up>−{nf(-v, 0)} CHF</span>")
         lignes.append((f"{e(nom)} <small>{e(ct)}</small>", f"{km} km<small>{mn} min</small>", f(r1["net"]), f(r2["net"])))
     ms = (mag or {}).get("magasins") or []
@@ -357,8 +359,8 @@ def page_zone(d, sy, mag, zone_fuel, ori, magasins_publies):
 <p class="lede">{lede}</p>
 <p><a class="btn" href="../../?a={e(d['id'])}">Calculer depuis ma ville</a></p>
 <h2>Combien on économise, depuis les villes proches</h2>
-<p>Pour des courses « un peu de tout », pour quelqu'un qui fait d'habitude ses courses chez Aldi ou Lidl en Suisse, en voiture à essence (7 L/100 km), usure comprise, au niveau de prix du magasin du milieu. Le temps de trajet n'est pas déduit.</p>
-{tableau(["Départ", "Trajet", "150 CHF, 1 adulte", "300 CHF, 2 adultes"], lignes) if lignes else '<p class="muted">Distances indisponibles.</p>'}"""
+<p>Pour 300 CHF de courses « un peu de tout », 2 adultes, quelqu'un qui fait d'habitude ses courses chez Aldi ou Lidl en Suisse, en voiture à essence (7 L/100 km), usure comprise, au niveau de prix du magasin du milieu. Deux cas : la viande, les laitages et les fruits et légumes restent achetés en Suisse (seuls l'épicerie, le pain et les boissons sont achetés en France), ou tout est acheté en France. Le temps de trajet n'est pas déduit.</p>
+{tableau(["Départ", "Trajet", "Épicerie et boissons en France", "Tout en France"], lignes) if lignes else '<p class="muted">Distances indisponibles.</p>'}"""
     if magasins_publies and ms:
         h += "<h2>Les supermarchés</h2>" + tableau(
             ["Magasin", "Niveau de prix"],
@@ -402,12 +404,24 @@ def faq_accueil(sy, mags, publies, dests):
           f"L'écart est le plus fort sur la viande ({pc(g['m'])}) et les produits laitiers ({pc(g['c'])}), plus faible sur "
           f"les fruits et légumes ({pc(g['f'])}). Le trajet, l'usure de la voiture et la douane réduisent l'économie : le "
           f"calculateur fait le compte depuis votre localité."),
+         ("Faire ses courses en France, est-ce que ça nuit aux paysans suisses ?",
+          f"Cela dépend de ce qu'on achète. Le café, les huiles, les boissons ou les produits de marque sont importés de toute "
+          f"façon : les acheter en France ne retire presque rien aux producteurs suisses, et c'est là que l'écart est le plus "
+          f"grand ({pc(sy['groupes']['import']['ecart'])} en Suisse). La viande, le lait, le fromage, les œufs et les légumes de "
+          f"saison sont surtout produits en Suisse : les acheter en France, c'est autant de ventes en moins pour les paysans "
+          f"suisses. Le calculateur les laisse en Suisse par défaut ; vous pouvez changer ce réglage."),
+         ("Pourquoi la viande suisse est-elle plus chère ?",
+          f"Elle coûte en moyenne {pc(g['m'])} de plus qu'en France. Une partie paie des coûts suisses (salaires, terrain) et la "
+          f"protection douanière ; une autre des règles d'élevage plus strictes : élevages plafonnés, transport des animaux limité "
+          f"à 6 heures, poules en cage interdites depuis 1991. Le paysan ne touche qu'environ 30 à 40 centimes par franc payé en "
+          f"magasin ; en direct (caissettes, magasins à la ferme), il garde l'essentiel."),
          ("Combien peut-on acheter en France sans payer de TVA ?",
           f"{R['franchise_chf']} CHF par personne et par jour. Au-delà, la TVA suisse est due sur la totalité des achats "
           f"({nf(R['tva_alimentaire'] * 100, 1)} % pour l'alimentation), et il faut les déclarer."),
          ("Combien de viande peut-on ramener de France ?",
           f"{R['viande_franchise_kg']} kg par personne et par jour sans droits de douane. Au-delà, 17 CHF par kg jusqu'à "
-          f"10 kg, puis 23 CHF par kg. Beurre et crème : 1 kg. Alcool : 5 litres sous 18 % vol., 1 litre au-dessus."),
+          f"10 kg, puis 23 CHF par kg. Beurre et crème : 1 kg. Alcool : 5 litres sous 18 % vol., 1 litre au-dessus. "
+          f"Rester sous la franchise est aussi le moyen le plus simple de garder ses achats de viande en Suisse."),
          ("Comment déclarer ses achats à la douane ?",
           "En passant par le passage rouge, ou avant la frontière avec l'application officielle QuickZoll de l'OFDF, "
           "qui permet aussi de payer la TVA et les droits.")]
@@ -428,10 +442,21 @@ def faq_accueil(sy, mags, publies, dests):
     return q
 
 
+def og_chiffres(snap):
+    grp, g = snap.get("groupes") or {}, snap.get("gaps") or {}
+    if (grp.get("import") or {}).get("economie") is not None:
+        return [(f"−{nf(grp['import']['economie'], 0)} %", "Ce que la Suisse importe\nen France"),
+                (pc(grp["suisse"]["ecart"]), "Ce qu'elle produit\nplus cher en Suisse"), (pc(g.get("m")), "Viande\nplus cher en Suisse")]
+    tot = snap.get("total") or {}
+    return [(f"−{nf(tot.get('economie'), 0)} %", "Les mêmes courses\nen France"), (pc(g.get("m")), "Viande\nplus cher en Suisse"),
+            (pc(g.get("c")), "Produits laitiers\nplus cher en Suisse")]
+
+
 def snapshot_barometre(sy, latest):
     return {"mois": latest["genere_le"][:7], "date": latest["genere_le"], "gaps": sy["gaps"], "total": sy.get("total"),
             "officiel": sy.get("officiel"), "releves": sy.get("releves"), "mois_releves": (latest.get("officiel") or {}).get("mois"),
-            "essence": sy["essence"], "fx": sy["fx"], "fl_12m_il_y_a_un_an": sy["fl_12m_il_y_a_un_an"], "version": 3}
+            "essence": sy["essence"], "fx": sy["fx"], "fl_12m_il_y_a_un_an": sy["fl_12m_il_y_a_un_an"], "groupes": sy.get("groupes"),
+            "version": 4}
 
 
 def page_barometre(snap, prev, archives, base_url, courant=True, series=None):
@@ -443,24 +468,29 @@ def page_barometre(snap, prev, archives, base_url, courant=True, series=None):
     mois = mois_long(snap["mois"])
     plein = (ess["sp95_ch"] - ess["sp95_fr"]) * 50 if ess.get("sp95_ch") and ess.get("sp95_fr") else None
     tot = snap.get("total") or {}
+    grp = snap.get("groupes") or {}
     items = []
-    if tot.get("economie") is not None:
+    if (grp.get("import") or {}).get("economie") is not None:
+        items.append(("Ce que la Suisse importe", f"−{nf(grp['import']['economie'], 0)} %", "en France : épicerie, huiles, boissons"))
+        items.append(("Ce que la Suisse produit", pc(grp["suisse"]["ecart"]), "plus cher en Suisse : viande, laitages, fruits et légumes"))
+    elif tot.get("economie") is not None:
         items.append(("Les mêmes courses", f"−{nf(tot['economie'], 0)} %", "en France, avant trajet"))
-    items += [("Viande", pc(g.get("m")), "plus cher en Suisse" + var("m")),
-              ("Fruits et légumes", pc(g.get("f")), "plus cher en Suisse" + var("f")),
-              ("Produits laitiers", pc(g.get("c")), "plus cher en Suisse" + var("c")),
-              ("Épicerie et boissons", pc(g.get("b")), "plus cher en Suisse" + var("b")),
+    items += [(RAYON_NOM[k].capitalize(), pc(g.get(k)), "plus cher en Suisse" + var(k)) for k in K5 if g.get(k) is not None]
+    items += [
               ("Plein de 50 L", nf(plein, 0) + " CHF" if plein else "—", "économisés en France (SP95)"),
               ("1 euro", nf(snap.get("fx"), 4) + " CHF", "taux BCE")]
     k = kpis(items)
     pm = lambda v, mot="chère": f"{nf(abs(v), 0)} % {'plus' if v >= 0 else 'moins'} {mot}"
     phrases = []
-    if tot.get("economie") is not None:
+    if (grp.get("import") or {}).get("economie") is not None:
+        phrases.append(f"En {mois}, ce que la Suisse importe (épicerie, huiles, boissons) coûte en moyenne {nf(grp['import']['economie'], 0)} % "
+                       f"de moins en France, avant les frais de trajet.")
+        phrases.append(f"Ce que la Suisse produit elle-même (viande, laitages, fruits et légumes) y est {pm(grp['suisse']['ecart'])} : "
+                       f"une partie de cet écart paie des salaires suisses et, pour la viande et les œufs, des règles d'élevage plus strictes.")
+    elif tot.get("economie") is not None:
         phrases.append(f"En {mois}, les mêmes courses coûtent en moyenne {nf(tot['economie'], 0)} % de moins en France qu'en Suisse, avant les frais de trajet.")
     if g.get("m") is not None:
         phrases.append(f"La viande reste le rayon où l'écart est le plus fort : {pm(g['m'])} en Suisse.")
-    if g.get("c") is not None:
-        phrases.append(f"Les produits laitiers sont {pm(g['c'], 'chers')} en Suisse, l'épicerie et les boissons {pm(g.get('b') or 0, 'chères')}.")
     if g.get("f") is not None:
         phrases.append(f"L'écart est plus faible sur les fruits et légumes ({pm(g['f'], 'chers')}).")
     if plein:
@@ -476,7 +506,7 @@ def page_barometre(snap, prev, archives, base_url, courant=True, series=None):
             ["Rayon", f"Écart officiel {off.get('annee', '')}", "Effet du change depuis", "Évolution de nos relevés", "Écart ce mois-ci"],
             [(RAYON_NOM[c].capitalize(), pc(off['detail'][c]['officiel']), f"{off['detail'][c]['change']:+.1f} %".replace(".", ","),
               (f"{off['detail'][c]['evolution']:+.1f} %".replace(".", ",") if off['detail'][c]['evolution'] else "—"), f"<b>{pc(g[c])}</b>")
-             for c in ("m", "f", "c", "b")])
+             for c in ("m", "c", "f", "p", "b")])
         det += ("<p class=\"muted\">Écart officiel : comparaison des niveaux de prix d'Eurostat et de l'Office fédéral de la statistique "
                 "(milliers de produits par pays). Effet du change : le franc s'est renforcé ou affaibli face à l'euro depuis. "
                 "Évolution de nos relevés : variation de l'écart mesuré sur nos produits (fruits et légumes, laitages).</p>")
@@ -524,6 +554,7 @@ def page_douane(regles):
   <div class="row"><label for="dCig">Cigarettes<small>nombre de pièces</small></label><input id="dCig" type="number" min="0" step="20" value="0"></div>
 </div>
 <div><div class="bill" id="dOut" aria-live="polite"></div></div></div>
+<p class="note"><b>Viande, beurre, vin : les franchises sont basses pour une raison.</b> Elles protègent les produits que la Suisse fabrique elle-même. Rester sous la franchise, c'est aussi garder en Suisse ces achats-là, et réserver la France à ce qui est importé de toute façon (épicerie, huiles, boissons sans alcool). <a href="../acheter-suisse/">Acheter suisse moins cher</a></p>
 <h2>Les règles</h2>
 {tableau(["Marchandise", "En franchise, par personne et par jour", "Au-delà"], [
     ("Valeur totale des achats", f"{R['franchise_chf']} CHF", f"TVA suisse sur tout le montant ({nf(R['tva_alimentaire'] * 100, 1)} % pour l'alimentation, 8,1 % pour le reste)"),
@@ -598,7 +629,7 @@ def page_donnees(controles, magasins_publies):
 
 def page_apropos():
     return """<h1>À propos</h1>
-<p class="lede">Panier Suisse France est un projet indépendant qui répond à une question simple : faire ses courses en France, ça vaut le coup, une fois le trajet, la douane et l'essence comptés ?</p>
+<p class="lede">Panier Suisse France est un projet indépendant qui répond à deux questions : faire ses courses en France, ça vaut le coup, une fois le trajet, la douane et l'essence comptés ? Et sur quels produits peut-on économiser sans rien retirer aux paysans suisses ? Le principe : payer moins cher en France ce que la Suisse importe de toute façon, et garder son budget pour ce qu'elle produit.</p>
 <h2>Pourquoi ce site</h2>
 <p>Les comparaisons de prix entre la Suisse et la France reviennent souvent, mais elles sont rarement mises à jour et ne disent pas combien il reste une fois le trajet payé. Ce site recalcule tout, chaque mois, à partir de sources publiques, et donne un résultat personnel : depuis votre localité, vers la ville et le magasin de votre choix.</p>
 <h2>Indépendance</h2>
@@ -758,8 +789,16 @@ def donnees_stations(extra, dests, ch_ess, fx):
 
 # ------------------------------------------------------------------ pages produit, Suisse, partenaires (v3)
 
-CAT_RAYON = {"Fruits": "f", "Légumes": "f", "Crèmerie": "c", "Pain": "b"}
-RAYON_NOM = {"m": "viande", "f": "fruits et légumes", "c": "produits laitiers", "b": "épicerie et boissons"}
+CAT_RAYON = {"Fruits": "f", "Légumes": "f", "Crèmerie": "c", "Pain": "p"}
+RAYON_NOM = {"m": "viande", "c": "lait, fromage et œufs", "f": "fruits et légumes", "p": "pain et céréales",
+             "b": "épicerie, huiles et boissons"}
+# Origine dominante de chaque produit relevé, pour le consommateur suisse (Agristat ; saison : OFAG, calendrier des séries)
+ORIGINE = {"bananes": "import", "clementines": "import", "oranges": "import", "huile": "import",
+           "pommes": "suisse", "poires": "suisse", "pdt": "suisse", "carottes": "suisse", "oignons": "suisse",
+           "poireaux": "suisse", "champignons": "suisse", "lait": "suisse", "beurre": "suisse", "emmental": "suisse",
+           "yaourt": "suisse", "pain": "suisse", "entrecote": "suisse", "veau": "suisse", "porc": "suisse", "jambon": "suisse",
+           "tomates": "saison", "courgettes": "saison", "endives": "saison", "poivrons": "saison"}
+ORIGINE_TXT = {"suisse": "Produit en Suisse", "saison": "Suisse en saison, importé le reste de l'année", "import": "Importé"}
 
 
 def produits_liste(latest):
@@ -771,7 +810,7 @@ def produits_liste(latest):
         u = "L" if p["unit"] == "L" else p["unit"]
         src = ("OFAG (moyenne du commerce de détail suisse)", "INSEE, prix estimé à partir du dernier prix moyen publié" if p.get("estime")
                else "INSEE (prix moyen de vente au détail)")
-        out.append({"id": p["id"], "label": p["label"], "rayon": CAT_RAYON.get(p.get("cat"), "f"), "unite": u,
+        out.append({"id": p["id"], "label": p["label"], "rayon": "b" if p["id"] == "huile" else CAT_RAYON.get(p.get("cat"), "f"), "unite": u,
                     "ch": p["ch"], "fr": p["fr_chf"], "fr_eur": p["fr_eur"], "ecart": p["ecart"], "mois": p.get("mois"),
                     "src_ch": src[0], "src_fr": src[1], "histo": True})
     for v in latest.get("viande") or []:
@@ -790,6 +829,8 @@ def produits_liste(latest):
                     "fr_eur": m.get("fr_unit_eur"), "ecart": m.get("ecart"), "mois": None,
                     "src_ch": f"Migros : {m.get('ch_produit') or ''}", "src_fr": f"Open Prices, {m.get('fr_n')} tickets de caisse en France",
                     "marque": True})
+    for x in out:
+        x["origine"] = ORIGINE.get(x["id"], "import" if x.get("marque") else "suisse")
     return out
 
 
@@ -807,6 +848,13 @@ def page_produit(p, series, sy):
                             f"Prix en CHF par {p['unite']}, 10 dernières années", " CHF")
     if p.get("exemples"):
         h += "<h2>Produits suisses relevés</h2><ul>" + "".join(f"<li>{e(x)}</li>" for x in p["exemples"][:6]) + "</ul>"
+    o = p.get("origine")
+    if o in ("suisse", "saison"):
+        h += f"""<h2>Le choix suisse</h2>
+<p><span class="tag ch">{ORIGINE_TXT[o]}</span> {"Hors saison, le produit vendu en Suisse est souvent importé : vérifiez l'origine sur l'étiquette. " if o == "saison" else ""}Le prix suisse paie en partie des salaires suisses et, pour la viande et les œufs, des règles d'élevage plus strictes. <a href="../../pourquoi-plus-cher/">Ce que paie la différence</a> · <a href="../../acheter-suisse/">Où l'acheter moins cher, en direct</a></p>"""
+    else:
+        h += f"""<h2>Un produit importé</h2>
+<p><span class="tag">{ORIGINE_TXT['import']}</span> {"Même produit, souvent même usine : " if p.get("marque") else ""}la différence de prix ne va pas à un producteur suisse. C'est le type d'achat qui vaut le trajet en France.</p>"""
     h += f"""<h2>Et pour tout le rayon ?</h2>
 <p>Sur l'ensemble du rayon {RAYON_NOM[p['rayon']]}, la Suisse est en moyenne {pc(g)} plus chère que la France (comparaison officielle Eurostat–OFS, mise à jour ce mois-ci). Un seul produit peut s'en écarter beaucoup.</p>
 <p><a class="btn" href="../../">Calculer mon économie, trajet compris</a></p>
@@ -816,14 +864,15 @@ def page_produit(p, series, sy):
 
 def page_produits_index(prods, sy):
     rows = []
-    for r in ("m", "f", "c", "b"):
+    for r in ("m", "c", "f", "p", "b"):
         for p in sorted([x for x in prods if x["rayon"] == r], key=lambda x: -x["ecart"]):
-            rows.append((f"<a href=\"{p['id']}/\">{e(p['label'])}</a><small>{RAYON_NOM[r]}</small>",
+            rows.append((f"<a href=\"{p['id']}/\">{e(p['label'])}</a><small>{RAYON_NOM[r]} · {ORIGINE_TXT[p['origine']].lower()}</small>",
                          f"{nf(p['ch'])} CHF/{p['unite']}", f"{nf(p['fr'])} CHF/{p['unite']}", f"<b>{pc(p['ecart'])}</b>"))
     return ("<h1>Prix produit par produit : Suisse et France</h1>"
             "<p class=\"lede\">Une trentaine de produits relevés chaque mois des deux côtés de la frontière, en francs suisses. "
-            "Ce sont des exemples : l'écart moyen de chaque rayon vient de la comparaison officielle Eurostat–OFS.</p>"
-            + kpis([(RAYON_NOM[k].capitalize(), pc(sy["gaps"][k]), "écart moyen du rayon") for k in ("m", "f", "c", "b")])
+            "Ce sont des exemples : l'écart moyen de chaque rayon vient de la comparaison officielle Eurostat–OFS. "
+            "Pour chaque produit, on indique s'il est produit en Suisse ou importé.</p>"
+            + kpis([(RAYON_NOM[k].capitalize(), pc(sy["gaps"][k]), "écart moyen du rayon") for k in ("m", "c", "f", "p", "b")])
             + tableau(["Produit", "Suisse", "France", "Écart"], rows))
 
 
@@ -833,6 +882,89 @@ SOURCES_SUISSE = [
     ("Blick, comparaison des prix de la viande, septembre 2025", "https://www.blick.ch/wirtschaft/in-welchem-supermarkt-ist-fleisch-wirklich-am-billigsten-preisschlacht-zwischen-den-detailhaendlern-die-grosse-blick-analyse-id21205522.html"),
     ("Tio.ch, test K-Tipp de 25 produits, novembre 2024", "https://www.tio.ch/svizzera/economia/1796522/la-carne-costa-meno-e-in-qualche-caso-molto-meno"),
 ]
+
+
+SOURCES_POURQUOI = [
+    ("Agristat, taux d'autosuffisance 2023, repris par Swissmilk", "https://api.swissmilk.ch/wp-content/uploads/2025/07/20250722_Arbeitsblatt_Herkunft-Lebensmittel_Konsum_FR.pdf"),
+    ("OFAG et OSMV, Année viticole 2024", "https://pro-strapi.swisswine.ch/uploads/2025_04_29_Communique_de_presse_Rapport_OFAG_et_OSMV_2024_FR_ef928ec222.pdf"),
+    ("OSAV, durée de transport des animaux (LPA art. 15, OPAn art. 152a)", "https://www.blv.admin.ch/dam/fr/sd-web/prjzlxDGNguC/fachinformation-15.5-fr.pdf"),
+    ("FRC, poules pondeuses", "https://www.frc.ch/wp-content/uploads/2013/03/FRC_MC_57-poules-pondeuses1.pdf"),
+    ("CIWF, rapport sur les cages (France, 2023)", "https://ciwf.org.uk/media/7458732/rapport-cages-web.pdf"),
+    ("swissinfo, effectifs maximaux et sorties en plein air", "https://www.swissinfo.ch/fre/politics/comment-l-%c3%a9levage-intensif-impacte-le-bien-%c3%aatre-animal/47846158"),
+    ("Marchés équitables Suisse, moniteur des prix (FHNW), 2024", "https://fairemaerkteschweiz.ch/fr/nouveau-calcul-du-moniteur-des-prix-lecart-de-prix-se-creuse-pour-la-viande/"),
+    ("FRC, enquête sur les marges des légumes, 2022", "https://enquetes.frc.ch/marges-legumes"),
+    ("swissinfo, la vente directe dans les fermes suisses, mars 2026", "https://www.swissinfo.ch/fre/la-suisse-insolite/la-vente-directe-une-affaire-qui-roule-dans-les-fermes-suisses/91091352"),
+    ("swissinfo, Coop dépasse Migros (Nielsen), novembre 2025", "https://www.swissinfo.ch/eng/agribusiness/coop-overtakes-migros-in-core-business/90267923"),
+]
+
+
+def _sources(lst):
+    return "<h2>Sources</h2><ul>" + "".join(f'<li><a href="{u}" rel="noopener">{e(t)}</a></li>' for t, u in lst) + "</ul>"
+
+
+def page_pourquoi(sy):
+    g, grp = sy["gaps"], sy["groupes"]
+    h = f"""<h1>Pourquoi c'est plus cher en Suisse, et ce que paie la différence</h1>
+<p class="lede">Ce que la Suisse produit elle-même (viande, laitages, fruits et légumes) coûte en moyenne {pc(grp['suisse']['ecart'])} de plus qu'en France. Ce qu'elle importe (épicerie, huiles, boissons) coûte {pc(grp['import']['ecart'])} de plus : un écart encore plus grand, qui ne revient pas aux producteurs suisses.</p>
+{kpis([("Produit en Suisse", pc(grp['suisse']['ecart']), "plus cher qu'en France"), ("Importé", pc(grp['import']['ecart']), "plus cher qu'en France"), ("Part du producteur", "30 à 42 ct.", "par franc payé en magasin")])}
+<h2>Ce que la Suisse produit</h2>
+<p>Part de la consommation couverte par la production suisse, et écart de prix du rayon avec la France ce mois-ci.</p>
+""" + tableau(["Aliment", "Produit en Suisse (2023)", "Écart avec la France"], [
+        ("Lait, fromage, beurre", "113 %", pc(g.get("c"))), ("Viande", "86 %", pc(g.get("m"))),
+        ("Pommes de terre", "69 %", pc(g.get("f")) + " (fruits et légumes)"), ("Œufs", "57 %", pc(g.get("c")) + " (avec les laitages)"),
+        ("Céréales (pain, farine)", "47 %", pc(g.get("p"))), ("Légumes", "44 %", pc(g.get("f"))),
+        ("Vin", "35,5 % des vins tranquilles (2024)", "non mesuré"), ("Huiles végétales", "25 %", pc(g.get("b")) + " (épicerie)"),
+        ("Fruits", "21 % (pommes et poires : bien plus)", pc(g.get("f"))),
+        ("Café, cacao, riz, épices, fruits exotiques", "0 %", pc(g.get("b")) + " (épicerie)")]) + f"""
+<h2>Ce que paie la différence</h2>
+<p>Une partie de l'écart vient de coûts que tout le monde paie en Suisse : salaires, terrain, bâtiments, transport. Une autre vient de la protection douanière des produits agricoles suisses, qui maintient les prix intérieurs plus hauts. Pour la viande et les œufs, une partie paie aussi des règles d'élevage plus strictes, inscrites dans la loi :</p>
+""" + tableau(["Règle", "Suisse", "Union européenne, France"], [
+        ("Poules en cage", "Interdites depuis 1991", "Cages « aménagées » autorisées ; 28 % des pondeuses françaises en cage (2023)"),
+        ("Taille maximale des élevages", "18 000 poules pondeuses, 27 000 poulets, 1 500 porcs, 300 veaux d'engraissement", "Pas de plafond"),
+        ("Transport des animaux", "6 heures de trajet au plus, 8 heures en tout", "Nettement plus long autorisé, selon l'espèce"),
+        ("Sorties régulières en plein air (programme SRPA)", "85 % des bovins, 50 % des porcs, 85 % des pondeuses, 8 % des poulets", "Pas de programme national équivalent")]) + """
+<p class="muted">À qualité égale, l'écart est plus faible : les labels français (Label Rouge, bio) ont des règles proches des règles suisses. Les prix moyens comparés ici mélangent toutes les qualités.</p>
+<h2>Où va le franc payé en magasin</h2>
+<ul>
+<li>Le paysan touche environ <b>30 centimes par franc</b> dépensé dans le commerce de détail, contre 45 en 1990.</li>
+<li>Selon le moniteur des prix de Marchés équitables Suisse (2024), la part du producteur est d'environ 42 centimes pour les produits conventionnels et 34 centimes pour les produits IP-Suisse et bio.</li>
+<li>Pour les légumes, le coût de production ne représente souvent qu'un quart à un tiers du prix en rayon (enquête FRC sur quelques exploitations, 2022). Le reste paie l'emballage, la logistique, les magasins et la marge.</li>
+<li>Coop et Migros font ensemble environ 80 % des ventes alimentaires des grandes enseignes suisses (Nielsen, 2025).</li>
+</ul>
+<p>En vente directe, le producteur garde l'essentiel du prix. Environ une exploitation suisse sur cinq vend une partie de sa production à la ferme.</p>
+<p><a class="btn" href="../acheter-suisse/">Acheter suisse moins cher, près de chez vous</a> <a class="btn" href="../">Calculer mon économie</a></p>
+<p class="muted">Ce site ne reçoit aucun financement des producteurs ni des enseignes. Les sources de la filière (Proviande, Union suisse des paysans) sont signalées comme telles ; les chiffres ci-dessus viennent de sources publiques ou indépendantes.</p>
+""" + _sources(SOURCES_POURQUOI)
+    return h
+
+
+def page_acheter_suisse(site, fermes_info):
+    n = (fermes_info or {}).get("total")
+    h = f"""<h1>Acheter suisse moins cher, près de chez vous</h1>
+<p class="lede">En direct, le paysan garde l'essentiel du prix, contre environ 30 à 40 centimes par franc en magasin. Magasins à la ferme, distributeurs de lait et d'œufs, boucheries, fromageries, marchés et caves autour de votre localité.</p>
+<form class="sentence" id="sentence" autocomplete="off" onsubmit="return false">
+  <span class="ln">Près de
+    <span class="slot" id="slotFrom"><input id="from" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="fromList" aria-label="Votre localité" placeholder="votre localité" spellcheck="false"><ul class="list" id="fromList" role="listbox" hidden></ul></span></span>
+  <span class="ln">à moins de
+    <span class="slot"><select id="rayon" aria-label="Distance"><option value="5">5 km</option><option value="10" selected>10 km</option><option value="20">20 km</option></select></span></span>
+</form>
+<div class="seg multi" id="types" role="group" aria-label="Types de points de vente"></div>
+<div id="direct" aria-live="polite"><p class="muted">{('Choisissez votre localité. ' + nf(n, 0) + ' points de vente référencés en Suisse.') if n else 'Carte en préparation : la liste des points de vente sera disponible après le prochain relevé.'}</p></div>
+<h2>Les bons plans pour payer moins cher</h2>
+""" + tableau(["Moyen", "Pour quoi", "Pourquoi c'est intéressant"], [
+        ("Morceaux moins nobles, origine suisse", "Viande", "Haché, émincé, ragoût, volaille : bien moins cher que l'entrecôte, en grande surface aussi"),
+        ("Caissettes à la ferme (5 à 10 kg)", "Viande", "Le paysan vend toute la bête, sans intermédiaire ; se congèle"),
+        ("Magasins à la ferme, libre-service 24 h/24", "Œufs, légumes, fruits, fromage", "Prix fixé par le producteur, produits de saison"),
+        ("Distributeurs de lait et d'œufs", "Lait, œufs", "Produits du jour, sans emballage pour le lait"),
+        ("Marchés", "Légumes, fruits, fromage", "Producteurs de la région, souvent des prix en fin de marché"),
+        ("Paniers en abonnement", "Légumes", "Prix fixe à l'année, légumes de saison"),
+        ("Caves et vignerons", "Vin", "Prix du domaine, caves ouvertes"),
+        ("Invendus du jour", "Tout", "Applications anti-gaspillage des boulangeries et magasins")]) + f"""
+<p class="muted">Liste tirée d'OpenStreetMap (© contributeurs OpenStreetMap, licence ODbL), mise à jour chaque mois : un point de vente manque ou a fermé ? <a href="https://www.openstreetmap.org/" rel="noopener">Corrigez-le sur OpenStreetMap</a>, il apparaîtra ici au relevé suivant. Les prix de la vente directe ne sont publiés nulle part : vous connaissez le prix d'une caissette ? <a href="{e(site.get('contact_url') or '')}" rel="noopener">Signalez-le</a>.</p>
+<p><a href="../pourquoi-plus-cher/">Pourquoi c'est plus cher en Suisse</a> · <a href="../">Calculer mon économie</a></p>
+<script id="data" type="application/json">{{"root":"../","f":{'true' if n else 'false'}}}</script>
+<script src="../direct.js?v=1"></script>"""
+    return h
 
 
 def page_suisse(sy):
@@ -864,13 +996,16 @@ def page_partenaires(site):
     contact = (f'<a href="mailto:{e(site["contact_email"])}">{e(site["contact_email"])}</a>' if site.get("contact_email")
                else f'<a href="{e(site["contact_url"])}" rel="noopener">formulaire de contact</a>')
     return f"""<h1>Partenaires et licences</h1>
-<p class="lede">Panier Suisse France est indépendant. Ses chiffres ne sont jamais influencés par un partenaire ; ce qui peut l'être, c'est leur diffusion.</p>
+<p class="lede">Panier Suisse France est indépendant. Son principe : payer moins là où ça ne coûte rien aux paysans suisses. Ses chiffres ne sont jamais influencés par un partenaire ; ce qui peut l'être, c'est leur diffusion.</p>
 <h2>Ce que nous proposons</h2>
-<ul><li><b>Le calculateur sur votre site</b>, à vos couleurs, pour une ville, un centre commercial ou un média : gratuit en version standard (<a href="../widget/">widget</a>), sous licence pour une version personnalisée.</li>
-<li><b>Études sur le tourisme d'achat</b> : écarts de prix par rayon et par ville, évolution mensuelle depuis 2006, essence aux cinq frontières, pour associations du commerce, chambres de commerce, collectivités.</li>
+<ul><li><b>Producteurs et marques suisses</b> (interprofessions, marques régionales, labels) : soutien d'une rubrique comme « Acheter suisse moins cher », signalé comme tel, sans droit sur les chiffres.</li>
+<li><b>Cantons et services de l'agriculture</b> : la carte des points de vente directe complétée avec vos listes de producteurs, sous votre accord.</li>
+<li><b>Fermes</b> : toutes les fermes référencées apparaissent gratuitement ; l'ordre d'affichage ne s'achète pas.</li>
+<li><b>Études sur le tourisme d'achat</b> : écarts de prix par rayon et par origine, évolution mensuelle depuis 2006, essence aux cinq frontières.</li>
+<li><b>Le calculateur sur votre site</b> : gratuit en version standard (<a href="../widget/">widget</a>), sous licence pour une version personnalisée.</li>
 <li><b>Baromètre mensuel</b> pour les médias : chiffres, texte et image prêts à publier.</li></ul>
 <h2>Nos règles</h2>
-<ul><li>Aucune enseigne comparée ne peut acheter une place, un classement ou un texte.</li>
+<ul><li>Aucun partenaire ne peut modifier un chiffre, une source ou un classement ; aucune enseigne comparée ne peut acheter une place ou un texte.</li>
 <li>Toute licence ou tout partenariat rémunéré est indiqué publiquement sur cette page.</li>
 <li>La méthode et les données restent publiques.</li></ul>
 <h2>Partenaires actuels</h2><p>Aucun.</p>
@@ -884,7 +1019,7 @@ def ecrire_csv(d: Path, sy, series, pub):
         w = csv.writer(fh, delimiter=";")
         w.writerow(["rayon", "ecart_ce_mois_pct", "ecart_officiel_pct", "annee_officielle", "effet_change_pct", "evolution_releves_pct", "ecart_releves_pct"])
         off = sy.get("officiel") or {}
-        for k in ("m", "f", "c", "b"):
+        for k in ("m", "c", "f", "p", "b"):
             dt_ = (off.get("detail") or {}).get(k, {})
             w.writerow([RAYON_NOM[k], f(sy["gaps"][k]), f(dt_.get("officiel")), off.get("annee", ""), f(dt_.get("change")),
                         f(dt_.get("evolution")), f((sy.get("releves") or {}).get(k))])
@@ -922,7 +1057,7 @@ def main(out: Path):
     out.mkdir(parents=True)
     # fichiers statiques
     shutil.copy(SITE / "base.css", out / "style.css")
-    for f in ("calc.js", "app.js", "essence.js"):
+    for f in ("calc.js", "app.js", "essence.js", "direct.js"):
         shutil.copy(SITE / f, out / f)
     for d in ("fonts", "img", "vendor", "v1", "v2", "v3"):
         if (SITE / d).exists():
@@ -973,8 +1108,8 @@ def main(out: Path):
                "essence": {"zones": zones_ess, "genere_le": maj_ess}, "synth": sy, "root": ""}
     data_json = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     g = sy["gaps"]
-    desc = (f"Les mêmes courses coûtent {nf(sy['total']['economie'], 0)} % de moins en France. Votre économie réelle, "
-            f"trajet, magasin et douane compris, depuis votre localité.")
+    desc = (f"Ce que la Suisse importe coûte {nf(sy['groupes']['import']['economie'], 0)} % de moins en France ; ce qu'elle produit, "
+            f"mieux vaut souvent l'acheter suisse. Votre économie réelle, trajet compris, depuis votre localité.")
     jsonld = json.dumps({"@context": "https://schema.org", "@type": "WebSite", "name": site["nom"], "url": site["base_url"] + "/",
                          "inLanguage": "fr-CH", "description": desc}, ensure_ascii=False)
     faq = faq_accueil(sy, mags_pub(pub), publies, latest.get("destinations") or [])
@@ -982,11 +1117,12 @@ def main(out: Path):
         {"@type": "WebSite", "name": site["nom"], "url": site["base_url"] + "/", "inLanguage": "fr-CH", "description": desc},
         {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}}
                                             for q, a in faq]}]}, ensure_ascii=False)
-    render("index.html", "", 0, "Courses en France : combien vous économisez vraiment | Panier Suisse France", desc, "index",
+    render("index.html", "", 0, "Courses Suisse ou France : où acheter quoi pour payer moins | Panier Suisse France", desc, "index",
            data_json=data_json, upd_text=upd, titre_fl=titre_fl, titre_viande=titre_viande, resume_fl=resume_fl,
            resume_fx=resume_fx, regles=sy["regles"], jsonld=jsonld, faq=faq, economie=nf(sy["total"]["economie"], 0),
+           eco_import=nf(sy["groupes"]["import"]["economie"], 0), ecart_suisse=nf(sy["groupes"]["suisse"]["ecart"], 0),
            magasins_ch=sy["magasins_ch"], pli_annee=(sy.get("officiel") or {}).get("annee", ""), gap_m=nf(g["m"], 0),
-           og_title="Faire ses courses en France, ça vaut le coup ?")
+           og_title="Payer moins là où ça ne coûte rien aux paysans suisses")
 
     dests = latest.get("destinations") or []
     mags = {d["id"]: d for d in ((pub.get("magasins") or {}).get("destinations") or [])}
@@ -1023,9 +1159,7 @@ def main(out: Path):
     for i, m in enumerate(mois_list):
         prev = snaps[mois_list[i - 1]] if i > 0 else None
         image_partage(out / "og" / f"barometre-{m}.png", f"Baromètre de {mois_long(m)}", "Les mêmes courses en Suisse et en France",
-                      [(f"−{nf((snaps[m].get('total') or {}).get('economie'), 0)} %" if (snaps[m].get('total') or {}).get('economie') else pc(snaps[m]["gaps"].get("b")), "Les mêmes courses\nen France"),
-                       (pc(snaps[m]["gaps"].get("m")), "Viande\nplus cher en Suisse"),
-                       (pc(snaps[m]["gaps"].get("c")), "Produits laitiers\nplus cher en Suisse")])
+                      og_chiffres(snaps[m]))
         others = [x for x in reversed(mois_list) if x != m]
         render("page.html", f"barometre/{m}/", 2, f"Baromètre des prix Suisse – France, {mois_long(m)} | Panier Suisse France",
                f"Écarts de prix entre la Suisse et la France en {mois_long(m)} : viande, fruits et légumes, produits laitiers, marques, essence.",
@@ -1061,6 +1195,21 @@ def main(out: Path):
     render("page.html", "prix/", 1, "Prix Suisse–France produit par produit | Panier Suisse France",
            "Une trentaine de produits relevés chaque mois en Suisse et en France : viande, fruits, légumes, laitages, marques.",
            "prix", content=page_produits_index(prods, sy), wide=True)
+    fo = DATA / "fermes_osm.json"
+    fermes_info = None
+    if fo.exists():
+        fj = json.loads(fo.read_text(encoding="utf-8"))
+        pts = [p_[:8] for p_ in fj.get("points") or []]
+        (out / "data/fermes.json").write_text(json.dumps({"source": fj.get("source"), "genere_le": fj.get("genere_le"),
+                                                          "types": fj.get("types"), "points": pts},
+                                                         ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+        fermes_info = {"total": len(pts), "par_type": fj.get("par_type")}
+    render("page.html", "pourquoi-plus-cher/", 1, "Pourquoi la viande et les laitages sont plus chers en Suisse | Panier Suisse France",
+           "Ce que paie l'écart de prix des produits suisses : salaires, règles d'élevage, part du producteur. Chiffres officiels.",
+           None, content=page_pourquoi(sy))
+    render("page.html", "acheter-suisse/", 1, "Acheter suisse moins cher : fermes, distributeurs, boucheries | Panier Suisse France",
+           "Magasins à la ferme, distributeurs de lait et d'œufs, boucheries et marchés près de chez vous, et les bons plans.",
+           "direct", content=page_acheter_suisse(site, fermes_info))
     render("page.html", "suisse/", 1, "Quel supermarché suisse est le moins cher ? | Panier Suisse France",
            "Aldi, Lidl, Migros, Coop, Denner : la synthèse des tests de prix publiés, avec leurs sources.", None,
            content=page_suisse(sy))
@@ -1077,9 +1226,8 @@ def main(out: Path):
            content=f'<h1>Page introuvable</h1><p><a href="{site["base_url"]}/">Retour au calculateur</a></p>')
 
     # images et fichiers techniques
-    image_partage(out / "og" / "accueil.png", "Faire ses courses en France,", "ça vaut le coup ? Le calcul depuis votre ville.",
-                  [(f"−{nf(sy['total']['economie'], 0)} %", "Les mêmes courses\nen France"), (pc(g["m"]), "Viande\nplus cher en Suisse"),
-                   (pc(g["c"]), "Produits laitiers\nplus cher en Suisse")])
+    image_partage(out / "og" / "accueil.png", "Payer moins là où ça ne coûte", "rien aux paysans suisses. Le calcul depuis votre ville.",
+                  og_chiffres({"groupes": sy["groupes"], "gaps": g, "total": sy["total"]}))
     icones(out)
     (out / "manifest.webmanifest").write_text(json.dumps({
         "name": site["nom"], "short_name": "Panier CH-FR", "start_url": "./", "display": "standalone", "lang": "fr-CH",
@@ -1092,7 +1240,7 @@ def main(out: Path):
                                      + "".join(f"  <url><loc>{site['base_url']}/{p}</loc><lastmod>{today}</lastmod></url>\n" for p in pages)
                                      + "</urlset>\n", encoding="utf-8")
     (out / ".nojekyll").write_text("", encoding="utf-8")
-    print(f"site v3 : {len(pages)} pages dans {out}")
+    print(f"site v3.1 : {len(pages)} pages dans {out}")
 
 
 if __name__ == "__main__":

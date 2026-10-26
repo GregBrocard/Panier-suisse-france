@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block main %}
   <div class="intro">
-    <h1>Faire ses courses en France, ça vaut le coup ?</h1>
-    <p class="keep">Remplissez les cases, puis appuyez sur « Calculer ». Le calcul tient compte des prix du magasin, du trajet, de la douane et de l'usure de la voiture.</p>
-    <p class="headline">En moyenne, les mêmes courses coûtent <b>{{ economie }} % de moins</b> en France, avant trajet.</p>
+    <h1>Payer moins là où ça ne coûte rien aux paysans suisses</h1>
+    <p class="headline">Ce que la Suisse importe coûte <b>{{ eco_import }} % de moins</b> en France. Ce qu'elle produit elle-même y est <b>{{ ecart_suisse }} % plus cher</b>, en partie <a href="{{ root }}pourquoi-plus-cher/">pour de bonnes raisons</a>.</p>
+    <p class="keep">Le calcul compte en France l'épicerie, les huiles et les boissons, et laisse en Suisse la viande, les laitages et les fruits et légumes : à vous de choisir. Il tient compte des prix du magasin, du trajet, de la douane et de l'usure de la voiture.</p>
     <p class="upd" id="upd">{{ upd_text }}</p>
   </div>
 
@@ -15,7 +15,7 @@
           <span class="slot" id="slotFrom"><input id="from" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="fromList" aria-label="Ville de départ" placeholder="insérer un lieu" spellcheck="false"><ul class="list" id="fromList" role="listbox" hidden></ul></span></span>
         <span class="ln">pour faire mes courses à
           <span class="slot" id="slotTo"><select id="to" aria-label="Ville française" class="empty"></select></span></span>
-        <span class="ln">et je dépense d'habitude
+        <span class="ln">et je dépense d'habitude pour mes courses
           <span class="slot" id="slotSpend"><input id="spend" type="number" inputmode="numeric" min="0" step="10" placeholder="montant" aria-label="Montant en francs"></span> CHF.</span>
       </form>
       <p class="hint">Tapez les premières lettres de votre ville ou son NPA, par exemple « Lau » ou « 1003 ».</p>
@@ -26,7 +26,8 @@
       <h3><span class="step">2</span>Vos habitudes</h3>
       <div class="field"><label for="storeCH">En Suisse, vous faites vos courses surtout chez</label>
         <select id="storeCH">{% for m in magasins_ch %}<option value="{{ m.id }}">{{ m.label }}</option>{% endfor %}</select></div>
-      <div class="field"><span class="lab">Vous achetez surtout</span><div class="seg" id="mix" role="group" aria-label="Ce que vous achetez"></div></div>
+      <div class="field"><span class="lab">Vous achetez suisse</span><div class="seg multi" id="suisse" role="group" aria-label="Ce que vous achetez en Suisse"></div>
+        <p class="hint">Rayons surtout produits en Suisse. Touchez-en un pour le compter en France. L'épicerie, les huiles et les boissons, surtout importées, sont toujours comptées en France.</p></div>
       <div class="pair">
         <div class="field"><label for="conso" id="consoLab">Essence (L/100 km)</label><input id="conso" type="number" min="0" step="0.1" value="7"></div>
         <div class="field"><label for="persons">Adultes dans la voiture
@@ -91,6 +92,15 @@
     <div class="figs" id="figs"></div>
   </section>
 
+  <section id="choix">
+    <div class="head"><h2>Où acheter quoi</h2><p>La même logique pour tout le panier : économiser sur ce qui est importé de toute façon, garder son budget pour ce que la Suisse produit.</p></div>
+    <div class="cards">
+      <div class="card"><h3>En France, si ça vaut le trajet</h3><p>Café, huiles, riz, pâtes, épices, biscuits et pâtes à tartiner de marque, boissons, fruits exotiques. Ce sont souvent les mêmes produits, des mêmes usines : en moyenne <b>{{ eco_import }} % moins chers</b> en France, et l'écart ne revient pas à un producteur suisse.</p></div>
+      <div class="card"><h3>Suisse, si vous le pouvez</h3><p>Viande, lait, fromage, œufs, fruits et légumes de saison, vin. Plus chers, mais l'écart paie des salaires suisses et des règles plus strictes : poules en cage interdites depuis 1991, élevages plafonnés, transport des animaux limité à 6 heures. <a href="{{ root }}pourquoi-plus-cher/">Ce que paie la différence</a></p></div>
+      <div class="card"><h3>Suisse, moins cher</h3><p>Morceaux moins nobles, caissettes de viande à la ferme, distributeurs de lait et d'œufs, marchés : en direct, le paysan garde l'essentiel du prix, contre environ 30 à 40 centimes par franc en magasin. <a href="{{ root }}acheter-suisse/">Trouver près de chez vous</a></p></div>
+    </div>
+  </section>
+
   <section id="histoire">
     <div class="head"><h2>{{ titre_fl }}</h2>
       <p>Nos relevés de 14 fruits et légumes, chaque mois depuis 2006 (OFAG en Suisse, INSEE en France). Au-dessus de zéro, la Suisse est plus chère. Ils servent à suivre l'évolution de l'écart officiel.</p></div>
@@ -110,7 +120,8 @@
 
   <section id="viande">
     <div class="head"><h2>{{ titre_viande }}</h2>
-      <p>Quatre exemples de prix au kilo. En France, moyenne nationale de l'INSEE ; en Suisse, prix Migros (médiane des produits équivalents, hors bio et hors promotion). Ces morceaux nobles creusent l'écart : sur toute la viande (volaille et charcuterie comprises), la Suisse est {{ gap_m }} % plus chère selon la comparaison officielle. Tout est en francs suisses.</p></div>
+      <p>Quatre exemples de prix au kilo. En France, moyenne nationale de l'INSEE ; en Suisse, prix Migros (médiane des produits équivalents, hors bio et hors promotion). Ces morceaux nobles creusent l'écart : sur toute la viande (volaille et charcuterie comprises), la Suisse est {{ gap_m }} % plus chère selon la comparaison officielle. Tout est en francs suisses.</p>
+      <p class="note"><b>Avant d'acheter sa viande en France.</b> La Suisse produit 86 % de la viande qu'elle consomme. L'écart de prix paie en partie des règles d'élevage plus strictes qu'en France : élevages plafonnés (par exemple 1 500 porcs ou 18 000 poules pondeuses par exploitation), transport limité à 6 heures, 85 % des bovins avec sorties régulières en plein air. Pour la payer moins cher : hachée, émincée ou en ragoût plutôt qu'en entrecôte, en caissette à la ferme, ou en boucherie. Et au-delà de 1 kg par personne, la douane taxe la viande achetée en France. <a href="{{ root }}acheter-suisse/">Acheter suisse moins cher</a></p></div>
     <figure class="photo-wide bw"><img src="{{ root }}img/boucherie.webp" srcset="{{ root }}img/boucherie-800.webp 800w, {{ root }}img/boucherie.webp 1800w" sizes="(max-width: 820px) 100vw, 900px" alt="Étal de boucherie parisien, années 1920" loading="lazy" style="object-position:50% 40%">
       <figcaption>« La vie chère à Paris », étal de boucherie, années 1920. Photo : <span data-credit="boucherie"></span>.</figcaption></figure>
     <div class="chart">
@@ -158,6 +169,7 @@
     <div class="head"><h2>D'où viennent les chiffres</h2><p><a href="{{ root }}methodologie/">Méthodologie complète</a></p></div>
     <div class="docs">
       <details class="doc" open><summary>Sources</summary><div class="b"><ul>
+        <li><b>Ce que la Suisse produit :</b> Agristat, taux d'autosuffisance 2023 ; règles d'élevage : OSAV et ordonnances fédérales. <a href="{{ root }}pourquoi-plus-cher/">Détail et sources</a></li>
         <li><b>Écart moyen par rayon :</b> comparaison officielle des niveaux de prix entre pays (Eurostat et Office fédéral de la statistique, programme des parités de pouvoir d'achat), mise à jour chaque mois avec le taux de change et nos relevés.</li>
         <li><b>Où vous faites vos courses en Suisse :</b> test de prix K-Tipp d'août 2025 (Aldi, Lidl, Migros, Coop). <a href="{{ root }}suisse/">Quel supermarché suisse est le moins cher ?</a></li>
         <li><b>Fruits, légumes, produits laitiers, Suisse :</b> Office fédéral de l'agriculture (OFAG), prix de consommation mensuels.</li>

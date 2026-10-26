@@ -4,22 +4,29 @@ Une seule source de vérité : le calculateur (site/calc.js) reçoit ces valeurs
 """
 from __future__ import annotations
 
-# Poids des catégories dans « Un peu de tout » : structure des dépenses alimentaires des ménages suisses,
-# pondérations de l'indice des prix harmonisé (Eurostat prc_hicp_inw, Suisse, 2025, en pour mille).
-#   viande         = viande (CP0112)                                              17,93
-#   fruits/légumes = fruits (CP0116) + légumes (CP0117)                           20,57
-#   crèmerie       = lait, fromage, œufs (CP0114) + huiles et graisses (CP0115)   18,30
-#   épicerie       = pain et céréales, sucre et chocolat, autres, boissons
-#                    sans alcool, poisson (CP0111, CP0118, CP0119, CP012, CP0113)  42,92
-POIDS_IPCH_CH_2025 = {"m": 17.93, "f": 20.57, "c": 18.30, "b": 42.92}
+# Rayons du calculateur (v3.1) et leur poids dans « Un peu de tout » : structure des dépenses alimentaires des
+# ménages suisses, pondérations de l'indice des prix harmonisé (Eurostat prc_hicp_inw, Suisse, 2025, ‰).
+#   m viande                          = viande (CP0112)                                          17,93
+#   c lait, fromage, œufs             = CP0114                                                   15,80
+#   f fruits, légumes, pommes de terre = fruits (CP0116) + légumes (CP0117)                      20,57
+#   p pain et céréales                = CP0111                                                   16,71
+#   b épicerie, huiles, boissons      = huiles (CP0115), poisson (CP0113), sucre, chocolat et
+#                                       autres (CP0118, CP0119), boissons sans alcool (CP012)    28,71
+POIDS_IPCH_CH_2025 = {"m": 17.93, "c": 15.80, "f": 20.57, "p": 16.71, "b": 28.71}
 _tot = sum(POIDS_IPCH_CH_2025.values())
-MIX = [
-    {"id": "mixte", "label": "Un peu de tout", "w": {k: round(v / _tot, 3) for k, v in POIDS_IPCH_CH_2025.items()}},
-    {"id": "viande", "label": "Viande", "w": {"m": .55, "f": .15, "c": .15, "b": .15}},
-    {"id": "fl", "label": "Fruits et légumes", "w": {"m": .10, "f": .60, "c": .15, "b": .15}},
-    {"id": "cremerie", "label": "Produits laitiers", "w": {"m": .10, "f": .15, "c": .60, "b": .15}},
-    {"id": "marques", "label": "Épicerie et boissons", "w": {"m": .10, "f": .15, "c": .15, "b": .60}},
+MIX = [{"id": "mixte", "label": "Un peu de tout", "w": {k: round(v / _tot, 3) for k, v in POIDS_IPCH_CH_2025.items()}}]
+
+# Rayons et origine dominante (Agristat, taux d'autosuffisance 2023) : ce que la Suisse produit elle-même.
+RAYONS = [
+    {"k": "m", "label": "Viande", "court": "la viande", "origine": "suisse", "autosuffisance": "86 %"},
+    {"k": "c", "label": "Lait, fromage, œufs", "court": "les laitages et les œufs", "origine": "suisse", "autosuffisance": "113 % (œufs : 57 %)"},
+    {"k": "f", "label": "Fruits, légumes, pommes de terre", "court": "les fruits et légumes", "origine": "suisse",
+     "autosuffisance": "légumes 44 %, pommes de terre 69 %, en saison bien plus"},
+    {"k": "p", "label": "Pain et céréales", "court": "le pain", "origine": "mixte", "autosuffisance": "47 %"},
+    {"k": "b", "label": "Épicerie, huiles, boissons", "court": "l'épicerie et les boissons", "origine": "import",
+     "autosuffisance": "huiles 25 %, café, cacao, riz, épices : 0 %"},
 ]
+SUISSE_DEFAUT = ["m", "c", "f"]   # ce que le calculateur propose d'acheter suisse par défaut
 
 # Où l'on fait ses courses en Suisse : niveau de prix par rapport à la moyenne suisse.
 # Test K-Tipp d'août 2025, même panier de 100 produits : Aldi 230,94 CHF, Lidl 232,83, Migros 243,54, Coop 250,70.
@@ -34,9 +41,10 @@ MAGASINS_CH = [
 
 # Catégories du calculateur et postes de la comparaison officielle des niveaux de prix (Eurostat)
 PLI_MAP = {"m": {"A01010102": 17.93},
+           "c": {"A01010104": 15.80},
            "f": {"A01010106": 20.57},
-           "c": {"A01010104": 15.80, "A01010105": 2.50},
-           "b": {"A01010101": 16.71, "A01010103": 2.81, "A01010199": 14.05, "A010102": 9.35}}
+           "p": {"A01010101": 16.71},
+           "b": {"A01010105": 2.50, "A01010103": 2.81, "A01010199": 14.05, "A010102": 9.35}}
 
 # Règles et coûts (sources dans METHODOLOGIE.md, section 4 et 5)
 REGLES = {
@@ -96,7 +104,7 @@ def ecarts_officiels(pli: dict, series: dict, fx_now: float) -> dict:
         recent = [rl[m] for m in sorted(rl)[-recent_n:]]
         now = _mean(recent)
         return (now / base) if base and now and len(recent) == recent_n else 1.0
-    ev = {"m": 1.0, "f": evol(series.get("panier") or [], 12), "c": evol(series.get("cremerie") or [], 3), "b": 1.0}
+    ev = {"m": 1.0, "f": evol(series.get("panier") or [], 12), "c": evol(series.get("cremerie") or [], 3), "p": 1.0, "b": 1.0}
     out, detail = {}, {}
     cats = pli["categories"]
     for k, comp in PLI_MAP.items():
@@ -136,15 +144,24 @@ def synthese(latest: dict, series: dict, pli: dict | None = None) -> dict:
         a, b = ess[f"{k}_ch"], ess[f"{k}_fr"]
         ess[f"{k}_ecart"] = round((a / b - 1) * 100, 1) if a and b else None
     meat_fr_kg = (sum(v["fr_chf"] * v["qty"] for v in meat) / sum(v["qty"] for v in meat)) if meat else 30.0
-    releves = {"m": _r(g_meat), "f": _r(g_fl), "c": _r(g_crem), "b": _r(g_brand)}
+    releves = {"m": _r(g_meat), "c": _r(g_crem), "f": _r(g_fl), "p": None, "b": _r(g_brand)}
     fx_now = (latest.get("fx") or {}).get("jour", {}).get("eur_chf")
     off = ecarts_officiels(pli, series, fx_now) if pli else None
     gaps = off["gaps"] if off else releves
     w = MIX[0]["w"]
-    part_fr = sum(w[k] / (1 + gaps[k] / 100) for k in w if gaps.get(k) is not None) / sum(w[k] for k in w if gaps.get(k) is not None)
+
+    def agg(keys):  # écart et économie d'un groupe de rayons, poids « Un peu de tout »
+        ks = [k for k in keys if gaps.get(k) is not None]
+        if not ks:
+            return {"ecart": None, "economie": None}
+        part = sum(w[k] / (1 + gaps[k] / 100) for k in ks) / sum(w[k] for k in ks)
+        return {"ecart": round((1 / part - 1) * 100, 1), "economie": round((1 - part) * 100, 1)}
+    groupes = {"tout": agg(w), "suisse": agg([r["k"] for r in RAYONS if r["origine"] == "suisse"]),
+               "import": agg([r["k"] for r in RAYONS if r["origine"] == "import"]),
+               "mixte": agg([r["k"] for r in RAYONS if r["origine"] == "mixte"])}
     return {
         "gaps": gaps, "releves": releves, "officiel": off,
-        "total": {"ecart": round((1 / part_fr - 1) * 100, 1), "economie": round((1 - part_fr) * 100, 1)},
+        "total": groupes["tout"], "groupes": groupes, "rayons": RAYONS, "suisse_defaut": SUISSE_DEFAUT,
         "magasins_ch": MAGASINS_CH,
         "fl_12m_il_y_a_un_an": _r(g_fl_prev), "fl_roll": roll,
         "essence": ess, "viande_fr_chf_kg": round(meat_fr_kg, 2),
@@ -158,13 +175,14 @@ def _r(v):
     return None if v is None else round(v, 1)
 
 
-def taux_economie(gaps: dict, w: dict, idx: float = 1.0, f_ch: float = 1.0) -> float:
+def taux_economie(gaps: dict, w: dict, idx: float = 1.0, f_ch: float = 1.0, suisse=()) -> float:
     """Part de la dépense suisse économisée en France (même formule que site/calc.js).
-    f_ch : niveau de prix du magasin suisse habituel (1 = moyenne), appliqué hors produits de marque."""
+    f_ch : niveau de prix du magasin suisse habituel (1 = moyenne), appliqué hors épicerie (produits de marque).
+    suisse : rayons achetés en Suisse, exclus du calcul."""
     tot = sw = 0.0
     for k, wk in w.items():
         g = gaps.get(k)
-        if g is None:
+        if g is None or k in suisse:
             continue
         g_adj = (1 + g / 100) * (f_ch if k != "b" else 1.0) / idx - 1
         tot += wk * (1 - 1 / (1 + g_adj))
@@ -178,9 +196,15 @@ def calcul(p: dict, S: dict) -> dict:
     R = S["regles"]
     spend, km = max(0.0, p.get("spend", 0)), max(0.0, p.get("km", 0))
     persons = max(1, round(p.get("persons", 1)))
-    rate = taux_economie(S["gaps"], p["w"], p.get("idx", 1.0), p.get("fch", 1.0))
-    fr = spend * (1 - rate)
-    gross = spend - fr
+    suisse = set(p.get("suisse") or [])
+    w = {k: v for k, v in p["w"].items() if S["gaps"].get(k) is not None}
+    sw = sum(w.values()) or 1.0
+    w_fr = {k: v for k, v in w.items() if k not in suisse}
+    spend_fr = spend * sum(w_fr.values()) / sw   # part des courses achetée en France (au prix suisse)
+    kept = spend - spend_fr                      # part gardée pour des produits achetés en Suisse
+    rate = taux_economie(S["gaps"], w_fr, p.get("idx", 1.0), p.get("fch", 1.0)) if w_fr else 0.0
+    fr = spend_fr * (1 - rate)
+    gross = spend_fr - fr
     mode = p.get("mode", "essence")
     car = mode != "tp"
     fuel_ch = S["essence"]["diesel_ch"] if mode == "diesel" else S["essence"]["sp95_ch"]
@@ -194,7 +218,7 @@ def calcul(p: dict, S: dict) -> dict:
     lim = R["franchise_chf"] * persons
     vat = fr * R["tva_alimentaire"] if fr > lim else 0.0
     card = fr * R["frais_carte"] if p.get("card") else 0.0
-    meat_kg = p["w"].get("m", 0) * fr / S["viande_fr_chf_kg"] if S.get("viande_fr_chf_kg") else 0.0
+    meat_kg = (w_fr.get("m", 0) / sum(w_fr.values())) * fr / S["viande_fr_chf_kg"] if S.get("viande_fr_chf_kg") and w_fr else 0.0
     excess = max(0.0, meat_kg - R["viande_franchise_kg"] * persons)
     duty, done, rest = 0.0, 0.0, excess
     for up_to, r in R["viande_droits"]:
@@ -206,4 +230,5 @@ def calcul(p: dict, S: dict) -> dict:
         if rest <= 0:
             break
     net = gross - energy - wear - vat - card  # droits sur la viande : avertissement seulement, non déduits
-    return {"rate": rate, "fr": fr, "gross": gross, "road": energy + wear, "vat": vat, "duty": duty, "net": net}
+    return {"rate": rate, "fr": fr, "gross": gross, "road": energy + wear, "vat": vat, "duty": duty, "net": net,
+            "spend_fr": spend_fr, "kept": kept}

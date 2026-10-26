@@ -3,20 +3,22 @@
  "date": "2026-10-26",
  "gaps": {
   "m": 62.8,
+  "c": 54.8,
   "f": 10.0,
-  "c": 55.7,
-  "b": 55.0
+  "p": 49.6,
+  "b": 59.5
  },
  "total": {
-  "ecart": 44.2,
+  "ecart": 44.3,
   "economie": 30.7
  },
  "officiel": {
   "gaps": {
    "m": 62.8,
+   "c": 54.8,
    "f": 10.0,
-   "c": 55.7,
-   "b": 55.0
+   "p": 49.6,
+   "b": 59.5
   },
   "detail": {
    "m": {
@@ -24,18 +26,23 @@
     "change": 3.24,
     "evolution": 0.0
    },
+   "c": {
+    "officiel": 53.3,
+    "change": 3.24,
+    "evolution": -2.2
+   },
    "f": {
     "officiel": 14.9,
     "change": 3.24,
     "evolution": -7.3
    },
-   "c": {
-    "officiel": 54.2,
+   "p": {
+    "officiel": 44.9,
     "change": 3.24,
-    "evolution": -2.2
+    "evolution": 0.0
    },
    "b": {
-    "officiel": 50.1,
+    "officiel": 54.5,
     "change": 3.24,
     "evolution": 0.0
    }
@@ -45,8 +52,9 @@
  },
  "releves": {
   "m": 113.8,
-  "f": -1.6,
   "c": 66.6,
+  "f": -1.6,
+  "p": null,
   "b": 40.9
  },
  "mois_releves": "2026-09",
@@ -60,5 +68,23 @@
  },
  "fx": 0.9227,
  "fl_12m_il_y_a_un_an": 0.7,
- "version": 3
+ "groupes": {
+  "tout": {
+   "ecart": 44.3,
+   "economie": 30.7
+  },
+  "suisse": {
+   "ecart": 36.0,
+   "economie": 26.5
+  },
+  "import": {
+   "ecart": 59.5,
+   "economie": 37.3
+  },
+  "mixte": {
+   "ecart": 49.6,
+   "economie": 33.2
+  }
+ },
+ "version": 4
 }

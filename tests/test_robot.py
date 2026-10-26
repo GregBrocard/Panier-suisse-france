@@ -72,7 +72,7 @@ def test_saut_signale():
 
 # ---------------------------------------------------------------- calcul des économies
 
-S = {"gaps": {"m": 100.0, "f": 20.0, "c": 50.0, "b": 30.0}, "regles": REGLES, "fx": 0.93,
+S = {"gaps": {"m": 100.0, "f": 20.0, "c": 50.0, "p": 40.0, "b": 30.0}, "regles": REGLES, "fx": 0.93,
      "essence": {"sp95_ch": 2.19, "diesel_ch": 2.48, "sp95_fr": 1.98, "diesel_fr": 2.21}, "viande_fr_chf_kg": 25.0}
 
 
@@ -85,6 +85,16 @@ def test_taux_economie():
     # supermarché suisse moins cher (facteur 0,9) : prix suisse × 0,9, sauf épicerie et boissons
     assert taux_economie({"m": 100}, {"m": 1}, 1.0, 0.9) == pytest.approx(1 - 1 / 1.8)
     assert taux_economie({"b": 100}, {"b": 1}, 1.0, 0.9) == pytest.approx(0.5)
+
+
+def test_achat_suisse_exclu_du_trajet():
+    w = {"m": .5, "b": .5}
+    tout = calcul({"spend": 200, "km": 0, "w": w, "idx": 1, "persons": 1, "mode": "essence", "conso": 0}, S)
+    malin = calcul({"spend": 200, "km": 0, "w": w, "suisse": ["m"], "idx": 1, "persons": 1, "mode": "essence", "conso": 0}, S)
+    assert malin["kept"] == pytest.approx(100) and malin["spend_fr"] == pytest.approx(100)
+    assert malin["gross"] < tout["gross"] and malin["duty"] == 0
+    rien = calcul({"spend": 200, "km": 10, "w": w, "suisse": ["m", "b"], "idx": 1, "persons": 1, "mode": "essence", "conso": 7}, S)
+    assert rien["gross"] == 0 and rien["net"] < 0
 
 
 def test_facteurs_k_tipp():
@@ -130,10 +140,10 @@ def test_tva_au_dela_franchise():
 def test_js_et_python_donnent_le_meme_resultat():
     cas = [{"spend": 200, "km": 42, "minutes": 37, "w": MIX[0]["w"], "idx": 0.96, "persons": 1, "mode": "essence",
             "conso": 7, "wear": True, "fill": False, "card": True},
-           {"spend": 350, "km": 80, "w": MIX[1]["w"], "idx": 1.05, "persons": 2, "mode": "diesel", "conso": 6, "wear": False},
-           {"spend": 120, "km": 30, "w": MIX[3]["w"], "idx": 1.0, "persons": 1, "mode": "ev", "conso": 18, "wear": True, "fch": 0.952},
+           {"spend": 350, "km": 80, "w": MIX[0]["w"], "suisse": ["m", "c", "f"], "idx": 1.05, "persons": 2, "mode": "diesel", "conso": 6, "wear": False},
+           {"spend": 120, "km": 30, "w": MIX[0]["w"], "suisse": ["m"], "idx": 1.0, "persons": 1, "mode": "ev", "conso": 18, "wear": True, "fch": 0.952},
            {"spend": 260, "km": 25, "w": MIX[0]["w"], "idx": 0.93, "persons": 1, "mode": "essence", "conso": 7, "fch": 1.029},
-           {"spend": 90, "km": 12, "w": MIX[2]["w"], "idx": 0.9, "persons": 1, "mode": "tp", "tpCost": 8}]
+           {"spend": 90, "km": 12, "w": MIX[0]["w"], "suisse": ["m", "c", "f", "p", "b"], "idx": 0.9, "persons": 1, "mode": "tp", "tpCost": 8}]
     js = ("const P=require('./site/calc.js');const S=" + json.dumps(S) + ";const C=" + json.dumps(cas) +
           ";console.log(JSON.stringify(C.map(c=>P.compute(c,S).net)))")
     out = json.loads(subprocess.run(["node", "-e", js], cwd=ROOT, capture_output=True, text=True, check=True).stdout)

@@ -77,6 +77,17 @@ def main():
             age = 999
     if age > 30:
         _safe(ST.main)
+    # points de vente directe (fermes, distributeurs, boucheries…) : même rythme
+    fo = DATA / "fermes_osm.json"
+    age_f = 999
+    if fo.exists():
+        try:
+            age_f = (dt.date.today() - dt.date.fromisoformat(json.loads(fo.read_text(encoding="utf-8"))["genere_le"])).days
+        except Exception:  # noqa: BLE001
+            age_f = 999
+    if age_f > 30:
+        from . import fermes as FE
+        _safe(FE.main)
     out = {"genere_le": dt.datetime.now(dt.timezone.utc).isoformat(timespec="minutes"), "fx": fx,
            "zones": zones, "ofdf": ofdf, "stations_fr": bande,
            "sources": {"france": "Flux officiel des prix des carburants, data.economie.gouv.fr",

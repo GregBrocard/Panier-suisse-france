@@ -1,8 +1,9 @@
 # Méthodologie — Panier Suisse France
 
-Version 3.0 · octobre 2026. Les versions précédentes restent consultables : [version 2](https://gregbrocard.github.io/Panier-suisse-france/v2/) et [version 1](https://gregbrocard.github.io/Panier-suisse-france/v1/) (branches `v2` et `v1` du dépôt). Les changements sont listés à la section 9.
+Version 3.1 · octobre 2026. Les versions précédentes restent consultables : [version 3.0](https://gregbrocard.github.io/Panier-suisse-france/v3/), [version 2](https://gregbrocard.github.io/Panier-suisse-france/v2/) et [version 1](https://gregbrocard.github.io/Panier-suisse-france/v1/) (branches `v3`, `v2` et `v1` du dépôt). Les changements sont listés à la section 9.
 
 **En bref.**
+0. **Le principe (v3.1)** : payer moins là où ça ne coûte rien aux paysans suisses. Le site distingue ce que la Suisse produit elle-même (viande, laitages et œufs, fruits et légumes) de ce qu'elle importe surtout (épicerie, huiles, boissons). Par défaut, le calculateur laisse les premiers en Suisse et ne compte en France que le reste ; l'utilisateur peut changer ce réglage. Les écarts de prix sont publiés sans les atténuer, avec ce que paie la différence (§ 3.9).
 1. L'écart de prix entre la Suisse et la France, rayon par rayon, part de la **comparaison officielle des niveaux de prix** publiée par Eurostat avec l'Office fédéral de la statistique (dernière année disponible).
 2. Il est mis à jour chaque mois avec le **taux de change du jour** et l'**évolution des prix mesurée par nos relevés** (fruits et légumes, produits laitiers).
 3. Le calculateur l'ajuste au **supermarché suisse** que vous fréquentez (discounter, Migros ou Coop, test K-Tipp) et au **magasin français** choisi (indice UFC-Que Choisir).
@@ -10,11 +11,11 @@ Version 3.0 · octobre 2026. Les versions précédentes restent consultables : [
 5. Le temps passé est affiché à part, jamais déduit. Les droits de douane sur la viande sont signalés, pas déduits : en restant dans la franchise, on ne les paie pas.
 6. Toutes les données et tout le code sont publics ; chaque chiffre peut être recalculé.
 
-**Sommaire.** 1. Question posée · 2. Principe · 3. Sources et couches du panier (3.0 écart de référence, 3.1 fruits et légumes, 3.2 produits laitiers, 3.3 viande, 3.4 marques, 3.5 carburant, 3.6 magasins français, 3.7 supermarchés suisses, 3.8 où faire le plein) · 4. Calculs · 5. Douane · 6. Contrôles · 7. Baromètre · 8. Limites · 9. Versions · 10. Citer
+**Sommaire.** 1. Question posée · 2. Principe · 3. Sources et couches du panier (3.0 écart de référence, 3.1 fruits et légumes, 3.2 produits laitiers, 3.3 viande, 3.4 marques, 3.5 carburant, 3.6 magasins français, 3.7 supermarchés suisses, 3.8 où faire le plein, 3.9 origine des produits et choix suisse, 3.10 vente directe) · 4. Calculs · 5. Douane · 6. Contrôles · 7. Baromètre · 8. Limites · 9. Versions · 10. Citer
 
 ## 1. Question posée
 
-Combien coûtent les mêmes courses du quotidien en Suisse et dans la France voisine, et à partir de quand le déplacement vaut-il la peine, une fois le trajet, l'usure de la voiture et la douane comptés ?
+Combien coûtent les mêmes courses du quotidien en Suisse et dans la France voisine, et à partir de quand le déplacement vaut-il la peine, une fois le trajet, l'usure de la voiture et la douane comptés ? Et depuis la v3.1 : sur quels produits l'économie ne coûte-t-elle rien aux producteurs suisses ?
 
 - **Départ** : n'importe quelle localité de Suisse (répertoire officiel des localités de swisstopo, environ 4 100 localités).
 - **Arrivée** : l'une des 12 zones françaises où les Suisses font couramment leurs courses (`config/destinations.yaml`) : Annemasse, Saint-Julien-en-Genevois, Saint-Genis / Ferney (avec Thoiry), Divonne / Gex (avec Segny), Thonon-les-Bains, Évian-les-Bains, Les Rousses, Jougne, Pontarlier, Morteau, Delle, Saint-Louis. Les communes voisines du Pays de Gex sont regroupées parce que, prises une à une, elles comptent trop peu de magasins référencés.
@@ -40,12 +41,15 @@ Le panier est défini dans `config/panier.yaml` (version 2). Le calculateur regr
 
 **Source.** Eurostat, indices de niveau des prix (`prc_ppp_ind`), programme Eurostat-OCDE des parités de pouvoir d'achat, auquel la Suisse participe par l'Office fédéral de la statistique. Indice UE27 = 100, à prix et taux de change de l'année. Dernière année publiée : 2024 (`data/pli.json`, relu à chaque relevé mensuel).
 
-| Rayon du site | Postes Eurostat (poids dans l'indice suisse, ‰) | Écart officiel 2024 |
+| Rayon du site (v3.1) | Postes Eurostat (poids dans l'indice suisse, ‰) | Écart officiel 2024 |
 |---|---|---|
 | Viande | Viande (17,93) | +57,7 % |
-| Fruits et légumes | Fruits, légumes, pommes de terre (20,57) | +14,9 % |
-| Produits laitiers | Lait, fromage, œufs (15,80) ; huiles et graisses (2,50) | +54,2 % |
-| Épicerie et boissons | Pain et céréales (16,71) ; poisson (2,81) ; autres produits alimentaires (14,05) ; boissons sans alcool (9,35) | +50,1 % |
+| Lait, fromage, œufs | Lait, fromage, œufs (15,80) | +53,3 % |
+| Fruits, légumes, pommes de terre | Fruits, légumes, pommes de terre (20,57) | +14,9 % |
+| Pain et céréales | Pain et céréales (16,71) | +44,9 % |
+| Épicerie, huiles, boissons | Huiles et graisses (2,50) ; poisson (2,81) ; autres produits alimentaires (14,05) ; boissons sans alcool (9,35) | +54,5 % |
+
+En v3.0, les huiles étaient comptées avec les produits laitiers et le pain avec l'épicerie ; la v3.1 les sépare pour distinguer ce que la Suisse produit de ce qu'elle importe.
 
 Écart d'un rayon = Σ poids × indice Suisse ÷ Σ poids × indice France − 1.
 
@@ -156,6 +160,18 @@ Le mode « Où faire le plein » (page Essence) indique, depuis une localité su
 
 **Limites.** Les distances vers les stations suisses et vers les stations françaises éloignées des villes frontalières sont des estimations. La couverture suisse dépend des relevés reçus. L'Allemagne, l'Italie et l'Autriche ne sont pas encore couvertes station par station (leurs prix moyens frontaliers figurent dans le tableau OFDF de la page).
 
+### 3.9 Origine des produits et choix suisse (nouveau en v3.1)
+
+**Classement des rayons.** Origine dominante pour le consommateur suisse, d'après les taux d'autosuffisance d'Agristat (2023) : lait et produits laitiers 113 %, viande 86 %, pommes de terre 69 %, œufs 57 %, céréales 47 %, légumes 44 %, huiles végétales 25 %, fruits 21 % (pommes et poires bien plus), café, cacao, riz, épices 0 %. D'où : viande, laitages et œufs, fruits et légumes = « produit surtout en Suisse » ; pain et céréales = « en partie suisse » ; épicerie, huiles, poisson, boissons sans alcool = « surtout importé ». Chaque produit relevé porte aussi une origine (« produit en Suisse », « suisse en saison », « importé ») ; un produit acheté dans un magasin suisse peut être importé : le site rappelle de lire l'étiquette.
+
+**Ce que paie l'écart.** Page « Pourquoi c'est plus cher en Suisse » : règles d'élevage inscrites dans la loi (poules en cage interdites depuis 1991 ; effectifs maximaux : 18 000 poules pondeuses, 27 000 poulets, 1 500 porcs, 300 veaux d'engraissement ; transport des animaux limité à 6 heures de trajet et 8 heures en tout, LPA art. 15 et OPAn art. 152a ; part des animaux en programme SRPA), part du producteur dans le prix de vente (environ 30 centimes par franc, 34 à 42 selon le moniteur des prix FHNW pour Marchés équitables Suisse, 2024), concentration du commerce de détail (Coop et Migros, environ 80 % des ventes alimentaires des grandes enseignes, Nielsen 2025).
+
+**Règle de neutralité.** Les écarts de prix sont publiés tels quels, sans les atténuer. Le site n'emploie pas l'impératif (« il faut ») ; il distingue ce que dit la loi de ce que disent les moyennes ; il ne porte aucun jugement sur une enseigne nommée ; il signale les sources de la filière (Proviande, Union suisse des paysans) comme telles ; le calcul « tout en France » reste toujours disponible. Aucun partenaire ne peut modifier un chiffre, une source ou un classement.
+
+### 3.10 Vente directe (nouveau en v3.1)
+
+La page « Acheter suisse moins cher » liste, autour d'une localité, les magasins à la ferme, distributeurs de produits de la ferme (lait, œufs, fromage, viande…), boucheries, fromageries, marchés et caves référencés dans OpenStreetMap (© contributeurs OpenStreetMap, licence ODbL), relevés chaque mois (`data/fermes_osm.json`). Distance : vol d'oiseau × facteur route (§ 3.8). Aucune source ne publie les prix de la vente directe : le site n'affirme donc pas qu'elle est moins chère ; des relevés datés pourront être ajoutés.
+
 ## 4. Calculs
 
 **Change.** Les prix français sont convertis au taux de référence EUR/CHF de la Banque centrale européenne : moyenne mensuelle pour l'historique, dernier taux quotidien pour la photo du mois et l'essence.
@@ -164,20 +180,23 @@ Le mode « Où faire le plein » (page Essence) indique, depuis une localité su
 
 **Moyenne sur 12 mois.** Les fruits et légumes étant saisonniers, l'indicateur principal est la moyenne des écarts mensuels sur les 12 derniers mois.
 
-**Pondération du panier (v2).** Le choix « Un peu de tout » pondère les quatre catégories selon la structure des dépenses alimentaires des ménages suisses, telle que mesurée par les pondérations de l'indice des prix à la consommation harmonisé (Eurostat, `prc_hicp_inw`, Suisse, 2025, en pour mille) :
+**Pondération du panier (v3.1).** Le panier « un peu de tout » pondère les cinq rayons selon la structure des dépenses alimentaires des ménages suisses, telle que mesurée par les pondérations de l'indice des prix à la consommation harmonisé (Eurostat, `prc_hicp_inw`, Suisse, 2025, en pour mille) :
 
-| Catégorie | Postes COICOP | Poids (‰) | Part |
+| Rayon | Postes COICOP | Poids (‰) | Part |
 |---|---|---|---|
 | Viande | 01.1.2 | 17,93 | 18,0 % |
-| Fruits et légumes | 01.1.6, 01.1.7 | 20,57 | 20,6 % |
-| Produits laitiers | 01.1.4, 01.1.5 | 18,30 | 18,4 % |
-| Épicerie et boissons | 01.1.1, 01.1.3, 01.1.8, 01.1.9, 01.2 | 42,92 | 43,0 % |
+| Lait, fromage, œufs | 01.1.4 | 15,80 | 15,8 % |
+| Fruits, légumes, pommes de terre | 01.1.6, 01.1.7 | 20,57 | 20,6 % |
+| Pain et céréales | 01.1.1 | 16,71 | 16,8 % |
+| Épicerie, huiles, boissons | 01.1.3, 01.1.5, 01.1.8, 01.1.9, 01.2 | 28,71 | 28,8 % |
 
-Les autres choix (« Viande », « Fruits et légumes », « Produits laitiers », « Épicerie et boissons ») donnent 55 à 60 % du poids à la catégorie choisie et répartissent le reste. Si une catégorie n'a pas de chiffre un mois donné, les poids des autres sont renormalisés.
+Les choix « Viande », « Fruits et légumes », etc. de la v3.0 sont remplacés par le réglage « Vous achetez suisse » (§ 3.9). Si un rayon n'a pas de chiffre un mois donné, les poids des autres sont renormalisés.
 
 **Calculateur de trajet.** Les formules sont dans `site/calc.js` (navigateur) et `scraper/synthese.py` (pages générées) ; les deux versions sont comparées par les tests automatiques.
 
-- taux d'économie = Σ poids × (1 − 1 ÷ (1 + écart de la catégorie ajusté par le supermarché suisse et par l'indice du magasin français)) ;
+- **rayons achetés en Suisse (v3.1)** : la dépense indiquée est celle de toutes les courses ; la part des rayons cochés « Vous achetez suisse » (par défaut viande, laitages et œufs, fruits et légumes) reste en Suisse et n'entre pas dans le calcul ; seule la part restante est achetée en France ;
+- taux d'économie sur la part achetée en France = Σ poids × (1 − 1 ÷ (1 + écart du rayon ajusté par le supermarché suisse et par l'indice du magasin français)), sur les seuls rayons achetés en France ;
+- le résultat indique aussi ce que donnerait le cas « tout en France », et la différence entre les deux : c'est ce que coûte le choix suisse ;
 - économie sur les courses = dépense × taux d'économie ;
 - distance : calculée automatiquement entre le centre de la localité de départ (coordonnées swisstopo) et le centre de la zone de destination, itinéraire le plus rapide (OSRM sur OpenStreetMap) ; l'utilisateur peut la corriger ;
 - énergie du trajet (v2) : voiture à essence ou diesel = distance aller-retour × consommation ÷ 100 × prix suisse du carburant correspondant (OFDF) ; voiture électrique = distance aller-retour × consommation (18 kWh/100 km par défaut) ÷ 100 × 0,28 CHF/kWh (TCS 2026) ; transports publics = prix du billet indiqué ;
@@ -190,7 +209,9 @@ Les autres choix (« Viande », « Fruits et légumes », « Produits laitiers �
 - **détaxe (v2, information)** : si les achats en France dépassent 100 €, TVA française maximale récupérable = achats × 5,5 ÷ 105,5 ; elle n'est pas ajoutée à l'économie, car l'opérateur garde une partie en frais et la détaxe exige un achat de plus de 100 € dans un même magasin ;
 - temps : durée de trajet aller-retour (OSRM) plus 15 minutes forfaitaires de douane et de parking (v2), affichée à part comme coût d'opportunité (durée × valeur d'une heure, 25 CHF/h par défaut à titre d'exemple) ; elle n'est pas déduite de l'économie.
 
-**Pages des zones (v2).** Pour chaque zone, l'économie est calculée depuis les villes suisses proches pour deux cas types : 150 CHF de courses pour 1 adulte et 300 CHF pour 2 adultes, « un peu de tout », voiture à essence 7 L/100 km, usure comprise, au niveau de prix du magasin du milieu, courses suisses chez un discounter.
+**Pages des zones (v3.1).** Pour chaque zone, l'économie est calculée depuis les villes suisses proches pour 300 CHF de courses, 2 adultes, dans deux cas : viande, laitages et fruits et légumes achetés en Suisse, ou tout acheté en France ; « un peu de tout », voiture à essence 7 L/100 km, usure comprise, au niveau de prix du magasin du milieu, courses suisses chez un discounter.
+
+**Chiffres d'accueil (v3.1).** « Ce que la Suisse importe coûte X % de moins en France ; ce qu'elle produit y est Y % plus cher » : X et Y sont calculés comme ci-dessous sur les rayons d'origine « import » (épicerie, huiles, boissons) et « suisse » (viande, laitages et œufs, fruits et légumes). Le pain, d'origine mixte, n'entre dans aucun des deux.
 
 **Chiffre d'accueil (v3).** « En moyenne, les mêmes courses coûtent X % de moins en France, avant trajet » : X = Σ poids × (1 − 1 ÷ (1 + écart de référence du rayon)), avec les poids « Un peu de tout », au niveau de la moyenne suisse (Migros) et du supermarché français moyen. Le calculateur, lui, part par défaut d'un discounter suisse et donne donc une économie un peu plus faible.
 
@@ -226,15 +247,20 @@ Chaque mois, les chiffres clés (économie totale, écarts de référence par ra
 - Les prix alimentaires français de base sont des moyennes nationales ; l'ajustement par magasin (§ 3.6) repose sur un indice global, pas sur des prix par produit.
 - Les prix français des produits laitiers sont estimés (§ 3.2).
 - L'écart de référence date de la dernière année publiée par Eurostat (2024 en octobre 2026) ; sa mise à jour mensuelle ne suit que le change pour la viande et l'épicerie.
-- Les facteurs de supermarché suisse reposent sur un seul test de prix (K-Tipp, 2025) et sont appliqués de la même façon à trois rayons.
+- Les facteurs de supermarché suisse reposent sur un seul test de prix (K-Tipp, 2025) et sont appliqués de la même façon à quatre rayons (pas à l'épicerie).
 - Les exemples de viande suisse proviennent d'une seule enseigne (Migros).
 - Côté français, Que Choisir ne couvre pas les discounters sans drive (Lidl, Aldi) : on compare un prix suisse de discounter à un supermarché français classique, ce qui tend à sous-estimer l'économie.
 - Open Prices dépend des tickets partagés par ses contributeurs : certains produits ont peu de relevés.
 - L'origine et la qualité des fruits et légumes ne sont pas contrôlées. Les promotions ne sont comptées ni en Suisse ni en France.
 - L'usure de la voiture est un forfait moyen (TCS) ; la quantité de viande achetée est estimée à partir du budget.
 - Les règles douanières sont rappelées à titre indicatif ; la règle officielle fait foi.
+- Le classement par origine porte sur des rayons entiers : un produit précis peut être importé dans un rayon « suisse », et inversement. Les fruits et légumes suisses ne le sont qu'en saison.
+- Les comparaisons de règles d'élevage portent sur la loi et les moyennes ; elles ne disent rien d'une exploitation ou d'un label précis. À qualité égale (labels français), l'écart de prix est plus faible.
+- La liste des points de vente directe dépend des contributeurs d'OpenStreetMap ; ses prix ne sont pas connus.
 
 ## 9. Historique des versions
+
+**v3.1 (octobre 2026)** : nouveau principe « payer moins là où ça ne coûte rien aux paysans suisses ». Cinq rayons au lieu de quatre (pain et huiles séparés) ; origine de chaque rayon et produit ; réglage « Vous achetez suisse » dans le calculateur (viande, laitages et œufs, fruits et légumes cochés par défaut) avec comparaison au cas « tout en France » ; pages « Pourquoi c'est plus cher en Suisse » et « Acheter suisse moins cher » (points de vente directe OpenStreetMap) ; chiffres d'accueil, baromètre, images de partage et pages des zones selon l'origine ; questions fréquentes sur les paysans et la viande.
 
 **v3.0 (octobre 2026)**
 - Écart par rayon ancré sur la comparaison officielle des niveaux de prix (Eurostat–OFS), mis à jour chaque mois par le change et l'évolution de nos relevés (§ 3.0). Chiffre d'accueil unique : l'économie moyenne sur les mêmes courses.
@@ -262,4 +288,4 @@ Chaque mois, les chiffres clés (économie totale, écarts de référence par ra
 
 ## 10. Citer
 
-> Brocard, G. (2026). *Panier Suisse France*, méthodologie v3.0. Données Eurostat–OFS, OFAG, INSEE, BCE, OFDF, TCS, K-Tipp, Open Prices, UFC-Que Choisir. Code et données : https://github.com/GregBrocard/Panier-suisse-france
+> Brocard, G. (2026). *Panier Suisse France*, méthodologie v3.1. Données Eurostat–OFS, Agristat, OFAG, OSAV, INSEE, BCE, OFDF, TCS, K-Tipp, Open Prices, OpenStreetMap, UFC-Que Choisir. Code et données : https://github.com/GregBrocard/Panier-suisse-france

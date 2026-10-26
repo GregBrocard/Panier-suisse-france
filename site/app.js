@@ -39,7 +39,8 @@
 
   // ---------- état (rien n'est présélectionné)
   const MIX = SY.mix;
-  const st = {o:null, dest:null, store:'avg', mix:'mixte', kmManual:false, shown:false};
+  const RAY = SY.rayons||[], SDEF = SY.suisse_defaut||[];
+  const st = {o:null, dest:null, store:'avg', mix:'mixte', suisse:SDEF.slice(), kmManual:false, shown:false};
   const trip = (oi,id) => { if(!ORI||oi==null||!id) return null; const r=ORI.dist[oi]; const k=dIdx[id]; return r&&k!=null&&r[2*k]!=null ? [r[2*k],r[2*k+1]] : null; };
 
   // ---------- autocomplétion
@@ -88,9 +89,10 @@
   sel.addEventListener('change',()=>setDest(sel.value));
 
   // ---------- habitudes
-  $('#mix').innerHTML=MIX.map(m=>`<button type="button" data-m="${m.id}" aria-pressed="${m.id===st.mix}">${m.label}</button>`).join('');
-  function setMix(id){ if(!MIX.some(m=>m.id===id)) return; st.mix=id; $('#mix').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.m===id)); }
-  $('#mix').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;setMix(b.dataset.m);update();});
+  // ce que l'on garde pour la Suisse (rayons produits en Suisse) ; l'épicerie importée est toujours comptée en France
+  $('#suisse').innerHTML=RAY.filter(r=>r.origine!=='import').map(r=>`<button type="button" data-k="${r.k}" aria-pressed="${st.suisse.includes(r.k)}">${esc(r.label)}</button>`).join('');
+  function setSuisse(list){ st.suisse=RAY.map(r=>r.k).filter(k=>list.includes(k)&&RAY.find(r=>r.k===k).origine!=='import'); $('#suisse').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',st.suisse.includes(x.dataset.k))); }
+  $('#suisse').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const k=b.dataset.k;setSuisse(st.suisse.includes(k)?st.suisse.filter(x=>x!==k):st.suisse.concat(k));update();});
   function syncFill(){ const on=$('#fill').checked && $('#mode').value!=='tp' && $('#mode').value!=='ev'; $('#tank').disabled=!on; $('#tankField').classList.toggle('off',!on); }
   function syncMode(){
     const m=$('#mode').value, car=m!=='tp';
@@ -128,7 +130,7 @@
     if(!st.kmManual && t) $('#km').value=t[0];
     const mode=$('#mode').value, z=fd(st.dest), fk = mode==='diesel'?'diesel':'sp95';
     return { spend: spend!=null?spend:+$('#spend').value||0, km:+$('#km').value||0, minutes: t&&!st.kmManual?t[1]:null,
-      w: MIX.find(m=>m.id===st.mix).w, idx, persons:+$('#persons').value||1, mode, conso:+$('#conso').value||0,
+      w: MIX[0].w, suisse: st.suisse.slice(), idx, persons:+$('#persons').value||1, mode, conso:+$('#conso').value||0,
       tpCost:+$('#tpCost').value||0, wear:$('#wear').checked, fill:$('#fill').checked, tank:+$('#tank').value||0,
       fuelFR: z&&z.moyenne_chf?z.moyenne_chf[fk]:null, card:$('#card').checked, vtime:+$('#vtime').value,
       fch: (SY.magasins_ch.find(m=>m.id===$('#storeCH').value)||{f:1}).f };
@@ -140,7 +142,7 @@
     const s=m.magasins.find(x=>String(x.dm)===String(st.store)); return s?{idx:s.indice,name:s.nom}:{idx:m.indice_median||1,name:null};
   }
   function save(){
-    store.set({o: st.o!=null&&ORI ? ORI.liste[st.o].slice(0,2).join('|') : null, dest: st.dest, spend: $('#spend').value, mix: st.mix,
+    store.set({o: st.o!=null&&ORI ? ORI.liste[st.o].slice(0,2).join('|') : null, dest: st.dest, spend: $('#spend').value, suisse: st.suisse.join(',')||'-',
       conso: $('#conso').value, persons: $('#persons').value, vtime: $('#vtime').value, fill: $('#fill').checked, tank: $('#tank').value,
       mode: $('#mode').value, wear: $('#wear').checked, card: $('#card').checked, tp: $('#tpCost').value, storeCH: $('#storeCH').value});
   }
@@ -149,7 +151,7 @@
     const u=new URL(location.href.split('#')[0]); const p=u.searchParams; [...p.keys()].forEach(k=>{ if(k!=='embed') p.delete(k); });
     if(st.o!=null&&ORI){ p.set('de', ORI.liste[st.o][0]); p.set('ct', ORI.liste[st.o][1]); }
     if(st.dest) p.set('a', st.dest); if(+$('#spend').value>0) p.set('m', $('#spend').value);
-    if(st.mix!=='mixte') p.set('mix', st.mix); if(+$('#persons').value>1) p.set('p', $('#persons').value);
+    if(st.suisse.join(',')!==SDEF.join(',')) p.set('s', st.suisse.join(',')||'-'); if(+$('#persons').value>1) p.set('p', $('#persons').value);
     if($('#mode').value!=='essence') p.set('mode', $('#mode').value);
     if($('#storeCH').value!=='discount') p.set('ch', $('#storeCH').value);
     return u.toString();
@@ -172,14 +174,22 @@
     let rng='';
     if(ms.length>1 && st.store==='avg'){ const ix=ms.map(x=>x.indice); const lo=PSF.compute(Object.assign({},p,{idx:Math.max(...ix)}),SY).net, hi=PSF.compute(Object.assign({},p,{idx:Math.min(...ix)}),SY).net;
       rng=`<p class="how">Selon le magasin choisi : de ${lo<0?'−':''}${nf(Math.abs(lo),0)} à ${hi<0?'−':''}${nf(Math.abs(hi),0)} CHF.</p>`; }
+    const nomsS=st.suisse.map(k=>(RAY.find(r=>r.k===k)||{}).court).filter(Boolean), nomsF=RAY.filter(r=>!st.suisse.includes(r.k)).map(r=>r.court);
+    const liste=a=>a.length<2?a.join(''):a.slice(0,-1).join(', ')+(a.length>2?', ':' et ')+a[a.length-1];
+    if(c.spendFR<=0){
+      $('#verdict').innerHTML=`<span class="amount">0<small>CHF</small></span><span class="what">de trajet : vous gardez toutes vos courses en Suisse</span><p class="how">Pour économiser sans rien retirer aux producteurs suisses, comptez au moins l'épicerie et les boissons en France.</p>`;
+      $('#bill').innerHTML=''; return;
+    }
     $('#verdict').innerHTML=(c.net>=0
-      ? `<span class="amount">${nf(c.net,0)}<small>CHF</small></span><span class="what">d'économie à ${esc(name||dd.nom)}</span>`
+      ? `<span class="amount">${nf(c.net,0)}<small>CHF</small></span><span class="what">d'économie à ${esc(name||dd.nom)}, sur ${esc(liste(nomsF))}</span>`
       : `<span class="amount loss">−${nf(-c.net,0)}<small>CHF</small></span><span class="what">de perte : mieux vaut rester en Suisse</span>`)
+      + (c.kept>0?`<p class="how keep">Et <b>${nf(c.kept,0)} CHF</b> de courses restent en Suisse : ${esc(liste(nomsS))}. <a href="${ROOT}acheter-suisse/">Où les payer moins cher</a></p>`:'')
       + `<p class="how">${esc(o?o[0]:'')} → ${esc(dd.nom)} : ${c.km} km${t?`, environ ${t[1]} min`:''}${dd.passage?', '+esc(dd.passage):''}. Trajet aller-retour compris.</p>`
       + rng + `<p class="how">Franchise : jusqu'à ${nf(c.lim,0)} CHF d'achats sans TVA suisse (${c.persons} adulte${c.persons>1?'s':''}).</p>`
       + `<div class="share"><button type="button" id="shareBtn">Partager ce calcul</button><a id="waBtn" href="https://wa.me/?text=${encodeURIComponent('Mes courses en France : '+(c.net>=0?nf(c.net,0)+' CHF d\'économie':'pas rentable')+' — '+shareURL())}" target="_blank" rel="noopener">WhatsApp</a><span class="muted" id="shareMsg" aria-live="polite"></span></div>`;
     const r=(a,b,cls='')=>`<div class="r ${cls}"><span>${a}</span><span>${b}</span></div>`, sg=v=>(v>=0?'− ':'+ ')+nf(Math.abs(v),0)+' CHF';
-    let h=r('Vos courses en Suisse',nf(c.spend,0)+' CHF')+r('Les mêmes en France',nf(c.fr,0)+' CHF')+r('Différence',sg(c.gross));
+    let h=(c.kept>0?r('Vos courses',nf(c.spend,0)+' CHF')+r('Gardé pour des produits suisses','− '+nf(c.kept,0)+' CHF','sub'):'')
+      +r(c.kept>0?'Acheté en France, au prix suisse':'Vos courses en Suisse',nf(c.spendFR,0)+' CHF')+r('Les mêmes en France',nf(c.fr,0)+' CHF')+r('Différence',sg(c.gross));
     if(p.mode==='tp') h+=r('Billet aller-retour','+ '+nf(c.roadEnergy,0)+' CHF');
     else h+=r(`${p.mode==='ev'?'Électricité':p.mode==='diesel'?'Diesel':'Essence'} aller-retour, ${2*c.km} km`,'+ '+nf(c.roadEnergy,0)+' CHF');
     if(c.roadWear) h+=r('Usure de la voiture (TCS)','+ '+nf(c.roadWear,0)+' CHF');
@@ -187,8 +197,10 @@
     if(c.cardFee) h+=r('Frais de carte en euros','+ '+nf(c.cardFee,0)+' CHF');
     if(c.vat) h+=r('TVA à la douane','+ '+nf(c.vat,0)+' CHF');
     h+=r(c.net>=0?'Vous économisez':'Vous perdez',nf(Math.abs(c.net),0)+' CHF','t');
+    if(st.suisse.length){ const all=PSF.compute(Object.assign({},p,{suisse:[]}),SY);
+      h+=`<p class="cmp">Si vous achetiez aussi ${esc(liste(nomsS))} en France : ${all.net>=0?nf(all.net,0)+' CHF d\'économie':'une perte de '+nf(-all.net,0)+' CHF'}${all.net>c.net?`, soit ${nf(all.net-c.net,0)} CHF de plus. C'est ce que coûte ici le choix suisse ; <a href="${ROOT}pourquoi-plus-cher/">voici ce qu'il paie</a>.`:'.'}${all.meatExcess>0?' Au-delà de 1 kg de viande par personne, la douane taxerait l\'excédent.':''}</p>`; }
     const be=PSF.breakEven(p,SY);
-    const beTxt = be==null?'<b>Pas rentable</b>, même avec 5000 CHF de courses.':be===0?'<b>Rentable dès le premier franc.</b>':`Rentable dès <b>${nf(Math.ceil(be/5)*5,0)} CHF</b> de courses.`;
+    const beTxt = be==null?'<b>Pas rentable</b>, même avec 5000 CHF de courses.':be===0?'<b>Rentable dès le premier franc.</b>':`Rentable dès <b>${nf(Math.ceil(be/5)*5,0)} CHF</b> de courses au total.`;
     const vatTxt = be!=null && be < c.lim ? ` Attention : au-delà de ${nf(c.lim,0)} CHF, la TVA suisse s'ajoute sur tout, d'où la marche sur la courbe.` : '';
     h+=`<div class="be"><span>${beTxt}${vatTxt}</span>${bePlot(p,be)}</div>`;
     if(c.fr>c.lim) h+=`<p class="warn">Plus de ${nf(c.lim,0)} CHF d'achats : déclarez-les à la douane, la TVA suisse s'applique sur tout.</p>`;
@@ -252,8 +264,9 @@
   // ---------- chiffres du mois et tableaux
   const E=SY.essence||{};
   const fig=(k,v,s)=>`<div class="fig"><span>${k}</span><b>${pc(v)}</b><small>${s}</small></div>`;
-  $('#figs').innerHTML=fig('Viande',G.m,'plus cher en Suisse')+fig('Fruits et légumes',G.f,'plus cher en Suisse')+fig('Produits laitiers',G.c,'plus cher en Suisse')
-    +fig('Épicerie et boissons',G.b,'plus cher en Suisse')+fig('Essence',E.sp95_ecart,'sans plomb, Genève comparé à la France voisine');
+  const OT={suisse:'produit surtout en Suisse',mixte:'en partie suisse',import:'surtout importé'};
+  $('#figs').innerHTML=RAY.map(r=>fig(r.label,G[r.k],'plus cher en Suisse · '+OT[r.origine])).join('')
+    +fig('Essence',E.sp95_ecart,'sans plomb, Genève comparé à la France voisine');
   const gp=g=>`<span class="${g>0?'up':'down'}">${pc(g)}</span>`;
   const rep=x=>x?`<span class="flag" title="Trop peu de produits ce mois-ci">valeur du mois précédent</span>`:'';
   const off=(L.officiel.produits||[]).filter(p=>p.ecart!=null && (p.groupe||'fl')==='fl');
@@ -271,7 +284,7 @@
     const S=store.get(), has=Q.has('de')||Q.has('a')||Q.has('m');
     const v=(k,sk)=>Q.has(k)?Q.get(k):(has?null:S[sk]);
     const sp=v('m','spend'); if(sp) $('#spend').value=sp;
-    const mx=v('mix','mix'); if(mx) setMix(mx);
+    const sx=v('s','suisse'); if(sx) setSuisse(sx==='-'?[]:sx.split(','));
     const pp=v('p','persons'); if(pp) $('#persons').value=pp;
     const md=v('mode','mode'); if(md && [...$('#mode').options].some(o=>o.value===md)) $('#mode').value=md;
     const sc=v('ch','storeCH'); if(sc && [...$('#storeCH').options].some(o=>o.value===sc)) $('#storeCH').value=sc;
