@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prix de l'essence près de la Suisse : où faire le plein | Panier Suisse France</title>
+<meta name="description" content="Indiquez votre localité : la station qui vous fait le plus économiser, trajet compris, en Suisse ou en France voisine.">
+<link rel="canonical" href="https://gregbrocard.github.io/Panier-suisse-france/essence/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Panier Suisse France">
+<meta property="og:title" content="Prix de l'essence près de la Suisse : où faire le plein | Panier Suisse France">
+<meta property="og:description" content="Indiquez votre localité : la station qui vous fait le plus économiser, trajet compris, en Suisse ou en France voisine.">
+<meta property="og:url" content="https://gregbrocard.github.io/Panier-suisse-france/essence/">
+<meta property="og:image" content="https://gregbrocard.github.io/Panier-suisse-france/og/accueil.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="fr_CH">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#da291c">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../icon-180.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="preload" href="../fonts/IBMPlexSans-Regular-Latin1.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../style.css?v=2026102620261026">
+
+
+</head>
+<body>
+<div style="background:#da291c;color:#fff;text-align:center;padding:8px 12px;font:14px/1.4 sans-serif">Version 3 archivée (octobre 2026). <a href="../../" style="color:#fff;font-weight:600">Voir la version actuelle</a></div>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="../"><span class="cross" aria-hidden="true"></span>Panier Suisse France</a>
+    <nav aria-label="Rubriques">
+      <a href="../">Calculateur</a><a href="../essence/" aria-current="page">Essence</a><a href="../zones/">Villes</a><a href="../prix/">Prix</a><a href="../douane/">Douane</a><a href="../barometre/">Baromètre</a><a href="../methodologie/">Méthode</a>
+    </nav>
+  </header>
+
+  <div class="intro">
+    <h1>Où faire le plein ?</h1>
+    <p class="keep">Indiquez votre localité : on vous montre la station qui vous fait le plus économiser, trajet compris, et la meilleure tout près de chez vous.</p>
+    <p class="upd">Stations françaises : prix officiels du 26 octobre 2026. Prix moyens suisses : douane suisse, 20 octobre 2026.</p>
+  </div>
+
+  <div class="tool">
+    <div class="panel">
+      <h3><span class="step">1</span>Votre plein</h3>
+      <form class="sentence" autocomplete="off" onsubmit="return false">
+        <span class="ln">J'habite à
+          <span class="slot" id="slotFrom"><input id="from" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="fromList" aria-label="Localité" placeholder="insérer un lieu" spellcheck="false"><ul class="list" id="fromList" role="listbox" hidden></ul></span></span>
+        <span class="ln">et je mets
+          <span class="slot" id="slotL"><input id="litres" type="number" inputmode="numeric" min="5" step="5" value="50" aria-label="Litres" style="width:2.6em;text-align:center"></span> litres de
+          <span class="slot"><select id="fuel" aria-label="Carburant"><option value="sp95">sans plomb 95</option><option value="diesel">diesel</option></select></span>.</span>
+      </form>
+      <p class="hint">Tapez les premières lettres de votre localité ou son NPA, par exemple « Mor » ou « 1110 ».</p>
+    </div>
+    <div class="panel side">
+      <h3><span class="step">2</span>Votre voiture</h3>
+      <div class="pair">
+        <div class="field"><label for="conso">Consommation (L/100 km)</label><input id="conso" type="number" min="0" step="0.1" value="7"></div>
+        <div class="field"><label for="radius">« Près de chez moi » (km)</label><select id="radius"><option value="5">5 km</option><option value="10" selected>10 km</option><option value="20">20 km</option></select></div>
+      </div>
+      <div class="field"><label for="pref">Prix que vous payez d'habitude (CHF/L)
+        <span class="info"><button type="button" class="ibtn" aria-expanded="false" aria-label="D'où vient ce prix">?</button>
+          <span class="pop" role="note" hidden><b>Prix de référence</b>Par défaut, le prix moyen de votre région frontalière publié chaque mois par la douane suisse (OFDF). Remplacez-le par le prix de votre station habituelle pour un calcul plus juste.</span></span></label>
+        <input id="pref" type="number" min="0" step="0.01"></div>
+      <label class="chk"><input id="wear" type="checkbox" checked> Compter l'usure de la voiture (0,19 CHF/km, TCS)</label>
+      <button type="button" class="go" id="go">Trouver où faire le plein</button>
+      <p class="missing" id="missing" role="alert" hidden></p>
+    </div>
+  </div>
+
+  <div class="answer" id="answer">
+    <p class="waiting" id="waiting">Vos meilleures stations s'afficheront ici.</p>
+    <div id="res" hidden>
+      <div class="cards" id="cards"></div>
+      <h3 style="margin-top:28px" id="listTitle">Toutes les stations rentables</h3>
+      <div class="tbl"><table id="tStations"><thead><tr><th>Station</th><th>Prix</th><th>Trajet</th><th>Gain net</th></tr></thead><tbody></tbody></table></div>
+      <p class="muted" id="resNote" style="margin-top:10px"></p>
+    </div>
+  </div>
+
+  <section id="couverture">
+    <div class="note" id="cov"></div>
+  </section>
+
+  <section class="page wide" style="padding-top:56px">
+<h2>Les prix du jour, ville par ville</h2>
+<p>Prix moyens des stations françaises autour de chaque ville frontalière, relevés chaque jour sur le flux officiel du ministère de l'Économie, convertis au taux de change du jour. Dernière mise à jour : 26 octobre 2026 à 05:48 (UTC).</p>
+<div class="kpis"><div class="kpi"><span>Sans plomb 95 en Suisse</span><b>2,19 CHF</b><small>zone frontière genevoise, OFDF, 20 octobre 2026</small></div><div class="kpi"><span>Sans plomb 95 en France</span><b>2,03 CHF</b><small>moyenne des zones frontalières</small></div><div class="kpi"><span>Plein de 50 L</span><b>8 CHF</b><small>économisés en moyenne en France</small></div><div class="kpi"><span>Diesel</span><b>+12 %</b><small>Suisse comparée à la France</small></div></div>
+<div class="tbl"><table><thead><tr><th>Ville</th><th>Sans plomb 95</th><th>Diesel</th><th>Plein de 50 L (SP95)</th><th>La moins chère (SP95)</th></tr></thead><tbody><tr><td data-label="Ville"><a href="../zones/annemasse/">Annemasse</a><small>11 stations</small></td><td data-label="Sans plomb 95">1,97 CHF<small>2,139 EUR</small></td><td data-label="Diesel">2,20 CHF<small>2,386 EUR</small></td><td data-label="Plein de 50 L (SP95)">11 CHF</td><td data-label="La moins chère (SP95)">132 Route de Bonneville, Vétraz-Monthoux<small>1,990 EUR, soit 1,84 CHF</small></td></tr><tr><td data-label="Ville"><a href="../zones/stjulien/">Saint-Julien-en-Genevois</a><small>1 stations</small></td><td data-label="Sans plomb 95">2,05 CHF<small>2,225 EUR</small></td><td data-label="Diesel">2,21 CHF<small>2,398 EUR</small></td><td data-label="Plein de 50 L (SP95)">7 CHF</td><td data-label="La moins chère (SP95)">Route des Vignes, Saint-Julien-en-Genevois<small>2,225 EUR, soit 2,05 CHF</small></td></tr><tr><td data-label="Ville"><a href="../zones/genisferney/">Saint-Genis / Ferney</a><small>7 stations</small></td><td data-label="Sans plomb 95">1,97 CHF<small>2,132 EUR</small></td><td data-label="Diesel">2,21 CHF<small>2,395 EUR</small></td><td data-label="Plein de 50 L (SP95)">11 CHF</td><td data-label="La moins chère (SP95)">148 Rue des Chalets, Saint-Genis-Pouilly<small>2,079 EUR, soit 1,92 CHF</small></td></tr><tr><td data-label="Ville"><a href="../zones/divonnegex/">Divonne / Gex</a><small>5 stations</small></td><td data-label="Sans plomb 95">1,99 CHF<small>2,160 EUR</small></td><td data-label="Diesel">2,21 CHF<small>2,395 EUR</small></td><td data-label="Plein de 50 L (SP95)">10 CHF</td><td data-label="La moins chère (SP95)">Route de Divonne les Bains, Gex<small>2,099 EUR, soit 1,94 CHF</small></td></tr><tr><td data-label="Ville"><a href="../zones/thonon/">Thonon-les-Bains</a><small>11 stations</small></td><td data-label="Sans plomb 95">1,98 CHF<small>2,145 EUR</small></td><td data-label="Diesel">2,22 CHF<small>2,405 EUR</small></td><td data-label="Plein de 50 L (SP95)">11 CHF</td><td data-label="La moins chère (SP95)">7 RUE AMEDEE DE FORAS, Thonon-les-Bains<small>2,036 EUR, soit 1,88 CHF</small></td></tr><tr><td data-label="Ville"><a href="../zones/evian/">Évian-les-Bains</a><small>7 stations</small></td><td data-label="Sans plomb 95">1,93 CHF<small>2,088 EUR</small></td><td data-label="Diesel">2,20 CHF<small>2,381 EUR</small></td><td data-label="Plein de 50 L (SP95)">13 CHF</td><td data-label="La moins chère (SP95)">7 RUE AMEDEE DE FORAS, Thonon-les-Bains<small>2,036 EUR, soit 1,88 CHF</small></td></tr><tr><td data-label="Ville"><a href="../zones/lesrousses/">Les Rousses</a><small>6 stations</small></td><td data-label="Sans plomb 95">2,09 CHF<small>2,261 EUR</small></td><td data-label="Diesel">2,23 CHF<small>2,414 EUR</small></td><td data-label="Plein de 50 L (SP95)">5 CHF</td><td data-label="La moins chère (SP95)">15 route Prémanon, Les Rousses<small>2,169 EUR, soit 2,00 CHF</small></td></tr><tr><td data-label="Ville"><a href="../zones/jougne/">Jougne</a><small>1 stations</small></td><td data-label="Sans plomb 95">2,01 CHF<small>2,178 EUR</small></td><td data-label="Diesel">2,18 CHF<small>2,365 EUR</small></td><td data-label="Plein de 50 L (SP95)">9 CHF</td><td data-label="La moins chère (SP95)">52, route de Lausanne, Les Hôpitaux-Neufs<small>2,178 EUR, soit 2,01 CHF</small></td></tr><tr><td data-label="Ville"><a href="../zones/pontarlier/">Pontarlier</a><small>7 stations</small></td><td data-label="Sans plomb 95">2,06 CHF<small>2,235 EUR</small></td><td data-label="Diesel">2,22 CHF<small>2,408 EUR</small></td><td data-label="Plein de 50 L (SP95)">6 CHF</td><td data-label="La moins chère (SP95)">Rue de Besançon, Doubs<small>2,199 EUR, soit 2,03 CHF</small></td></tr><tr><td data-label="Ville"><a href="../zones/morteau/">Morteau</a><small>6 stations</small></td><td data-label="Sans plomb 95">2,07 CHF<small>2,239 EUR</small></td><td data-label="Diesel">2,23 CHF<small>2,419 EUR</small></td><td data-label="Plein de 50 L (SP95)">6 CHF</td><td data-label="La moins chère (SP95)">4 rue du Clos Jeune, Morteau<small>2,149 EUR, soit 1,98 CHF</small></td></tr><tr><td data-label="Ville"><a href="../zones/delle/">Delle</a><small>5 stations</small></td><td data-label="Sans plomb 95">2,05 CHF<small>2,223 EUR</small></td><td data-label="Diesel">2,24 CHF<small>2,425 EUR</small></td><td data-label="Plein de 50 L (SP95)">7 CHF</td><td data-label="La moins chère (SP95)">37 FAUBOURG DE BELFORT, Delle<small>2,054 EUR, soit 1,90 CHF</small></td></tr><tr><td data-label="Ville"><a href="../zones/stlouis/">Saint-Louis</a><small>8 stations</small></td><td data-label="Sans plomb 95">2,14 CHF<small>2,320 EUR</small></td><td data-label="Diesel">2,26 CHF<small>2,445 EUR</small></td><td data-label="Plein de 50 L (SP95)">2 CHF</td><td data-label="La moins chère (SP95)">17 Route de St Louis, Huningue<small>2,278 EUR, soit 2,10 CHF</small></td></tr></tbody></table></div>
+<p class="muted">Plein de 50 L : économie par rapport au prix suisse de la zone frontière genevoise, sans compter le trajet. Pour savoir si le détour vaut la peine, utilisez le <a href="../">calculateur</a>.</p>
+<h2>Les autres frontières suisses</h2>
+<p>Prix à la colonne publiés une fois par mois par l'Office fédéral de la douane et de la sécurité des frontières (OFDF), tableau T 4.4, état du 20 octobre 2026.</p>
+<div class="tbl"><table><thead><tr><th>Frontière</th><th>SP95 Suisse</th><th>SP95 à l'étranger</th><th>Diesel Suisse</th><th>Diesel à l'étranger</th></tr></thead><tbody><tr><td data-label="Frontière">Bâle / Weil am Rhein (Allemagne)</td><td data-label="SP95 Suisse">2,16 CHF</td><td data-label="SP95 à l&#x27;étranger">2,179 EUR<small>soit 2,01 CHF, plein de 50 L : 7 CHF de moins</small></td><td data-label="Diesel Suisse">2,44 CHF</td><td data-label="Diesel à l&#x27;étranger">2,229 EUR<small>soit 2,06 CHF, plein de 50 L : 19 CHF de moins</small></td></tr><tr><td data-label="Frontière">Kreuzlingen / Constance (Allemagne)</td><td data-label="SP95 Suisse">2,13 CHF</td><td data-label="SP95 à l&#x27;étranger">2,089 EUR<small>soit 1,93 CHF, plein de 50 L : 10 CHF de moins</small></td><td data-label="Diesel Suisse">2,41 CHF</td><td data-label="Diesel à l&#x27;étranger">2,219 EUR<small>soit 2,05 CHF, plein de 50 L : 18 CHF de moins</small></td></tr><tr><td data-label="Frontière">Tessin / Italie</td><td data-label="SP95 Suisse">2,04 CHF</td><td data-label="SP95 à l&#x27;étranger">1,989 EUR<small>soit 1,84 CHF, plein de 50 L : 10 CHF de moins</small></td><td data-label="Diesel Suisse">2,32 CHF</td><td data-label="Diesel à l&#x27;étranger">2,189 EUR<small>soit 2,02 CHF, plein de 50 L : 15 CHF de moins</small></td></tr><tr><td data-label="Frontière">Genève / France</td><td data-label="SP95 Suisse">2,19 CHF</td><td data-label="SP95 à l&#x27;étranger">2,200 EUR<small>soit 2,03 CHF, plein de 50 L : 8 CHF de moins</small></td><td data-label="Diesel Suisse">2,48 CHF</td><td data-label="Diesel à l&#x27;étranger">2,400 EUR<small>soit 2,21 CHF, plein de 50 L : 13 CHF de moins</small></td></tr><tr><td data-label="Frontière">Liechtenstein / Autriche</td><td data-label="SP95 Suisse">2,17 CHF</td><td data-label="SP95 à l&#x27;étranger">1,759 EUR<small>soit 1,62 CHF, plein de 50 L : 27 CHF de moins</small></td><td data-label="Diesel Suisse">2,46 CHF</td><td data-label="Diesel à l&#x27;étranger">2,099 EUR<small>soit 1,94 CHF, plein de 50 L : 26 CHF de moins</small></td></tr></tbody></table></div>
+<h2>Bon à savoir</h2>
+<ul><li>Le carburant contenu dans le réservoir passe la douane sans formalité. Pour un bidon de réserve, renseignez-vous auprès de l'<a href="https://www.bazg.admin.ch/fr/franchises-quantitatives-denrees-alimentaires-alcool-et-tabac" rel="noopener">OFDF</a>.</li>
+<li>Le prix en francs suppose le taux de change officiel de la BCE ; avec une carte suisse classique, comptez environ 1 à 2 % de plus.</li>
+<li>Sources : <a href="https://data.economie.gouv.fr/explore/dataset/prix-des-carburants-en-france-flux-instantane-v2/" rel="noopener">flux officiel des prix des carburants</a> (France), <a href="https://www.bazg.admin.ch" rel="noopener">OFDF</a> (Suisse et frontières), BCE (change).</li></ul>
+  </section>
+
+  <footer class="foot">
+    <nav aria-label="Pied de page">
+      <a href="../prix/">Prix par produit</a>
+      <a href="../suisse/">Supermarchés suisses</a>
+      <a href="../a-propos/">À propos</a>
+      <a href="../partenaires/">Partenaires</a>
+      <a href="../methodologie/">Méthodologie</a>
+      <a href="../barometre/">Baromètre du mois</a>
+      <a href="../widget/">Intégrer le calculateur</a>
+      <a href="../donnees/">Données ouvertes</a>
+      <a href="../mentions-legales/">Mentions légales</a>
+      <a href="../confidentialite/">Confidentialité</a>
+      <a href="https://github.com/GregBrocard/Panier-suisse-france" rel="noopener">Code source</a>
+    </nav>
+    <p>Données mises à jour automatiquement le 20 de chaque mois (essence : chaque jour). Méthode version 2, site version 3. Aucun lien commercial avec les enseignes comparées.</p>
+    <p>Sources : Eurostat et OFS (comparaison officielle des prix), OFAG, INSEE, BCE, OFDF, K-Tipp, Open Prices (Open Food Facts), UFC-Que Choisir, relevé Migros, flux officiel des prix des carburants. Trajets et adresses : © contributeurs OpenStreetMap (ODbL), OSRM. Fond de carte : Natural Earth. Localités : swisstopo. Photos : Wikimedia Commons.</p>
+  </footer>
+</div>
+
+<script src="../calc.js?v=2026102620261026"></script>
+<script id="data" type="application/json">{"root": "../", "lacs": [[[6.8712, 46.4587], [6.9165, 46.4419], [6.9354, 46.4231], [6.9139, 46.4043], [6.8677, 46.4025], [6.6972, 46.4231], [6.4994, 46.4093], [6.4791, 46.389], [6.4082, 46.3654], [6.3837, 46.348], [6.3555, 46.3716], [6.2948, 46.3739], [6.2371, 46.3124], [6.183, 46.2388], [6.1332, 46.2047], [6.1532, 46.2312], [6.16, 46.2689], [6.1765, 46.3001], [6.3184, 46.4511], [6.3528, 46.4673], [6.4191, 46.4731], [6.5109, 46.5176], [6.6201, 46.5194], [6.8712, 46.4587]], [[9.7186, 47.5467], [9.7445, 47.5199], [9.6897, 47.5199], [9.6762, 47.4993], [9.6488, 47.4993], [9.6347, 47.5123], [9.6079, 47.4993], [9.5929, 47.4993], [9.5529, 47.5123], [9.5178, 47.4928], [9.4946, 47.4881], [9.398, 47.544], [9.3712, 47.5811], [9.2067, 47.6474], [9.1828, 47.6706], [9.2064, 47.6724], [9.2055, 47.6815], [9.1749, 47.7189], [9.1616, 47.7469], [9.1487, 47.7595], [9.073, 47.7875], [9.0401, 47.811], [9.0321, 47.8207], [9.0719, 47.8166], [9.1761, 47.7657], [9.2108, 47.7595], [9.2267, 47.7248], [9.3224, 47.6818], [9.403, 47.675], [9.4566, 47.6565], [9.4881, 47.6538], [9.5072, 47.6421], [9.5217, 47.6126], [9.5375, 47.5991], [9.5944, 47.5882], [9.6762, 47.554], [9.7186, 47.5467]], [[9.066, 47.723], [9.1037, 47.7006], [9.1275, 47.6706], [9.0159, 47.6792], [8.9812, 47.6624], [8.9055, 47.6521], [8.8811, 47.6565], [8.9147, 47.6565], [8.9862, 47.6865], [9.0047, 47.7042], [8.9429, 47.7339], [8.9462, 47.7433], [8.9562, 47.7474], [9.0047, 47.7321], [9.0047, 47.7389], [8.9836, 47.7463], [8.9836, 47.7525], [9.066, 47.723]], [[8.8461, 46.1691], [8.8417, 46.1543], [8.746, 46.0925], [8.7419, 46.064], [8.7534, 46.0175], [8.7381, 45.9945], [8.6486, 45.9451], [8.6079, 45.9086], [8.6044, 45.8826], [8.6215, 45.847], [8.6215, 45.827], [8.6074, 45.8099], [8.575, 45.7943], [8.5726, 45.7743], [8.6206, 45.7255], [8.6121, 45.7222], [8.5788, 45.7419], [8.5488, 45.7911], [8.567, 45.8185], [8.5744, 45.852], [8.5664, 45.87], [8.5211, 45.8977], [8.4955, 45.9297], [8.4943, 45.9398], [8.5037, 45.943], [8.5603, 45.9321], [8.6156, 45.9551], [8.7136, 46.0387], [8.7139, 46.0519], [8.7004, 46.0811], [8.7107, 46.1105], [8.7333, 46.1305], [8.7952, 46.1644], [8.8461, 46.1691]]], "usure": 0.19, "ofdf_zones": [{"id": "geneve", "nom": "zone frontière genevoise", "lat": 46.204, "lon": 6.143, "sp95": 2.19, "diesel": 2.48}, {"id": "bale", "nom": "zone frontière bâloise", "lat": 47.559, "lon": 7.588, "sp95": 2.16, "diesel": 2.44}, {"id": "kreuzlingen", "nom": "zone frontière de Kreuzlingen", "lat": 47.65, "lon": 9.175, "sp95": 2.13, "diesel": 2.41}, {"id": "tessin", "nom": "zone frontière tessinoise", "lat": 45.99, "lon": 8.95, "sp95": 2.04, "diesel": 2.32}, {"id": "liechtenstein", "nom": "zone frontière saint-galloise (Liechtenstein)", "lat": 47.168, "lon": 9.478, "sp95": 2.17, "diesel": 2.46}], "route": {"facteur": 1.394, "kmh": 75.6, "paires": 7104}, "ref_defaut": {"sp95": 2.19, "diesel": 2.48}, "ofdf_date": "20 octobre 2026", "signal_url": "https://github.com/GregBrocard/Panier-suisse-france/issues/new?title=Prix%20essence%20%3A%20&labels=prix&body=Station%20%3A%20%0ALocalit%C3%A9%20%3A%20%0APrix%20sans%20plomb%2095%20%28CHF/L%29%20%3A%20%0APrix%20diesel%20%28CHF/L%29%20%3A%20%0ADate%20du%20relev%C3%A9%20%3A%20%0A%28Une%20photo%20du%20panneau%20de%20prix%20est%20la%20bienvenue.%29"}</script>
+<script src="../essence.js?v=2026102620261026"></script>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+{
+ "source": "Eurostat, indices de niveau des prix (prc_ppp_ind), programme Eurostat-OCDE des parités de pouvoir d'achat ; UE27 = 100",
+ "url": "https://ec.europa.eu/eurostat/databrowser/view/prc_ppp_ind/default/table",
+ "annee": "2024",
+ "categories": {
+  "A0101": {
+   "label": "Produits alimentaires et boissons non-alcoolisées",
+   "CH": 158.5,
+   "FR": 110.1
+  },
+  "A01010101": {
+   "label": "Pain et céréales",
+   "CH": 163.0,
+   "FR": 112.5
+  },
+  "A01010102": {
+   "label": "Viande",
+   "CH": 207.7,
+   "FR": 131.7
+  },
+  "A01010103": {
+   "label": "Poisson",
+   "CH": 165.6,
+   "FR": 110.6
+  },
+  "A01010104": {
+   "label": "Lait, fromage et ¿ufs",
+   "CH": 147.2,
+   "FR": 96.0
+  },
+  "A01010105": {
+   "label": "Huiles et graisses",
+   "CH": 169.9,
+   "FR": 106.6
+  },
+  "A01010106": {
+   "label": "Fruits, légumes, pommes de terre",
+   "CH": 137.0,
+   "FR": 119.2
+  },
+  "A01010199": {
+   "label": "Autres produits alimentaires",
+   "CH": 154.6,
+   "FR": 93.7
+  },
+  "A010102": {
+   "label": "Boissons non-alcoolisées",
+   "CH": 135.2,
+   "FR": 96.9
+  }
+ }
+}

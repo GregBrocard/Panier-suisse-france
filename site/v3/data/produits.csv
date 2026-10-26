@@ -1,0 +1,34 @@
+﻿produit;rayon;unite;prix_suisse_chf;prix_france_chf;prix_france_eur;ecart_pct;mois;source_suisse;source_france
+Bananes;fruits et légumes;kg;2,49;1,93;2,05;28,8;2026-09;OFAG (moyenne du commerce de détail suisse);INSEE (prix moyen de vente au détail)
+Pommes;fruits et légumes;kg;3,02;2,97;3,15;1,8;2026-09;OFAG (moyenne du commerce de détail suisse);INSEE (prix moyen de vente au détail)
+Poires;fruits et légumes;kg;3,47;3,6;3,82;-3,7;2026-09;OFAG (moyenne du commerce de détail suisse);INSEE (prix moyen de vente au détail)
+Clémentines;fruits et légumes;kg;2,57;3,99;4,23;-35,6;2026-09;OFAG (moyenne du commerce de détail suisse);INSEE (prix moyen de vente au détail)
+Oranges;fruits et légumes;kg;1,72;2,65;2,81;-35,1;2026-09;OFAG (moyenne du commerce de détail suisse);INSEE (prix moyen de vente au détail)
+Tomates;fruits et légumes;kg;4,77;4,93;5,23;-3,3;2026-09;OFAG (moyenne du commerce de détail suisse);INSEE (prix moyen de vente au détail)
+Carottes;fruits et légumes;kg;2,02;2,08;2,21;-3,1;2026-09;OFAG (moyenne du commerce de détail suisse);INSEE (prix moyen de vente au détail)
+Courgettes;fruits et légumes;kg;2,77;3,02;3,2;-8,2;2026-09;OFAG (moyenne du commerce de détail suisse);INSEE (prix moyen de vente au détail)
+Champignons de Paris;fruits et légumes;kg;8,86;6,16;6,53;43,9;2026-09;OFAG (moyenne du commerce de détail suisse);INSEE (prix moyen de vente au détail)
+Oignons jaunes;fruits et légumes;kg;1,75;2,67;2,83;-34,4;2026-09;OFAG (moyenne du commerce de détail suisse);INSEE (prix moyen de vente au détail)
+Poireaux;fruits et légumes;kg;4,18;3,27;3,47;27,7;2026-09;OFAG (moyenne du commerce de détail suisse);INSEE (prix moyen de vente au détail)
+Endives;fruits et légumes;kg;3,55;4,51;4,78;-21,2;2026-09;OFAG (moyenne du commerce de détail suisse);INSEE (prix moyen de vente au détail)
+Poivrons;fruits et légumes;kg;3,79;4,46;4,73;-15,0;2026-09;OFAG (moyenne du commerce de détail suisse);INSEE (prix moyen de vente au détail)
+Pommes de terre;fruits et légumes;kg;1,59;1,83;1,94;-12,8;2026-09;OFAG (moyenne du commerce de détail suisse);INSEE (prix moyen de vente au détail)
+Pain courant (CH mi-blanc, FR baguette);épicerie et boissons;kg;2,38;3,89;4,12;-38,7;2026-09;OFAG (moyenne du commerce de détail suisse);INSEE (prix moyen de vente au détail)
+Lait UHT (CH drink 2,7 %, FR demi-écrémé);produits laitiers;L;1,68;1,09;1,16;53,6;2026-09;OFAG (moyenne du commerce de détail suisse);INSEE, prix estimé à partir du dernier prix moyen publié
+Beurre;produits laitiers;kg;20,34;11,36;12,05;78,9;2026-09;OFAG (moyenne du commerce de détail suisse);INSEE, prix estimé à partir du dernier prix moyen publié
+Emmental (CH doux, FR français);produits laitiers;kg;15,82;10,23;10,85;54,6;2026-09;OFAG (moyenne du commerce de détail suisse);INSEE, prix estimé à partir du dernier prix moyen publié
+Yaourt nature;produits laitiers;kg;3,24;1,68;1,78;92,9;2026-09;OFAG (moyenne du commerce de détail suisse);INSEE, prix estimé à partir du dernier prix moyen publié
+Huile de tournesol;produits laitiers;L;5,35;2,79;2,98;91,6;2026-08;OFAG (moyenne du commerce de détail suisse);INSEE, prix estimé à partir du dernier prix moyen publié
+Entrecôte de bœuf;viande;kg;78,75;30,67;32,52;156,8;2026-09;Migros, médiane de 10 produits, hors bio et promotions;INSEE (prix moyen)
+Escalope de veau;viande;kg;57,75;27,88;29,57;107,1;2026-09;Migros, médiane de 2 produits, hors bio et promotions;INSEE (prix moyen)
+Rôti de porc;viande;kg;19,29;13,18;13,98;46,4;2026-09;Migros, médiane de 15 produits, hors bio et promotions;INSEE (prix moyen)
+Jambon cuit supérieur;viande;kg;39,29;18,44;19,56;113,1;2026-09;Migros, médiane de 7 produits, hors bio et promotions;INSEE (prix moyen)
+Nutella;épicerie et boissons;kg;7,3333;6,595;7,147;11,2;;Migros : Nutella Nutella · Pâte à tartiner (0.75 kg) à 5.50;Open Prices, 9 tickets de caisse en France
+Coca-Cola (bouteille PET);épicerie et boissons;L;1,6;1,587;1,72;0,8;;Migros : Coca-Cola Coca-Cola · Classic  (1.5 L) à 2.40;Open Prices, 16 tickets de caisse en France
+Red Bull 25 cl;épicerie et boissons;L;6,0;4,171;4,52;43,9;;Migros : Red Bull Red Bull · Energy Drink (0.25 L) à 1.50;Open Prices, 21 tickets de caisse en France
+Pringles Original;épicerie et boissons;kg;17,8378;10,097;10,943;76,7;;Migros : Pringles Pringles · Original (0.185 kg) à 3.30;Open Prices, 16 tickets de caisse en France
+Kinder Bueno;épicerie et boissons;kg;21,7054;18,955;20,543;14,5;;Migros : Kinder Kinder · Bueno (0.129 kg) à 2.80;Open Prices, 25 tickets de caisse en France
+Lindt Excellence noir 100 g;épicerie et boissons;kg;48,0;28,511;30,9;68,4;;Migros : Excellence Lindt Excellence · Noir · 70% cacao (0.1 kg) à 4.80;Open Prices, 7 tickets de caisse en France
+Oreo Original;épicerie et boissons;kg;19,1558;8,958;9,708;113,8;;Migros : Oreo Oreo · Original (0.154 kg) à 2.95;Open Prices, 14 tickets de caisse en France
+Evian (6 × 1,5 L);épicerie et boissons;L;0,7333;0,38;0,412;93,0;;Migros : Evian Evian · Eau minérale (9 L) à 6.60;Open Prices, 9 tickets de caisse en France
+Barilla Pesto alla Genovese;épicerie et boissons;kg;20,5263;12,36;13,395;66,1;;Migros : Barilla Barilla · Pesto · Genovese (0.19 kg) à 3.90;Open Prices, 14 tickets de caisse en France

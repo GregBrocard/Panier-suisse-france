@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Douane : ce qu'on peut ramener de France en 2026 | Panier Suisse France</title>
+<meta name="description" content="Combien de viande, d'alcool et de tabac peut-on ramener de France ? Calcul de la TVA et des droits de douane, et mode d'emploi de la détaxe.">
+<link rel="canonical" href="https://gregbrocard.github.io/Panier-suisse-france/douane/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Panier Suisse France">
+<meta property="og:title" content="Douane : ce qu'on peut ramener de France en 2026 | Panier Suisse France">
+<meta property="og:description" content="Combien de viande, d'alcool et de tabac peut-on ramener de France ? Calcul de la TVA et des droits de douane, et mode d'emploi de la détaxe.">
+<meta property="og:url" content="https://gregbrocard.github.io/Panier-suisse-france/douane/">
+<meta property="og:image" content="https://gregbrocard.github.io/Panier-suisse-france/og/accueil.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="fr_CH">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#da291c">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../icon-180.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="preload" href="../fonts/IBMPlexSans-Regular-Latin1.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../style.css?v=2026102620261026">
+
+
+</head>
+<body>
+<div style="background:#da291c;color:#fff;text-align:center;padding:8px 12px;font:14px/1.4 sans-serif">Version 3 archivée (octobre 2026). <a href="../../" style="color:#fff;font-weight:600">Voir la version actuelle</a></div>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="../"><span class="cross" aria-hidden="true"></span>Panier Suisse France</a>
+    <nav aria-label="Rubriques">
+      <a href="../">Calculateur</a><a href="../essence/">Essence</a><a href="../zones/">Villes</a><a href="../prix/">Prix</a><a href="../douane/" aria-current="page">Douane</a><a href="../barometre/">Baromètre</a><a href="../methodologie/">Méthode</a>
+    </nav>
+  </header>
+
+  <main class="page">
+<h1>Douane : ce que vous pouvez ramener de France</h1>
+<p class="lede">Règles de l'Office fédéral de la douane et de la sécurité des frontières (OFDF) pour les achats privés, par personne et par jour. Entrez vos achats : le calcul donne la TVA et les droits à payer.</p>
+<div class="grid2"><div class="form" id="dz">
+  <div class="row"><label for="dPers">Adultes (17 ans et plus)</label><input id="dPers" type="number" min="1" max="9" value="1"></div>
+  <div class="row"><label for="dTot">Montant total des achats<small>en CHF, tout compris</small></label><input id="dTot" type="number" min="0" step="10" value="200"></div>
+  <div class="row"><label for="dViande">Viande et préparations de viande<small>en kg, sans le gibier</small></label><input id="dViande" type="number" min="0" step="0.1" value="0"></div>
+  <div class="row"><label for="dBeurre">Beurre et crème<small>en kg ou en litres</small></label><input id="dBeurre" type="number" min="0" step="0.1" value="0"></div>
+  <div class="row"><label for="dHuile">Huiles, graisses, margarine<small>en kg ou en litres</small></label><input id="dHuile" type="number" min="0" step="0.5" value="0"></div>
+  <div class="row"><label for="dAlc1">Boissons alcoolisées jusqu'à 18 % vol.<small>en litres (vin, bière)</small></label><input id="dAlc1" type="number" min="0" step="0.5" value="0"></div>
+  <div class="row"><label for="dAlc2">Boissons alcoolisées de plus de 18 % vol.<small>en litres</small></label><input id="dAlc2" type="number" min="0" step="0.1" value="0"></div>
+  <div class="row"><label for="dCig">Cigarettes<small>nombre de pièces</small></label><input id="dCig" type="number" min="0" step="20" value="0"></div>
+</div>
+<div><div class="bill" id="dOut" aria-live="polite"></div></div></div>
+<h2>Les règles</h2>
+<div class="tbl"><table><thead><tr><th>Marchandise</th><th>En franchise, par personne et par jour</th><th>Au-delà</th></tr></thead><tbody><tr><td data-label="Marchandise">Valeur totale des achats</td><td data-label="En franchise, par personne et par jour">150 CHF</td><td data-label="Au-delà">TVA suisse sur tout le montant (2,6 % pour l'alimentation, 8,1 % pour le reste)</td></tr><tr><td data-label="Marchandise">Viande et préparations de viande (sans le gibier)</td><td data-label="En franchise, par personne et par jour">1 kg</td><td data-label="Au-delà">17 CHF/kg jusqu'à 10 kg, 23 CHF/kg au-delà</td></tr><tr><td data-label="Marchandise">Beurre et crème</td><td data-label="En franchise, par personne et par jour">1 kg ou 1 L</td><td data-label="Au-delà">16 CHF par kg ou litre</td></tr><tr><td data-label="Marchandise">Huiles, graisses, margarine</td><td data-label="En franchise, par personne et par jour">5 kg ou 5 L</td><td data-label="Au-delà">2 CHF par kg ou litre</td></tr><tr><td data-label="Marchandise">Boissons jusqu'à 18 % vol.</td><td data-label="En franchise, par personne et par jour">5 L</td><td data-label="Au-delà">2 CHF par litre</td></tr><tr><td data-label="Marchandise">Boissons de plus de 18 % vol.</td><td data-label="En franchise, par personne et par jour">1 L</td><td data-label="Au-delà">15 CHF par litre</td></tr><tr><td data-label="Marchandise">Cigarettes, cigares (ou 250 g d'autres tabacs)</td><td data-label="En franchise, par personne et par jour">250 pièces</td><td data-label="Au-delà">0,25 CHF par pièce</td></tr></tbody></table></div>
+<p class="muted">Source : OFDF, <a href="https://www.bazg.admin.ch/dam/fr/sd-web/Mv9dMMMmYzCG/Info-Zoll-Wertfreigrenze-Freimengen_f.pdf" rel="noopener">Info douane, franchises de valeur et quantitatives</a>. Information indicative : en cas de doute, la règle officielle fait foi. Les franchises par personne ne se cumulent pas sur plusieurs jours.</p>
+<h2>Déclarer et payer sans attendre</h2>
+<p>L'application officielle <b>QuickZoll</b> de l'OFDF permet de déclarer ses achats et de payer la TVA ou les droits sur son téléphone avant de passer la frontière.</p>
+<h2>La détaxe : se faire rembourser la TVA française</h2>
+<ul><li>Pour les personnes qui habitent hors de l'Union européenne, donc en Suisse, et de passage en France.</li>
+<li>Plus de 100 € d'achats TTC le même jour dans le même magasin ; le magasin doit proposer la détaxe et établir un bordereau.</li>
+<li>À la sortie de France, faites valider le bordereau à une borne PABLO avant de passer la douane suisse, avec les marchandises.</li>
+<li>La TVA française sur l'alimentation est de 5,5 % ; le remboursement est fait par le magasin ou un opérateur, qui garde souvent une partie en frais.</li>
+<li>Après la détaxe, les règles suisses ci-dessus s'appliquent normalement.</li></ul>
+<p class="muted">Source : <a href="https://www.douane.gouv.fr/articles/a10805-detaxe-presentation-de-pablo" rel="noopener">douane française, la détaxe avec PABLO</a>.</p>
+  </main>
+
+  <footer class="foot">
+    <nav aria-label="Pied de page">
+      <a href="../prix/">Prix par produit</a>
+      <a href="../suisse/">Supermarchés suisses</a>
+      <a href="../a-propos/">À propos</a>
+      <a href="../partenaires/">Partenaires</a>
+      <a href="../methodologie/">Méthodologie</a>
+      <a href="../barometre/">Baromètre du mois</a>
+      <a href="../widget/">Intégrer le calculateur</a>
+      <a href="../donnees/">Données ouvertes</a>
+      <a href="../mentions-legales/">Mentions légales</a>
+      <a href="../confidentialite/">Confidentialité</a>
+      <a href="https://github.com/GregBrocard/Panier-suisse-france" rel="noopener">Code source</a>
+    </nav>
+    <p>Données mises à jour automatiquement le 20 de chaque mois (essence : chaque jour). Méthode version 2, site version 3. Aucun lien commercial avec les enseignes comparées.</p>
+    <p>Sources : Eurostat et OFS (comparaison officielle des prix), OFAG, INSEE, BCE, OFDF, K-Tipp, Open Prices (Open Food Facts), UFC-Que Choisir, relevé Migros, flux officiel des prix des carburants. Trajets et adresses : © contributeurs OpenStreetMap (ODbL), OSRM. Fond de carte : Natural Earth. Localités : swisstopo. Photos : Wikimedia Commons.</p>
+  </footer>
+</div>
+<script>(function(){const R={"franchise_chf": 150, "tva_alimentaire": 0.026, "viande_franchise_kg": 1, "viande_droits": [[10, 17], [null, 23]], "beurre_franchise_kg": 1, "beurre_droits": 16, "huile_franchise_kg": 5, "huile_droits": 2, "alcool_bas_franchise_l": 5, "alcool_bas_droits": 2, "alcool_haut_franchise_l": 1, "alcool_haut_droits": 15, "cigarettes_franchise": 250, "cigarettes_droits": 0.25, "usure_chf_km": 0.19, "electricite_chf_kwh": 0.28, "conso_ev_kwh": 18, "douane_minutes": 15, "frais_carte": 0.015, "tva_fr_alimentaire": 0.055, "detaxe_min_eur": 100};const $=s=>document.getElementById(s);const nf=(v,d=2)=>v.toLocaleString('fr-FR',{minimumFractionDigits:d,maximumFractionDigits:d}).replace(/[\u202f\u00a0]/g,'\u2009');
+function tiers(x,t){let r=Math.max(0,x),done=0,s=0;for(const [u,rate] of t){const cap=u==null?Infinity:u-done;const q=Math.min(r,cap);s+=q*rate;r-=q;done+=q;if(r<=0)break;}return s;}
+function upd(){const p=Math.max(1,+$('dPers').value||1),tot=+$('dTot').value||0;const rows=[];let sum=0;
+const add=(lab,v)=>{if(v>0){rows.push([lab,v]);sum+=v;}};
+add('TVA suisse ('+nf(R.tva_alimentaire*100,1)+' % sur tout, alimentation)', tot>R.franchise_chf*p?tot*R.tva_alimentaire:0);
+add('Viande', tiers((+$('dViande').value||0)-R.viande_franchise_kg*p, R.viande_droits));
+add('Beurre et crème', Math.max(0,(+$('dBeurre').value||0)-R.beurre_franchise_kg*p)*R.beurre_droits);
+add('Huiles et graisses', Math.max(0,(+$('dHuile').value||0)-R.huile_franchise_kg*p)*R.huile_droits);
+add('Alcool jusqu\'à 18 %', Math.max(0,(+$('dAlc1').value||0)-R.alcool_bas_franchise_l*p)*R.alcool_bas_droits);
+add('Alcool de plus de 18 %', Math.max(0,(+$('dAlc2').value||0)-R.alcool_haut_franchise_l*p)*R.alcool_haut_droits);
+add('Cigarettes', Math.max(0,(+$('dCig').value||0)-R.cigarettes_franchise*p)*R.cigarettes_droits);
+const r=(a,b,c='')=>`<div class="r ${c}"><span>${a}</span><span>${b}</span></div>`;
+$('dOut').innerHTML=(rows.length?rows.map(x=>r(x[0],nf(x[1])+' CHF')).join(''):r('Rien à payer','0 CHF'))+r('Total à payer à la douane',nf(sum)+' CHF','t')+`<p class="muted">Franchise de valeur pour ${p} adulte${p>1?'s':''} : ${nf(R.franchise_chf*p,0)} CHF. Au-delà, déclarez vos achats (passage rouge ou QuickZoll).</p>`;}
+document.querySelectorAll('#dz input').forEach(i=>i.addEventListener('input',upd));upd();})();</script>
+</body>
+</html>
