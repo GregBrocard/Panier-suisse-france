@@ -61,10 +61,10 @@
  "essence": {
   "sp95_ch": 2.19,
   "diesel_ch": 2.48,
-  "sp95_fr": 2.019,
-  "diesel_fr": 2.243,
-  "sp95_ecart": 8.5,
-  "diesel_ecart": 10.6
+  "sp95_fr": 2.01,
+  "diesel_fr": 2.238,
+  "sp95_ecart": 9.0,
+  "diesel_ecart": 10.8
  },
  "fx": 0.9227,
  "fl_12m_il_y_a_un_an": 0.7,
