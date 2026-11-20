@@ -1,0 +1,90 @@
+{
+ "mois": "2026-11",
+ "date": "2026-11-20",
+ "gaps": {
+  "m": 62.9,
+  "c": 55.7,
+  "f": 9.9,
+  "p": 49.6,
+  "b": 59.6
+ },
+ "total": {
+  "ecart": 44.5,
+  "economie": 30.8
+ },
+ "officiel": {
+  "gaps": {
+   "m": 62.9,
+   "c": 55.7,
+   "f": 9.9,
+   "p": 49.6,
+   "b": 59.6
+  },
+  "detail": {
+   "m": {
+    "officiel": 57.7,
+    "change": 3.29,
+    "evolution": 0.0
+   },
+   "c": {
+    "officiel": 53.3,
+    "change": 3.29,
+    "evolution": -1.7
+   },
+   "f": {
+    "officiel": 14.9,
+    "change": 3.29,
+    "evolution": -7.4
+   },
+   "p": {
+    "officiel": 44.9,
+    "change": 3.29,
+    "evolution": 0.0
+   },
+   "b": {
+    "officiel": 54.5,
+    "change": 3.29,
+    "evolution": 0.0
+   }
+  },
+  "annee": "2024",
+  "fx_annee": 0.9526
+ },
+ "releves": {
+  "m": 119.7,
+  "c": 69.3,
+  "f": -1.6,
+  "p": null,
+  "b": 47.5
+ },
+ "mois_releves": "2026-10",
+ "essence": {
+  "sp95_ch": 1.89,
+  "diesel_ch": 2.29,
+  "sp95_fr": 1.854,
+  "diesel_fr": 1.987,
+  "sp95_ecart": 1.9,
+  "diesel_ecart": 15.2
+ },
+ "fx": 0.9223,
+ "fl_12m_il_y_a_un_an": 0.2,
+ "groupes": {
+  "tout": {
+   "ecart": 44.5,
+   "economie": 30.8
+  },
+  "suisse": {
+   "ecart": 36.2,
+   "economie": 26.6
+  },
+  "import": {
+   "ecart": 59.6,
+   "economie": 37.3
+  },
+  "mixte": {
+   "ecart": 49.6,
+   "economie": 33.2
+  }
+ },
+ "version": 4
+}

@@ -1,8 +1,9 @@
 {
- "date": "2026-10-26",
- "alertes": [],
+ "date": "2026-11-20",
+ "alertes": [
+  "Marque kinder : écart passé de 14.5 % à 84.1 % en un mois."
+ ],
  "reprises": [
-  "Viande veau : prix suisse du 2026-10-25 repris (2 produits seulement).",
-  "Essence jougne : stations françaises du 2026-10-25 reprises."
+  "Viande veau : prix suisse du 2026-10-25 repris (2 produits seulement)."
  ]
 }

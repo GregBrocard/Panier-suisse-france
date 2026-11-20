@@ -1,15 +1,15 @@
 {
- "genere_le": "2026-10-26",
+ "genere_le": "2026-11-20",
  "basket_version": 2,
  "fx": {
   "jour": {
-   "date": "2026-10-23",
-   "eur_chf": 0.9227
+   "date": "2026-11-20",
+   "eur_chf": 0.9223
   },
   "source": "BCE, taux de référence EUR/CHF"
  },
  "officiel": {
-  "mois": "2026-09",
+  "mois": "2026-10",
   "produits": [
    {
     "id": "bananes",
@@ -20,11 +20,11 @@
     "in_total": true,
     "groupe": "fl",
     "estime": false,
-    "mois": "2026-09",
-    "ch": 2.49,
-    "fr_eur": 2.05,
-    "fr_chf": 1.93,
-    "ecart": 28.8,
+    "mois": "2026-10",
+    "ch": 2.55,
+    "fr_eur": 2.07,
+    "fr_chf": 1.92,
+    "ecart": 32.7,
     "sources": {
      "ofag": [
       "Bananes"
@@ -47,11 +47,11 @@
     "in_total": true,
     "groupe": "fl",
     "estime": false,
-    "mois": "2026-09",
-    "ch": 3.02,
-    "fr_eur": 3.15,
-    "fr_chf": 2.97,
-    "ecart": 1.8,
+    "mois": "2026-10",
+    "ch": 2.96,
+    "fr_eur": 3.01,
+    "fr_chf": 2.79,
+    "ecart": 5.9,
     "sources": {
      "ofag": [
       "Pommes Golden I",
@@ -76,11 +76,11 @@
     "in_total": true,
     "groupe": "fl",
     "estime": false,
-    "mois": "2026-09",
-    "ch": 3.47,
-    "fr_eur": 3.82,
-    "fr_chf": 3.6,
-    "ecart": -3.7,
+    "mois": "2026-10",
+    "ch": 3.69,
+    "fr_eur": 3.81,
+    "fr_chf": 3.54,
+    "ecart": 4.2,
     "sources": {
      "ofag": [
       "Poires Conférence I",
@@ -104,11 +104,11 @@
     "in_total": true,
     "groupe": "fl",
     "estime": false,
-    "mois": "2026-09",
-    "ch": 2.57,
-    "fr_eur": 4.23,
-    "fr_chf": 3.99,
-    "ecart": -35.6,
+    "mois": "2026-10",
+    "ch": 2.48,
+    "fr_eur": 4.55,
+    "fr_chf": 4.22,
+    "ecart": -41.3,
     "sources": {
      "ofag": [
       "Clémentines"
@@ -131,11 +131,11 @@
     "in_total": true,
     "groupe": "fl",
     "estime": false,
-    "mois": "2026-09",
-    "ch": 1.72,
-    "fr_eur": 2.81,
-    "fr_chf": 2.65,
-    "ecart": -35.1,
+    "mois": "2026-10",
+    "ch": 1.58,
+    "fr_eur": 2.83,
+    "fr_chf": 2.63,
+    "ecart": -39.9,
     "sources": {
      "ofag": [
       "Oranges blondes"
@@ -158,11 +158,11 @@
     "in_total": true,
     "groupe": "fl",
     "estime": false,
-    "mois": "2026-09",
-    "ch": 4.77,
-    "fr_eur": 5.23,
-    "fr_chf": 4.93,
-    "ecart": -3.3,
+    "mois": "2026-10",
+    "ch": 4.46,
+    "fr_eur": 4.25,
+    "fr_chf": 3.94,
+    "ecart": 13.2,
     "sources": {
      "ofag": [
       "Tomates grappes",
@@ -186,11 +186,11 @@
     "in_total": true,
     "groupe": "fl",
     "estime": false,
-    "mois": "2026-09",
-    "ch": 2.02,
-    "fr_eur": 2.21,
-    "fr_chf": 2.08,
-    "ecart": -3.1,
+    "mois": "2026-10",
+    "ch": 2.03,
+    "fr_eur": 2.18,
+    "fr_chf": 2.02,
+    "ecart": 0.3,
     "sources": {
      "ofag": [
       "Carottes"
@@ -213,11 +213,11 @@
     "in_total": true,
     "groupe": "fl",
     "estime": false,
-    "mois": "2026-09",
-    "ch": 2.77,
-    "fr_eur": 3.2,
-    "fr_chf": 3.02,
-    "ecart": -8.2,
+    "mois": "2026-10",
+    "ch": 2.97,
+    "fr_eur": 2.88,
+    "fr_chf": 2.67,
+    "ecart": 11.1,
     "sources": {
      "ofag": [
       "Courgettes"
@@ -240,11 +240,11 @@
     "in_total": true,
     "groupe": "fl",
     "estime": false,
-    "mois": "2026-09",
-    "ch": 8.86,
-    "fr_eur": 6.53,
-    "fr_chf": 6.16,
-    "ecart": 43.9,
+    "mois": "2026-10",
+    "ch": 8.8,
+    "fr_eur": 6.55,
+    "fr_chf": 6.08,
+    "ecart": 44.7,
     "sources": {
      "ofag": [
       "Champignons de Paris"
@@ -267,11 +267,11 @@
     "in_total": true,
     "groupe": "fl",
     "estime": false,
-    "mois": "2026-09",
+    "mois": "2026-10",
     "ch": 1.75,
-    "fr_eur": 2.83,
-    "fr_chf": 2.67,
-    "ecart": -34.4,
+    "fr_eur": 2.82,
+    "fr_chf": 2.62,
+    "ecart": -33.1,
     "sources": {
      "ofag": [
       "Oignons jaunes"
@@ -294,11 +294,11 @@
     "in_total": true,
     "groupe": "fl",
     "estime": false,
-    "mois": "2026-09",
-    "ch": 4.18,
-    "fr_eur": 3.47,
-    "fr_chf": 3.27,
-    "ecart": 27.7,
+    "mois": "2026-10",
+    "ch": 4.58,
+    "fr_eur": 3.21,
+    "fr_chf": 2.98,
+    "ecart": 53.7,
     "sources": {
      "ofag": [
       "Poireau vert"
@@ -321,11 +321,11 @@
     "in_total": true,
     "groupe": "fl",
     "estime": false,
-    "mois": "2026-09",
-    "ch": 3.55,
-    "fr_eur": 4.78,
-    "fr_chf": 4.51,
-    "ecart": -21.2,
+    "mois": "2026-10",
+    "ch": 4.0,
+    "fr_eur": 4.26,
+    "fr_chf": 3.95,
+    "ecart": 1.2,
     "sources": {
      "ofag": [
       "Chicorée Witloof"
@@ -348,11 +348,11 @@
     "in_total": true,
     "groupe": "fl",
     "estime": false,
-    "mois": "2026-09",
-    "ch": 3.79,
-    "fr_eur": 4.73,
-    "fr_chf": 4.46,
-    "ecart": -15.0,
+    "mois": "2026-10",
+    "ch": 4.09,
+    "fr_eur": 4.89,
+    "fr_chf": 4.54,
+    "ecart": -9.9,
     "sources": {
      "ofag": [
       "Poivrons"
@@ -375,11 +375,11 @@
     "in_total": true,
     "groupe": "fl",
     "estime": false,
-    "mois": "2026-09",
-    "ch": 1.59,
-    "fr_eur": 1.94,
+    "mois": "2026-10",
+    "ch": 1.6,
+    "fr_eur": 1.97,
     "fr_chf": 1.83,
-    "ecart": -12.8,
+    "ecart": -12.5,
     "sources": {
      "ofag": [
       "Chair ferme : vert",
@@ -403,11 +403,11 @@
     "in_total": false,
     "groupe": "fl",
     "estime": false,
-    "mois": "2026-09",
+    "mois": "2026-10",
     "ch": 2.38,
     "fr_eur": 4.12,
-    "fr_chf": 3.89,
-    "ecart": -38.7,
+    "fr_chf": 3.82,
+    "ecart": -37.8,
     "sources": {
      "ofag": [
       "Pain mi-blanc , non bio, moyenne"
@@ -550,11 +550,11 @@
     "in_total": true,
     "groupe": "cremerie",
     "estime": true,
-    "mois": "2026-08",
-    "ch": 5.35,
-    "fr_eur": 2.98,
-    "fr_chf": 2.79,
-    "ecart": 91.6,
+    "mois": "2026-10",
+    "ch": 5.21,
+    "fr_eur": 2.97,
+    "fr_chf": 2.75,
+    "ecart": 89.2,
     "sources": {
      "ofag": [
       "Huile de tournesol, non bio, import"
@@ -573,15 +573,15 @@
    }
   ],
   "dernier": {
-   "m": "2026-09",
-   "fx": 0.94299,
+   "m": "2026-10",
+   "fx": 0.92819,
    "n": 14,
-   "ch": 33.26,
-   "fr": 36.01,
-   "ecart": -7.6,
+   "ch": 33.48,
+   "fr": 34.26,
+   "ecart": -2.3,
    "cats": {
-    "Fruits": -12.0,
-    "Légumes": -4.5
+    "Fruits": -12.5,
+    "Légumes": 5.4
    }
   }
  },
@@ -591,25 +591,25 @@
    "label": "Entrecôte de bœuf",
    "unit": "kg",
    "qty": 0.3,
-   "ch": 78.75,
-   "ch_migros": 78.75,
+   "ch": 79.5,
+   "ch_migros": 79.5,
    "ajustement_discount": 0.0,
    "ch_n": 10,
    "ch_produits": [
     "M-Classic M-Classic · Entrecôte de bœuf  — 44.50/kg",
     "Migros Migros · Entrecôte de bœuf  — 45.00/kg",
     "Migros Migros · Entrecôte de bœuf — 50.00/kg",
-    "Entrecôte parisienne — 52.50/kg",
     "Entrecôte de bœuf · De la région — 78.00/kg",
     "Entrecôte de bœuf — 79.50/kg",
     "Entrecôte de bœuf · De la région — 79.50/kg",
+    "Sélection Sélection · Entrecôte — 79.50/kg",
     "Weiderind Weiderind · Entrecôte de bœuf · De la région — 84.00/kg"
    ],
    "fr_eur": 32.52,
-   "fr_mois": "2026-09",
-   "fr_chf": 30.67,
+   "fr_mois": "2026-10",
+   "fr_chf": 30.18,
    "insee": "000442435",
-   "ecart": 156.8
+   "ecart": 163.4
   },
   {
    "id": "veau",
@@ -624,11 +624,11 @@
     "Migros Migros · Escalope à la chair à saucisse de veau · De la région — 29.50/kg",
     "Escalopes de veau Qualivo · De la région — 86.00/kg"
    ],
-   "fr_eur": 29.57,
-   "fr_mois": "2026-09",
-   "fr_chf": 27.88,
+   "fr_eur": 29.61,
+   "fr_mois": "2026-10",
+   "fr_chf": 27.48,
    "insee": "000442441",
-   "ecart": 107.1,
+   "ecart": 110.2,
    "reprise": "2026-10-25"
   },
   {
@@ -636,10 +636,10 @@
    "label": "Rôti de porc",
    "unit": "kg",
    "qty": 0.4,
-   "ch": 19.29,
-   "ch_migros": 19.29,
+   "ch": 20.89,
+   "ch_migros": 20.89,
    "ajustement_discount": 0.0,
-   "ch_n": 15,
+   "ch_n": 16,
    "ch_produits": [
     "M-Budget M-Budget · saucisse à rôtir de porc — 10.13/kg",
     "Saucisse à rôtir de porc · De la région — 14.20/kg",
@@ -650,35 +650,34 @@
     "Migros Migros · Saucisse à rôtir de porc — 19.09/kg",
     "Saucisse à rôtir de porc · De la région — 19.29/kg"
    ],
-   "fr_eur": 13.98,
-   "fr_mois": "2026-09",
-   "fr_chf": 13.18,
+   "fr_eur": 14.03,
+   "fr_mois": "2026-10",
+   "fr_chf": 13.02,
    "insee": "000442448",
-   "ecart": 46.4
+   "ecart": 60.4
   },
   {
    "id": "jambon",
    "label": "Jambon cuit supérieur",
    "unit": "kg",
    "qty": 0.2,
-   "ch": 39.29,
-   "ch_migros": 39.29,
+   "ch": 38.39,
+   "ch_migros": 38.39,
    "ajustement_discount": 0.0,
-   "ch_n": 7,
+   "ch_n": 6,
    "ch_produits": [
     "Da Emilio Da Emilio · Pinsa · au jambon cuit — 18.06/kg",
     "Jambonneau · De la région, cuit — 23.00/kg",
     "Tradition Tradition · Jambon cuit — 37.50/kg",
     "Rapelli Rapelli · Jambon cuit de cuisse Puccini — 39.29/kg",
     "Spécialité Suisse Spécialité Suisse · Jambon cuit · De la région — 45.00/kg",
-    "Jambon cuit de bœuf · De la région — 55.00/kg",
-    "Jambon cuit — 87.27/kg"
+    "Jambon cuit de bœuf · De la région — 55.00/kg"
    ],
-   "fr_eur": 19.56,
-   "fr_mois": "2026-09",
-   "fr_chf": 18.44,
+   "fr_eur": 19.7,
+   "fr_mois": "2026-10",
+   "fr_chf": 18.29,
    "insee": "000849397",
-   "ecart": 113.1
+   "ecart": 109.9
   }
  ],
  "marques": [
@@ -694,13 +693,13 @@
    "fr_n": 9,
    "fr_produit": "Pâte à tartiner Nutella noisettes et cacao - 750g 750g",
    "fr_prix_eur": 5.36,
-   "fr_depuis": "2025-10-26",
+   "fr_depuis": "2025-11-20",
    "fenetre_mois": 12,
    "fr_n_12m": 9,
    "ean_fr": [
     "3017620421006"
    ],
-   "fr_unit_chf": 6.595,
+   "fr_unit_chf": 6.592,
    "ecart": 11.2
   },
   {
@@ -715,14 +714,14 @@
    "fr_n": 16,
    "fr_produit": "Coca-Cola goût original 1250ml",
    "fr_prix_eur": 2.15,
-   "fr_depuis": "2025-10-26",
+   "fr_depuis": "2025-11-20",
    "fenetre_mois": 12,
    "fr_n_12m": 16,
    "ean_fr": [
     "5449000267412"
    ],
-   "fr_unit_chf": 1.587,
-   "ecart": 0.8
+   "fr_unit_chf": 1.586,
+   "ecart": 0.9
   },
   {
    "id": "redbull",
@@ -736,13 +735,13 @@
    "fr_n": 21,
    "fr_produit": "25 cl Red Bull - Energy Drink 250ml",
    "fr_prix_eur": 1.13,
-   "fr_depuis": "2025-10-26",
+   "fr_depuis": "2025-11-20",
    "fenetre_mois": 12,
    "fr_n_12m": 21,
    "ean_fr": [
     "9002490205973"
    ],
-   "fr_unit_chf": 4.171,
+   "fr_unit_chf": 4.169,
    "ecart": 43.9
   },
   {
@@ -753,39 +752,39 @@
    "ch_unit": 17.8378,
    "ch_produit": "Pringles Pringles · Original (0.185 kg) à 3.30",
    "ch_url": "https://www.migros.ch/fr/product/101980000000",
-   "fr_unit_eur": 10.943,
-   "fr_n": 16,
+   "fr_unit_eur": 11.514,
+   "fr_n": 18,
    "fr_produit": "Pringles Original 175g",
-   "fr_prix_eur": 1.915,
-   "fr_depuis": "2025-10-26",
+   "fr_prix_eur": 2.015,
+   "fr_depuis": "2025-11-20",
    "fenetre_mois": 12,
-   "fr_n_12m": 16,
+   "fr_n_12m": 18,
    "ean_fr": [
     "5053990156009"
    ],
-   "fr_unit_chf": 10.097,
-   "ecart": 76.7
+   "fr_unit_chf": 10.619,
+   "ecart": 68.0
   },
   {
    "id": "kinder",
    "label": "Kinder Bueno",
    "unit": "kg",
    "qty": 0.129,
-   "ch_unit": 21.7054,
-   "ch_produit": "Kinder Kinder · Bueno (0.129 kg) à 2.80",
-   "ch_url": "https://www.migros.ch/fr/product/101578500000",
+   "ch_unit": 34.8837,
+   "ch_produit": "Kinder Kinder · Bueno (0.043 kg) à 1.50",
+   "ch_url": "https://www.migros.ch/fr/product/101578400000",
    "fr_unit_eur": 20.543,
-   "fr_n": 25,
+   "fr_n": 23,
    "fr_produit": "Barre Chocolatée Kinder Bueno Chocolat au Lait 129g",
    "fr_prix_eur": 2.65,
-   "fr_depuis": "2025-10-26",
+   "fr_depuis": "2025-11-20",
    "fenetre_mois": 12,
-   "fr_n_12m": 25,
+   "fr_n_12m": 23,
    "ean_fr": [
     "8000500025857"
    ],
-   "fr_unit_chf": 18.955,
-   "ecart": 14.5
+   "fr_unit_chf": 18.947,
+   "ecart": 84.1
   },
   {
    "id": "lindt",
@@ -799,13 +798,13 @@
    "fr_n": 7,
    "fr_produit": "Cioccolato Fondente 78% 100g",
    "fr_prix_eur": 3.09,
-   "fr_depuis": "2025-10-26",
+   "fr_depuis": "2025-11-20",
    "fenetre_mois": 12,
    "fr_n_12m": 7,
    "ean_fr": [
     "3046920010047"
    ],
-   "fr_unit_chf": 28.511,
+   "fr_unit_chf": 28.499,
    "ecart": 68.4
   },
   {
@@ -816,18 +815,18 @@
    "ch_unit": 19.1558,
    "ch_produit": "Oreo Oreo · Original (0.154 kg) à 2.95",
    "ch_url": "https://www.migros.ch/fr/product/110561100000",
-   "fr_unit_eur": 9.708,
-   "fr_n": 14,
+   "fr_unit_eur": 9.74,
+   "fr_n": 15,
    "fr_produit": "OREO ORIGINAL 154g",
-   "fr_prix_eur": 1.495,
-   "fr_depuis": "2025-10-26",
+   "fr_prix_eur": 1.5,
+   "fr_depuis": "2025-11-20",
    "fenetre_mois": 12,
-   "fr_n_12m": 14,
+   "fr_n_12m": 15,
    "ean_fr": [
     "7622300336738"
    ],
-   "fr_unit_chf": 8.958,
-   "ecart": 113.8
+   "fr_unit_chf": 8.983,
+   "ecart": 113.2
   },
   {
    "id": "babybel",
@@ -841,13 +840,13 @@
    "fr_n": 2,
    "fr_produit": "Babybel 264g",
    "fr_prix_eur": 4.815,
-   "fr_depuis": "2025-10-26",
+   "fr_depuis": "2025-11-20",
    "fenetre_mois": 12,
    "fr_n_12m": 2,
    "ean_fr": [
     "3073781178005"
    ],
-   "fr_unit_chf": 16.829,
+   "fr_unit_chf": 16.822,
    "ecart": 28.3
   },
   {
@@ -855,21 +854,21 @@
    "label": "Evian (6 × 1,5 L)",
    "unit": "L",
    "qty": 3.0,
-   "ch_unit": 0.7333,
-   "ch_produit": "Evian Evian · Eau minérale (9 L) à 6.60",
+   "ch_unit": 0.7222,
+   "ch_produit": "Evian Evian · Eau minérale (9 L) à 6.50",
    "ch_url": "https://www.migros.ch/fr/product/120804900000",
    "fr_unit_eur": 0.412,
    "fr_n": 9,
    "fr_produit": "Evian 9000ml",
    "fr_prix_eur": 3.71,
-   "fr_depuis": "2025-10-26",
+   "fr_depuis": "2025-11-20",
    "fenetre_mois": 12,
    "fr_n_12m": 9,
    "ean_fr": [
     "3068320120263"
    ],
    "fr_unit_chf": 0.38,
-   "ecart": 93.0
+   "ecart": 90.1
   },
   {
    "id": "pesto",
@@ -879,18 +878,18 @@
    "ch_unit": 20.5263,
    "ch_produit": "Barilla Barilla · Pesto · Genovese (0.19 kg) à 3.90",
    "ch_url": "https://www.migros.ch/fr/product/153202000000",
-   "fr_unit_eur": 13.395,
+   "fr_unit_eur": 13.105,
    "fr_n": 14,
    "fr_produit": "Barilla PESTO alla GENOVESE 190g",
-   "fr_prix_eur": 2.545,
-   "fr_depuis": "2026-04-26",
+   "fr_prix_eur": 2.49,
+   "fr_depuis": "2026-05-21",
    "fenetre_mois": 6,
-   "fr_n_12m": 18,
+   "fr_n_12m": 19,
    "ean_fr": [
     "8076809513753"
    ],
-   "fr_unit_chf": 12.36,
-   "ecart": 66.1
+   "fr_unit_chf": 12.087,
+   "ecart": 69.8
   }
  ],
  "carburant": {
@@ -898,295 +897,294 @@
    "annemasse": {
     "n": 11,
     "moyenne": {
-     "sp95": 2.139,
-     "diesel": 2.386
+     "sp95": 1.95,
+     "diesel": 2.135
     },
     "min": {
-     "sp95": 1.99,
-     "diesel": 2.25
+     "sp95": 1.899,
+     "diesel": 2.055
     },
     "moyenne_chf": {
-     "sp95": 1.974,
-     "diesel": 2.202
+     "sp95": 1.798,
+     "diesel": 1.969
     },
     "min_chf": {
-     "sp95": 1.836,
-     "diesel": 2.076
+     "sp95": 1.751,
+     "diesel": 1.895
     }
    },
    "stjulien": {
     "n": 1,
     "moyenne": {
-     "sp95": 2.225,
-     "diesel": 2.398
+     "sp95": 1.987,
+     "diesel": 2.117
     },
     "min": {
-     "sp95": 2.225,
-     "diesel": 2.398
+     "sp95": 1.987,
+     "diesel": 2.117
     },
     "moyenne_chf": {
-     "sp95": 2.053,
-     "diesel": 2.213
+     "sp95": 1.833,
+     "diesel": 1.953
     },
     "min_chf": {
-     "sp95": 2.053,
-     "diesel": 2.213
+     "sp95": 1.833,
+     "diesel": 1.953
     }
    },
    "genisferney": {
     "n": 7,
     "moyenne": {
-     "sp95": 2.132,
-     "diesel": 2.395
+     "sp95": 1.964,
+     "diesel": 2.131
     },
     "min": {
-     "sp95": 2.079,
-     "diesel": 2.345
+     "sp95": 1.894,
+     "diesel": 2.069
     },
     "moyenne_chf": {
-     "sp95": 1.967,
-     "diesel": 2.21
+     "sp95": 1.811,
+     "diesel": 1.965
     },
     "min_chf": {
-     "sp95": 1.918,
-     "diesel": 2.164
+     "sp95": 1.747,
+     "diesel": 1.908
     }
    },
    "divonnegex": {
     "n": 5,
     "moyenne": {
-     "sp95": 2.16,
-     "diesel": 2.395
+     "sp95": 1.961,
+     "diesel": 2.131
     },
     "min": {
-     "sp95": 2.099,
-     "diesel": 2.359
+     "sp95": 1.87,
+     "diesel": 2.03
     },
     "moyenne_chf": {
-     "sp95": 1.993,
-     "diesel": 2.21
+     "sp95": 1.809,
+     "diesel": 1.965
     },
     "min_chf": {
-     "sp95": 1.937,
-     "diesel": 2.177
+     "sp95": 1.725,
+     "diesel": 1.872
     }
    },
    "thonon": {
     "n": 11,
     "moyenne": {
-     "sp95": 2.145,
-     "diesel": 2.405
+     "sp95": 1.964,
+     "diesel": 2.166
     },
     "min": {
-     "sp95": 2.036,
-     "diesel": 2.363
+     "sp95": 1.885,
+     "diesel": 2.062
     },
     "moyenne_chf": {
-     "sp95": 1.979,
-     "diesel": 2.219
+     "sp95": 1.811,
+     "diesel": 1.998
     },
     "min_chf": {
-     "sp95": 1.879,
-     "diesel": 2.18
+     "sp95": 1.739,
+     "diesel": 1.902
     }
    },
    "evian": {
     "n": 7,
     "moyenne": {
-     "sp95": 2.088,
-     "diesel": 2.381
+     "sp95": 1.936,
+     "diesel": 2.121
     },
     "min": {
-     "sp95": 2.036,
-     "diesel": 2.359
+     "sp95": 1.885,
+     "diesel": 2.062
     },
     "moyenne_chf": {
-     "sp95": 1.927,
-     "diesel": 2.197
+     "sp95": 1.786,
+     "diesel": 1.956
     },
     "min_chf": {
-     "sp95": 1.879,
-     "diesel": 2.177
+     "sp95": 1.739,
+     "diesel": 1.902
     }
    },
    "lesrousses": {
     "n": 6,
     "moyenne": {
-     "sp95": 2.261,
-     "diesel": 2.414
+     "sp95": 2.111,
+     "diesel": 2.189
     },
     "min": {
-     "sp95": 2.169,
-     "diesel": 2.369
+     "sp95": 1.969,
+     "diesel": 2.099
     },
     "moyenne_chf": {
-     "sp95": 2.086,
-     "diesel": 2.227
+     "sp95": 1.947,
+     "diesel": 2.019
     },
     "min_chf": {
-     "sp95": 2.001,
-     "diesel": 2.186
+     "sp95": 1.816,
+     "diesel": 1.936
     }
    },
    "jougne": {
     "n": 1,
     "moyenne": {
-     "sp95": 2.178,
-     "diesel": 2.365
+     "sp95": 1.968,
+     "diesel": 2.092
     },
     "min": {
-     "sp95": 2.178,
-     "diesel": 2.365
+     "sp95": 1.968,
+     "diesel": 2.092
     },
     "moyenne_chf": {
-     "sp95": 2.01,
-     "diesel": 2.182
+     "sp95": 1.815,
+     "diesel": 1.929
     },
     "min_chf": {
-     "sp95": 2.01,
-     "diesel": 2.182
-    },
-    "reprise": "2026-10-25"
+     "sp95": 1.815,
+     "diesel": 1.929
+    }
    },
    "pontarlier": {
     "n": 7,
     "moyenne": {
-     "sp95": 2.235,
-     "diesel": 2.408
+     "sp95": 2.081,
+     "diesel": 2.198
     },
     "min": {
-     "sp95": 2.199,
-     "diesel": 2.379
+     "sp95": 1.99,
+     "diesel": 2.158
     },
     "moyenne_chf": {
-     "sp95": 2.062,
-     "diesel": 2.222
+     "sp95": 1.919,
+     "diesel": 2.027
     },
     "min_chf": {
-     "sp95": 2.029,
-     "diesel": 2.195
+     "sp95": 1.835,
+     "diesel": 1.99
     }
    },
    "morteau": {
     "n": 6,
     "moyenne": {
-     "sp95": 2.239,
-     "diesel": 2.419
+     "sp95": 2.066,
+     "diesel": 2.185
     },
     "min": {
-     "sp95": 2.149,
-     "diesel": 2.399
+     "sp95": 1.99,
+     "diesel": 2.149
     },
     "moyenne_chf": {
-     "sp95": 2.066,
-     "diesel": 2.232
+     "sp95": 1.905,
+     "diesel": 2.015
     },
     "min_chf": {
-     "sp95": 1.983,
-     "diesel": 2.214
+     "sp95": 1.835,
+     "diesel": 1.982
     }
    },
    "delle": {
     "n": 5,
     "moyenne": {
-     "sp95": 2.223,
-     "diesel": 2.425
+     "sp95": 2.068,
+     "diesel": 2.173
     },
     "min": {
-     "sp95": 2.054,
-     "diesel": 2.342
+     "sp95": 1.915,
+     "diesel": 2.057
     },
     "moyenne_chf": {
-     "sp95": 2.051,
-     "diesel": 2.238
+     "sp95": 1.907,
+     "diesel": 2.004
     },
     "min_chf": {
-     "sp95": 1.895,
-     "diesel": 2.161
+     "sp95": 1.766,
+     "diesel": 1.897
     }
    },
    "stlouis": {
     "n": 8,
     "moyenne": {
-     "sp95": 2.32,
-     "diesel": 2.445
+     "sp95": 2.073,
+     "diesel": 2.21
     },
     "min": {
-     "sp95": 2.278,
-     "diesel": 2.25
+     "sp95": 1.99,
+     "diesel": 2.149
     },
     "moyenne_chf": {
-     "sp95": 2.141,
-     "diesel": 2.256
+     "sp95": 1.912,
+     "diesel": 2.038
     },
     "min_chf": {
-     "sp95": 2.102,
-     "diesel": 2.076
+     "sp95": 1.835,
+     "diesel": 1.982
     }
    }
   },
   "ch": {
    "source": "https://www.bazg.admin.ch/dam/fr/sd-web/GEosTpUlCewh/Monatstabelle%20T%204.4f.02.pdf",
-   "date_texte": "20 octobre 2026",
+   "date_texte": "20 novembre 2026re 2026",
    "zones": {
     "bale": {
      "sp95": {
-      "ch_chf": 2.16,
-      "etranger_eur": 2.179
+      "ch_chf": 1.87,
+      "etranger_eur": 1.829
      },
      "diesel": {
-      "ch_chf": 2.44,
-      "etranger_eur": 2.229
+      "ch_chf": 2.27,
+      "etranger_eur": 2.109
      }
     },
     "kreuzlingen": {
      "sp95": {
-      "ch_chf": 2.13,
-      "etranger_eur": 2.089
+      "ch_chf": 1.86,
+      "etranger_eur": 1.989
      },
      "diesel": {
-      "ch_chf": 2.41,
-      "etranger_eur": 2.219
+      "ch_chf": 2.29,
+      "etranger_eur": 2.169
      }
     },
     "tessin": {
      "sp95": {
-      "ch_chf": 2.04,
-      "etranger_eur": 1.989
+      "ch_chf": 1.86,
+      "etranger_eur": 1.934
      },
      "diesel": {
-      "ch_chf": 2.32,
+      "ch_chf": 2.22,
       "etranger_eur": 2.189
      }
     },
     "geneve": {
      "sp95": {
-      "ch_chf": 2.19,
-      "etranger_eur": 2.2
+      "ch_chf": 1.89,
+      "etranger_eur": 2.04
      },
      "diesel": {
-      "ch_chf": 2.48,
-      "etranger_eur": 2.4
+      "ch_chf": 2.29,
+      "etranger_eur": 2.19
      }
     },
     "liechtenstein": {
      "sp95": {
-      "ch_chf": 2.17,
-      "etranger_eur": 1.759
+      "ch_chf": 1.89,
+      "etranger_eur": 1.569
      },
      "diesel": {
-      "ch_chf": 2.46,
-      "etranger_eur": 2.099
+      "ch_chf": 2.29,
+      "etranger_eur": 1.979
      }
     }
    },
    "sp95": {
-    "ch_chf": 2.19,
-    "fr_eur": 2.2
+    "ch_chf": 1.89,
+    "fr_eur": 2.04
    },
    "diesel": {
-    "ch_chf": 2.48,
-    "fr_eur": 2.4
+    "ch_chf": 2.29,
+    "fr_eur": 2.19
    }
   },
   "historique_fr": {
@@ -2670,6 +2668,11 @@
      "2026-09",
      2.2,
      2.075
+    ],
+    [
+     "2026-10",
+     2.21,
+     2.051
     ]
    ],
    "diesel": [
@@ -4332,6 +4335,11 @@
      "2026-09",
      2.34,
      2.207
+    ],
+    [
+     "2026-10",
+     2.36,
+     2.191
     ]
    ]
   }
@@ -23704,6 +23712,11 @@
    [
     "Trogen",
     "AR",
+    "9043"
+   ],
+   [
+    "Trogen",
+    "SG",
     "9043"
    ],
    [
@@ -121001,6 +121014,32 @@
     143
    ],
    [
+    381,
+    279,
+    382,
+    269,
+    375,
+    265,
+    365,
+    265,
+    352,
+    274,
+    342,
+    259,
+    371,
+    269,
+    316,
+    230,
+    300,
+    246,
+    287,
+    228,
+    237,
+    196,
+    185,
+    142
+   ],
+   [
     167,
     143,
     189,
@@ -134988,7 +135027,7 @@
    ],
    [
     47.579,
-    9.169
+    9.168
    ],
    [
     47.57,
@@ -134996,7 +135035,7 @@
    ],
    [
     47.393,
-    8.384
+    8.385
    ],
    [
     46.629,
@@ -135060,7 +135099,7 @@
    ],
    [
     47.526,
-    8.832
+    8.831
    ],
    [
     47.322,
@@ -135184,7 +135223,7 @@
    ],
    [
     47.507,
-    7.523
+    7.524
    ],
    [
     47.503,
@@ -135327,7 +135366,7 @@
     8.018
    ],
    [
-    46.468,
+    46.467,
     9.651
    ],
    [
@@ -136212,7 +136251,7 @@
    ],
    [
     46.035,
-    8.933
+    8.932
    ],
    [
     46.149,
@@ -136260,7 +136299,7 @@
    ],
    [
     46.244,
-    10.129
+    10.128
    ],
    [
     46.49,
@@ -137200,7 +137239,7 @@
    ],
    [
     46.913,
-    6.676
+    6.673
    ],
    [
     46.097,
@@ -137355,7 +137394,7 @@
     7.306
    ],
    [
-    47.092,
+    47.091,
     8.013
    ],
    [
@@ -137432,7 +137471,7 @@
    ],
    [
     46.708,
-    9.169
+    9.168
    ],
    [
     47.36,
@@ -138076,7 +138115,7 @@
    ],
    [
     47.033,
-    9.078
+    9.077
    ],
    [
     47.55,
@@ -138400,7 +138439,7 @@
    ],
    [
     46.802,
-    9.23
+    9.231
    ],
    [
     47.001,
@@ -138631,7 +138670,7 @@
     9.177
    ],
    [
-    46.507,
+    46.506,
     7.181
    ],
    [
@@ -139076,7 +139115,7 @@
    ],
    [
     47.467,
-    7.861
+    7.86
    ],
    [
     47.249,
@@ -139516,7 +139555,7 @@
    ],
    [
     46.677,
-    6.963
+    6.964
    ],
    [
     47.144,
@@ -139608,7 +139647,7 @@
    ],
    [
     46.25,
-    9.146
+    9.147
    ],
    [
     47.115,
@@ -139836,7 +139875,7 @@
    ],
    [
     47.264,
-    7.475
+    7.476
    ],
    [
     46.667,
@@ -140251,7 +140290,7 @@
     7.66
    ],
    [
-    47.419,
+    47.418,
     7.602
    ],
    [
@@ -140623,7 +140662,7 @@
     7.238
    ],
    [
-    47.096,
+    47.095,
     8.461
    ],
    [
@@ -140952,7 +140991,7 @@
    ],
    [
     47.426,
-    7.898
+    7.899
    ],
    [
     47.324,
@@ -141024,7 +141063,7 @@
    ],
    [
     47.431,
-    7.382
+    7.381
    ],
    [
     47.424,
@@ -141444,7 +141483,7 @@
    ],
    [
     46.791,
-    9.202
+    9.201
    ],
    [
     47.274,
@@ -141531,7 +141570,7 @@
     9.097
    ],
    [
-    46.686,
+    46.685,
     9.563
    ],
    [
@@ -142116,7 +142155,7 @@
    ],
    [
     46.311,
-    10.064
+    10.063
    ],
    [
     47.336,
@@ -142496,7 +142535,7 @@
    ],
    [
     46.83,
-    7.015
+    7.016
    ],
    [
     47.7,
@@ -142800,7 +142839,7 @@
    ],
    [
     46.68,
-    7.867
+    7.866
    ],
    [
     47.03,
@@ -143148,7 +143187,7 @@
    ],
    [
     46.826,
-    9.654
+    9.653
    ],
    [
     46.577,
@@ -143284,7 +143323,7 @@
    ],
    [
     45.994,
-    8.809
+    8.808
    ],
    [
     47.351,
@@ -143471,8 +143510,8 @@
     8.056
    ],
    [
-    46.523,
-    9.614
+    46.525,
+    9.616
    ],
    [
     47.547,
@@ -143747,7 +143786,7 @@
     8.264
    ],
    [
-    47.631,
+    47.632,
     9.234
    ],
    [
@@ -144047,7 +144086,7 @@
     7.573
    ],
    [
-    47.186,
+    47.187,
     7.691
    ],
    [
@@ -144548,7 +144587,7 @@
    ],
    [
     46.715,
-    6.728
+    6.727
    ],
    [
     46.072,
@@ -144655,7 +144694,7 @@
     6.526
    ],
    [
-    46.57,
+    46.571,
     6.826
    ],
    [
@@ -144803,8 +144842,8 @@
     9.559
    ],
    [
-    46.6,
-    9.572
+    46.596,
+    9.569
    ],
    [
     46.749,
@@ -144836,7 +144875,7 @@
    ],
    [
     46.72,
-    9.196
+    9.197
    ],
    [
     46.834,
@@ -145087,7 +145126,7 @@
     8.932
    ],
    [
-    46.474,
+    46.473,
     9.888
    ],
    [
@@ -145363,7 +145402,7 @@
     8.969
    ],
    [
-    46.762,
+    46.763,
     6.531
    ],
    [
@@ -145668,7 +145707,7 @@
    ],
    [
     46.379,
-    8.035
+    8.034
    ],
    [
     47.049,
@@ -145892,7 +145931,7 @@
    ],
    [
     47.083,
-    7.98
+    7.981
    ],
    [
     46.461,
@@ -146095,8 +146134,8 @@
     6.824
    ],
    [
-    46.672,
-    8.742
+    46.671,
+    8.739
    ],
    [
     46.78,
@@ -146235,7 +146274,7 @@
     7.658
    ],
    [
-    47.05,
+    47.049,
     7.706
    ],
    [
@@ -146584,7 +146623,7 @@
    ],
    [
     46.597,
-    9.599
+    9.598
    ],
    [
     46.02,
@@ -146880,7 +146919,7 @@
    ],
    [
     47.015,
-    8.178
+    8.177
    ],
    [
     46.807,
@@ -147052,7 +147091,7 @@
    ],
    [
     47.433,
-    7.637
+    7.636
    ],
    [
     47.023,
@@ -147480,7 +147519,7 @@
    ],
    [
     46.686,
-    7.677
+    7.678
    ],
    [
     46.874,
@@ -147548,7 +147587,7 @@
    ],
    [
     46.221,
-    7.598
+    7.597
    ],
    [
     46.472,
@@ -147716,7 +147755,7 @@
    ],
    [
     47.229,
-    7.843
+    7.844
    ],
    [
     46.794,
@@ -147783,7 +147822,7 @@
     8.361
    ],
    [
-    46.971,
+    46.97,
     8.335
    ],
    [
@@ -148255,7 +148294,7 @@
     7.557
    ],
    [
-    47.023,
+    47.022,
     7.029
    ],
    [
@@ -148308,7 +148347,7 @@
    ],
    [
     46.583,
-    9.625
+    9.624
    ],
    [
     47.407,
@@ -148433,6 +148472,10 @@
    [
     47.398,
     9.469
+   ],
+   [
+    47.394,
+    9.509
    ],
    [
     46.169,
@@ -149688,7 +149731,7 @@
    ],
    [
     46.773,
-    7.508
+    7.507
    ],
    [
     47.301,
@@ -149783,7 +149826,7 @@
     7.662
    ],
    [
-    47.434,
+    47.433,
     7.907
    ],
    [
@@ -149832,7 +149875,7 @@
    ],
    [
     47.401,
-    9.636
+    9.635
    ],
    [
     47.251,
@@ -149904,7 +149947,7 @@
    ],
    [
     47.413,
-    8.161
+    8.162
    ],
    [
     47.652,
@@ -150515,62 +150558,62 @@
  ],
  "journal": [
   "== Change BCE",
-  "   333 mois, dernier jour {'date': '2026-10-23', 'eur_chf': 0.9227}",
+  "   334 mois, dernier jour {'date': '2026-11-20', 'eur_chf': 0.9223}",
   "== Niveaux de prix officiels (Eurostat)",
   "   année 2024 : alimentation CH 158.5 / FR 110.1",
   "== Panier officiel (OFAG / INSEE)",
-  "   bananes      OFAG  248 mois (2006-02→2026-09) | INSEE  340 mois (1998-01→2026-09)",
-  "   pommes       OFAG  248 mois (2006-02→2026-09) | INSEE  340 mois (1998-01→2026-09)",
-  "   poires       OFAG  240 mois (2006-02→2026-09) | INSEE  340 mois (1998-01→2026-09)",
-  "   clementines  OFAG  180 mois (2006-02→2026-09) | INSEE  182 mois (1998-01→2026-09)",
-  "   oranges      OFAG  248 mois (2006-02→2026-09) | INSEE  340 mois (1998-01→2026-09)",
-  "   tomates      OFAG  248 mois (2006-02→2026-09) | INSEE  340 mois (1998-01→2026-09)",
-  "   carottes     OFAG  248 mois (2006-02→2026-09) | INSEE  340 mois (1998-01→2026-09)",
-  "   courgettes   OFAG  248 mois (2006-02→2026-09) | INSEE  322 mois (1998-01→2026-09)",
-  "   champignons  OFAG  248 mois (2006-02→2026-09) | INSEE  340 mois (1998-01→2026-09)",
-  "   oignons      OFAG  248 mois (2006-02→2026-09) | INSEE  340 mois (1998-01→2026-09)",
-  "   poireaux     OFAG  248 mois (2006-02→2026-09) | INSEE  257 mois (1998-01→2026-09)",
-  "   endives      OFAG  248 mois (2006-02→2026-09) | INSEE  284 mois (1998-01→2026-09)",
-  "   poivrons     OFAG  248 mois (2006-02→2026-09) | INSEE   88 mois (2019-01→2026-09)",
-  "   pdt          OFAG  248 mois (2006-02→2026-09) | INSEE  340 mois (1998-01→2026-09)",
-  "   pain         OFAG   69 mois (2020-01→2026-09) | INSEE  412 mois (1992-01→2026-09)",
-  "   lait         OFAG  321 mois (2000-01→2026-09) | INSEE   81 mois (2020-01→2026-09)",
-  "   beurre       OFAG  321 mois (2000-01→2026-09) | INSEE   81 mois (2020-01→2026-09)",
-  "   emmental     OFAG  265 mois (2004-09→2026-09) | INSEE   81 mois (2020-01→2026-09)",
-  "   yaourt       OFAG  265 mois (2004-09→2026-09) | INSEE   81 mois (2020-01→2026-09)",
-  "   huile        OFAG   74 mois (2020-01→2026-08) | INSEE   81 mois (2020-01→2026-09)",
-  "   fruits et légumes : 243 mois de série, dernier : {'m': '2026-09', 'fx': 0.94299, 'n': 14, 'ch': 33.26, 'fr': 36.01, 'ecart': -7.6, 'cats': {'Fruits': -12.0, 'Légumes': -4.5}}",
-  "   crèmerie : 81 mois, dernier : {'m': '2026-09', 'fx': 0.94299, 'n': 4, 'ch': 18.11, 'fr': 10.87, 'ecart': 66.6, 'cats': {'Crèmerie': 66.6}}",
+  "   bananes      OFAG  249 mois (2006-02→2026-10) | INSEE  341 mois (1998-01→2026-10)",
+  "   pommes       OFAG  249 mois (2006-02→2026-10) | INSEE  341 mois (1998-01→2026-10)",
+  "   poires       OFAG  241 mois (2006-02→2026-10) | INSEE  341 mois (1998-01→2026-10)",
+  "   clementines  OFAG  181 mois (2006-02→2026-10) | INSEE  183 mois (1998-01→2026-10)",
+  "   oranges      OFAG  249 mois (2006-02→2026-10) | INSEE  341 mois (1998-01→2026-10)",
+  "   tomates      OFAG  249 mois (2006-02→2026-10) | INSEE  341 mois (1998-01→2026-10)",
+  "   carottes     OFAG  249 mois (2006-02→2026-10) | INSEE  341 mois (1998-01→2026-10)",
+  "   courgettes   OFAG  249 mois (2006-02→2026-10) | INSEE  323 mois (1998-01→2026-10)",
+  "   champignons  OFAG  249 mois (2006-02→2026-10) | INSEE  341 mois (1998-01→2026-10)",
+  "   oignons      OFAG  249 mois (2006-02→2026-10) | INSEE  341 mois (1998-01→2026-10)",
+  "   poireaux     OFAG  249 mois (2006-02→2026-10) | INSEE  258 mois (1998-01→2026-10)",
+  "   endives      OFAG  249 mois (2006-02→2026-10) | INSEE  285 mois (1998-01→2026-10)",
+  "   poivrons     OFAG  249 mois (2006-02→2026-10) | INSEE   89 mois (2019-01→2026-10)",
+  "   pdt          OFAG  249 mois (2006-02→2026-10) | INSEE  341 mois (1998-01→2026-10)",
+  "   pain         OFAG   70 mois (2020-01→2026-10) | INSEE  413 mois (1992-01→2026-10)",
+  "   lait         OFAG  321 mois (2000-01→2026-09) | INSEE   82 mois (2020-01→2026-10)",
+  "   beurre       OFAG  321 mois (2000-01→2026-09) | INSEE   82 mois (2020-01→2026-10)",
+  "   emmental     OFAG  265 mois (2004-09→2026-09) | INSEE   82 mois (2020-01→2026-10)",
+  "   yaourt       OFAG  265 mois (2004-09→2026-09) | INSEE   82 mois (2020-01→2026-10)",
+  "   huile        OFAG   76 mois (2020-01→2026-10) | INSEE   82 mois (2020-01→2026-10)",
+  "   fruits et légumes : 244 mois de série, dernier : {'m': '2026-10', 'fx': 0.92819, 'n': 14, 'ch': 33.48, 'fr': 34.26, 'ecart': -2.3, 'cats': {'Fruits': -12.5, 'Légumes': 5.4}}",
+  "   crèmerie : 81 mois, dernier : {'m': '2026-09', 'fx': 0.94299, 'n': 5, 'ch': 20.78, 'fr': 12.27, 'ecart': 69.3, 'cats': {'Crèmerie': 69.3}}",
   "== Viande (Migros / INSEE)",
-  "   viande entrecote  CH 78.75 (10 produits) | FR 32.52 € (2026-09)",
-  "   viande veau       CH 57.75 (2 produits) | FR 29.57 € (2026-09)",
-  "   viande porc       CH 19.29 (15 produits) | FR 13.98 € (2026-09)",
-  "   viande jambon     CH 39.29 (7 produits) | FR 19.56 € (2026-09)",
+  "   viande entrecote  CH 79.5 (10 produits) | FR 32.52 € (2026-10)",
+  "   viande veau       CH 58.75 (2 produits) | FR 29.61 € (2026-10)",
+  "   viande porc       CH 20.89 (16 produits) | FR 14.03 € (2026-10)",
+  "   viande jambon     CH 38.39 (6 produits) | FR 19.7 € (2026-10)",
   "== Marques (Migros / Open Prices)",
   "   marque nutella  CH 7.3333/kg (Nutella Nutella · Pâte à tartiner (0.75 kg) à 5.50) | FR 7.147 €/kg (n=9)",
   "   marque coca     CH 1.6/L (Coca-Cola Coca-Cola · Classic  (1.5 L) à 2.40) | FR 1.72 €/L (n=16)",
   "   marque redbull  CH 6.0/L (Red Bull Red Bull · Energy Drink (0.25 L) à 1.50) | FR 4.52 €/L (n=21)",
-  "   marque pringles CH 17.8378/kg (Pringles Pringles · Original (0.185 kg) à 3.30) | FR 10.943 €/kg (n=16)",
-  "   marque kinder   CH 21.7054/kg (Kinder Kinder · Bueno (0.129 kg) à 2.80) | FR 20.543 €/kg (n=25)",
+  "   marque pringles CH 17.8378/kg (Pringles Pringles · Original (0.185 kg) à 3.30) | FR 11.514 €/kg (n=18)",
+  "   marque kinder   CH 34.8837/kg (Kinder Kinder · Bueno (0.043 kg) à 1.50) | FR 20.543 €/kg (n=23)",
   "   marque lindt    CH 48.0/kg (Excellence Lindt Excellence · Noir · 70% cacao (0.1 kg) à 4.80) | FR 30.9 €/kg (n=7)",
-  "   marque oreo     CH 19.1558/kg (Oreo Oreo · Original (0.154 kg) à 2.95) | FR 9.708 €/kg (n=14)",
+  "   marque oreo     CH 19.1558/kg (Oreo Oreo · Original (0.154 kg) à 2.95) | FR 9.74 €/kg (n=15)",
   "   marque babybel  CH 21.5909/kg (Mini Babybel Mini Babybel · Fromage à pâte mi-dure (0.264 kg) à 5.70) | FR 18.239 €/kg (n=2)",
-  "   marque evian    CH 0.7333/L (Evian Evian · Eau minérale (9 L) à 6.60) | FR 0.412 €/L (n=9)",
-  "   marque pesto    CH 20.5263/kg (Barilla Barilla · Pesto · Genovese (0.19 kg) à 3.90) | FR 13.395 €/kg (n=14)",
+  "   marque evian    CH 0.7222/L (Evian Evian · Eau minérale (9 L) à 6.50) | FR 0.412 €/L (n=9)",
+  "   marque pesto    CH 20.5263/kg (Barilla Barilla · Pesto · Genovese (0.19 kg) à 3.90) | FR 13.105 €/kg (n=14)",
   "== Carburant",
-  "   carburant annemasse   11 stations, moyenne {'sp95': 2.139, 'diesel': 2.386}",
-  "   carburant stjulien    1 stations, moyenne {'sp95': 2.225, 'diesel': 2.398}",
-  "   carburant genisferney 7 stations, moyenne {'sp95': 2.132, 'diesel': 2.395}",
-  "   carburant divonnegex  5 stations, moyenne {'sp95': 2.16, 'diesel': 2.395}",
-  "   carburant thonon      11 stations, moyenne {'sp95': 2.145, 'diesel': 2.405}",
-  "   carburant evian       7 stations, moyenne {'sp95': 2.088, 'diesel': 2.381}",
-  "   carburant lesrousses  6 stations, moyenne {'sp95': 2.261, 'diesel': 2.414}",
-  "!! stations jougne : ReadTimeout: HTTPSConnectionPool(host='data.economie.gouv.fr', port=443): Read timed out. (read timeout=90)",
-  "   carburant pontarlier  7 stations, moyenne {'sp95': 2.235, 'diesel': 2.408}",
-  "   carburant morteau     6 stations, moyenne {'sp95': 2.239, 'diesel': 2.419}",
-  "   carburant delle       5 stations, moyenne {'sp95': 2.223, 'diesel': 2.425}",
-  "   carburant stlouis     8 stations, moyenne {'sp95': 2.32, 'diesel': 2.445}",
-  "   carburant CH (OFDF) diesel {'ch_chf': 2.48, 'fr_eur': 2.4} sp95 {'ch_chf': 2.19, 'fr_eur': 2.2} (20 octobre 2026)",
+  "   carburant annemasse   11 stations, moyenne {'sp95': 1.95, 'diesel': 2.135}",
+  "   carburant stjulien    1 stations, moyenne {'sp95': 1.987, 'diesel': 2.117}",
+  "   carburant genisferney 7 stations, moyenne {'sp95': 1.964, 'diesel': 2.131}",
+  "   carburant divonnegex  5 stations, moyenne {'sp95': 1.961, 'diesel': 2.131}",
+  "   carburant thonon      11 stations, moyenne {'sp95': 1.964, 'diesel': 2.166}",
+  "   carburant evian       7 stations, moyenne {'sp95': 1.936, 'diesel': 2.121}",
+  "   carburant lesrousses  6 stations, moyenne {'sp95': 2.111, 'diesel': 2.189}",
+  "   carburant jougne      1 stations, moyenne {'sp95': 1.968, 'diesel': 2.092}",
+  "   carburant pontarlier  7 stations, moyenne {'sp95': 2.081, 'diesel': 2.198}",
+  "   carburant morteau     6 stations, moyenne {'sp95': 2.066, 'diesel': 2.185}",
+  "   carburant delle       5 stations, moyenne {'sp95': 2.068, 'diesel': 2.173}",
+  "   carburant stlouis     8 stations, moyenne {'sp95': 2.073, 'diesel': 2.21}",
+  "   carburant CH (OFDF) diesel {'ch_chf': 2.29, 'fr_eur': 2.19} sp95 {'ch_chf': 1.89, 'fr_eur': 2.04} (20 novembre 2026re 2026)",
   "== Magasins (Que Choisir)",
   "   panel national : 168 magasins, médiane 367.5 €",
   "   département 74 : 85 magasins listés",
@@ -150593,18 +150636,19 @@
   "   delle       3 magasins, indice médian 0.9795",
   "   stlouis     4 magasins, indice médian 0.9574",
   "== Trajets",
-  "   4141 localités suisses (swisstopo)",
-  "   trajets : 0 localités à calculer sur 4141",
-  "   trajets disponibles pour 4141 localités",
+  "   4142 localités suisses (swisstopo)",
+  "   trajets : 1 localités à calculer sur 4142",
+  "   trajets disponibles pour 4142 localités",
   "== Contrôles",
   "   reprise : Viande veau : prix suisse du 2026-10-25 repris (2 produits seulement).",
-  "   reprise : Essence jougne : stations françaises du 2026-10-25 reprises."
+  "   ALERTE : Marque kinder : écart passé de 14.5 % à 84.1 % en un mois."
  ],
  "controles": {
-  "alertes": [],
+  "alertes": [
+   "Marque kinder : écart passé de 14.5 % à 84.1 % en un mois."
+  ],
   "reprises": [
-   "Viande veau : prix suisse du 2026-10-25 repris (2 produits seulement).",
-   "Essence jougne : stations françaises du 2026-10-25 reprises."
+   "Viande veau : prix suisse du 2026-10-25 repris (2 produits seulement)."
   ]
  }
 }

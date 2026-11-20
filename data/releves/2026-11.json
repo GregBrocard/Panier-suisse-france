@@ -1,0 +1,514 @@
+{
+ "date": "2026-11-20",
+ "fx": {
+  "date": "2026-11-20",
+  "eur_chf": 0.9223
+ },
+ "viande": [
+  {
+   "id": "entrecote",
+   "label": "Entrecôte de bœuf",
+   "unit": "kg",
+   "qty": 0.3,
+   "ch": 79.5,
+   "ch_migros": 79.5,
+   "ajustement_discount": 0.0,
+   "ch_n": 10,
+   "ch_produits": [
+    "M-Classic M-Classic · Entrecôte de bœuf  — 44.50/kg",
+    "Migros Migros · Entrecôte de bœuf  — 45.00/kg",
+    "Migros Migros · Entrecôte de bœuf — 50.00/kg",
+    "Entrecôte de bœuf · De la région — 78.00/kg",
+    "Entrecôte de bœuf — 79.50/kg",
+    "Entrecôte de bœuf · De la région — 79.50/kg",
+    "Sélection Sélection · Entrecôte — 79.50/kg",
+    "Weiderind Weiderind · Entrecôte de bœuf · De la région — 84.00/kg"
+   ],
+   "fr_eur": 32.52,
+   "fr_mois": "2026-10",
+   "fr_chf": 30.18,
+   "insee": "000442435",
+   "ecart": 163.4
+  },
+  {
+   "id": "veau",
+   "label": "Escalope de veau",
+   "unit": "kg",
+   "qty": 0.2,
+   "ch": 57.75,
+   "ch_migros": 57.75,
+   "ajustement_discount": 0.0,
+   "ch_n": 2,
+   "ch_produits": [
+    "Migros Migros · Escalope à la chair à saucisse de veau · De la région — 29.50/kg",
+    "Escalopes de veau Qualivo · De la région — 86.00/kg"
+   ],
+   "fr_eur": 29.61,
+   "fr_mois": "2026-10",
+   "fr_chf": 27.48,
+   "insee": "000442441",
+   "ecart": 110.2,
+   "reprise": "2026-10-25"
+  },
+  {
+   "id": "porc",
+   "label": "Rôti de porc",
+   "unit": "kg",
+   "qty": 0.4,
+   "ch": 20.89,
+   "ch_migros": 20.89,
+   "ajustement_discount": 0.0,
+   "ch_n": 16,
+   "ch_produits": [
+    "M-Budget M-Budget · saucisse à rôtir de porc — 10.13/kg",
+    "Saucisse à rôtir de porc · De la région — 14.20/kg",
+    "Rôti de porc · De la région — 16.50/kg",
+    "Saucisse à rôtir de porc · De la région — 18.75/kg",
+    "Migros Migros · Saucisse à rôtir de porc — 18.79/kg",
+    "Saucisse à rôtir de porc · De la région — 18.83/kg",
+    "Migros Migros · Saucisse à rôtir de porc — 19.09/kg",
+    "Saucisse à rôtir de porc · De la région — 19.29/kg"
+   ],
+   "fr_eur": 14.03,
+   "fr_mois": "2026-10",
+   "fr_chf": 13.02,
+   "insee": "000442448",
+   "ecart": 60.4
+  },
+  {
+   "id": "jambon",
+   "label": "Jambon cuit supérieur",
+   "unit": "kg",
+   "qty": 0.2,
+   "ch": 38.39,
+   "ch_migros": 38.39,
+   "ajustement_discount": 0.0,
+   "ch_n": 6,
+   "ch_produits": [
+    "Da Emilio Da Emilio · Pinsa · au jambon cuit — 18.06/kg",
+    "Jambonneau · De la région, cuit — 23.00/kg",
+    "Tradition Tradition · Jambon cuit — 37.50/kg",
+    "Rapelli Rapelli · Jambon cuit de cuisse Puccini — 39.29/kg",
+    "Spécialité Suisse Spécialité Suisse · Jambon cuit · De la région — 45.00/kg",
+    "Jambon cuit de bœuf · De la région — 55.00/kg"
+   ],
+   "fr_eur": 19.7,
+   "fr_mois": "2026-10",
+   "fr_chf": 18.29,
+   "insee": "000849397",
+   "ecart": 109.9
+  }
+ ],
+ "marques": [
+  {
+   "id": "nutella",
+   "label": "Nutella",
+   "unit": "kg",
+   "qty": 0.75,
+   "ch_unit": 7.3333,
+   "ch_produit": "Nutella Nutella · Pâte à tartiner (0.75 kg) à 5.50",
+   "ch_url": "https://www.migros.ch/fr/product/151212300000",
+   "fr_unit_eur": 7.147,
+   "fr_n": 9,
+   "fr_produit": "Pâte à tartiner Nutella noisettes et cacao - 750g 750g",
+   "fr_prix_eur": 5.36,
+   "fr_depuis": "2025-11-20",
+   "fenetre_mois": 12,
+   "fr_n_12m": 9,
+   "ean_fr": [
+    "3017620421006"
+   ],
+   "fr_unit_chf": 6.592,
+   "ecart": 11.2
+  },
+  {
+   "id": "coca",
+   "label": "Coca-Cola (bouteille PET)",
+   "unit": "L",
+   "qty": 1.5,
+   "ch_unit": 1.6,
+   "ch_produit": "Coca-Cola Coca-Cola · Classic  (1.5 L) à 2.40",
+   "ch_url": "https://www.migros.ch/fr/product/120974000000",
+   "fr_unit_eur": 1.72,
+   "fr_n": 16,
+   "fr_produit": "Coca-Cola goût original 1250ml",
+   "fr_prix_eur": 2.15,
+   "fr_depuis": "2025-11-20",
+   "fenetre_mois": 12,
+   "fr_n_12m": 16,
+   "ean_fr": [
+    "5449000267412"
+   ],
+   "fr_unit_chf": 1.586,
+   "ecart": 0.9
+  },
+  {
+   "id": "redbull",
+   "label": "Red Bull 25 cl",
+   "unit": "L",
+   "qty": 0.25,
+   "ch_unit": 6.0,
+   "ch_produit": "Red Bull Red Bull · Energy Drink (0.25 L) à 1.50",
+   "ch_url": "https://www.migros.ch/fr/product/120265000000",
+   "fr_unit_eur": 4.52,
+   "fr_n": 21,
+   "fr_produit": "25 cl Red Bull - Energy Drink 250ml",
+   "fr_prix_eur": 1.13,
+   "fr_depuis": "2025-11-20",
+   "fenetre_mois": 12,
+   "fr_n_12m": 21,
+   "ean_fr": [
+    "9002490205973"
+   ],
+   "fr_unit_chf": 4.169,
+   "ecart": 43.9
+  },
+  {
+   "id": "pringles",
+   "label": "Pringles Original",
+   "unit": "kg",
+   "qty": 0.175,
+   "ch_unit": 17.8378,
+   "ch_produit": "Pringles Pringles · Original (0.185 kg) à 3.30",
+   "ch_url": "https://www.migros.ch/fr/product/101980000000",
+   "fr_unit_eur": 11.514,
+   "fr_n": 18,
+   "fr_produit": "Pringles Original 175g",
+   "fr_prix_eur": 2.015,
+   "fr_depuis": "2025-11-20",
+   "fenetre_mois": 12,
+   "fr_n_12m": 18,
+   "ean_fr": [
+    "5053990156009"
+   ],
+   "fr_unit_chf": 10.619,
+   "ecart": 68.0
+  },
+  {
+   "id": "kinder",
+   "label": "Kinder Bueno",
+   "unit": "kg",
+   "qty": 0.129,
+   "ch_unit": 34.8837,
+   "ch_produit": "Kinder Kinder · Bueno (0.043 kg) à 1.50",
+   "ch_url": "https://www.migros.ch/fr/product/101578400000",
+   "fr_unit_eur": 20.543,
+   "fr_n": 23,
+   "fr_produit": "Barre Chocolatée Kinder Bueno Chocolat au Lait 129g",
+   "fr_prix_eur": 2.65,
+   "fr_depuis": "2025-11-20",
+   "fenetre_mois": 12,
+   "fr_n_12m": 23,
+   "ean_fr": [
+    "8000500025857"
+   ],
+   "fr_unit_chf": 18.947,
+   "ecart": 84.1
+  },
+  {
+   "id": "lindt",
+   "label": "Lindt Excellence noir 100 g",
+   "unit": "kg",
+   "qty": 0.1,
+   "ch_unit": 48.0,
+   "ch_produit": "Excellence Lindt Excellence · Noir · 70% cacao (0.1 kg) à 4.80",
+   "ch_url": "https://www.migros.ch/fr/product/100189700000",
+   "fr_unit_eur": 30.9,
+   "fr_n": 7,
+   "fr_produit": "Cioccolato Fondente 78% 100g",
+   "fr_prix_eur": 3.09,
+   "fr_depuis": "2025-11-20",
+   "fenetre_mois": 12,
+   "fr_n_12m": 7,
+   "ean_fr": [
+    "3046920010047"
+   ],
+   "fr_unit_chf": 28.499,
+   "ecart": 68.4
+  },
+  {
+   "id": "oreo",
+   "label": "Oreo Original",
+   "unit": "kg",
+   "qty": 0.154,
+   "ch_unit": 19.1558,
+   "ch_produit": "Oreo Oreo · Original (0.154 kg) à 2.95",
+   "ch_url": "https://www.migros.ch/fr/product/110561100000",
+   "fr_unit_eur": 9.74,
+   "fr_n": 15,
+   "fr_produit": "OREO ORIGINAL 154g",
+   "fr_prix_eur": 1.5,
+   "fr_depuis": "2025-11-20",
+   "fenetre_mois": 12,
+   "fr_n_12m": 15,
+   "ean_fr": [
+    "7622300336738"
+   ],
+   "fr_unit_chf": 8.983,
+   "ecart": 113.2
+  },
+  {
+   "id": "babybel",
+   "label": "Mini Babybel (12 × 22 g)",
+   "unit": "kg",
+   "qty": 0.264,
+   "ch_unit": 21.5909,
+   "ch_produit": "Mini Babybel Mini Babybel · Fromage à pâte mi-dure (0.264 kg) à 5.70",
+   "ch_url": "https://www.migros.ch/fr/product/212430300000",
+   "fr_unit_eur": 18.239,
+   "fr_n": 2,
+   "fr_produit": "Babybel 264g",
+   "fr_prix_eur": 4.815,
+   "fr_depuis": "2025-11-20",
+   "fenetre_mois": 12,
+   "fr_n_12m": 2,
+   "ean_fr": [
+    "3073781178005"
+   ],
+   "fr_unit_chf": 16.822,
+   "ecart": 28.3
+  },
+  {
+   "id": "evian",
+   "label": "Evian (6 × 1,5 L)",
+   "unit": "L",
+   "qty": 3.0,
+   "ch_unit": 0.7222,
+   "ch_produit": "Evian Evian · Eau minérale (9 L) à 6.50",
+   "ch_url": "https://www.migros.ch/fr/product/120804900000",
+   "fr_unit_eur": 0.412,
+   "fr_n": 9,
+   "fr_produit": "Evian 9000ml",
+   "fr_prix_eur": 3.71,
+   "fr_depuis": "2025-11-20",
+   "fenetre_mois": 12,
+   "fr_n_12m": 9,
+   "ean_fr": [
+    "3068320120263"
+   ],
+   "fr_unit_chf": 0.38,
+   "ecart": 90.1
+  },
+  {
+   "id": "pesto",
+   "label": "Barilla Pesto alla Genovese",
+   "unit": "kg",
+   "qty": 0.19,
+   "ch_unit": 20.5263,
+   "ch_produit": "Barilla Barilla · Pesto · Genovese (0.19 kg) à 3.90",
+   "ch_url": "https://www.migros.ch/fr/product/153202000000",
+   "fr_unit_eur": 13.105,
+   "fr_n": 14,
+   "fr_produit": "Barilla PESTO alla GENOVESE 190g",
+   "fr_prix_eur": 2.49,
+   "fr_depuis": "2026-05-21",
+   "fenetre_mois": 6,
+   "fr_n_12m": 19,
+   "ean_fr": [
+    "8076809513753"
+   ],
+   "fr_unit_chf": 12.087,
+   "ecart": 69.8
+  }
+ ],
+ "carburant": {
+  "destinations": {
+   "annemasse": {
+    "n": 11,
+    "moyenne": {
+     "sp95": 1.95,
+     "diesel": 2.135
+    },
+    "min": {
+     "sp95": 1.899,
+     "diesel": 2.055
+    }
+   },
+   "stjulien": {
+    "n": 1,
+    "moyenne": {
+     "sp95": 1.987,
+     "diesel": 2.117
+    },
+    "min": {
+     "sp95": 1.987,
+     "diesel": 2.117
+    }
+   },
+   "genisferney": {
+    "n": 7,
+    "moyenne": {
+     "sp95": 1.964,
+     "diesel": 2.131
+    },
+    "min": {
+     "sp95": 1.894,
+     "diesel": 2.069
+    }
+   },
+   "divonnegex": {
+    "n": 5,
+    "moyenne": {
+     "sp95": 1.961,
+     "diesel": 2.131
+    },
+    "min": {
+     "sp95": 1.87,
+     "diesel": 2.03
+    }
+   },
+   "thonon": {
+    "n": 11,
+    "moyenne": {
+     "sp95": 1.964,
+     "diesel": 2.166
+    },
+    "min": {
+     "sp95": 1.885,
+     "diesel": 2.062
+    }
+   },
+   "evian": {
+    "n": 7,
+    "moyenne": {
+     "sp95": 1.936,
+     "diesel": 2.121
+    },
+    "min": {
+     "sp95": 1.885,
+     "diesel": 2.062
+    }
+   },
+   "lesrousses": {
+    "n": 6,
+    "moyenne": {
+     "sp95": 2.111,
+     "diesel": 2.189
+    },
+    "min": {
+     "sp95": 1.969,
+     "diesel": 2.099
+    }
+   },
+   "jougne": {
+    "n": 1,
+    "moyenne": {
+     "sp95": 1.968,
+     "diesel": 2.092
+    },
+    "min": {
+     "sp95": 1.968,
+     "diesel": 2.092
+    }
+   },
+   "pontarlier": {
+    "n": 7,
+    "moyenne": {
+     "sp95": 2.081,
+     "diesel": 2.198
+    },
+    "min": {
+     "sp95": 1.99,
+     "diesel": 2.158
+    }
+   },
+   "morteau": {
+    "n": 6,
+    "moyenne": {
+     "sp95": 2.066,
+     "diesel": 2.185
+    },
+    "min": {
+     "sp95": 1.99,
+     "diesel": 2.149
+    }
+   },
+   "delle": {
+    "n": 5,
+    "moyenne": {
+     "sp95": 2.068,
+     "diesel": 2.173
+    },
+    "min": {
+     "sp95": 1.915,
+     "diesel": 2.057
+    }
+   },
+   "stlouis": {
+    "n": 8,
+    "moyenne": {
+     "sp95": 2.073,
+     "diesel": 2.21
+    },
+    "min": {
+     "sp95": 1.99,
+     "diesel": 2.149
+    }
+   }
+  },
+  "ch": {
+   "source": "https://www.bazg.admin.ch/dam/fr/sd-web/GEosTpUlCewh/Monatstabelle%20T%204.4f.02.pdf",
+   "date_texte": "20 novembre 2026re 2026",
+   "zones": {
+    "bale": {
+     "sp95": {
+      "ch_chf": 1.87,
+      "etranger_eur": 1.829
+     },
+     "diesel": {
+      "ch_chf": 2.27,
+      "etranger_eur": 2.109
+     }
+    },
+    "kreuzlingen": {
+     "sp95": {
+      "ch_chf": 1.86,
+      "etranger_eur": 1.989
+     },
+     "diesel": {
+      "ch_chf": 2.29,
+      "etranger_eur": 2.169
+     }
+    },
+    "tessin": {
+     "sp95": {
+      "ch_chf": 1.86,
+      "etranger_eur": 1.934
+     },
+     "diesel": {
+      "ch_chf": 2.22,
+      "etranger_eur": 2.189
+     }
+    },
+    "geneve": {
+     "sp95": {
+      "ch_chf": 1.89,
+      "etranger_eur": 2.04
+     },
+     "diesel": {
+      "ch_chf": 2.29,
+      "etranger_eur": 2.19
+     }
+    },
+    "liechtenstein": {
+     "sp95": {
+      "ch_chf": 1.89,
+      "etranger_eur": 1.569
+     },
+     "diesel": {
+      "ch_chf": 2.29,
+      "etranger_eur": 1.979
+     }
+    }
+   },
+   "sp95": {
+    "ch_chf": 1.89,
+    "fr_eur": 2.04
+   },
+   "diesel": {
+    "ch_chf": 2.29,
+    "fr_eur": 2.19
+   }
+  }
+ }
+}

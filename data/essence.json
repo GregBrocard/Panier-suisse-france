@@ -1,34 +1,34 @@
 {
- "genere_le": "2026-11-20T14:22+00:00",
+ "genere_le": "2026-11-20T16:13+00:00",
  "fx": {
-  "date": "2026-11-19",
-  "eur_chf": 0.9262
+  "date": "2026-11-20",
+  "eur_chf": 0.9223
  },
  "zones": {
   "annemasse": {
    "nom": "Annemasse",
    "n": 11,
    "moyenne": {
-    "sp95": 1.952,
-    "diesel": 2.136
+    "sp95": 1.95,
+    "diesel": 2.135
    },
    "min": {
-    "sp95": 1.915,
-    "diesel": 2.065
+    "sp95": 1.899,
+    "diesel": 2.055
    },
    "moins_chers": {
     "sp95": [
+     {
+      "adresse": "17 rue des Teppes",
+      "ville": "Vétraz-Monthoux",
+      "prix": 1.899,
+      "maj": "2026-11-20T15:19:24+00:00"
+     },
      {
       "adresse": "14 rue de la Résistance",
       "ville": "Annemasse",
       "prix": 1.915,
       "maj": "2026-11-19T12:27:22+00:00"
-     },
-     {
-      "adresse": "17 rue des Teppes",
-      "ville": "Vétraz-Monthoux",
-      "prix": 1.915,
-      "maj": "2026-11-19T10:48:41+00:00"
      },
      {
       "adresse": "90 Route de Bonneville",
@@ -39,16 +39,16 @@
     ],
     "diesel": [
      {
+      "adresse": "17 rue des Teppes",
+      "ville": "Vétraz-Monthoux",
+      "prix": 2.055,
+      "maj": "2026-11-20T15:19:24+00:00"
+     },
+     {
       "adresse": "Rue Albert Hénon",
       "ville": "Ville-la-Grand",
       "prix": 2.065,
       "maj": "2026-11-20T09:41:00+00:00"
-     },
-     {
-      "adresse": "17 rue des Teppes",
-      "ville": "Vétraz-Monthoux",
-      "prix": 2.065,
-      "maj": "2026-11-19T10:48:41+00:00"
      },
      {
       "adresse": "45 route de Ripaille - P.A. de la Menoge",
@@ -59,12 +59,12 @@
     ]
    },
    "moyenne_chf": {
-    "sp95": 1.808,
-    "diesel": 1.978
+    "sp95": 1.798,
+    "diesel": 1.969
    },
    "min_chf": {
-    "sp95": 1.774,
-    "diesel": 1.913
+    "sp95": 1.751,
+    "diesel": 1.895
    }
   },
   "stjulien": {
@@ -97,12 +97,12 @@
     ]
    },
    "moyenne_chf": {
-    "sp95": 1.84,
-    "diesel": 1.961
+    "sp95": 1.833,
+    "diesel": 1.953
    },
    "min_chf": {
-    "sp95": 1.84,
-    "diesel": 1.961
+    "sp95": 1.833,
+    "diesel": 1.953
    }
   },
   "genisferney": {
@@ -159,12 +159,12 @@
     ]
    },
    "moyenne_chf": {
-    "sp95": 1.819,
-    "diesel": 1.974
+    "sp95": 1.811,
+    "diesel": 1.965
    },
    "min_chf": {
-    "sp95": 1.754,
-    "diesel": 1.916
+    "sp95": 1.747,
+    "diesel": 1.908
    }
   },
   "divonnegex": {
@@ -221,12 +221,12 @@
     ]
    },
    "moyenne_chf": {
-    "sp95": 1.816,
-    "diesel": 1.974
+    "sp95": 1.809,
+    "diesel": 1.965
    },
    "min_chf": {
-    "sp95": 1.732,
-    "diesel": 1.88
+    "sp95": 1.725,
+    "diesel": 1.872
    }
   },
   "thonon": {
@@ -283,12 +283,12 @@
     ]
    },
    "moyenne_chf": {
-    "sp95": 1.819,
-    "diesel": 2.006
+    "sp95": 1.811,
+    "diesel": 1.998
    },
    "min_chf": {
-    "sp95": 1.746,
-    "diesel": 1.91
+    "sp95": 1.739,
+    "diesel": 1.902
    }
   },
   "evian": {
@@ -345,12 +345,12 @@
     ]
    },
    "moyenne_chf": {
-    "sp95": 1.793,
-    "diesel": 1.964
+    "sp95": 1.786,
+    "diesel": 1.956
    },
    "min_chf": {
-    "sp95": 1.746,
-    "diesel": 1.91
+    "sp95": 1.739,
+    "diesel": 1.902
    }
   },
   "lesrousses": {
@@ -407,12 +407,12 @@
     ]
    },
    "moyenne_chf": {
-    "sp95": 1.955,
-    "diesel": 2.027
+    "sp95": 1.947,
+    "diesel": 2.019
    },
    "min_chf": {
-    "sp95": 1.824,
-    "diesel": 1.944
+    "sp95": 1.816,
+    "diesel": 1.936
    }
   },
   "jougne": {
@@ -445,12 +445,12 @@
     ]
    },
    "moyenne_chf": {
-    "sp95": 1.823,
-    "diesel": 1.938
+    "sp95": 1.815,
+    "diesel": 1.929
    },
    "min_chf": {
-    "sp95": 1.823,
-    "diesel": 1.938
+    "sp95": 1.815,
+    "diesel": 1.929
    }
   },
   "pontarlier": {
@@ -507,12 +507,12 @@
     ]
    },
    "moyenne_chf": {
-    "sp95": 1.927,
-    "diesel": 2.036
+    "sp95": 1.919,
+    "diesel": 2.027
    },
    "min_chf": {
-    "sp95": 1.843,
-    "diesel": 1.999
+    "sp95": 1.835,
+    "diesel": 1.99
    }
   },
   "morteau": {
@@ -569,12 +569,12 @@
     ]
    },
    "moyenne_chf": {
-    "sp95": 1.914,
-    "diesel": 2.024
+    "sp95": 1.905,
+    "diesel": 2.015
    },
    "min_chf": {
-    "sp95": 1.843,
-    "diesel": 1.99
+    "sp95": 1.835,
+    "diesel": 1.982
    }
   },
   "delle": {
@@ -631,12 +631,12 @@
     ]
    },
    "moyenne_chf": {
-    "sp95": 1.915,
-    "diesel": 2.013
+    "sp95": 1.907,
+    "diesel": 2.004
    },
    "min_chf": {
-    "sp95": 1.774,
-    "diesel": 1.905
+    "sp95": 1.766,
+    "diesel": 1.897
    }
   },
   "stlouis": {
@@ -693,12 +693,12 @@
     ]
    },
    "moyenne_chf": {
-    "sp95": 1.92,
-    "diesel": 2.047
+    "sp95": 1.912,
+    "diesel": 2.038
    },
    "min_chf": {
-    "sp95": 1.843,
-    "diesel": 1.99
+    "sp95": 1.835,
+    "diesel": 1.982
    }
   }
  },
@@ -828,10 +828,10 @@
    "lon": 6.27791,
    "adresse": "ZA les Boucheroz RN 508",
    "ville": "Faverges-Seythenex",
-   "sp95": 1.989,
-   "sp95_maj": "2026-11-13T15:14:46+00:00",
-   "diesel": 2.109,
-   "diesel_maj": "2026-11-10T13:31:48+00:00"
+   "sp95": 1.969,
+   "sp95_maj": "2026-11-20T15:59:10+00:00",
+   "diesel": 2.099,
+   "diesel_maj": "2026-11-20T15:59:10+00:00"
   },
   {
    "id": "25310001",
@@ -927,8 +927,8 @@
    "lon": 6.17159,
    "adresse": "Boulevard Kennedy",
    "ville": "Vesoul",
-   "sp95": null,
-   "sp95_maj": null,
+   "sp95": 1.781,
+   "sp95_maj": "2026-11-20T15:56:39+00:00",
    "diesel": 1.999,
    "diesel_maj": "2026-11-20T10:21:00+00:00"
   },
@@ -1171,8 +1171,8 @@
    "ville": "Pusey",
    "sp95": 2.09,
    "sp95_maj": "2026-11-16T13:13:03+00:00",
-   "diesel": 2.09,
-   "diesel_maj": "2026-11-19T11:02:22+00:00"
+   "diesel": 2.05,
+   "diesel_maj": "2026-11-20T16:48:31+00:00"
   },
   {
    "id": "90500001",
@@ -1620,10 +1620,10 @@
    "lon": 6.074,
    "adresse": "3 rue des Isles",
    "ville": "Foncine-le-Haut",
-   "sp95": 2.059,
-   "sp95_maj": "2026-11-16T17:24:29+00:00",
-   "diesel": 2.199,
-   "diesel_maj": "2026-11-16T17:24:29+00:00"
+   "sp95": 1.999,
+   "sp95_maj": "2026-11-20T15:14:06+00:00",
+   "diesel": 2.179,
+   "diesel_maj": "2026-11-20T15:14:06+00:00"
   },
   {
    "id": "25150006",
@@ -1906,10 +1906,10 @@
    "lon": 6.14428,
    "adresse": "Carrefour de la Vaugine",
    "ville": "Vesoul",
-   "sp95": 1.979,
-   "sp95_maj": "2026-11-19T10:28:29+00:00",
-   "diesel": 2.099,
-   "diesel_maj": "2026-11-19T10:28:29+00:00"
+   "sp95": 1.899,
+   "sp95_maj": "2026-11-20T15:59:50+00:00",
+   "diesel": 2.059,
+   "diesel_maj": "2026-11-20T15:59:50+00:00"
   },
   {
    "id": "74600013",
@@ -2715,6 +2715,17 @@
    "diesel_maj": null
   },
   {
+   "id": "74100008",
+   "lat": 46.184,
+   "lon": 6.276,
+   "adresse": "17 rue des Teppes",
+   "ville": "Vétraz-Monthoux",
+   "sp95": 1.899,
+   "sp95_maj": "2026-11-20T15:19:24+00:00",
+   "diesel": 2.055,
+   "diesel_maj": "2026-11-20T15:19:24+00:00"
+  },
+  {
    "id": "74520012",
    "lat": 46.09636,
    "lon": 5.96418,
@@ -2724,17 +2735,6 @@
    "sp95_maj": "2026-11-13T06:10:46+00:00",
    "diesel": 2.369,
    "diesel_maj": "2026-11-13T06:10:46+00:00"
-  },
-  {
-   "id": "74100008",
-   "lat": 46.184,
-   "lon": 6.276,
-   "adresse": "17 rue des Teppes",
-   "ville": "Vétraz-Monthoux",
-   "sp95": 1.915,
-   "sp95_maj": "2026-11-19T10:48:41+00:00",
-   "diesel": 2.065,
-   "diesel_maj": "2026-11-19T10:48:41+00:00"
   },
   {
    "id": "25000007",
@@ -3281,10 +3281,10 @@
    "lon": 6.15873,
    "adresse": "22 Route de Paris",
    "ville": "Vesoul",
-   "sp95": 1.99,
-   "sp95_maj": "2026-11-20T08:40:46+00:00",
-   "diesel": null,
-   "diesel_maj": null
+   "sp95": null,
+   "sp95_maj": null,
+   "diesel": 2.135,
+   "diesel_maj": "2026-11-20T15:44:21+00:00"
   },
   {
    "id": "68260001",
@@ -3589,8 +3589,8 @@
    "lon": 5.963,
    "adresse": "CHÂTEAU FARINE",
    "ville": "Besançon",
-   "sp95": 1.99,
-   "sp95_maj": "2026-11-20T07:11:18+00:00",
+   "sp95": null,
+   "sp95_maj": null,
    "diesel": null,
    "diesel_maj": null
   },
@@ -3650,17 +3650,6 @@
    "diesel_maj": "2026-11-13T00:05:00+00:00"
   },
   {
-   "id": "70000010",
-   "lat": 47.615,
-   "lon": 6.136,
-   "adresse": "Rue Olivier Albert",
-   "ville": "Noidans-lès-Vesoul",
-   "sp95": null,
-   "sp95_maj": null,
-   "diesel": null,
-   "diesel_maj": null
-  },
-  {
    "id": "25700003",
    "lat": 47.484,
    "lon": 6.834,
@@ -3668,6 +3657,17 @@
    "ville": "Valentigney",
    "sp95": 1.99,
    "sp95_maj": "2026-11-20T00:01:00+00:00",
+   "diesel": null,
+   "diesel_maj": null
+  },
+  {
+   "id": "70000010",
+   "lat": 47.615,
+   "lon": 6.136,
+   "adresse": "Rue Olivier Albert",
+   "ville": "Noidans-lès-Vesoul",
+   "sp95": null,
+   "sp95_maj": null,
    "diesel": null,
    "diesel_maj": null
   },
@@ -4273,8 +4273,8 @@
    "ville": "Besançon",
    "sp95": null,
    "sp95_maj": null,
-   "diesel": 2.159,
-   "diesel_maj": "2026-11-19T12:19:52+00:00"
+   "diesel": 2.129,
+   "diesel_maj": "2026-11-20T15:22:59+00:00"
   },
   {
    "id": "39270001",
@@ -4794,6 +4794,17 @@
    "diesel_maj": "2026-11-20T14:57:39+00:00"
   },
   {
+   "id": "70200008",
+   "lat": 47.676,
+   "lon": 6.523,
+   "adresse": "route de Belfort, Champ Caen",
+   "ville": "Lure",
+   "sp95": 2.09,
+   "sp95_maj": "2026-11-20T16:14:49+00:00",
+   "diesel": 2.05,
+   "diesel_maj": "2026-11-20T16:47:59+00:00"
+  },
+  {
    "id": "70100003",
    "lat": 47.445,
    "lon": 5.598,
@@ -4803,17 +4814,6 @@
    "sp95_maj": "2026-11-19T11:01:01+00:00",
    "diesel": 2.17,
    "diesel_maj": "2026-11-19T11:01:01+00:00"
-  },
-  {
-   "id": "70200008",
-   "lat": 47.676,
-   "lon": 6.523,
-   "adresse": "route de Belfort, Champ Caen",
-   "ville": "Lure",
-   "sp95": 1.99,
-   "sp95_maj": "2026-11-13T14:01:44+00:00",
-   "diesel": 2.09,
-   "diesel_maj": "2026-11-19T11:01:24+00:00"
   },
   {
    "id": "39200003",
@@ -5415,8 +5415,8 @@
    "lon": 6.86,
    "adresse": "3 rue de Besançon",
    "ville": "Belfort",
-   "sp95": null,
-   "sp95_maj": null,
+   "sp95": 1.938,
+   "sp95_maj": "2026-11-20T16:10:54+00:00",
    "diesel": null,
    "diesel_maj": null
   },
