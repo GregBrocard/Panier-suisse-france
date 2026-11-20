@@ -59,12 +59,12 @@
  },
  "mois_releves": "2026-09",
  "essence": {
-  "sp95_ch": 2.19,
-  "diesel_ch": 2.48,
-  "sp95_fr": 1.866,
-  "diesel_fr": 2.004,
-  "sp95_ecart": 17.4,
-  "diesel_ecart": 23.8
+  "sp95_ch": 1.89,
+  "diesel_ch": 2.29,
+  "sp95_fr": 1.862,
+  "diesel_fr": 1.995,
+  "sp95_ecart": 1.5,
+  "diesel_ecart": 14.8
  },
  "fx": 0.9227,
  "fl_12m_il_y_a_un_an": 0.7,
