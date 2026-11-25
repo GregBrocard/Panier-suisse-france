@@ -1,70 +1,70 @@
 {
- "genere_le": "2026-11-24T16:27+00:00",
+ "genere_le": "2026-11-25T16:11+00:00",
  "fx": {
-  "date": "2026-11-24",
-  "eur_chf": 0.9183
+  "date": "2026-11-25",
+  "eur_chf": 0.9085
  },
  "zones": {
   "annemasse": {
    "nom": "Annemasse",
    "n": 11,
    "moyenne": {
-    "sp95": 1.937,
-    "diesel": 2.108
+    "sp95": 1.933,
+    "diesel": 2.057
    },
    "min": {
-    "sp95": 1.889,
-    "diesel": 2.009
+    "sp95": 1.879,
+    "diesel": 1.999
    },
    "moins_chers": {
     "sp95": [
      {
+      "adresse": "14 rue de la Résistance",
+      "ville": "Annemasse",
+      "prix": 1.879,
+      "maj": "2026-11-25T09:37:24+00:00"
+     },
+     {
+      "adresse": "6 Route des Vallées",
+      "ville": "Annemasse",
+      "prix": 1.888,
+      "maj": "2026-11-25T11:21:00+00:00"
+     },
+     {
       "adresse": "17 rue des Teppes",
       "ville": "Vétraz-Monthoux",
       "prix": 1.889,
-      "maj": "2026-11-24T09:07:53+00:00"
-     },
-     {
-      "adresse": "14 rue de la Résistance",
-      "ville": "Annemasse",
-      "prix": 1.895,
-      "maj": "2026-11-24T11:00:43+00:00"
-     },
-     {
-      "adresse": "210 rue de BERSAT",
-      "ville": "Reignier-Ésery",
-      "prix": 1.899,
-      "maj": "2026-11-23T09:59:24+00:00"
+      "maj": "2026-11-25T09:35:18+00:00"
      }
     ],
     "diesel": [
      {
+      "adresse": "81 ROUTE DE THONON",
+      "ville": "Annemasse",
+      "prix": 1.999,
+      "maj": "2026-11-25T00:01:00+00:00"
+     },
+     {
+      "adresse": "66 ROUTE D'ETREMBIERES",
+      "ville": "Annemasse",
+      "prix": 1.999,
+      "maj": "2026-11-25T00:01:00+00:00"
+     },
+     {
       "adresse": "Rue Albert Hénon",
       "ville": "Ville-la-Grand",
       "prix": 2.009,
-      "maj": "2026-11-24T09:14:00+00:00"
-     },
-     {
-      "adresse": "17 rue des Teppes",
-      "ville": "Vétraz-Monthoux",
-      "prix": 2.009,
-      "maj": "2026-11-24T09:07:53+00:00"
-     },
-     {
-      "adresse": "45 route de Ripaille - P.A. de la Menoge",
-      "ville": "Bonne",
-      "prix": 2.024,
-      "maj": "2026-11-24T14:49:49+00:00"
+      "maj": "2026-11-25T09:53:00+00:00"
      }
     ]
    },
    "moyenne_chf": {
-    "sp95": 1.779,
-    "diesel": 1.936
+    "sp95": 1.756,
+    "diesel": 1.869
    },
    "min_chf": {
-    "sp95": 1.735,
-    "diesel": 1.845
+    "sp95": 1.707,
+    "diesel": 1.816
    }
   },
   "stjulien": {
@@ -97,20 +97,20 @@
     ]
    },
    "moyenne_chf": {
-    "sp95": 1.78,
-    "diesel": 1.913
+    "sp95": 1.761,
+    "diesel": 1.892
    },
    "min_chf": {
-    "sp95": 1.78,
-    "diesel": 1.913
+    "sp95": 1.761,
+    "diesel": 1.892
    }
   },
   "genisferney": {
    "nom": "Saint-Genis / Ferney",
    "n": 7,
    "moyenne": {
-    "sp95": 1.959,
-    "diesel": 2.116
+    "sp95": 1.957,
+    "diesel": 2.112
    },
    "min": {
     "sp95": 1.879,
@@ -134,7 +134,7 @@
       "adresse": "route de Bellegarde",
       "ville": "Thoiry",
       "prix": 1.909,
-      "maj": "2026-11-23T13:27:32+00:00"
+      "maj": "2026-11-25T14:23:30+00:00"
      }
     ],
     "diesel": [
@@ -145,33 +145,33 @@
       "maj": "2026-11-24T09:13:57+00:00"
      },
      {
+      "adresse": "route de Bellegarde",
+      "ville": "Thoiry",
+      "prix": 2.059,
+      "maj": "2026-11-25T14:23:30+00:00"
+     },
+     {
       "adresse": "RN5",
       "ville": "Ségny",
       "prix": 2.07,
-      "maj": "2026-11-24T13:22:00+00:00"
-     },
-     {
-      "adresse": "Route de Meyrin",
-      "ville": "Ferney-Voltaire",
-      "prix": 2.07,
-      "maj": "2026-11-24T09:05:30+00:00"
+      "maj": "2026-11-25T00:44:00+00:00"
      }
     ]
    },
    "moyenne_chf": {
-    "sp95": 1.799,
-    "diesel": 1.943
+    "sp95": 1.778,
+    "diesel": 1.919
    },
    "min_chf": {
-    "sp95": 1.725,
-    "diesel": 1.86
+    "sp95": 1.707,
+    "diesel": 1.84
    }
   },
   "divonnegex": {
    "nom": "Divonne / Gex",
    "n": 5,
    "moyenne": {
-    "sp95": 1.953,
+    "sp95": 1.96,
     "diesel": 2.119
    },
    "min": {
@@ -189,14 +189,14 @@
      {
       "adresse": "156 Av. des Tilleuls",
       "ville": "Gex",
-      "prix": 1.9,
-      "maj": "2026-11-20T07:17:13+00:00"
+      "prix": 1.95,
+      "maj": "2026-11-25T08:27:16+00:00"
      },
      {
       "adresse": "RN5",
       "ville": "Ségny",
-      "prix": 1.972,
-      "maj": "2026-11-24T13:22:00+00:00"
+      "prix": 1.96,
+      "maj": "2026-11-25T00:44:00+00:00"
      }
     ],
     "diesel": [
@@ -210,34 +210,34 @@
       "adresse": "RN5",
       "ville": "Ségny",
       "prix": 2.07,
-      "maj": "2026-11-24T13:22:00+00:00"
+      "maj": "2026-11-25T00:44:00+00:00"
      },
      {
       "adresse": "156 Av. des Tilleuls",
       "ville": "Gex",
       "prix": 2.15,
-      "maj": "2026-11-20T07:17:13+00:00"
+      "maj": "2026-11-25T08:27:16+00:00"
      }
     ]
    },
    "moyenne_chf": {
-    "sp95": 1.793,
-    "diesel": 1.946
+    "sp95": 1.781,
+    "diesel": 1.925
    },
    "min_chf": {
-    "sp95": 1.708,
-    "diesel": 1.836
+    "sp95": 1.69,
+    "diesel": 1.816
    }
   },
   "thonon": {
    "nom": "Thonon-les-Bains",
    "n": 11,
    "moyenne": {
-    "sp95": 1.959,
-    "diesel": 2.154
+    "sp95": 1.947,
+    "diesel": 2.126
    },
    "min": {
-    "sp95": 1.873,
+    "sp95": 1.87,
     "diesel": 1.999
    },
    "moins_chers": {
@@ -245,20 +245,20 @@
      {
       "adresse": "7 RUE AMEDEE DE FORAS",
       "ville": "Thonon-les-Bains",
-      "prix": 1.873,
-      "maj": "2026-11-24T09:26:09+00:00"
+      "prix": 1.87,
+      "maj": "2026-11-25T09:40:53+00:00"
+     },
+     {
+      "adresse": "RUE DE CARTHERAY",
+      "ville": "Publier",
+      "prix": 1.87,
+      "maj": "2026-11-25T12:47:46+00:00"
      },
      {
       "adresse": "54 Avenue d'Évian",
       "ville": "Thonon-les-Bains",
-      "prix": 1.892,
-      "maj": "2026-11-23T11:20:00+00:00"
-     },
-     {
-      "adresse": "Chemin de Morcy",
-      "ville": "Thonon-les-Bains",
-      "prix": 1.939,
-      "maj": "2026-11-18T16:42:43+00:00"
+      "prix": 1.889,
+      "maj": "2026-11-25T11:21:00+00:00"
      }
     ],
     "diesel": [
@@ -266,40 +266,40 @@
       "adresse": "RUE DE CARTHERAY",
       "ville": "Publier",
       "prix": 1.999,
-      "maj": "2026-11-21T12:43:32+00:00"
-     },
-     {
-      "adresse": "7 RUE AMEDEE DE FORAS",
-      "ville": "Thonon-les-Bains",
-      "prix": 2.037,
-      "maj": "2026-11-24T09:26:09+00:00"
+      "maj": "2026-11-25T12:47:46+00:00"
      },
      {
       "adresse": "157 Route des Blaves",
       "ville": "Allinges",
-      "prix": 2.095,
-      "maj": "2026-11-20T23:59:00+00:00"
+      "prix": 2.009,
+      "maj": "2026-11-24T23:45:00+00:00"
+     },
+     {
+      "adresse": "7 RUE AMEDEE DE FORAS",
+      "ville": "Thonon-les-Bains",
+      "prix": 2.012,
+      "maj": "2026-11-25T09:40:53+00:00"
      }
     ]
    },
    "moyenne_chf": {
-    "sp95": 1.799,
-    "diesel": 1.978
+    "sp95": 1.769,
+    "diesel": 1.931
    },
    "min_chf": {
-    "sp95": 1.72,
-    "diesel": 1.836
+    "sp95": 1.699,
+    "diesel": 1.816
    }
   },
   "evian": {
    "nom": "Évian-les-Bains",
    "n": 7,
    "moyenne": {
-    "sp95": 1.933,
-    "diesel": 2.084
+    "sp95": 1.922,
+    "diesel": 2.08
    },
    "min": {
-    "sp95": 1.873,
+    "sp95": 1.87,
     "diesel": 1.999
    },
    "moins_chers": {
@@ -307,20 +307,20 @@
      {
       "adresse": "7 RUE AMEDEE DE FORAS",
       "ville": "Thonon-les-Bains",
-      "prix": 1.873,
-      "maj": "2026-11-24T09:26:09+00:00"
+      "prix": 1.87,
+      "maj": "2026-11-25T09:40:53+00:00"
+     },
+     {
+      "adresse": "RUE DE CARTHERAY",
+      "ville": "Publier",
+      "prix": 1.87,
+      "maj": "2026-11-25T12:47:46+00:00"
      },
      {
       "adresse": "54 Avenue d'Évian",
       "ville": "Thonon-les-Bains",
-      "prix": 1.892,
-      "maj": "2026-11-23T11:20:00+00:00"
-     },
-     {
-      "adresse": "267 ROUTE DE VERS LES GRANGES",
-      "ville": "Vinzier",
-      "prix": 1.919,
-      "maj": "2026-11-23T12:21:42+00:00"
+      "prix": 1.889,
+      "maj": "2026-11-25T11:21:00+00:00"
      }
     ],
     "diesel": [
@@ -328,13 +328,13 @@
       "adresse": "RUE DE CARTHERAY",
       "ville": "Publier",
       "prix": 1.999,
-      "maj": "2026-11-21T12:43:32+00:00"
+      "maj": "2026-11-25T12:47:46+00:00"
      },
      {
       "adresse": "7 RUE AMEDEE DE FORAS",
       "ville": "Thonon-les-Bains",
-      "prix": 2.037,
-      "maj": "2026-11-24T09:26:09+00:00"
+      "prix": 2.012,
+      "maj": "2026-11-25T09:40:53+00:00"
      },
      {
       "adresse": "267 ROUTE DE VERS LES GRANGES",
@@ -345,20 +345,20 @@
     ]
    },
    "moyenne_chf": {
-    "sp95": 1.775,
-    "diesel": 1.914
+    "sp95": 1.746,
+    "diesel": 1.89
    },
    "min_chf": {
-    "sp95": 1.72,
-    "diesel": 1.836
+    "sp95": 1.699,
+    "diesel": 1.816
    }
   },
   "lesrousses": {
    "nom": "Les Rousses",
    "n": 6,
    "moyenne": {
-    "sp95": 2.079,
-    "diesel": 2.143
+    "sp95": 2.076,
+    "diesel": 2.134
    },
    "min": {
     "sp95": 1.969,
@@ -407,12 +407,12 @@
     ]
    },
    "moyenne_chf": {
-    "sp95": 1.909,
-    "diesel": 1.968
+    "sp95": 1.886,
+    "diesel": 1.939
    },
    "min_chf": {
-    "sp95": 1.808,
-    "diesel": 1.891
+    "sp95": 1.789,
+    "diesel": 1.871
    }
   },
   "jougne": {
@@ -445,24 +445,24 @@
     ]
    },
    "moyenne_chf": {
-    "sp95": 1.79,
-    "diesel": 1.878
+    "sp95": 1.771,
+    "diesel": 1.858
    },
    "min_chf": {
-    "sp95": 1.79,
-    "diesel": 1.878
+    "sp95": 1.771,
+    "diesel": 1.858
    }
   },
   "pontarlier": {
    "nom": "Pontarlier",
    "n": 7,
    "moyenne": {
-    "sp95": 2.009,
-    "diesel": 2.11
+    "sp95": 2.013,
+    "diesel": 2.097
    },
    "min": {
     "sp95": 1.959,
-    "diesel": 2.078
+    "diesel": 2.068
    },
    "moins_chers": {
     "sp95": [
@@ -487,6 +487,12 @@
     ],
     "diesel": [
      {
+      "adresse": "1 Rue de la Fée Verte",
+      "ville": "Pontarlier",
+      "prix": 2.068,
+      "maj": "2026-11-25T06:23:59+00:00"
+     },
+     {
       "adresse": "route de dijon",
       "ville": "Houtaud",
       "prix": 2.078,
@@ -497,22 +503,16 @@
       "ville": "Doubs",
       "prix": 2.079,
       "maj": "2026-11-21T20:30:00+00:00"
-     },
-     {
-      "adresse": "66 RUE DES SALINS",
-      "ville": "Pontarlier",
-      "prix": 2.079,
-      "maj": "2026-11-23T14:25:32+00:00"
      }
     ]
    },
    "moyenne_chf": {
-    "sp95": 1.845,
-    "diesel": 1.938
+    "sp95": 1.829,
+    "diesel": 1.905
    },
    "min_chf": {
-    "sp95": 1.799,
-    "diesel": 1.908
+    "sp95": 1.78,
+    "diesel": 1.879
    }
   },
   "morteau": {
@@ -520,11 +520,11 @@
    "n": 6,
    "moyenne": {
     "sp95": 2.019,
-    "diesel": 2.127
+    "diesel": 2.119
    },
    "min": {
     "sp95": 1.949,
-    "diesel": 2.099
+    "diesel": 2.089
    },
    "moins_chers": {
     "sp95": [
@@ -549,6 +549,12 @@
     ],
     "diesel": [
      {
+      "adresse": "40 Rue de la Louhière",
+      "ville": "Morteau",
+      "prix": 2.089,
+      "maj": "2026-11-25T06:47:42+00:00"
+     },
+     {
       "adresse": "4 rue du Clos Jeune",
       "ville": "Morteau",
       "prix": 2.099,
@@ -559,22 +565,16 @@
       "ville": "Villers-le-Lac",
       "prix": 2.099,
       "maj": "2026-11-23T09:49:56+00:00"
-     },
-     {
-      "adresse": "ROUTE DU PRE DES COMBES",
-      "ville": "Morteau",
-      "prix": 2.099,
-      "maj": "2026-11-23T10:17:06+00:00"
      }
     ]
    },
    "moyenne_chf": {
-    "sp95": 1.854,
-    "diesel": 1.953
+    "sp95": 1.834,
+    "diesel": 1.925
    },
    "min_chf": {
-    "sp95": 1.79,
-    "diesel": 1.928
+    "sp95": 1.771,
+    "diesel": 1.898
    }
   },
   "delle": {
@@ -582,7 +582,7 @@
    "n": 5,
    "moyenne": {
     "sp95": 2.04,
-    "diesel": 2.132
+    "diesel": 2.126
    },
    "min": {
     "sp95": 1.897,
@@ -631,20 +631,20 @@
     ]
    },
    "moyenne_chf": {
-    "sp95": 1.873,
-    "diesel": 1.958
+    "sp95": 1.853,
+    "diesel": 1.931
    },
    "min_chf": {
-    "sp95": 1.742,
-    "diesel": 1.858
+    "sp95": 1.723,
+    "diesel": 1.838
    }
   },
   "stlouis": {
    "nom": "Saint-Louis",
    "n": 8,
    "moyenne": {
-    "sp95": 2.06,
-    "diesel": 2.205
+    "sp95": 2.056,
+    "diesel": 2.2
    },
    "min": {
     "sp95": 1.999,
@@ -662,13 +662,13 @@
       "adresse": "Rue du 19 Novembre",
       "ville": "Blotzheim",
       "prix": 1.999,
-      "maj": "2026-11-24T01:18:00+00:00"
+      "maj": "2026-11-25T09:53:00+00:00"
      },
      {
       "adresse": "2 RUE DU RHIN",
       "ville": "Huningue",
-      "prix": 2.018,
-      "maj": "2026-11-24T12:48:09+00:00"
+      "prix": 1.999,
+      "maj": "2026-11-25T16:00:58+00:00"
      }
     ],
     "diesel": [
@@ -676,7 +676,7 @@
       "adresse": "1 Rue de Seville",
       "ville": "Saint-Louis",
       "prix": 2.158,
-      "maj": "2026-11-24T09:14:00+00:00"
+      "maj": "2026-11-25T09:53:00+00:00"
      },
      {
       "adresse": "Carrefour de l'Europe",
@@ -687,18 +687,18 @@
      {
       "adresse": "Rue du 19 Novembre",
       "ville": "Blotzheim",
-      "prix": 2.172,
-      "maj": "2026-11-24T01:18:00+00:00"
+      "prix": 2.159,
+      "maj": "2026-11-25T09:53:00+00:00"
      }
     ]
    },
    "moyenne_chf": {
-    "sp95": 1.892,
-    "diesel": 2.025
+    "sp95": 1.868,
+    "diesel": 1.999
    },
    "min_chf": {
-    "sp95": 1.836,
-    "diesel": 1.982
+    "sp95": 1.816,
+    "diesel": 1.961
    }
   }
  },
@@ -775,8 +775,8 @@
    "ville": "Pouilley-les-Vignes",
    "sp95": 1.919,
    "sp95_maj": "2026-11-24T13:54:23+00:00",
-   "diesel": 2.059,
-   "diesel_maj": "2026-11-24T13:54:23+00:00"
+   "diesel": 2.039,
+   "diesel_maj": "2026-11-25T09:32:53+00:00"
   },
   {
    "id": "74250003",
@@ -841,8 +841,8 @@
    "ville": "Blamont",
    "sp95": 1.917,
    "sp95_maj": "2026-11-24T06:00:00+00:00",
-   "diesel": 2.089,
-   "diesel_maj": "2026-11-20T12:04:57+00:00"
+   "diesel": 2.069,
+   "diesel_maj": "2026-11-25T06:00:00+00:00"
   },
   {
    "id": "74350006",
@@ -861,10 +861,10 @@
    "lon": 7.38714,
    "adresse": "14 Rue de Berne",
    "ville": "Illzach",
-   "sp95": 2.071,
-   "sp95_maj": "2026-11-24T11:50:19+00:00",
+   "sp95": 2.069,
+   "sp95_maj": "2026-11-25T11:22:56+00:00",
    "diesel": 2.157,
-   "diesel_maj": "2026-11-24T11:50:19+00:00"
+   "diesel_maj": "2026-11-25T11:22:56+00:00"
   },
   {
    "id": "68200004",
@@ -873,9 +873,9 @@
    "adresse": "258 RUE DE BELFORT",
    "ville": "Mulhouse",
    "sp95": 1.997,
-   "sp95_maj": "2026-11-24T11:51:23+00:00",
+   "sp95_maj": "2026-11-25T08:14:53+00:00",
    "diesel": 2.127,
-   "diesel_maj": "2026-11-24T11:51:23+00:00"
+   "diesel_maj": "2026-11-25T08:14:53+00:00"
   },
   {
    "id": "68270001",
@@ -905,10 +905,10 @@
    "lon": 6.128,
    "adresse": "AVENUE DE LA PLAINE",
    "ville": "Annecy",
-   "sp95": 1.943,
-   "sp95_maj": "2026-11-24T07:31:00+00:00",
-   "diesel": 2.118,
-   "diesel_maj": "2026-11-24T07:31:00+00:00"
+   "sp95": 1.933,
+   "sp95_maj": "2026-11-25T07:32:00+00:00",
+   "diesel": 2.1,
+   "diesel_maj": "2026-11-25T07:32:00+00:00"
   },
   {
    "id": "74960003",
@@ -949,10 +949,10 @@
    "lon": 6.12456,
    "adresse": "134 avenue de geneve",
    "ville": "Annecy",
-   "sp95": 1.96,
-   "sp95_maj": "2026-11-24T13:22:00+00:00",
-   "diesel": 2.053,
-   "diesel_maj": "2026-11-24T13:22:00+00:00"
+   "sp95": 1.948,
+   "sp95_maj": "2026-11-25T13:07:00+00:00",
+   "diesel": 2.035,
+   "diesel_maj": "2026-11-25T13:07:00+00:00"
   },
   {
    "id": "74700001",
@@ -961,9 +961,9 @@
    "adresse": "1751 Avenue de Genève",
    "ville": "Sallanches",
    "sp95": 1.974,
-   "sp95_maj": "2026-11-24T08:32:00+00:00",
+   "sp95_maj": "2026-11-25T08:23:00+00:00",
    "diesel": 2.115,
-   "diesel_maj": "2026-11-24T08:32:00+00:00"
+   "diesel_maj": "2026-11-25T08:23:00+00:00"
   },
   {
    "id": "68200025",
@@ -972,9 +972,9 @@
    "adresse": "151, AVENUE DE COLMAR",
    "ville": "Mulhouse",
    "sp95": 2.049,
-   "sp95_maj": "2026-11-24T06:00:00+00:00",
+   "sp95_maj": "2026-11-25T06:00:00+00:00",
    "diesel": 2.249,
-   "diesel_maj": "2026-11-24T06:00:00+00:00"
+   "diesel_maj": "2026-11-25T06:00:00+00:00"
   },
   {
    "id": "68701001",
@@ -984,8 +984,8 @@
    "ville": "Cernay",
    "sp95": null,
    "sp95_maj": null,
-   "diesel": null,
-   "diesel_maj": null
+   "diesel": 2.19,
+   "diesel_maj": "2026-11-25T06:56:11+00:00"
   },
   {
    "id": "74800001",
@@ -1004,10 +1004,10 @@
    "lon": 6.18316,
    "adresse": "81 ROUTE DU PLOT",
    "ville": "Groisy",
-   "sp95": 2.019,
-   "sp95_maj": "2026-11-20T08:59:03+00:00",
-   "diesel": 2.185,
-   "diesel_maj": "2026-11-20T08:59:03+00:00"
+   "sp95": 1.999,
+   "sp95_maj": "2026-11-25T07:54:41+00:00",
+   "diesel": 2.154,
+   "diesel_maj": "2026-11-25T07:54:41+00:00"
   },
   {
    "id": "68270003",
@@ -1015,10 +1015,10 @@
    "lon": 7.337,
    "adresse": "Rue de Kingersheim",
    "ville": "Wittenheim",
-   "sp95": 1.965,
-   "sp95_maj": "2026-11-24T14:20:52+00:00",
+   "sp95": 1.958,
+   "sp95_maj": "2026-11-25T10:42:05+00:00",
    "diesel": 2.099,
-   "diesel_maj": "2026-11-24T14:20:51+00:00"
+   "diesel_maj": "2026-11-25T10:42:05+00:00"
   },
   {
    "id": "73310002",
@@ -1028,8 +1028,8 @@
    "ville": "Ruffieux",
    "sp95": 1.899,
    "sp95_maj": "2026-11-23T09:28:23+00:00",
-   "diesel": 2.069,
-   "diesel_maj": "2026-11-23T09:28:23+00:00"
+   "diesel": 2.019,
+   "diesel_maj": "2026-11-25T07:31:30+00:00"
   },
   {
    "id": "1630005",
@@ -1072,8 +1072,8 @@
    "ville": "Roche-lez-Beaupré",
    "sp95": 2.029,
    "sp95_maj": "2026-11-16T07:07:20+00:00",
-   "diesel": 2.099,
-   "diesel_maj": "2026-11-23T11:28:51+00:00"
+   "diesel": 2.069,
+   "diesel_maj": "2026-11-25T12:25:26+00:00"
   },
   {
    "id": "1300002",
@@ -1092,10 +1092,10 @@
    "lon": 6.999,
    "adresse": "8, rue du general de gaulle",
    "ville": "Masevaux-Niederbruck",
-   "sp95": 1.978,
-   "sp95_maj": "2026-11-24T09:14:00+00:00",
-   "diesel": 2.11,
-   "diesel_maj": "2026-11-24T09:14:00+00:00"
+   "sp95": 1.97,
+   "sp95_maj": "2026-11-25T09:53:00+00:00",
+   "diesel": 2.052,
+   "diesel_maj": "2026-11-25T09:53:00+00:00"
   },
   {
    "id": "1100008",
@@ -1114,8 +1114,8 @@
    "lon": 6.518,
    "adresse": "ZI Aux Cloyes",
    "ville": "Lure",
-   "sp95": null,
-   "sp95_maj": null,
+   "sp95": 2.09,
+   "sp95_maj": "2026-11-25T14:09:57+00:00",
    "diesel": 2.05,
    "diesel_maj": "2026-11-24T14:40:02+00:00"
   },
@@ -1136,10 +1136,10 @@
    "lon": 7.397,
    "adresse": "64 RUE DE MULHOUSE",
    "ville": "Rixheim",
-   "sp95": 2.073,
-   "sp95_maj": "2026-11-24T09:14:00+00:00",
+   "sp95": 2.072,
+   "sp95_maj": "2026-11-25T09:54:00+00:00",
    "diesel": 2.158,
-   "diesel_maj": "2026-11-24T09:14:00+00:00"
+   "diesel_maj": "2026-11-25T09:54:00+00:00"
   },
   {
    "id": "74000007",
@@ -1181,9 +1181,9 @@
    "adresse": "37 Rue Alfred Péchin",
    "ville": "Beaucourt",
    "sp95": 2.2,
-   "sp95_maj": "2026-11-21T08:45:00+00:00",
-   "diesel": 2.21,
-   "diesel_maj": "2026-11-21T08:45:00+00:00"
+   "sp95_maj": "2026-11-25T09:20:37+00:00",
+   "diesel": 2.18,
+   "diesel_maj": "2026-11-25T09:20:37+00:00"
   },
   {
    "id": "25300005",
@@ -1202,10 +1202,10 @@
    "lon": 6.838,
    "adresse": "56, AVENUE DU GENERAL LECLERC",
    "ville": "Belfort",
-   "sp95": 1.914,
-   "sp95_maj": "2026-11-24T08:07:11+00:00",
-   "diesel": null,
-   "diesel_maj": null
+   "sp95": null,
+   "sp95_maj": null,
+   "diesel": 2.049,
+   "diesel_maj": "2026-11-25T09:18:26+00:00"
   },
   {
    "id": "74300004",
@@ -1214,9 +1214,9 @@
    "adresse": "RD 19 Lieu dit Les Bossons",
    "ville": "Thyez",
    "sp95": 1.959,
-   "sp95_maj": "2026-11-24T08:19:20+00:00",
-   "diesel": 2.079,
-   "diesel_maj": "2026-11-24T08:19:19+00:00"
+   "sp95_maj": "2026-11-25T09:13:16+00:00",
+   "diesel": 1.999,
+   "diesel_maj": "2026-11-25T09:13:16+00:00"
   },
   {
    "id": "25300013",
@@ -1237,8 +1237,8 @@
    "ville": "Mélisey",
    "sp95": 2.199,
    "sp95_maj": "2026-11-21T09:00:31+00:00",
-   "diesel": 2.229,
-   "diesel_maj": "2026-11-21T09:00:31+00:00"
+   "diesel": 2.199,
+   "diesel_maj": "2026-11-25T08:53:52+00:00"
   },
   {
    "id": "70320004",
@@ -1248,8 +1248,8 @@
    "ville": "Corbenay",
    "sp95": 1.959,
    "sp95_maj": "2026-11-20T07:38:26+00:00",
-   "diesel": 2.089,
-   "diesel_maj": "2026-11-20T07:38:26+00:00"
+   "diesel": 2.039,
+   "diesel_maj": "2026-11-25T08:34:03+00:00"
   },
   {
    "id": "74130006",
@@ -1268,10 +1268,10 @@
    "lon": 7.252,
    "adresse": "RN 66",
    "ville": "Lutterbach",
-   "sp95": null,
-   "sp95_maj": null,
-   "diesel": null,
-   "diesel_maj": null
+   "sp95": 1.972,
+   "sp95_maj": "2026-11-25T16:06:19+00:00",
+   "diesel": 2.111,
+   "diesel_maj": "2026-11-25T16:06:19+00:00"
   },
   {
    "id": "74300009",
@@ -1279,10 +1279,10 @@
    "lon": 6.625,
    "adresse": "180 allée des Noyères",
    "ville": "Magland",
-   "sp95": 1.895,
-   "sp95_maj": "2026-11-24T10:22:54+00:00",
-   "diesel": 2.045,
-   "diesel_maj": "2026-11-24T10:22:54+00:00"
+   "sp95": 1.889,
+   "sp95_maj": "2026-11-25T09:13:14+00:00",
+   "diesel": 2.009,
+   "diesel_maj": "2026-11-25T09:13:14+00:00"
   },
   {
    "id": "74370003",
@@ -1290,10 +1290,10 @@
    "lon": 6.13122,
    "adresse": "Route Imperiale",
    "ville": "Fillière",
-   "sp95": 1.971,
-   "sp95_maj": "2026-11-21T06:27:41+00:00",
-   "diesel": 2.177,
-   "diesel_maj": "2026-11-21T06:27:40+00:00"
+   "sp95": 1.961,
+   "sp95_maj": "2026-11-25T07:18:45+00:00",
+   "diesel": 2.127,
+   "diesel_maj": "2026-11-25T07:18:44+00:00"
   },
   {
    "id": "74500005",
@@ -1334,8 +1334,8 @@
    "lon": 5.94475,
    "adresse": "2 RUE RENE CHAR",
    "ville": "Besançon",
-   "sp95": 1.906,
-   "sp95_maj": "2026-11-24T06:45:38+00:00",
+   "sp95": 1.905,
+   "sp95_maj": "2026-11-25T06:48:29+00:00",
    "diesel": 2.056,
    "diesel_maj": "2026-11-24T06:45:38+00:00"
   },
@@ -1390,9 +1390,9 @@
    "adresse": "81 ROUTE DE THONON",
    "ville": "Annemasse",
    "sp95": 1.99,
-   "sp95_maj": "2026-11-24T00:01:00+00:00",
-   "diesel": 2.23,
-   "diesel_maj": "2026-11-24T00:01:00+00:00"
+   "sp95_maj": "2026-11-25T00:01:00+00:00",
+   "diesel": 1.999,
+   "diesel_maj": "2026-11-25T00:01:00+00:00"
   },
   {
    "id": "74310002",
@@ -1423,9 +1423,9 @@
    "adresse": "AUTOROUTE A36 - AIRE DE BESANCON MARCHAUX",
    "ville": "Marchaux-Chaudefontaine",
    "sp95": 1.99,
-   "sp95_maj": "2026-11-24T00:01:00+00:00",
+   "sp95_maj": "2026-11-25T00:01:00+00:00",
    "diesel": 2.176,
-   "diesel_maj": "2026-11-24T00:01:00+00:00"
+   "diesel_maj": "2026-11-25T00:01:00+00:00"
   },
   {
    "id": "74200019",
@@ -1433,10 +1433,10 @@
    "lon": 6.477,
    "adresse": "930 AVENUE DE THONON",
    "ville": "Allinges",
-   "sp95": 1.999,
-   "sp95_maj": "2026-11-17T10:40:51+00:00",
-   "diesel": 2.228,
-   "diesel_maj": "2026-11-17T10:40:50+00:00"
+   "sp95": 1.958,
+   "sp95_maj": "2026-11-25T10:17:44+00:00",
+   "diesel": 2.168,
+   "diesel_maj": "2026-11-25T10:17:43+00:00"
   },
   {
    "id": "39210001",
@@ -1456,9 +1456,9 @@
    "adresse": "8 route Nationale 73",
    "ville": "Ranchot",
    "sp95": 1.99,
-   "sp95_maj": "2026-11-20T10:44:50+00:00",
-   "diesel": 2.23,
-   "diesel_maj": "2026-11-20T10:44:50+00:00"
+   "sp95_maj": "2026-11-25T07:12:04+00:00",
+   "diesel": 2.049,
+   "diesel_maj": "2026-11-25T07:12:04+00:00"
   },
   {
    "id": "74520010",
@@ -1468,8 +1468,8 @@
    "ville": "Valleiry",
    "sp95": 1.927,
    "sp95_maj": "2026-11-23T12:51:48+00:00",
-   "diesel": 2.087,
-   "diesel_maj": "2026-11-23T12:51:48+00:00"
+   "diesel": 2.067,
+   "diesel_maj": "2026-11-25T10:58:21+00:00"
   },
   {
    "id": "39210003",
@@ -1488,10 +1488,10 @@
    "lon": 6.862,
    "adresse": "1 avenue du général de Gaulle",
    "ville": "Belfort",
-   "sp95": 1.989,
-   "sp95_maj": "2026-11-24T09:14:00+00:00",
-   "diesel": 2.064,
-   "diesel_maj": "2026-11-24T09:14:00+00:00"
+   "sp95": 1.999,
+   "sp95_maj": "2026-11-25T09:53:00+00:00",
+   "diesel": 2.047,
+   "diesel_maj": "2026-11-25T09:53:00+00:00"
   },
   {
    "id": "74100007",
@@ -1499,10 +1499,10 @@
    "lon": 6.24,
    "adresse": "Rue Albert Hénon",
    "ville": "Ville-la-Grand",
-   "sp95": 1.965,
-   "sp95_maj": "2026-11-24T09:14:00+00:00",
+   "sp95": 1.958,
+   "sp95_maj": "2026-11-25T09:53:00+00:00",
    "diesel": 2.009,
-   "diesel_maj": "2026-11-24T09:14:00+00:00"
+   "diesel_maj": "2026-11-25T09:53:00+00:00"
   },
   {
    "id": "74320006",
@@ -1523,8 +1523,8 @@
    "ville": "Issenheim",
    "sp95": 2.045,
    "sp95_maj": "2026-11-23T09:28:41+00:00",
-   "diesel": 2.135,
-   "diesel_maj": "2026-11-23T09:28:41+00:00"
+   "diesel": 2.119,
+   "diesel_maj": "2026-11-25T12:30:00+00:00"
   },
   {
    "id": "74000014",
@@ -1532,10 +1532,10 @@
    "lon": 6.11613,
    "adresse": "18 BD.DE LA ROCADE",
    "ville": "Annecy",
-   "sp95": 1.934,
-   "sp95_maj": "2026-11-24T00:01:00+00:00",
-   "diesel": 2.028,
-   "diesel_maj": "2026-11-24T00:01:00+00:00"
+   "sp95": 1.924,
+   "sp95_maj": "2026-11-25T00:01:00+00:00",
+   "diesel": 2.011,
+   "diesel_maj": "2026-11-25T00:01:00+00:00"
   },
   {
    "id": "25800003",
@@ -1543,10 +1543,10 @@
    "lon": 6.33096,
    "adresse": "5 ROUTE VERNIER FONTAINE",
    "ville": "Valdahon",
-   "sp95": 1.879,
-   "sp95_maj": "2026-11-23T15:44:35+00:00",
-   "diesel": 2.019,
-   "diesel_maj": "2026-11-23T15:44:35+00:00"
+   "sp95": 1.873,
+   "sp95_maj": "2026-11-25T09:23:02+00:00",
+   "diesel": 2.009,
+   "diesel_maj": "2026-11-25T09:23:02+00:00"
   },
   {
    "id": "90500002",
@@ -1565,10 +1565,10 @@
    "lon": 6.491,
    "adresse": "54 Avenue d'Évian",
    "ville": "Thonon-les-Bains",
-   "sp95": 1.892,
-   "sp95_maj": "2026-11-23T11:20:00+00:00",
+   "sp95": 1.889,
+   "sp95_maj": "2026-11-25T11:21:00+00:00",
    "diesel": 2.165,
-   "diesel_maj": "2026-11-23T11:20:00+00:00"
+   "diesel_maj": "2026-11-25T11:21:00+00:00"
   },
   {
    "id": "74600016",
@@ -1588,9 +1588,9 @@
    "adresse": "A40 - KM79 - SENS MILAN MACON",
    "ville": "Valleiry",
    "sp95": 1.99,
-   "sp95_maj": "2026-11-24T00:01:00+00:00",
+   "sp95_maj": "2026-11-25T00:01:00+00:00",
    "diesel": 2.199,
-   "diesel_maj": "2026-11-24T00:01:00+00:00"
+   "diesel_maj": "2026-11-25T00:01:00+00:00"
   },
   {
    "id": "25000011",
@@ -1642,10 +1642,10 @@
    "lon": 5.572,
    "adresse": "BOULEVARD DE L EUROPE",
    "ville": "Lons-le-Saunier",
-   "sp95": null,
-   "sp95_maj": null,
-   "diesel": 2.036,
-   "diesel_maj": "2026-11-24T00:01:00+00:00"
+   "sp95": 1.909,
+   "sp95_maj": "2026-11-25T07:28:05+00:00",
+   "diesel": 2.021,
+   "diesel_maj": "2026-11-25T00:01:00+00:00"
   },
   {
    "id": "25110003",
@@ -1688,8 +1688,8 @@
    "ville": "Lure",
    "sp95": 1.999,
    "sp95_maj": "2026-11-21T08:46:42+00:00",
-   "diesel": 2.099,
-   "diesel_maj": "2026-11-21T08:46:42+00:00"
+   "diesel": 2.059,
+   "diesel_maj": "2026-11-25T08:49:46+00:00"
   },
   {
    "id": "74350005",
@@ -1699,8 +1699,8 @@
    "ville": "Allonzier-la-Caille",
    "sp95": 1.989,
    "sp95_maj": "2026-11-23T10:41:10+00:00",
-   "diesel": 2.149,
-   "diesel_maj": "2026-11-23T10:41:10+00:00"
+   "diesel": 2.129,
+   "diesel_maj": "2026-11-25T08:23:57+00:00"
   },
   {
    "id": "74800004",
@@ -1708,10 +1708,10 @@
    "lon": 6.32623,
    "adresse": "65 impasse des Champs",
    "ville": "Amancy",
-   "sp95": 1.939,
-   "sp95_maj": "2026-11-23T09:27:46+00:00",
-   "diesel": 2.119,
-   "diesel_maj": "2026-11-23T09:27:46+00:00"
+   "sp95": 1.919,
+   "sp95_maj": "2026-11-25T14:56:00+00:00",
+   "diesel": 2.099,
+   "diesel_maj": "2026-11-25T14:56:00+00:00"
   },
   {
    "id": "39230001",
@@ -1743,8 +1743,8 @@
    "ville": "Gray",
    "sp95": null,
    "sp95_maj": null,
-   "diesel": 2.099,
-   "diesel_maj": "2026-11-24T13:01:08+00:00"
+   "diesel": 2.079,
+   "diesel_maj": "2026-11-25T12:14:39+00:00"
   },
   {
    "id": "74140004",
@@ -1774,10 +1774,10 @@
    "lon": 6.11397,
    "adresse": "4 RUE DU LAC",
    "ville": "Saône",
-   "sp95": 1.985,
-   "sp95_maj": "2026-11-20T12:55:33+00:00",
-   "diesel": 2.049,
-   "diesel_maj": "2026-11-23T14:43:22+00:00"
+   "sp95": 1.965,
+   "sp95_maj": "2026-11-25T15:13:09+00:00",
+   "diesel": 1.999,
+   "diesel_maj": "2026-11-25T15:13:09+00:00"
   },
   {
    "id": "74890001",
@@ -1813,26 +1813,15 @@
    "diesel_maj": "2026-11-23T13:39:27+00:00"
   },
   {
-   "id": "39300004",
-   "lat": 46.74,
-   "lon": 5.916,
-   "adresse": "1 Avenue Jean Jaurès",
-   "ville": "Champagnole",
-   "sp95": 1.944,
-   "sp95_maj": "2026-11-24T09:43:50+00:00",
-   "diesel": 2.049,
-   "diesel_maj": "2026-11-24T13:21:09+00:00"
-  },
-  {
    "id": "68480004",
    "lat": 47.48852,
    "lon": 7.39387,
    "adresse": "58 rue principale",
    "ville": "Oltingue",
-   "sp95": 1.999,
-   "sp95_maj": "2026-11-24T10:02:37+00:00",
-   "diesel": 2.159,
-   "diesel_maj": "2026-11-24T10:02:36+00:00"
+   "sp95": 1.949,
+   "sp95_maj": "2026-11-25T12:33:51+00:00",
+   "diesel": 2.129,
+   "diesel_maj": "2026-11-25T12:33:51+00:00"
   },
   {
    "id": "25210002",
@@ -1846,15 +1835,26 @@
    "diesel_maj": "2026-11-24T12:55:22+00:00"
   },
   {
+   "id": "39300004",
+   "lat": 46.74,
+   "lon": 5.916,
+   "adresse": "1 Avenue Jean Jaurès",
+   "ville": "Champagnole",
+   "sp95": 1.915,
+   "sp95_maj": "2026-11-25T10:05:27+00:00",
+   "diesel": 2.039,
+   "diesel_maj": "2026-11-25T10:05:27+00:00"
+  },
+  {
    "id": "74350003",
    "lat": 46.009,
    "lon": 6.114,
    "adresse": "Route de Genève",
    "ville": "Allonzier-la-Caille",
-   "sp95": 1.999,
-   "sp95_maj": "2026-11-19T12:50:23+00:00",
-   "diesel": 2.239,
-   "diesel_maj": "2026-11-19T12:50:22+00:00"
+   "sp95": 1.959,
+   "sp95_maj": "2026-11-25T13:10:59+00:00",
+   "diesel": 2.119,
+   "diesel_maj": "2026-11-25T13:10:58+00:00"
   },
   {
    "id": "74700005",
@@ -1875,8 +1875,8 @@
    "ville": "Pontarlier",
    "sp95": null,
    "sp95_maj": null,
-   "diesel": 2.089,
-   "diesel_maj": "2026-11-24T11:59:44+00:00"
+   "diesel": 2.079,
+   "diesel_maj": "2026-11-25T11:58:12+00:00"
   },
   {
    "id": "70700003",
@@ -1884,10 +1884,10 @@
    "lon": 5.83882,
    "adresse": "4 Place de Trano",
    "ville": "Bucey-lès-Gy",
-   "sp95": 2.139,
-   "sp95_maj": "2026-11-16T12:51:59+00:00",
-   "diesel": 2.109,
-   "diesel_maj": "2026-11-16T12:51:59+00:00"
+   "sp95": 2.099,
+   "sp95_maj": "2026-11-25T09:55:55+00:00",
+   "diesel": 2.099,
+   "diesel_maj": "2026-11-25T09:55:55+00:00"
   },
   {
    "id": "70250005",
@@ -1907,9 +1907,9 @@
    "adresse": "Carrefour de la Vaugine",
    "ville": "Vesoul",
    "sp95": 1.899,
-   "sp95_maj": "2026-11-20T15:59:50+00:00",
-   "diesel": 2.049,
-   "diesel_maj": "2026-11-24T16:43:35+00:00"
+   "sp95_maj": "2026-11-25T12:47:47+00:00",
+   "diesel": 2.029,
+   "diesel_maj": "2026-11-25T12:47:47+00:00"
   },
   {
    "id": "74600013",
@@ -1918,9 +1918,9 @@
    "adresse": "A41 AIRE DE LA RIPAILLE",
    "ville": "Annecy",
    "sp95": 1.99,
-   "sp95_maj": "2026-11-24T00:01:00+00:00",
+   "sp95_maj": "2026-11-25T00:01:00+00:00",
    "diesel": 2.25,
-   "diesel_maj": "2026-11-24T00:01:00+00:00"
+   "diesel_maj": "2026-11-25T00:01:00+00:00"
   },
   {
    "id": "74320001",
@@ -1940,9 +1940,9 @@
    "adresse": "ROUTE NATIONALE 205 - AUTOROUTE BLANCHE",
    "ville": "Les Houches",
    "sp95": 1.99,
-   "sp95_maj": "2026-11-24T00:01:00+00:00",
-   "diesel": 2.23,
-   "diesel_maj": "2026-11-24T00:01:00+00:00"
+   "sp95_maj": "2026-11-25T00:01:00+00:00",
+   "diesel": null,
+   "diesel_maj": null
   },
   {
    "id": "74200020",
@@ -1951,9 +1951,9 @@
    "adresse": "61 AVENUE DE GENEVE",
    "ville": "Thonon-les-Bains",
    "sp95": 1.969,
-   "sp95_maj": "2026-11-23T21:00:00+00:00",
+   "sp95_maj": "2026-11-24T21:00:00+00:00",
    "diesel": 2.169,
-   "diesel_maj": "2026-11-23T21:00:00+00:00"
+   "diesel_maj": "2026-11-24T21:00:00+00:00"
   },
   {
    "id": "74440002",
@@ -1984,9 +1984,9 @@
    "adresse": "AUTOROUTE A35 - AIRE DE BATTENHEIM",
    "ville": "Battenheim",
    "sp95": 1.99,
-   "sp95_maj": "2026-11-24T00:01:00+00:00",
+   "sp95_maj": "2026-11-25T00:01:00+00:00",
    "diesel": 2.181,
-   "diesel_maj": "2026-11-24T00:01:00+00:00"
+   "diesel_maj": "2026-11-25T00:01:00+00:00"
   },
   {
    "id": "1300003",
@@ -1996,8 +1996,8 @@
    "ville": "Chazey-Bons",
    "sp95": 1.859,
    "sp95_maj": "2026-11-23T09:00:24+00:00",
-   "diesel": 2.003,
-   "diesel_maj": "2026-11-24T11:32:44+00:00"
+   "diesel": 2.002,
+   "diesel_maj": "2026-11-25T08:23:15+00:00"
   },
   {
    "id": "39220002",
@@ -2027,10 +2027,10 @@
    "lon": 6.873,
    "adresse": "57 Avenue d'Altkirch",
    "ville": "Belfort",
-   "sp95": 2.339,
-   "sp95_maj": "2026-11-03T13:48:23+00:00",
-   "diesel": 2.379,
-   "diesel_maj": "2026-11-03T13:48:23+00:00"
+   "sp95": 2.259,
+   "sp95_maj": "2026-11-25T16:02:57+00:00",
+   "diesel": 2.299,
+   "diesel_maj": "2026-11-25T16:02:57+00:00"
   },
   {
    "id": "68170003",
@@ -2040,8 +2040,8 @@
    "ville": "Rixheim",
    "sp95": null,
    "sp95_maj": null,
-   "diesel": null,
-   "diesel_maj": null
+   "diesel": 2.19,
+   "diesel_maj": "2026-11-25T09:45:39+00:00"
   },
   {
    "id": "88160003",
@@ -2050,9 +2050,9 @@
    "adresse": "Route Ménil",
    "ville": "Le Thillot",
    "sp95": 1.99,
-   "sp95_maj": "2026-11-20T09:01:13+00:00",
-   "diesel": 2.159,
-   "diesel_maj": "2026-11-20T09:01:13+00:00"
+   "sp95_maj": "2026-11-25T08:51:12+00:00",
+   "diesel": 2.099,
+   "diesel_maj": "2026-11-25T08:51:12+00:00"
   },
   {
    "id": "68870001",
@@ -2072,9 +2072,9 @@
    "adresse": "AUTOROUTE A36 - AIRE PORTE D'ALSACE",
    "ville": "Burnhaupt-le-Bas",
    "sp95": 1.99,
-   "sp95_maj": "2026-11-24T00:01:00+00:00",
+   "sp95_maj": "2026-11-25T00:01:00+00:00",
    "diesel": 2.25,
-   "diesel_maj": "2026-11-24T00:01:00+00:00"
+   "diesel_maj": "2026-11-25T00:01:00+00:00"
   },
   {
    "id": "1100004",
@@ -2093,10 +2093,10 @@
    "lon": 7.31968,
    "adresse": "320 avenue d'altkirch",
    "ville": "Brunstatt-Didenheim",
-   "sp95": 1.999,
-   "sp95_maj": "2026-11-19T09:28:34+00:00",
-   "diesel": 2.149,
-   "diesel_maj": "2026-11-19T09:28:34+00:00"
+   "sp95": 1.969,
+   "sp95_maj": "2026-11-25T10:27:28+00:00",
+   "diesel": 2.099,
+   "diesel_maj": "2026-11-25T10:27:28+00:00"
   },
   {
    "id": "25680001",
@@ -2154,6 +2154,17 @@
    "diesel_maj": "2026-11-23T12:10:38+00:00"
   },
   {
+   "id": "25640008",
+   "lat": 47.32077,
+   "lon": 6.12837,
+   "adresse": "RUE DE LA GRAPPE",
+   "ville": "Marchaux-Chaudefontaine",
+   "sp95": 2.119,
+   "sp95_maj": "2026-11-12T14:11:50+00:00",
+   "diesel": 2.159,
+   "diesel_maj": "2026-11-12T14:11:50+00:00"
+  },
+  {
    "id": "25130001",
    "lat": 47.05779,
    "lon": 6.67018,
@@ -2174,17 +2185,6 @@
    "sp95_maj": "2026-11-23T11:11:51+00:00",
    "diesel": 2.099,
    "diesel_maj": "2026-11-23T11:11:51+00:00"
-  },
-  {
-   "id": "25640008",
-   "lat": 47.32077,
-   "lon": 6.12837,
-   "adresse": "RUE DE LA GRAPPE",
-   "ville": "Marchaux-Chaudefontaine",
-   "sp95": 2.119,
-   "sp95_maj": "2026-11-12T14:11:50+00:00",
-   "diesel": 2.159,
-   "diesel_maj": "2026-11-12T14:11:50+00:00"
   },
   {
    "id": "1630001",
@@ -2269,8 +2269,8 @@
    "lon": 6.392,
    "adresse": "ZA du Bouquet",
    "ville": "Saint-Sauveur",
-   "sp95": 1.99,
-   "sp95_maj": "2026-11-17T14:56:43+00:00",
+   "sp95": 2.09,
+   "sp95_maj": "2026-11-25T13:12:30+00:00",
    "diesel": 2.05,
    "diesel_maj": "2026-11-23T15:42:23+00:00"
   },
@@ -2291,10 +2291,10 @@
    "lon": 7.307,
    "adresse": "4 rue de la république",
    "ville": "Illtal",
-   "sp95": 2.099,
-   "sp95_maj": "2026-11-24T10:49:14+00:00",
-   "diesel": 2.149,
-   "diesel_maj": "2026-11-24T10:48:53+00:00"
+   "sp95": 2.079,
+   "sp95_maj": "2026-11-25T10:15:26+00:00",
+   "diesel": 2.129,
+   "diesel_maj": "2026-11-25T10:15:25+00:00"
   },
   {
    "id": "39200005",
@@ -2347,7 +2347,7 @@
    "adresse": "ROUTE DE LUXEUIL",
    "ville": "Corbenay",
    "sp95": 1.99,
-   "sp95_maj": "2026-11-24T08:10:39+00:00",
+   "sp95_maj": "2026-11-25T08:13:39+00:00",
    "diesel": null,
    "diesel_maj": null
   },
@@ -2359,8 +2359,8 @@
    "ville": "Saône",
    "sp95": 2.049,
    "sp95_maj": "2026-11-21T13:07:17+00:00",
-   "diesel": 2.155,
-   "diesel_maj": "2026-11-06T18:45:38+00:00"
+   "diesel": 2.089,
+   "diesel_maj": "2026-11-24T18:05:10+00:00"
   },
   {
    "id": "74100014",
@@ -2368,10 +2368,10 @@
    "lon": 6.25515,
    "adresse": "14 rue de la Résistance",
    "ville": "Annemasse",
-   "sp95": 1.895,
-   "sp95_maj": "2026-11-24T11:00:43+00:00",
-   "diesel": 2.039,
-   "diesel_maj": "2026-11-24T11:00:43+00:00"
+   "sp95": 1.879,
+   "sp95_maj": "2026-11-25T09:37:24+00:00",
+   "diesel": 2.015,
+   "diesel_maj": "2026-11-25T09:37:23+00:00"
   },
   {
    "id": "74430001",
@@ -2379,10 +2379,10 @@
    "lon": 6.67256,
    "adresse": "LE VERNAY BRON",
    "ville": "Saint-Jean-d'Aulps",
-   "sp95": 1.939,
-   "sp95_maj": "2026-11-20T08:05:32+00:00",
-   "diesel": 2.099,
-   "diesel_maj": "2026-11-20T08:05:32+00:00"
+   "sp95": 1.919,
+   "sp95_maj": "2026-11-25T08:31:00+00:00",
+   "diesel": 2.049,
+   "diesel_maj": "2026-11-25T08:31:00+00:00"
   },
   {
    "id": "74160001",
@@ -2413,9 +2413,9 @@
    "adresse": "ROUTE DES VIGNES",
    "ville": "La Balme-de-Sillingy",
    "sp95": 2.095,
-   "sp95_maj": "2026-11-24T09:14:00+00:00",
-   "diesel": 2.094,
-   "diesel_maj": "2026-11-24T09:14:00+00:00"
+   "sp95_maj": "2026-11-25T09:53:00+00:00",
+   "diesel": 2.084,
+   "diesel_maj": "2026-11-25T09:53:00+00:00"
   },
   {
    "id": "25500005",
@@ -2480,8 +2480,8 @@
    "ville": "Vesoul",
    "sp95": 2.11,
    "sp95_maj": "2026-11-23T15:23:28+00:00",
-   "diesel": 2.17,
-   "diesel_maj": "2026-11-23T15:23:28+00:00"
+   "diesel": 2.15,
+   "diesel_maj": "2026-11-25T11:33:59+00:00"
   },
   {
    "id": "25400005",
@@ -2566,10 +2566,10 @@
    "lon": 6.819,
    "adresse": "94 Chemin des Vorges",
    "ville": "La Chapelle-d'Abondance",
-   "sp95": 2.065,
-   "sp95_maj": "2026-11-19T07:00:00+00:00",
-   "diesel": 2.119,
-   "diesel_maj": "2026-11-19T07:00:00+00:00"
+   "sp95": 2.019,
+   "sp95_maj": "2026-11-25T09:38:50+00:00",
+   "diesel": 2.039,
+   "diesel_maj": "2026-11-25T09:38:50+00:00"
   },
   {
    "id": "1170003",
@@ -2634,8 +2634,8 @@
    "ville": "Pirey",
    "sp95": 1.99,
    "sp95_maj": "2026-11-24T09:09:57+00:00",
-   "diesel": 2.086,
-   "diesel_maj": "2026-11-24T09:09:57+00:00"
+   "diesel": 2.046,
+   "diesel_maj": "2026-11-25T06:07:41+00:00"
   },
   {
    "id": "1170002",
@@ -2687,10 +2687,10 @@
    "lon": 6.84373,
    "adresse": "4 Allée du Chêne",
    "ville": "Audincourt",
-   "sp95": 1.998,
-   "sp95_maj": "2026-11-24T08:42:09+00:00",
-   "diesel": 2.036,
-   "diesel_maj": "2026-11-24T08:42:08+00:00"
+   "sp95": 1.974,
+   "sp95_maj": "2026-11-25T14:11:51+00:00",
+   "diesel": 2.021,
+   "diesel_maj": "2026-11-25T14:11:50+00:00"
   },
   {
    "id": "25000023",
@@ -2699,9 +2699,9 @@
    "adresse": "2 RUE DE VESOUL",
    "ville": "Besançon",
    "sp95": 1.99,
-   "sp95_maj": "2026-11-24T17:00:32+00:00",
-   "diesel": 2.086,
-   "diesel_maj": "2026-11-24T17:00:32+00:00"
+   "sp95_maj": "2026-11-25T00:01:00+00:00",
+   "diesel": 2.049,
+   "diesel_maj": "2026-11-25T00:01:00+00:00"
   },
   {
    "id": "70150001",
@@ -2711,8 +2711,8 @@
    "ville": "Marnay",
    "sp95": 1.949,
    "sp95_maj": "2026-11-20T06:30:24+00:00",
-   "diesel": 2.069,
-   "diesel_maj": "2026-11-21T06:39:54+00:00"
+   "diesel": 2.059,
+   "diesel_maj": "2026-11-25T11:35:20+00:00"
   },
   {
    "id": "74520012",
@@ -2733,8 +2733,8 @@
    "ville": "Vétraz-Monthoux",
    "sp95": 1.889,
    "sp95_maj": "2026-11-24T09:07:53+00:00",
-   "diesel": 2.009,
-   "diesel_maj": "2026-11-24T09:07:52+00:00"
+   "diesel": 2.015,
+   "diesel_maj": "2026-11-25T09:35:18+00:00"
   },
   {
    "id": "25000007",
@@ -2742,10 +2742,10 @@
    "lon": 5.98521,
    "adresse": "17 Rue de l'Amitié",
    "ville": "Besançon",
-   "sp95": 1.969,
-   "sp95_maj": "2026-11-23T14:18:29+00:00",
-   "diesel": 2.079,
-   "diesel_maj": "2026-11-23T14:18:29+00:00"
+   "sp95": 1.959,
+   "sp95_maj": "2026-11-25T10:35:28+00:00",
+   "diesel": 2.056,
+   "diesel_maj": "2026-11-25T10:35:28+00:00"
   },
   {
    "id": "25250002",
@@ -2753,10 +2753,10 @@
    "lon": 6.57943,
    "adresse": "Avenue Foch",
    "ville": "L'Isle-sur-le-Doubs",
-   "sp95": 1.95,
-   "sp95_maj": "2026-11-16T07:40:33+00:00",
-   "diesel": 2.078,
-   "diesel_maj": "2026-11-10T09:34:08+00:00"
+   "sp95": 1.895,
+   "sp95_maj": "2026-11-25T10:14:30+00:00",
+   "diesel": 2.03,
+   "diesel_maj": "2026-11-25T10:14:30+00:00"
   },
   {
    "id": "74200018",
@@ -2765,9 +2765,9 @@
    "adresse": "27 Avenue de Genève",
    "ville": "Thonon-les-Bains",
    "sp95": 1.99,
-   "sp95_maj": "2026-11-24T06:33:14+00:00",
-   "diesel": 2.17,
-   "diesel_maj": "2026-11-24T06:33:14+00:00"
+   "sp95_maj": "2026-11-25T08:20:57+00:00",
+   "diesel": 2.027,
+   "diesel_maj": "2026-11-25T08:20:57+00:00"
   },
   {
    "id": "25500002",
@@ -2776,9 +2776,9 @@
    "adresse": "40 Rue de la Louhière",
    "ville": "Morteau",
    "sp95": 1.99,
-   "sp95_maj": "2026-11-24T11:45:30+00:00",
-   "diesel": 2.136,
-   "diesel_maj": "2026-11-24T11:45:30+00:00"
+   "sp95_maj": "2026-11-25T06:47:42+00:00",
+   "diesel": 2.089,
+   "diesel_maj": "2026-11-25T06:47:42+00:00"
   },
   {
    "id": "68190003",
@@ -2786,10 +2786,10 @@
    "lon": 7.347,
    "adresse": "10 RUE DE LA GARE",
    "ville": "Ensisheim",
-   "sp95": 2.079,
-   "sp95_maj": "2026-11-17T11:44:37+00:00",
-   "diesel": 2.129,
-   "diesel_maj": "2026-11-24T08:04:12+00:00"
+   "sp95": 2.045,
+   "sp95_maj": "2026-11-25T10:20:39+00:00",
+   "diesel": 2.099,
+   "diesel_maj": "2026-11-25T10:20:38+00:00"
   },
   {
    "id": "68680003",
@@ -2809,9 +2809,9 @@
    "adresse": "39 Rue Clemenceau",
    "ville": "Champagnole",
    "sp95": 2.109,
-   "sp95_maj": "2026-11-24T09:14:00+00:00",
-   "diesel": 2.059,
-   "diesel_maj": "2026-11-24T09:14:00+00:00"
+   "sp95_maj": "2026-11-25T09:53:00+00:00",
+   "diesel": 2.049,
+   "diesel_maj": "2026-11-25T09:53:00+00:00"
   },
   {
    "id": "25800002",
@@ -2820,9 +2820,9 @@
    "adresse": "12 GRANDE RUE",
    "ville": "Valdahon",
    "sp95": 1.88,
-   "sp95_maj": "2026-11-23T16:09:19+00:00",
-   "diesel": 2.018,
-   "diesel_maj": "2026-11-24T08:27:12+00:00"
+   "sp95_maj": "2026-11-25T09:57:17+00:00",
+   "diesel": 2.009,
+   "diesel_maj": "2026-11-25T09:57:17+00:00"
   },
   {
    "id": "74520004",
@@ -2874,10 +2874,10 @@
    "lon": 6.522,
    "adresse": "RUE DE LA VERDOLLE",
    "ville": "Orchamps-Vennes",
-   "sp95": 1.989,
-   "sp95_maj": "2026-11-24T12:15:05+00:00",
-   "diesel": 2.089,
-   "diesel_maj": "2026-11-24T12:15:05+00:00"
+   "sp95": 1.974,
+   "sp95_maj": "2026-11-25T06:59:33+00:00",
+   "diesel": 2.065,
+   "diesel_maj": "2026-11-25T06:59:33+00:00"
   },
   {
    "id": "74150003",
@@ -2885,10 +2885,10 @@
    "lon": 5.938,
    "adresse": "Avenue Roosevelt",
    "ville": "Rumilly",
-   "sp95": 1.949,
-   "sp95_maj": "2026-11-16T12:46:13+00:00",
-   "diesel": 2.099,
-   "diesel_maj": "2026-11-21T12:02:42+00:00"
+   "sp95": 1.9,
+   "sp95_maj": "2026-11-25T12:26:05+00:00",
+   "diesel": 2.035,
+   "diesel_maj": "2026-11-25T12:26:05+00:00"
   },
   {
    "id": "74270007",
@@ -2918,10 +2918,10 @@
    "lon": 5.929,
    "adresse": "ZA DU PRE MUNNY",
    "ville": "Péron",
-   "sp95": 1.875,
-   "sp95_maj": "2026-11-24T08:15:48+00:00",
+   "sp95": 1.869,
+   "sp95_maj": "2026-11-25T09:40:05+00:00",
    "diesel": 2.015,
-   "diesel_maj": "2026-11-24T08:15:47+00:00"
+   "diesel_maj": "2026-11-25T09:40:05+00:00"
   },
   {
    "id": "74570011",
@@ -2940,10 +2940,10 @@
    "lon": 6.32907,
    "adresse": "34 RUE DE LA SAULNE",
    "ville": "Thônes",
-   "sp95": 1.989,
-   "sp95_maj": "2026-11-20T13:31:38+00:00",
-   "diesel": 2.245,
-   "diesel_maj": "2026-11-16T13:02:07+00:00"
+   "sp95": 1.962,
+   "sp95_maj": "2026-11-25T11:53:27+00:00",
+   "diesel": 2.18,
+   "diesel_maj": "2026-11-25T11:53:27+00:00"
   },
   {
    "id": "68490002",
@@ -2951,10 +2951,10 @@
    "lon": 7.53969,
    "adresse": "Avenue de la Gare",
    "ville": "Chalampé",
-   "sp95": 2.001,
-   "sp95_maj": "2026-11-18T08:59:34+00:00",
-   "diesel": 2.189,
-   "diesel_maj": "2026-11-18T08:59:34+00:00"
+   "sp95": 1.949,
+   "sp95_maj": "2026-11-25T10:01:50+00:00",
+   "diesel": 2.094,
+   "diesel_maj": "2026-11-25T10:01:50+00:00"
   },
   {
    "id": "88340001",
@@ -2985,9 +2985,9 @@
    "adresse": "ACQUIT EST",
    "ville": "Valleiry",
    "sp95": 1.99,
-   "sp95_maj": "2026-11-24T10:43:49+00:00",
-   "diesel": 2.23,
-   "diesel_maj": "2026-11-24T10:43:49+00:00"
+   "sp95_maj": "2026-11-25T07:16:25+00:00",
+   "diesel": 2.077,
+   "diesel_maj": "2026-11-25T07:16:25+00:00"
   },
   {
    "id": "39220006",
@@ -3001,26 +3001,26 @@
    "diesel_maj": "2026-11-24T09:30:04+00:00"
   },
   {
-   "id": "35800003",
-   "lat": 46.839,
-   "lon": 5.687,
-   "adresse": "RN83",
-   "ville": "Poligny",
-   "sp95": 1.939,
-   "sp95_maj": "2026-11-24T09:33:16+00:00",
-   "diesel": 2.035,
-   "diesel_maj": "2026-11-24T09:33:16+00:00"
-  },
-  {
    "id": "74200016",
    "lat": 46.38021,
    "lon": 6.49641,
    "adresse": "7 RUE AMEDEE DE FORAS",
    "ville": "Thonon-les-Bains",
-   "sp95": 1.873,
-   "sp95_maj": "2026-11-24T09:26:09+00:00",
-   "diesel": 2.037,
-   "diesel_maj": "2026-11-24T09:26:09+00:00"
+   "sp95": 1.87,
+   "sp95_maj": "2026-11-25T09:40:53+00:00",
+   "diesel": 2.012,
+   "diesel_maj": "2026-11-25T09:40:53+00:00"
+  },
+  {
+   "id": "35800003",
+   "lat": 46.839,
+   "lon": 5.687,
+   "adresse": "RN83",
+   "ville": "Poligny",
+   "sp95": 1.929,
+   "sp95_maj": "2026-11-25T09:18:24+00:00",
+   "diesel": 2.019,
+   "diesel_maj": "2026-11-25T09:18:24+00:00"
   },
   {
    "id": "68620001",
@@ -3050,10 +3050,10 @@
    "lon": 7.445,
    "adresse": "ZAC HOEL",
    "ville": "Sierentz",
-   "sp95": 1.975,
-   "sp95_maj": "2026-11-24T11:26:05+00:00",
-   "diesel": 2.151,
-   "diesel_maj": "2026-11-24T11:26:05+00:00"
+   "sp95": 1.958,
+   "sp95_maj": "2026-11-25T16:24:38+00:00",
+   "diesel": 2.101,
+   "diesel_maj": "2026-11-25T16:24:38+00:00"
   },
   {
    "id": "25420006",
@@ -3072,10 +3072,10 @@
    "lon": 5.57411,
    "adresse": "route de champagnole",
    "ville": "Perrigny",
-   "sp95": 1.949,
-   "sp95_maj": "2026-11-20T09:52:01+00:00",
-   "diesel": 2.099,
-   "diesel_maj": "2026-11-20T09:52:01+00:00"
+   "sp95": 1.919,
+   "sp95_maj": "2026-11-25T08:57:18+00:00",
+   "diesel": 2.019,
+   "diesel_maj": "2026-11-25T08:57:18+00:00"
   },
   {
    "id": "74000020",
@@ -3084,9 +3084,9 @@
    "adresse": "4 BIS CHEMIN DES ALLUEGES",
    "ville": "Annecy",
    "sp95": 1.969,
-   "sp95_maj": "2026-11-24T06:00:00+00:00",
+   "sp95_maj": "2026-11-25T06:00:00+00:00",
    "diesel": 2.129,
-   "diesel_maj": "2026-11-24T06:00:00+00:00"
+   "diesel_maj": "2026-11-25T06:00:00+00:00"
   },
   {
    "id": "70500004",
@@ -3105,8 +3105,8 @@
    "lon": 6.06033,
    "adresse": "156 Av. des Tilleuls",
    "ville": "Gex",
-   "sp95": 1.9,
-   "sp95_maj": "2026-11-20T07:17:13+00:00",
+   "sp95": 1.95,
+   "sp95_maj": "2026-11-25T08:27:16+00:00",
    "diesel": 2.15,
    "diesel_maj": "2026-11-20T07:16:58+00:00"
   },
@@ -3127,8 +3127,8 @@
    "lon": 7.218,
    "adresse": "19 route de Bussang",
    "ville": "Soultz-Haut-Rhin",
-   "sp95": null,
-   "sp95_maj": null,
+   "sp95": 1.99,
+   "sp95_maj": "2026-11-25T06:28:48+00:00",
    "diesel": null,
    "diesel_maj": null
   },
@@ -3155,17 +3155,6 @@
    "diesel_maj": "2026-11-23T08:56:02+00:00"
   },
   {
-   "id": "70300009",
-   "lat": 47.805,
-   "lon": 6.383,
-   "adresse": "28 Rue Édouard Herriot",
-   "ville": "Saint-Sauveur",
-   "sp95": 1.99,
-   "sp95_maj": "2026-11-17T18:02:54+00:00",
-   "diesel": null,
-   "diesel_maj": null
-  },
-  {
    "id": "74190003",
    "lat": 45.91878,
    "lon": 6.70405,
@@ -3173,19 +3162,19 @@
    "ville": "Passy",
    "sp95": 1.975,
    "sp95_maj": "2026-11-24T08:46:00+00:00",
-   "diesel": 2.115,
-   "diesel_maj": "2026-11-24T08:45:59+00:00"
+   "diesel": 2.015,
+   "diesel_maj": "2026-11-25T11:25:54+00:00"
   },
   {
-   "id": "39700018",
-   "lat": 47.152,
-   "lon": 5.76,
-   "adresse": "4 RUE DE LA GARE",
-   "ville": "Fraisans",
-   "sp95": 1.959,
-   "sp95_maj": "2026-11-17T05:26:20+00:00",
-   "diesel": 2.079,
-   "diesel_maj": "2026-11-17T05:26:20+00:00"
+   "id": "70300009",
+   "lat": 47.805,
+   "lon": 6.383,
+   "adresse": "28 Rue Édouard Herriot",
+   "ville": "Saint-Sauveur",
+   "sp95": 1.99,
+   "sp95_maj": "2026-11-24T21:01:43+00:00",
+   "diesel": 2.03,
+   "diesel_maj": "2026-11-25T07:53:23+00:00"
   },
   {
    "id": "52500003",
@@ -3194,9 +3183,9 @@
    "adresse": "ROUTE DE VESOUL",
    "ville": "Fayl-Billot",
    "sp95": 1.989,
-   "sp95_maj": "2026-11-18T11:43:23+00:00",
-   "diesel": 2.149,
-   "diesel_maj": "2026-11-18T11:43:23+00:00"
+   "sp95_maj": "2026-11-25T12:00:18+00:00",
+   "diesel": 2.089,
+   "diesel_maj": "2026-11-25T12:00:18+00:00"
   },
   {
    "id": "39150002",
@@ -3259,10 +3248,10 @@
    "lon": 6.06503,
    "adresse": "1405 ROUTE BLANCHE",
    "ville": "Les Rousses",
-   "sp95": 2.179,
-   "sp95_maj": "2026-11-20T13:37:14+00:00",
-   "diesel": 2.199,
-   "diesel_maj": "2026-11-20T13:36:51+00:00"
+   "sp95": 2.159,
+   "sp95_maj": "2026-11-24T18:17:15+00:00",
+   "diesel": 2.149,
+   "diesel_maj": "2026-11-24T18:17:31+00:00"
   },
   {
    "id": "68730001",
@@ -3271,9 +3260,9 @@
    "adresse": "Rue du 19 Novembre",
    "ville": "Blotzheim",
    "sp95": 1.999,
-   "sp95_maj": "2026-11-24T01:18:00+00:00",
-   "diesel": 2.172,
-   "diesel_maj": "2026-11-24T01:18:00+00:00"
+   "sp95_maj": "2026-11-25T09:53:00+00:00",
+   "diesel": 2.159,
+   "diesel_maj": "2026-11-25T09:53:00+00:00"
   },
   {
    "id": "70000005",
@@ -3281,10 +3270,10 @@
    "lon": 6.15873,
    "adresse": "22 Route de Paris",
    "ville": "Vesoul",
-   "sp95": null,
-   "sp95_maj": null,
-   "diesel": null,
-   "diesel_maj": null
+   "sp95": 1.978,
+   "sp95_maj": "2026-11-25T10:45:48+00:00",
+   "diesel": 2.039,
+   "diesel_maj": "2026-11-25T10:45:48+00:00"
   },
   {
    "id": "68260001",
@@ -3292,10 +3281,10 @@
    "lon": 7.342,
    "adresse": "45 Rue d'illzach",
    "ville": "Kingersheim",
-   "sp95": 1.995,
-   "sp95_maj": "2026-11-24T09:14:00+00:00",
-   "diesel": 2.233,
-   "diesel_maj": "2026-11-24T09:14:00+00:00"
+   "sp95": 1.964,
+   "sp95_maj": "2026-11-25T09:53:00+00:00",
+   "diesel": 2.133,
+   "diesel_maj": "2026-11-25T09:53:00+00:00"
   },
   {
    "id": "25330001",
@@ -3337,9 +3326,9 @@
    "adresse": "37 Rue Edouard Herriot,",
    "ville": "Luxeuil-les-Bains",
    "sp95": 1.999,
-   "sp95_maj": "2026-11-24T07:33:28+00:00",
+   "sp95_maj": "2026-11-25T06:00:00+00:00",
    "diesel": 2.199,
-   "diesel_maj": "2026-11-24T06:00:00+00:00"
+   "diesel_maj": "2026-11-25T06:00:00+00:00"
   },
   {
    "id": "70110002",
@@ -3393,8 +3382,8 @@
    "ville": "Scionzier",
    "sp95": null,
    "sp95_maj": null,
-   "diesel": 2.149,
-   "diesel_maj": "2026-11-06T10:39:03+00:00"
+   "diesel": 2.099,
+   "diesel_maj": "2026-11-25T12:27:11+00:00"
   },
   {
    "id": "74300003",
@@ -3414,9 +3403,9 @@
    "adresse": "9 AVENUE ANNA DE NOUAILLES",
    "ville": "Évian-les-Bains",
    "sp95": 1.999,
-   "sp95_maj": "2026-11-24T06:00:00+00:00",
+   "sp95_maj": "2026-11-25T06:00:00+00:00",
    "diesel": 2.129,
-   "diesel_maj": "2026-11-24T06:00:00+00:00"
+   "diesel_maj": "2026-11-25T06:00:00+00:00"
   },
   {
    "id": "74120006",
@@ -3425,9 +3414,9 @@
    "adresse": "ROUTE NATIONALE 522",
    "ville": "Megève",
    "sp95": 1.99,
-   "sp95_maj": "2026-11-24T00:01:00+00:00",
-   "diesel": 2.23,
-   "diesel_maj": "2026-11-24T00:01:00+00:00"
+   "sp95_maj": "2026-11-25T00:01:00+00:00",
+   "diesel": 2.023,
+   "diesel_maj": "2026-11-25T00:01:00+00:00"
   },
   {
    "id": "25220002",
@@ -3469,9 +3458,9 @@
    "adresse": "Route de Mulhouse",
    "ville": "Altkirch",
    "sp95": 1.908,
-   "sp95_maj": "2026-11-24T09:14:00+00:00",
+   "sp95_maj": "2026-11-25T09:53:00+00:00",
    "diesel": 2.127,
-   "diesel_maj": "2026-11-24T09:14:00+00:00"
+   "diesel_maj": "2026-11-25T09:53:00+00:00"
   },
   {
    "id": "25430001",
@@ -3523,10 +3512,10 @@
    "lon": 7.138,
    "adresse": "Aire de Porte d' Alsace - A36",
    "ville": "Burnhaupt-le-Bas",
-   "sp95": 2.126,
-   "sp95_maj": "2026-11-24T08:00:00+00:00",
-   "diesel": 2.216,
-   "diesel_maj": "2026-11-24T08:00:00+00:00"
+   "sp95": 2.096,
+   "sp95_maj": "2026-11-25T08:00:00+00:00",
+   "diesel": 2.194,
+   "diesel_maj": "2026-11-25T08:00:00+00:00"
   },
   {
    "id": "39220005",
@@ -3556,10 +3545,10 @@
    "lon": 6.44063,
    "adresse": "5460 route du chinaillon",
    "ville": "Le Grand-Bornand",
-   "sp95": null,
-   "sp95_maj": null,
-   "diesel": 2.25,
-   "diesel_maj": "2026-11-14T08:54:58+00:00"
+   "sp95": 1.99,
+   "sp95_maj": "2026-11-25T16:45:12+00:00",
+   "diesel": 2.19,
+   "diesel_maj": "2026-11-25T16:45:12+00:00"
   },
   {
    "id": "25650002",
@@ -3600,10 +3589,10 @@
    "lon": 6.683,
    "adresse": "119 Chemin de la Zone Commerciale",
    "ville": "Domancy",
-   "sp95": 1.969,
-   "sp95_maj": "2026-11-17T09:08:51+00:00",
-   "diesel": 2.149,
-   "diesel_maj": "2026-11-17T09:08:51+00:00"
+   "sp95": 1.919,
+   "sp95_maj": "2026-11-25T08:33:22+00:00",
+   "diesel": 2.115,
+   "diesel_maj": "2026-11-25T08:33:22+00:00"
   },
   {
    "id": "90100003",
@@ -3656,9 +3645,9 @@
    "adresse": "1 ROUTE DE BELCHAMP",
    "ville": "Valentigney",
    "sp95": 1.99,
-   "sp95_maj": "2026-11-24T09:46:48+00:00",
+   "sp95_maj": "2026-11-25T00:01:00+00:00",
    "diesel": 2.17,
-   "diesel_maj": "2026-11-24T09:46:48+00:00"
+   "diesel_maj": "2026-11-25T00:01:00+00:00"
   },
   {
    "id": "70000010",
@@ -3710,10 +3699,10 @@
    "lon": 6.218,
    "adresse": "5 Rue René Cassin",
    "ville": "Gaillard",
-   "sp95": 1.965,
-   "sp95_maj": "2026-11-20T09:30:33+00:00",
-   "diesel": 2.085,
-   "diesel_maj": "2026-11-20T09:30:07+00:00"
+   "sp95": 1.955,
+   "sp95_maj": "2026-11-25T09:29:50+00:00",
+   "diesel": 2.009,
+   "diesel_maj": "2026-11-25T09:29:50+00:00"
   },
   {
    "id": "74540002",
@@ -3855,8 +3844,19 @@
    "ville": "Wittersdorf",
    "sp95": null,
    "sp95_maj": null,
-   "diesel": 2.23,
-   "diesel_maj": "2026-11-23T20:13:24+00:00"
+   "diesel": 2.117,
+   "diesel_maj": "2026-11-25T06:06:00+00:00"
+  },
+  {
+   "id": "39700018",
+   "lat": 47.152,
+   "lon": 5.76,
+   "adresse": "4 RUE DE LA GARE",
+   "ville": "Fraisans",
+   "sp95": 1.939,
+   "sp95_maj": "2026-11-25T12:06:21+00:00",
+   "diesel": 2.039,
+   "diesel_maj": "2026-11-25T12:06:20+00:00"
   },
   {
    "id": "68300002",
@@ -3903,17 +3903,6 @@
    "diesel_maj": "2026-11-24T12:56:42+00:00"
   },
   {
-   "id": "39170001",
-   "lat": 46.403,
-   "lon": 5.794,
-   "adresse": "6 Rue du Jura",
-   "ville": "Coteaux du Lizon",
-   "sp95": 2.195,
-   "sp95_maj": "2026-11-01T17:54:46+00:00",
-   "diesel": 2.388,
-   "diesel_maj": "2026-11-01T18:10:00+00:00"
-  },
-  {
    "id": "90150001",
    "lat": 47.688,
    "lon": 6.955,
@@ -3925,15 +3914,26 @@
    "diesel_maj": null
   },
   {
+   "id": "39170001",
+   "lat": 46.403,
+   "lon": 5.794,
+   "adresse": "6 Rue du Jura",
+   "ville": "Coteaux du Lizon",
+   "sp95": 2.195,
+   "sp95_maj": "2026-11-01T17:54:46+00:00",
+   "diesel": 2.388,
+   "diesel_maj": "2026-11-01T18:10:00+00:00"
+  },
+  {
    "id": "68210002",
    "lat": 47.631,
    "lon": 7.111,
    "adresse": "42, Rue de Belfort",
    "ville": "Dannemarie",
-   "sp95": 1.923,
-   "sp95_maj": "2026-11-24T08:08:37+00:00",
-   "diesel": 2.149,
-   "diesel_maj": "2026-11-24T08:08:37+00:00"
+   "sp95": 1.908,
+   "sp95_maj": "2026-11-25T08:33:39+00:00",
+   "diesel": 2.127,
+   "diesel_maj": "2026-11-25T08:33:38+00:00"
   },
   {
    "id": "74200003",
@@ -3975,9 +3975,9 @@
    "adresse": "LE PIED DES GOUTTES",
    "ville": "Montbéliard",
    "sp95": 1.999,
-   "sp95_maj": "2026-11-24T09:14:00+00:00",
-   "diesel": 2.054,
-   "diesel_maj": "2026-11-24T09:14:00+00:00"
+   "sp95_maj": "2026-11-25T09:53:00+00:00",
+   "diesel": 2.038,
+   "diesel_maj": "2026-11-25T09:53:00+00:00"
   },
   {
    "id": "68390002",
@@ -3987,8 +3987,8 @@
    "ville": "Sausheim",
    "sp95": null,
    "sp95_maj": null,
-   "diesel": 2.25,
-   "diesel_maj": "2026-11-24T11:00:00+00:00"
+   "diesel": 2.234,
+   "diesel_maj": "2026-11-25T09:30:00+00:00"
   },
   {
    "id": "25420005",
@@ -4051,10 +4051,10 @@
    "lon": 6.48231,
    "adresse": "157 Route des Blaves",
    "ville": "Allinges",
-   "sp95": 1.955,
-   "sp95_maj": "2026-11-20T23:59:00+00:00",
-   "diesel": 2.095,
-   "diesel_maj": "2026-11-20T23:59:00+00:00"
+   "sp95": 1.941,
+   "sp95_maj": "2026-11-24T23:45:00+00:00",
+   "diesel": 2.009,
+   "diesel_maj": "2026-11-24T23:45:00+00:00"
   },
   {
    "id": "1220001",
@@ -4151,9 +4151,9 @@
    "adresse": "RN 83",
    "ville": "Rouffach",
    "sp95": 1.99,
-   "sp95_maj": "2026-11-24T11:59:37+00:00",
-   "diesel": 2.23,
-   "diesel_maj": "2026-11-24T11:58:34+00:00"
+   "sp95_maj": "2026-11-25T00:01:00+00:00",
+   "diesel": 2.119,
+   "diesel_maj": "2026-11-25T00:01:00+00:00"
   },
   {
    "id": "39130008",
@@ -4185,8 +4185,8 @@
    "ville": "Thoiry",
    "sp95": 1.909,
    "sp95_maj": "2026-11-23T13:27:32+00:00",
-   "diesel": 2.089,
-   "diesel_maj": "2026-11-23T13:27:32+00:00"
+   "diesel": 2.059,
+   "diesel_maj": "2026-11-25T14:23:30+00:00"
   },
   {
    "id": "74120004",
@@ -4205,10 +4205,10 @@
    "lon": 7.339,
    "adresse": "24 RUE D'ALTKIRCH",
    "ville": "Mulhouse",
-   "sp95": null,
-   "sp95_maj": null,
-   "diesel": null,
-   "diesel_maj": null
+   "sp95": 1.99,
+   "sp95_maj": "2026-11-25T09:58:03+00:00",
+   "diesel": 2.19,
+   "diesel_maj": "2026-11-25T09:58:24+00:00"
   },
   {
    "id": "1130002",
@@ -4227,10 +4227,10 @@
    "lon": 6.409,
    "adresse": "Aire de Pontchy Bonneville - A40",
    "ville": "Bonneville",
-   "sp95": 2.248,
-   "sp95_maj": "2026-11-24T11:00:00+00:00",
-   "diesel": 2.329,
-   "diesel_maj": "2026-11-24T11:00:00+00:00"
+   "sp95": 2.247,
+   "sp95_maj": "2026-11-25T09:30:00+00:00",
+   "diesel": 2.309,
+   "diesel_maj": "2026-11-25T09:30:00+00:00"
   },
   {
    "id": "25300012",
@@ -4273,8 +4273,8 @@
    "ville": "Besançon",
    "sp95": null,
    "sp95_maj": null,
-   "diesel": 2.079,
-   "diesel_maj": "2026-11-24T12:48:24+00:00"
+   "diesel": 2.059,
+   "diesel_maj": "2026-11-25T12:37:32+00:00"
   },
   {
    "id": "39270001",
@@ -4376,17 +4376,6 @@
    "diesel_maj": "2026-11-16T08:36:56+00:00"
   },
   {
-   "id": "70100002",
-   "lat": 47.43624,
-   "lon": 5.59965,
-   "adresse": "ZA GRAY SUD CARREFOUR DES HAUTS PRES",
-   "ville": "Gray",
-   "sp95": 2.049,
-   "sp95_maj": "2026-11-13T09:48:18+00:00",
-   "diesel": 2.159,
-   "diesel_maj": "2026-11-13T09:48:18+00:00"
-  },
-  {
    "id": "68740001",
    "lat": 47.918,
    "lon": 7.528,
@@ -4396,6 +4385,17 @@
    "sp95_maj": "2026-11-18T11:56:02+00:00",
    "diesel": 2.279,
    "diesel_maj": "2026-11-18T11:56:02+00:00"
+  },
+  {
+   "id": "70100002",
+   "lat": 47.43624,
+   "lon": 5.59965,
+   "adresse": "ZA GRAY SUD CARREFOUR DES HAUTS PRES",
+   "ville": "Gray",
+   "sp95": 2.049,
+   "sp95_maj": "2026-11-13T09:48:18+00:00",
+   "diesel": 2.159,
+   "diesel_maj": "2026-11-13T09:48:18+00:00"
   },
   {
    "id": "1200001",
@@ -4481,9 +4481,9 @@
    "adresse": "8 HAMEAU DU SOLEIL LEVANT - RN19",
    "ville": "Malvillers",
    "sp95": 1.99,
-   "sp95_maj": "2026-11-12T15:48:25+00:00",
-   "diesel": null,
-   "diesel_maj": null
+   "sp95_maj": "2026-11-25T08:31:57+00:00",
+   "diesel": 2.19,
+   "diesel_maj": "2026-11-25T08:31:57+00:00"
   },
   {
    "id": "1590002",
@@ -4502,10 +4502,10 @@
    "lon": 7.258,
    "adresse": "7, rue de Bettendorf",
    "ville": "Hirsingue",
-   "sp95": 2.099,
-   "sp95_maj": "2026-11-24T09:14:00+00:00",
+   "sp95": 2.079,
+   "sp95_maj": "2026-11-25T09:53:00+00:00",
    "diesel": 2.127,
-   "diesel_maj": "2026-11-24T09:14:00+00:00"
+   "diesel_maj": "2026-11-25T09:53:00+00:00"
   },
   {
    "id": "74180001",
@@ -4513,10 +4513,10 @@
    "lon": 6.461,
    "adresse": "123 ROUTE DE MONTRENAZ",
    "ville": "Saint-Jeoire",
-   "sp95": 1.979,
-   "sp95_maj": "2026-11-23T12:00:00+00:00",
-   "diesel": 2.039,
-   "diesel_maj": "2026-11-23T12:00:00+00:00"
+   "sp95": 1.959,
+   "sp95_maj": "2026-11-25T14:00:00+00:00",
+   "diesel": 1.999,
+   "diesel_maj": "2026-11-25T14:00:00+00:00"
   },
   {
    "id": "1130003",
@@ -4524,10 +4524,10 @@
    "lon": 5.604,
    "adresse": "RTE DE LA CLUSE RN 84",
    "ville": "Nantua",
-   "sp95": 1.895,
-   "sp95_maj": "2026-11-24T00:01:00+00:00",
-   "diesel": 2.047,
-   "diesel_maj": "2026-11-24T00:01:00+00:00"
+   "sp95": 1.894,
+   "sp95_maj": "2026-11-25T00:01:00+00:00",
+   "diesel": 2.044,
+   "diesel_maj": "2026-11-25T00:01:00+00:00"
   },
   {
    "id": "68480003",
@@ -4557,10 +4557,10 @@
    "lon": 6.07865,
    "adresse": "RN5",
    "ville": "Ségny",
-   "sp95": 1.972,
-   "sp95_maj": "2026-11-24T13:22:00+00:00",
+   "sp95": 1.96,
+   "sp95_maj": "2026-11-25T00:44:00+00:00",
    "diesel": 2.07,
-   "diesel_maj": "2026-11-24T13:22:00+00:00"
+   "diesel_maj": "2026-11-25T00:44:00+00:00"
   },
   {
    "id": "1200003",
@@ -4568,8 +4568,8 @@
    "lon": 5.81355,
    "adresse": "Avenue Maréchal de Lattre de Tassigny",
    "ville": "Valserhône",
-   "sp95": 2.099,
-   "sp95_maj": "2026-11-19T09:06:25+00:00",
+   "sp95": 2.009,
+   "sp95_maj": "2026-11-25T08:51:58+00:00",
    "diesel": 2.109,
    "diesel_maj": "2026-11-24T08:33:38+00:00"
   },
@@ -4579,10 +4579,10 @@
    "lon": 5.999,
    "adresse": "25 Route de Lyon",
    "ville": "Beure",
-   "sp95": 2.149,
-   "sp95_maj": "2026-11-05T08:55:38+00:00",
-   "diesel": 2.299,
-   "diesel_maj": "2026-11-05T08:55:38+00:00"
+   "sp95": 2.049,
+   "sp95_maj": "2026-11-25T06:58:42+00:00",
+   "diesel": 2.199,
+   "diesel_maj": "2026-11-25T06:57:15+00:00"
   },
   {
    "id": "1300001",
@@ -4602,9 +4602,9 @@
    "adresse": "66 RUE DE SELONCOURT",
    "ville": "Audincourt",
    "sp95": 1.999,
-   "sp95_maj": "2026-11-24T11:28:24+00:00",
+   "sp95_maj": "2026-11-25T09:26:08+00:00",
    "diesel": 2.119,
-   "diesel_maj": "2026-11-24T11:28:24+00:00"
+   "diesel_maj": "2026-11-25T09:26:08+00:00"
   },
   {
    "id": "25300009",
@@ -4640,6 +4640,17 @@
    "diesel_maj": "2026-11-21T08:36:52+00:00"
   },
   {
+   "id": "70200006",
+   "lat": 47.675,
+   "lon": 6.521,
+   "adresse": "16 Rue de Belfort",
+   "ville": "Lure",
+   "sp95": 1.99,
+   "sp95_maj": "2026-11-25T11:59:24+00:00",
+   "diesel": 2.04,
+   "diesel_maj": "2026-11-25T11:59:24+00:00"
+  },
+  {
    "id": "1460001",
    "lat": 46.17219,
    "lon": 5.57673,
@@ -4649,17 +4660,6 @@
    "sp95_maj": "2026-11-20T11:04:13+00:00",
    "diesel": 2.129,
    "diesel_maj": "2026-11-20T11:04:13+00:00"
-  },
-  {
-   "id": "70200006",
-   "lat": 47.675,
-   "lon": 6.521,
-   "adresse": "16 Rue de Belfort",
-   "ville": "Lure",
-   "sp95": 1.99,
-   "sp95_maj": "2026-11-23T08:04:32+00:00",
-   "diesel": null,
-   "diesel_maj": null
   },
   {
    "id": "88560003",
@@ -4733,10 +4733,10 @@
    "lon": 6.073,
    "adresse": "ZI La Mandallaz",
    "ville": "Epagny Metz-Tessy",
-   "sp95": 1.949,
-   "sp95_maj": "2026-11-16T13:19:44+00:00",
-   "diesel": 2.026,
-   "diesel_maj": "2026-11-24T12:25:07+00:00"
+   "sp95": 1.939,
+   "sp95_maj": "2026-11-25T13:26:55+00:00",
+   "diesel": 1.997,
+   "diesel_maj": "2026-11-25T11:10:11+00:00"
   },
   {
    "id": "25500001",
@@ -4755,10 +4755,10 @@
    "lon": 6.916,
    "adresse": "CD 419",
    "ville": "Bessoncourt",
-   "sp95": 1.929,
-   "sp95_maj": "2026-11-24T09:13:37+00:00",
-   "diesel": 2.047,
-   "diesel_maj": "2026-11-24T09:13:37+00:00"
+   "sp95": 1.915,
+   "sp95_maj": "2026-11-25T09:39:17+00:00",
+   "diesel": 2.015,
+   "diesel_maj": "2026-11-25T09:39:16+00:00"
   },
   {
    "id": "25550003",
@@ -4790,8 +4790,8 @@
    "ville": "Viuz-en-Sallaz",
    "sp95": null,
    "sp95_maj": null,
-   "diesel": 2.15,
-   "diesel_maj": "2026-11-24T16:49:27+00:00"
+   "diesel": 2.14,
+   "diesel_maj": "2026-11-25T07:23:37+00:00"
   },
   {
    "id": "70100003",
@@ -4799,21 +4799,10 @@
    "lon": 5.598,
    "adresse": "20 Avenue du Maréchal Lyautey",
    "ville": "Gray",
-   "sp95": null,
-   "sp95_maj": null,
-   "diesel": null,
-   "diesel_maj": null
-  },
-  {
-   "id": "39200003",
-   "lat": 46.379,
-   "lon": 5.839,
-   "adresse": "16 Route de Lyon",
-   "ville": "Saint-Claude",
-   "sp95": 1.881,
-   "sp95_maj": "2026-11-24T07:08:26+00:00",
-   "diesel": 2.045,
-   "diesel_maj": "2026-11-24T07:08:26+00:00"
+   "sp95": 1.99,
+   "sp95_maj": "2026-11-25T10:50:26+00:00",
+   "diesel": 2.059,
+   "diesel_maj": "2026-11-25T10:50:26+00:00"
   },
   {
    "id": "70200008",
@@ -4825,6 +4814,17 @@
    "sp95_maj": "2026-11-20T16:14:49+00:00",
    "diesel": 2.05,
    "diesel_maj": "2026-11-20T16:47:59+00:00"
+  },
+  {
+   "id": "39200003",
+   "lat": 46.379,
+   "lon": 5.839,
+   "adresse": "16 Route de Lyon",
+   "ville": "Saint-Claude",
+   "sp95": 1.864,
+   "sp95_maj": "2026-11-25T10:16:45+00:00",
+   "diesel": 2.034,
+   "diesel_maj": "2026-11-25T10:16:45+00:00"
   },
   {
    "id": "74170001",
@@ -4843,10 +4843,10 @@
    "lon": 6.089,
    "adresse": "AVENUE D AIX LES BAINS",
    "ville": "Annecy",
-   "sp95": 1.949,
-   "sp95_maj": "2026-11-16T09:43:16+00:00",
-   "diesel": 2.026,
-   "diesel_maj": "2026-11-24T10:55:46+00:00"
+   "sp95": 1.939,
+   "sp95_maj": "2026-11-25T11:40:37+00:00",
+   "diesel": 1.996,
+   "diesel_maj": "2026-11-25T11:40:37+00:00"
   },
   {
    "id": "68270002",
@@ -4876,10 +4876,10 @@
    "lon": 6.65296,
    "adresse": "4 IMPASSE DE LA CHEVU",
    "ville": "Arcey",
-   "sp95": 1.95,
-   "sp95_maj": "2026-11-16T07:40:01+00:00",
-   "diesel": 2.086,
-   "diesel_maj": "2026-11-10T09:34:28+00:00"
+   "sp95": 1.899,
+   "sp95_maj": "2026-11-25T10:44:25+00:00",
+   "diesel": 2.035,
+   "diesel_maj": "2026-11-25T10:44:25+00:00"
   },
   {
    "id": "74540001",
@@ -4888,9 +4888,9 @@
    "adresse": "ROUTE D'AIX LES BAINS N° 1463",
    "ville": "Alby-sur-Chéran",
    "sp95": 1.99,
-   "sp95_maj": "2026-11-21T08:15:49+00:00",
-   "diesel": 2.23,
-   "diesel_maj": "2026-11-24T07:56:42+00:00"
+   "sp95_maj": "2026-11-25T14:15:32+00:00",
+   "diesel": 2.07,
+   "diesel_maj": "2026-11-25T14:15:32+00:00"
   },
   {
    "id": "25000021",
@@ -4898,10 +4898,10 @@
    "lon": 5.887,
    "adresse": "RN 73",
    "ville": "Chemaudin et Vaux",
-   "sp95": null,
-   "sp95_maj": null,
-   "diesel": null,
-   "diesel_maj": null
+   "sp95": 1.99,
+   "sp95_maj": "2026-11-25T15:39:53+00:00",
+   "diesel": 2.046,
+   "diesel_maj": "2026-11-25T15:31:23+00:00"
   },
   {
    "id": "90200002",
@@ -4920,10 +4920,10 @@
    "lon": 7.17,
    "adresse": "5 Avenue d'Alsace BP60189",
    "ville": "Cernay",
-   "sp95": 1.987,
-   "sp95_maj": "2026-11-24T10:56:09+00:00",
-   "diesel": 2.152,
-   "diesel_maj": "2026-11-23T09:52:38+00:00"
+   "sp95": 1.967,
+   "sp95_maj": "2026-11-25T10:19:58+00:00",
+   "diesel": 2.105,
+   "diesel_maj": "2026-11-25T10:19:58+00:00"
   },
   {
    "id": "1350003",
@@ -4953,10 +4953,10 @@
    "lon": 7.59,
    "adresse": "2 RUE DU RHIN",
    "ville": "Huningue",
-   "sp95": 2.018,
-   "sp95_maj": "2026-11-24T12:48:09+00:00",
-   "diesel": 2.198,
-   "diesel_maj": "2026-11-24T12:48:08+00:00"
+   "sp95": 1.999,
+   "sp95_maj": "2026-11-25T16:00:58+00:00",
+   "diesel": 2.185,
+   "diesel_maj": "2026-11-25T12:36:40+00:00"
   },
   {
    "id": "68200018",
@@ -4964,10 +4964,10 @@
    "lon": 7.326,
    "adresse": "185 AV DE COLMAR",
    "ville": "Mulhouse",
-   "sp95": null,
-   "sp95_maj": null,
-   "diesel": null,
-   "diesel_maj": null
+   "sp95": 1.873,
+   "sp95_maj": "2026-11-25T08:34:05+00:00",
+   "diesel": 2.069,
+   "diesel_maj": "2026-11-25T08:34:05+00:00"
   },
   {
    "id": "68300003",
@@ -4976,9 +4976,9 @@
    "adresse": "1 Rue de Seville",
    "ville": "Saint-Louis",
    "sp95": 2.155,
-   "sp95_maj": "2026-11-24T09:14:00+00:00",
+   "sp95_maj": "2026-11-25T09:53:00+00:00",
    "diesel": 2.158,
-   "diesel_maj": "2026-11-24T09:14:00+00:00"
+   "diesel_maj": "2026-11-25T09:53:00+00:00"
   },
   {
    "id": "68520004",
@@ -4986,10 +4986,10 @@
    "lon": 7.148,
    "adresse": "Rue du Pont d'Aspach",
    "ville": "Burnhaupt-le-Haut",
-   "sp95": 1.988,
-   "sp95_maj": "2026-11-24T10:42:19+00:00",
-   "diesel": 2.154,
-   "diesel_maj": "2026-11-23T09:33:58+00:00"
+   "sp95": 1.968,
+   "sp95_maj": "2026-11-25T10:00:53+00:00",
+   "diesel": 2.106,
+   "diesel_maj": "2026-11-25T10:00:52+00:00"
   },
   {
    "id": "25450001",
@@ -5054,8 +5054,8 @@
    "ville": "Cluses",
    "sp95": null,
    "sp95_maj": null,
-   "diesel": 2.046,
-   "diesel_maj": "2026-11-24T06:40:23+00:00"
+   "diesel": 2.03,
+   "diesel_maj": "2026-11-25T06:40:58+00:00"
   },
   {
    "id": "74970001",
@@ -5063,10 +5063,10 @@
    "lon": 6.502,
    "adresse": "40, RUE DES CLUS",
    "ville": "Marignier",
-   "sp95": 1.889,
-   "sp95_maj": "2026-11-24T08:09:56+00:00",
-   "diesel": 2.039,
-   "diesel_maj": "2026-11-24T08:09:56+00:00"
+   "sp95": 1.879,
+   "sp95_maj": "2026-11-25T05:19:34+00:00",
+   "diesel": 1.999,
+   "diesel_maj": "2026-11-25T05:19:34+00:00"
   },
   {
    "id": "74270006",
@@ -5074,10 +5074,10 @@
    "lon": 5.944,
    "adresse": "ZA DES BONNETS",
    "ville": "Musièges",
-   "sp95": 1.899,
-   "sp95_maj": "2026-11-23T06:00:27+00:00",
-   "diesel": 1.999,
-   "diesel_maj": "2026-11-23T06:00:27+00:00"
+   "sp95": 1.871,
+   "sp95_maj": "2026-11-25T09:20:32+00:00",
+   "diesel": 1.965,
+   "diesel_maj": "2026-11-25T09:20:32+00:00"
   },
   {
    "id": "70190005",
@@ -5096,10 +5096,10 @@
    "lon": 6.241,
    "adresse": "6 Route des Vallées",
    "ville": "Annemasse",
-   "sp95": 1.904,
-   "sp95_maj": "2026-11-24T15:21:00+00:00",
+   "sp95": 1.888,
+   "sp95_maj": "2026-11-25T11:21:00+00:00",
    "diesel": 2.133,
-   "diesel_maj": "2026-11-24T15:21:00+00:00"
+   "diesel_maj": "2026-11-25T11:21:00+00:00"
   },
   {
    "id": "74800002",
@@ -5108,9 +5108,9 @@
    "adresse": "3515 Avenue du Mont-Blanc",
    "ville": "Saint-Pierre-en-Faucigny",
    "sp95": 1.938,
-   "sp95_maj": "2026-11-24T07:31:00+00:00",
-   "diesel": 2.12,
-   "diesel_maj": "2026-11-24T07:31:00+00:00"
+   "sp95_maj": "2026-11-25T07:32:00+00:00",
+   "diesel": 2.101,
+   "diesel_maj": "2026-11-25T07:32:00+00:00"
   },
   {
    "id": "25150002",
@@ -5130,20 +5130,9 @@
    "adresse": "ROUTE DE BETHONCOURT",
    "ville": "Montbéliard",
    "sp95": 2.0,
-   "sp95_maj": "2026-11-24T11:06:12+00:00",
+   "sp95_maj": "2026-11-25T10:34:39+00:00",
    "diesel": 2.055,
-   "diesel_maj": "2026-11-24T11:06:12+00:00"
-  },
-  {
-   "id": "25022001",
-   "lat": 47.2634,
-   "lon": 6.06632,
-   "adresse": "1 chemin Voie des Agasses",
-   "ville": "Chalezeule",
-   "sp95": 1.919,
-   "sp95_maj": "2026-11-23T19:52:00+00:00",
-   "diesel": 2.079,
-   "diesel_maj": "2026-11-23T19:52:00+00:00"
+   "diesel_maj": "2026-11-25T10:34:39+00:00"
   },
   {
    "id": "68127002",
@@ -5157,13 +5146,24 @@
    "diesel_maj": "2026-11-23T09:00:00+00:00"
   },
   {
+   "id": "25022001",
+   "lat": 47.2634,
+   "lon": 6.06632,
+   "adresse": "1 chemin Voie des Agasses",
+   "ville": "Chalezeule",
+   "sp95": 1.919,
+   "sp95_maj": "2026-11-23T19:52:00+00:00",
+   "diesel": 2.079,
+   "diesel_maj": "2026-11-23T19:52:00+00:00"
+  },
+  {
    "id": "68540001",
    "lat": 47.866,
    "lon": 7.256,
    "adresse": "Route de Guebwiller",
    "ville": "Bollwiller",
-   "sp95": 1.999,
-   "sp95_maj": "2026-11-23T10:27:02+00:00",
+   "sp95": 1.989,
+   "sp95_maj": "2026-11-25T07:58:25+00:00",
    "diesel": 2.139,
    "diesel_maj": "2026-11-23T10:27:01+00:00"
   },
@@ -5195,10 +5195,10 @@
    "lon": 5.90516,
    "adresse": "37 AVENUE EDOUARD HERRIOT",
    "ville": "Champagnole",
-   "sp95": 1.944,
-   "sp95_maj": "2026-11-24T09:42:31+00:00",
-   "diesel": 2.049,
-   "diesel_maj": "2026-11-24T13:22:06+00:00"
+   "sp95": 1.915,
+   "sp95_maj": "2026-11-25T10:06:32+00:00",
+   "diesel": 2.039,
+   "diesel_maj": "2026-11-25T10:06:32+00:00"
   },
   {
    "id": "70100008",
@@ -5239,10 +5239,10 @@
    "lon": 7.27844,
    "adresse": "5 Rue Aristide BRIAND",
    "ville": "Lutterbach",
-   "sp95": 2.059,
-   "sp95_maj": "2026-11-24T10:41:42+00:00",
-   "diesel": 2.149,
-   "diesel_maj": "2026-11-24T10:41:42+00:00"
+   "sp95": 2.049,
+   "sp95_maj": "2026-11-25T12:33:06+00:00",
+   "diesel": 2.099,
+   "diesel_maj": "2026-11-25T12:33:06+00:00"
   },
   {
    "id": "68300004",
@@ -5273,20 +5273,9 @@
    "adresse": "STATION TOTAL RN.203",
    "ville": "Argonay",
    "sp95": 1.99,
-   "sp95_maj": "2026-11-24T06:50:34+00:00",
-   "diesel": 2.17,
-   "diesel_maj": "2026-11-24T06:50:34+00:00"
-  },
-  {
-   "id": "88160002",
-   "lat": 47.883,
-   "lon": 6.758,
-   "adresse": "35 Avenue de Verdun",
-   "ville": "Le Thillot",
-   "sp95": 1.99,
-   "sp95_maj": "2026-11-23T08:12:50+00:00",
-   "diesel": null,
-   "diesel_maj": null
+   "sp95_maj": "2026-11-25T06:57:26+00:00",
+   "diesel": 2.114,
+   "diesel_maj": "2026-11-25T06:57:26+00:00"
   },
   {
    "id": "74230004",
@@ -5300,15 +5289,26 @@
    "diesel_maj": "2026-11-17T09:13:10+00:00"
   },
   {
+   "id": "88160002",
+   "lat": 47.883,
+   "lon": 6.758,
+   "adresse": "35 Avenue de Verdun",
+   "ville": "Le Thillot",
+   "sp95": 1.975,
+   "sp95_maj": "2026-11-25T08:08:35+00:00",
+   "diesel": null,
+   "diesel_maj": null
+  },
+  {
    "id": "74420001",
    "lat": 46.208,
    "lon": 6.403,
    "adresse": "191 Rue Vallée Verte",
    "ville": "Boëge",
-   "sp95": 2.05,
-   "sp95_maj": "2026-11-18T06:00:19+00:00",
-   "diesel": 2.19,
-   "diesel_maj": "2026-11-20T07:08:25+00:00"
+   "sp95": 2.02,
+   "sp95_maj": "2026-11-25T10:45:45+00:00",
+   "diesel": 2.14,
+   "diesel_maj": "2026-11-25T10:45:45+00:00"
   },
   {
    "id": "70270002",
@@ -5338,10 +5338,10 @@
    "lon": 6.525,
    "adresse": "RUE DE CARTHERAY",
    "ville": "Publier",
-   "sp95": 1.939,
-   "sp95_maj": "2026-11-21T12:43:32+00:00",
+   "sp95": 1.87,
+   "sp95_maj": "2026-11-25T12:47:46+00:00",
    "diesel": 1.999,
-   "diesel_maj": "2026-11-21T12:43:32+00:00"
+   "diesel_maj": "2026-11-25T12:47:46+00:00"
   },
   {
    "id": "74700006",
@@ -5384,8 +5384,8 @@
    "ville": "Wittelsheim",
    "sp95": 1.989,
    "sp95_maj": "2026-11-24T12:00:00+00:00",
-   "diesel": 2.149,
-   "diesel_maj": "2026-11-24T12:00:00+00:00"
+   "diesel": 2.105,
+   "diesel_maj": "2026-11-25T12:00:00+00:00"
   },
   {
    "id": "1460003",
@@ -5406,8 +5406,8 @@
    "ville": "Montbozon",
    "sp95": 2.179,
    "sp95_maj": "2026-11-20T23:59:00+00:00",
-   "diesel": 2.229,
-   "diesel_maj": "2026-11-20T23:59:00+00:00"
+   "diesel": 2.199,
+   "diesel_maj": "2026-11-24T23:59:00+00:00"
   },
   {
    "id": "90000014",
@@ -5415,8 +5415,8 @@
    "lon": 6.86,
    "adresse": "3 rue de Besançon",
    "ville": "Belfort",
-   "sp95": 1.914,
-   "sp95_maj": "2026-11-24T00:01:00+00:00",
+   "sp95": 1.899,
+   "sp95_maj": "2026-11-25T00:01:00+00:00",
    "diesel": null,
    "diesel_maj": null
   },
@@ -5437,10 +5437,10 @@
    "lon": 6.335,
    "adresse": "1 Rue de la Fée Verte",
    "ville": "Pontarlier",
-   "sp95": 1.99,
-   "sp95_maj": "2026-11-24T06:24:22+00:00",
-   "diesel": 2.146,
-   "diesel_maj": "2026-11-24T06:24:22+00:00"
+   "sp95": null,
+   "sp95_maj": null,
+   "diesel": 2.068,
+   "diesel_maj": "2026-11-25T06:23:59+00:00"
   },
   {
    "id": "74230006",
@@ -5459,10 +5459,10 @@
    "lon": 6.092,
    "adresse": "60 Route des Creuses",
    "ville": "Annecy",
-   "sp95": 1.949,
-   "sp95_maj": "2026-11-24T09:14:00+00:00",
-   "diesel": 2.053,
-   "diesel_maj": "2026-11-24T09:14:00+00:00"
+   "sp95": 1.939,
+   "sp95_maj": "2026-11-25T09:53:00+00:00",
+   "diesel": 2.035,
+   "diesel_maj": "2026-11-25T09:53:00+00:00"
   },
   {
    "id": "88360002",
@@ -5474,17 +5474,6 @@
    "sp95_maj": "2026-11-10T09:07:30+00:00",
    "diesel": 2.219,
    "diesel_maj": "2026-11-07T10:28:18+00:00"
-  },
-  {
-   "id": "68440003",
-   "lat": 47.73133,
-   "lon": 7.41706,
-   "adresse": "63 rue du Général de Gaulle",
-   "ville": "Habsheim",
-   "sp95": 1.999,
-   "sp95_maj": "2026-11-20T10:05:31+00:00",
-   "diesel": 2.199,
-   "diesel_maj": "2026-11-20T10:05:31+00:00"
   },
   {
    "id": "1210003",
@@ -5507,6 +5496,17 @@
    "sp95_maj": null,
    "diesel": null,
    "diesel_maj": null
+  },
+  {
+   "id": "68440003",
+   "lat": 47.73133,
+   "lon": 7.41706,
+   "adresse": "63 rue du Général de Gaulle",
+   "ville": "Habsheim",
+   "sp95": 1.969,
+   "sp95_maj": "2026-11-25T09:10:28+00:00",
+   "diesel": 2.149,
+   "diesel_maj": "2026-11-25T09:10:28+00:00"
   },
   {
    "id": "52500001",
@@ -5537,9 +5537,9 @@
    "adresse": "ROUTE DE LYON",
    "ville": "Beure",
    "sp95": 2.049,
-   "sp95_maj": "2026-11-24T08:00:00+00:00",
+   "sp95_maj": "2026-11-25T08:00:00+00:00",
    "diesel": 2.199,
-   "diesel_maj": "2026-11-24T08:00:00+00:00"
+   "diesel_maj": "2026-11-25T08:00:00+00:00"
   },
   {
    "id": "1260002",
@@ -5614,9 +5614,9 @@
    "adresse": "29 grande rue",
    "ville": "Aibre",
    "sp95": 1.99,
-   "sp95_maj": "2026-11-18T14:51:54+00:00",
-   "diesel": null,
-   "diesel_maj": null
+   "sp95_maj": "2026-11-25T16:03:00+00:00",
+   "diesel": 2.23,
+   "diesel_maj": "2026-11-25T16:03:00+00:00"
   },
   {
    "id": "39200002",
@@ -5636,9 +5636,9 @@
    "adresse": "CD 108",
    "ville": "Ottmarsheim",
    "sp95": 1.99,
-   "sp95_maj": "2026-11-17T13:47:03+00:00",
-   "diesel": null,
-   "diesel_maj": null
+   "sp95_maj": "2026-11-25T10:28:26+00:00",
+   "diesel": 2.179,
+   "diesel_maj": "2026-11-25T10:28:26+00:00"
   },
   {
    "id": "68200027",
@@ -5647,9 +5647,9 @@
    "adresse": "184 ROUTE DE BELFORT",
    "ville": "Mulhouse",
    "sp95": 2.049,
-   "sp95_maj": "2026-11-24T06:00:00+00:00",
+   "sp95_maj": "2026-11-25T06:00:00+00:00",
    "diesel": 2.249,
-   "diesel_maj": "2026-11-24T06:00:00+00:00"
+   "diesel_maj": "2026-11-25T06:00:00+00:00"
   },
   {
    "id": "90400001",
@@ -5712,21 +5712,10 @@
    "lon": 6.511,
    "adresse": "1612 ROUTE DU MONT-BLANC",
    "ville": "Vougy",
-   "sp95": 1.979,
-   "sp95_maj": "2026-11-24T08:10:53+00:00",
-   "diesel": 2.039,
-   "diesel_maj": "2026-11-24T08:10:53+00:00"
-  },
-  {
-   "id": "68200026",
-   "lat": 47.777,
-   "lon": 7.335,
-   "adresse": "170, Rue des Romains",
-   "ville": "Mulhouse",
-   "sp95": 1.888,
-   "sp95_maj": "2026-11-24T11:00:00+00:00",
-   "diesel": 2.084,
-   "diesel_maj": "2026-11-24T11:00:00+00:00"
+   "sp95": 1.959,
+   "sp95_maj": "2026-11-25T05:18:55+00:00",
+   "diesel": 1.999,
+   "diesel_maj": "2026-11-25T05:18:54+00:00"
   },
   {
    "id": "90000013",
@@ -5738,6 +5727,17 @@
    "sp95_maj": null,
    "diesel": null,
    "diesel_maj": null
+  },
+  {
+   "id": "68200026",
+   "lat": 47.777,
+   "lon": 7.335,
+   "adresse": "170, Rue des Romains",
+   "ville": "Mulhouse",
+   "sp95": 1.939,
+   "sp95_maj": "2026-11-25T10:00:00+00:00",
+   "diesel": 2.079,
+   "diesel_maj": "2026-11-25T10:00:00+00:00"
   },
   {
    "id": "74140003",
@@ -5790,9 +5790,9 @@
    "adresse": "61 rue des Grebes Huppés",
    "ville": "Bonneville",
    "sp95": 1.889,
-   "sp95_maj": "2026-11-23T09:21:54+00:00",
-   "diesel": 2.044,
-   "diesel_maj": "2026-11-23T09:21:54+00:00"
+   "sp95_maj": "2026-11-25T07:44:56+00:00",
+   "diesel": 2.039,
+   "diesel_maj": "2026-11-25T07:44:56+00:00"
   },
   {
    "id": "70180003",
@@ -5811,10 +5811,10 @@
    "lon": 7.00409,
    "adresse": "1 RUE DU GENERAL DE GAULLE",
    "ville": "Montreux-Château",
-   "sp95": 1.989,
-   "sp95_maj": "2026-11-22T18:26:43+00:00",
-   "diesel": 2.139,
-   "diesel_maj": "2026-11-22T18:25:57+00:00"
+   "sp95": 1.939,
+   "sp95_maj": "2026-11-24T18:28:13+00:00",
+   "diesel": 2.119,
+   "diesel_maj": "2026-11-24T18:28:13+00:00"
   },
   {
    "id": "70170003",
@@ -5835,8 +5835,8 @@
    "ville": "Perrigny",
    "sp95": null,
    "sp95_maj": null,
-   "diesel": 2.21,
-   "diesel_maj": "2026-11-23T07:56:56+00:00"
+   "diesel": 2.15,
+   "diesel_maj": "2026-11-25T07:12:31+00:00"
   },
   {
    "id": "39200007",
@@ -5856,9 +5856,9 @@
    "adresse": "20 ROUTE DES CREUSES",
    "ville": "Annecy",
    "sp95": 1.999,
-   "sp95_maj": "2026-11-23T21:00:00+00:00",
+   "sp95_maj": "2026-11-24T21:00:00+00:00",
    "diesel": 2.169,
-   "diesel_maj": "2026-11-23T21:00:00+00:00"
+   "diesel_maj": "2026-11-24T21:00:00+00:00"
   },
   {
    "id": "74930003",
@@ -5890,8 +5890,8 @@
    "ville": "Salins-les-Bains",
    "sp95": null,
    "sp95_maj": null,
-   "diesel": 2.087,
-   "diesel_maj": "2026-11-24T00:01:00+00:00"
+   "diesel": 2.084,
+   "diesel_maj": "2026-11-25T00:01:00+00:00"
   },
   {
    "id": "1100007",
@@ -5900,7 +5900,7 @@
    "adresse": "174 COURS DE VERDUN",
    "ville": "Oyonnax",
    "sp95": 1.99,
-   "sp95_maj": "2026-11-24T00:01:00+00:00",
+   "sp95_maj": "2026-11-25T00:01:00+00:00",
    "diesel": null,
    "diesel_maj": null
   },
@@ -5921,8 +5921,8 @@
    "lon": 7.294,
    "adresse": "15 ROUTE DE THANN",
    "ville": "Pfastatt",
-   "sp95": 1.889,
-   "sp95_maj": "2026-11-24T00:00:00+00:00",
+   "sp95": null,
+   "sp95_maj": null,
    "diesel": null,
    "diesel_maj": null
   },
@@ -5933,9 +5933,9 @@
    "adresse": "66 ROUTE D'ETREMBIERES",
    "ville": "Annemasse",
    "sp95": 1.99,
-   "sp95_maj": "2026-11-24T00:01:00+00:00",
-   "diesel": 2.23,
-   "diesel_maj": "2026-11-24T00:01:00+00:00"
+   "sp95_maj": "2026-11-25T00:01:00+00:00",
+   "diesel": 1.999,
+   "diesel_maj": "2026-11-25T00:01:00+00:00"
   },
   {
    "id": "74220002",
@@ -5949,17 +5949,6 @@
    "diesel_maj": "2026-11-21T10:25:52+00:00"
   },
   {
-   "id": "68330001",
-   "lat": 47.59169,
-   "lon": 7.57614,
-   "adresse": "17 Route de St Louis",
-   "ville": "Huningue",
-   "sp95": 2.019,
-   "sp95_maj": "2026-11-24T12:28:29+00:00",
-   "diesel": 2.199,
-   "diesel_maj": "2026-11-24T12:28:29+00:00"
-  },
-  {
    "id": "70200001",
    "lat": 47.67909,
    "lon": 6.50168,
@@ -5967,8 +5956,19 @@
    "ville": "Lure",
    "sp95": 1.999,
    "sp95_maj": "2026-11-23T11:55:12+00:00",
-   "diesel": 2.099,
-   "diesel_maj": "2026-11-23T11:55:11+00:00"
+   "diesel": 2.083,
+   "diesel_maj": "2026-11-25T11:26:33+00:00"
+  },
+  {
+   "id": "68330001",
+   "lat": 47.59169,
+   "lon": 7.57614,
+   "adresse": "17 Route de St Louis",
+   "ville": "Huningue",
+   "sp95": 2.018,
+   "sp95_maj": "2026-11-25T10:37:23+00:00",
+   "diesel": 2.198,
+   "diesel_maj": "2026-11-25T10:37:23+00:00"
   },
   {
    "id": "68880001",
